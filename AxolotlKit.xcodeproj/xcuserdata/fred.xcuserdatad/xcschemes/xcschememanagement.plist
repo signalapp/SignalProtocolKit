@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>AxolotlKit Tests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>AxolotlKit.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>B63B2F9C197D8AFD00E09F65</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B63B2FB5197D8AFD00E09F65</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B63B2FDA197D8B9600E09F65</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B6B98F78197D838A00B16B5E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B6B98F83197D838A00B16B5E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
