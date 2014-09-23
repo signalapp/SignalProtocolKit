@@ -20,6 +20,7 @@
 		B611CB6519844D8500FC54DA /* AliceAxolotlParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = B611CB6419844D8500FC54DA /* AliceAxolotlParameters.m */; };
 		B611CB6819844E7C00FC54DA /* BobAxolotlParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = B611CB6719844E7C00FC54DA /* BobAxolotlParameters.m */; };
 		B61B6839198352570047EF87 /* SessionRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B61B6838198352570047EF87 /* SessionRecord.m */; };
+		B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B61E841C19D1780D004FC382 /* HKDFTest.m */; };
 		B63B2F9F197D8AFD00E09F65 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2F9E197D8AFD00E09F65 /* Foundation.framework */; };
 		B63B2FA1197D8AFD00E09F65 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2FA0197D8AFD00E09F65 /* CoreGraphics.framework */; };
 		B63B2FA3197D8AFD00E09F65 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2FA2197D8AFD00E09F65 /* UIKit.framework */; };
@@ -71,6 +72,7 @@
 		B611CB6719844E7C00FC54DA /* BobAxolotlParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BobAxolotlParameters.m; path = Models/BobAxolotlParameters.m; sourceTree = "<group>"; };
 		B61B6837198352570047EF87 /* SessionRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionRecord.h; path = Classes/Sessions/SessionRecord.h; sourceTree = "<group>"; };
 		B61B6838198352570047EF87 /* SessionRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionRecord.m; path = Classes/Sessions/SessionRecord.m; sourceTree = "<group>"; };
+		B61E841C19D1780D004FC382 /* HKDFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKDFTest.m; sourceTree = "<group>"; };
 		B63B2F9D197D8AFD00E09F65 /* AxolotlKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AxolotlKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63B2F9E197D8AFD00E09F65 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B63B2FA0197D8AFD00E09F65 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -199,6 +201,22 @@
 			name = AxoltolKeys;
 			sourceTree = "<group>";
 		};
+		B61E841719D172BC004FC382 /* ECC */ = {
+			isa = PBXGroup;
+			children = (
+				B6E37ADF19CF107C00E619CA /* ECCTests.m */,
+			);
+			name = ECC;
+			sourceTree = "<group>";
+		};
+		B61E841819D176D7004FC382 /* HKDF */ = {
+			isa = PBXGroup;
+			children = (
+				B61E841C19D1780D004FC382 /* HKDFTest.m */,
+			);
+			name = HKDF;
+			sourceTree = "<group>";
+		};
 		B63B2FA4197D8AFD00E09F65 /* AxolotlKit App */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,7 +243,8 @@
 		B63B2FDF197D8B9600E09F65 /* AxolotlKit Tests */ = {
 			isa = PBXGroup;
 			children = (
-				B6E37ADF19CF107C00E619CA /* ECCTests.m */,
+				B61E841819D176D7004FC382 /* HKDF */,
+				B61E841719D172BC004FC382 /* ECC */,
 				B63B2FE5197D8B9600E09F65 /* AxolotlKit_Tests.m */,
 				B63B2FE0197D8B9600E09F65 /* Supporting Files */,
 			);
@@ -586,6 +605,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */,
 				B63B2FE6197D8B9600E09F65 /* AxolotlKit_Tests.m in Sources */,
 				B6E37AE019CF107C00E619CA /* ECCTests.m in Sources */,
 			);

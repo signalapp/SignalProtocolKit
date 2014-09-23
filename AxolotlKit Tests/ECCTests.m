@@ -128,7 +128,7 @@ const Byte DJB_TYPE = 0x05;
 }
 
 - (void)testSignatures{
-    Byte aliceIdentityPrivate [] = {(Byte)0xc0, (Byte)0x97, (Byte)0x24, (Byte)0x84, (Byte)0x12,
+    __unused Byte aliceIdentityPrivate [] = {(Byte)0xc0, (Byte)0x97, (Byte)0x24, (Byte)0x84, (Byte)0x12,
         (Byte)0xe5, (Byte)0x8b, (Byte)0xf0, (Byte)0x5d, (Byte)0xf4,
         (Byte)0x87, (Byte)0x96, (Byte)0x82, (Byte)0x05, (Byte)0x13,
         (Byte)0x27, (Byte)0x94, (Byte)0x17, (Byte)0x8e, (Byte)0x36,
@@ -202,11 +202,11 @@ const Byte DJB_TYPE = 0x05;
     NSData *data = [NSData dataWithBytes:&message length:4096];
     
     @try {
-        NSData *signature = [Ed25519 sign:data withKeyPair:keys];
+        __unused NSData *signature = [Ed25519 sign:data withKeyPair:keys];
         XCTAssert(FALSE, @"Signature algorithm should have thrown on overflow");
     }
     @catch (NSException *exception) {
-        XCTAssert(TRUE, @"All good");
+        XCTAssert(TRUE, @"Signing overflow detected");
     }
 }
 
