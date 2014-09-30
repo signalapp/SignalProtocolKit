@@ -20,7 +20,7 @@
 
 -(NSData*)baseMaterial:(NSData*)seed;
 
-@property (readonly)int index;
-@property (readonly)NSData *key;
+@property (readonly) int index;
+@property (readonly) NSData *key;
 
 @end

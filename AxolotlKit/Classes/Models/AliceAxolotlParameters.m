@@ -12,7 +12,8 @@
 
 @synthesize ourIdentityKeyPair=_ourIdentityKeyPair, theirIdentityKey=_theirIdentityKey;
 
-- (instancetype)initWithIdentityKey:(ECKeyPair*)myIdentityKey theirIdentityKey:(NSData*)theirIdentityKey ourBaseKey:(ECKeyPair*)ourBaseKey theirSignedPreKey:(NSData*)theirSignedPreKey theirOneTimePreKey:(NSData*)theirOneTimePreKey{
+- (instancetype)initWithIdentityKey:(ECKeyPair*)myIdentityKey theirIdentityKey:(NSData*)theirIdentityKey ourBaseKey:(ECKeyPair*)ourBaseKey theirSignedPreKey:(NSData*)theirSignedPreKey theirOneTimePreKey:(NSData*)theirOneTimePreKey theirRatchetKey:(NSData*)theirRatchetKey{
+    
     self = [super init];
     
     if (self) {
@@ -21,6 +22,7 @@
         _ourBaseKey             = ourBaseKey;
         _theirSignedPreKey      = theirSignedPreKey;
         _theirOneTimePrekey     = theirOneTimePreKey;
+        _theirRatchetKey        = theirRatchetKey;
     }
     
     return self;

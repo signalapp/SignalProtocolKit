@@ -30,4 +30,6 @@ typedef PreKeyBundle*(^AxolotlFetchKey)   (NSInteger contactIdentifier, NSIntege
 
 @interface SessionCipher : NSObject
 
+
+
 @end

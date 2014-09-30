@@ -19,6 +19,6 @@
 
 @property (nonatomic, readonly)NSData* theirOneTimePrekey;
 
-- (instancetype)initWithIdentityKey:(ECKeyPair*)myIdentityKey theirIdentityKey:(NSData*)theirIdentityKey ourBaseKey:(ECKeyPair*)ourBaseKey theirSignedPreKey:(NSData*)theirSignedPreKey theirOneTimePreKey:(NSData*)theirOneTimePreKey;
+- (instancetype)initWithIdentityKey:(ECKeyPair*)myIdentityKey theirIdentityKey:(NSData*)theirIdentityKey ourBaseKey:(ECKeyPair*)ourBaseKey theirSignedPreKey:(NSData*)theirSignedPreKey theirOneTimePreKey:(NSData*)theirOneTimePreKey theirRatchetKey:(NSData*)theirRatchetKey;
 
 @end
