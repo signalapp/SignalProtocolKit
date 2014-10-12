@@ -52,7 +52,7 @@
 
 - (void)runInteraction{
     
-    SessionCiper *sessionCipher = [[SessionCipher alloc] initW]
+    SessionCiper *sessionCipher = [[SessionCipher alloc] initWithSessionStore:<#(id<AxolotlStore>)#> recipientId:<#(long)#> deviceId:<#(int)#>]
     
 }
 

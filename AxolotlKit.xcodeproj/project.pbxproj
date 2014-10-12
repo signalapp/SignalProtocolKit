@@ -21,6 +21,7 @@
 		B611CB6819844E7C00FC54DA /* BobAxolotlParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = B611CB6719844E7C00FC54DA /* BobAxolotlParameters.m */; };
 		B61B6839198352570047EF87 /* SessionRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B61B6838198352570047EF87 /* SessionRecord.m */; };
 		B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B61E841C19D1780D004FC382 /* HKDFTest.m */; };
+		B62F96B319EAA57E004CA958 /* InMemoryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B62F96B219EAA57E004CA958 /* InMemoryStore.m */; };
 		B63B2F9F197D8AFD00E09F65 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2F9E197D8AFD00E09F65 /* Foundation.framework */; };
 		B63B2FA1197D8AFD00E09F65 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2FA0197D8AFD00E09F65 /* CoreGraphics.framework */; };
 		B63B2FA3197D8AFD00E09F65 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2FA2197D8AFD00E09F65 /* UIKit.framework */; };
@@ -74,6 +75,12 @@
 		B61B6837198352570047EF87 /* SessionRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionRecord.h; path = Classes/Sessions/SessionRecord.h; sourceTree = "<group>"; };
 		B61B6838198352570047EF87 /* SessionRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionRecord.m; path = Classes/Sessions/SessionRecord.m; sourceTree = "<group>"; };
 		B61E841C19D1780D004FC382 /* HKDFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKDFTest.m; sourceTree = "<group>"; };
+		B62F96B119EAA57E004CA958 /* InMemoryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InMemoryStore.h; sourceTree = "<group>"; };
+		B62F96B219EAA57E004CA958 /* InMemoryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InMemoryStore.m; sourceTree = "<group>"; };
+		B62F96B419EAA7A7004CA958 /* SessionStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionStore.h; path = State/SessionStore.h; sourceTree = "<group>"; };
+		B62F96B819EAA881004CA958 /* IdentityKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IdentityKeyStore.h; path = State/IdentityKeyStore.h; sourceTree = "<group>"; };
+		B62F96B919EAA8C5004CA958 /* SignedPreKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignedPreKeyStore.h; path = State/SignedPreKeyStore.h; sourceTree = "<group>"; };
+		B62F96BA19EAA8F5004CA958 /* PreKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreKeyStore.h; path = State/PreKeyStore.h; sourceTree = "<group>"; };
 		B63B2F9D197D8AFD00E09F65 /* AxolotlKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AxolotlKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63B2F9E197D8AFD00E09F65 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B63B2FA0197D8AFD00E09F65 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -103,11 +110,10 @@
 		B6B05C781980611400238B0D /* WhisperMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhisperMessage.m; path = Models/WhisperMessage.m; sourceTree = "<group>"; };
 		B6B05C7A1980612F00238B0D /* PrekeyWhisperMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrekeyWhisperMessage.h; path = Models/PrekeyWhisperMessage.h; sourceTree = "<group>"; };
 		B6B05C7B1980612F00238B0D /* PrekeyWhisperMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrekeyWhisperMessage.m; path = Models/PrekeyWhisperMessage.m; sourceTree = "<group>"; };
-		B6B05C82198083B800238B0D /* SessionStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionStore.h; path = Classes/Models/SessionStore.h; sourceTree = "<group>"; };
+		B6B05C82198083B800238B0D /* AxolotlStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AxolotlStore.h; path = Models/AxolotlStore.h; sourceTree = "<group>"; };
 		B6B05C8619808BB800238B0D /* IdentityStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityStore.h; sourceTree = "<group>"; };
 		B6B05C8719808EE100238B0D /* SessionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionBuilder.h; path = Classes/SessionBuilder.h; sourceTree = "<group>"; };
 		B6B05C8819808EE100238B0D /* SessionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionBuilder.m; path = Classes/SessionBuilder.m; sourceTree = "<group>"; };
-		B6B05C8B19808F9200238B0D /* PrekeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrekeyStore.h; sourceTree = "<group>"; };
 		B6B05C8C1980919000238B0D /* AxolotlExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxolotlExceptions.h; sourceTree = "<group>"; };
 		B6B98F7D197D838A00B16B5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6B98F96197D83DD00B16B5E /* RKCK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKCK.h; sourceTree = "<group>"; };
@@ -227,6 +233,27 @@
 			name = Ratchet;
 			sourceTree = "<group>";
 		};
+		B62F96B019EAA552004CA958 /* Testing Additions */ = {
+			isa = PBXGroup;
+			children = (
+				B62F96B119EAA57E004CA958 /* InMemoryStore.h */,
+				B62F96B219EAA57E004CA958 /* InMemoryStore.m */,
+			);
+			name = "Testing Additions";
+			sourceTree = "<group>";
+		};
+		B62F96B719EAA81A004CA958 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				B6B05C82198083B800238B0D /* AxolotlStore.h */,
+				B62F96B819EAA881004CA958 /* IdentityKeyStore.h */,
+				B62F96BA19EAA8F5004CA958 /* PreKeyStore.h */,
+				B62F96B419EAA7A7004CA958 /* SessionStore.h */,
+				B62F96B919EAA8C5004CA958 /* SignedPreKeyStore.h */,
+			);
+			name = State;
+			sourceTree = "<group>";
+		};
 		B63B2FA4197D8AFD00E09F65 /* AxolotlKit App */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +280,7 @@
 		B63B2FDF197D8B9600E09F65 /* AxolotlKit Tests */ = {
 			isa = PBXGroup;
 			children = (
+				B62F96B019EAA552004CA958 /* Testing Additions */,
 				B61E841719D172BC004FC382 /* ECC */,
 				B61E841819D176D7004FC382 /* HKDF */,
 				B61E841F19D1813A004FC382 /* Ratchet */,
@@ -324,7 +352,6 @@
 				B6D51DF41984C0C500A25F87 /* PreKeyRecord.m */,
 				B6D51DF01984BE9300A25F87 /* SignedPrekeyRecord.h */,
 				B6D51DF11984BE9300A25F87 /* SignedPrekeyRecord.m */,
-				B6B05C82198083B800238B0D /* SessionStore.h */,
 				B61B6837198352570047EF87 /* SessionRecord.h */,
 				B61B6838198352570047EF87 /* SessionRecord.m */,
 			);
@@ -345,7 +372,6 @@
 			children = (
 				B677600A197E4CA500A09623 /* PreKeyBundle.h */,
 				B677600B197E4CA500A09623 /* PreKeyBundle.m */,
-				B6B05C8B19808F9200238B0D /* PrekeyStore.h */,
 			);
 			name = Prekey;
 			sourceTree = "<group>";
@@ -404,6 +430,7 @@
 				B6B98F9A197D83DD00B16B5E /* TSDerivedSecrets.h */,
 				B6B98F9B197D83DD00B16B5E /* TSDerivedSecrets.m */,
 				B6B05C8C1980919000238B0D /* AxolotlExceptions.h */,
+				B62F96B719EAA81A004CA958 /* State */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -617,6 +644,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */,
+				B62F96B319EAA57E004CA958 /* InMemoryStore.m in Sources */,
 				B6D41A2319DB4F8E00EE9BAA /* SessionCipherTest.m in Sources */,
 				B63B2FE6197D8B9600E09F65 /* AxolotlKit_Tests.m in Sources */,
 				B6E37AE019CF107C00E619CA /* ECCTests.m in Sources */,
@@ -762,6 +790,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)/**",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -801,6 +833,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)/**",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;

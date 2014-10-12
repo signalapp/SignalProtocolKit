@@ -9,13 +9,18 @@
 #import <Foundation/Foundation.h>
 #import "SessionState.h"
 
-@interface SessionRecord : NSObject
+@interface SessionRecord : NSObject<NSSecureCoding>
+
+- (instancetype)init;
+- (instancetype)initWithSessionState:(SessionState*)sessionState;
 
 - (BOOL)hasSessionState:(int)version baseKey:(NSData*)aliceBaseKey;
 - (SessionState*)sessionState;
-- (NSArray*)previousSessionStates;
+- (NSMutableArray*)previousSessionStates;
 
-- (void)reset;
+- (BOOL)isFresh;
 - (void)archiveCurrentState;
+- (void)promoteState:(SessionState*)promotedState;
+- (void)setState:(SessionState*)sessionState;
 
 @end

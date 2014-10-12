@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "IdentityStore.h"
 #import "SessionStore.h"
-#import "PrekeyStore.h"
+#import "SignedPreKeyStore.h"
+#import "PreKeyStore.h"
 #import "PreKeyBundle.h"
 
 @class PrekeyWhisperMessage;
@@ -19,11 +20,13 @@
 typedef PreKeyBundle*(^AxolotlFetchKey)   (NSInteger contactIdentifier, NSInteger deviceId);
 
 @property(nonatomic, readonly)id<SessionStore>  sessionStore;
-@property(nonatomic, readonly)id<PrekeyStore>   prekeyStore ;
+@property(nonatomic, readonly)id<PreKeyStore>   prekeyStore ;
+@property(nonatomic, readonly)id<SignedPreKeyStore> signedPreKeyStore;
 @property(nonatomic, readonly)id<IdentityStore> identityStore;
 
 @property(nonatomic, readonly)AxolotlFetchKey fetchKeyBlock;
 
--(int)process:(SessionRecord*)sessionRecord prekeyWhisperMessage:(PrekeyWhisperMessage*)message;
+- (void)processPrekeyBundle:(PreKeyBundle*)preKeyBundle;
+- (int)processPrekeyWhisperMessage:(PrekeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord;
 
 @end

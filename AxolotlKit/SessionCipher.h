@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "IdentityStore.h"
+#import "AxolotlStore.h"
+#import "SignedPreKeyStore.h"
+#import "PreKeyStore.h"
+#import "IdentityKeyStore.h"
 #import "SessionStore.h"
 
 #import "AxolotlPlainMessage.h"
@@ -30,6 +33,8 @@ typedef PreKeyBundle*(^AxolotlFetchKey)   (NSInteger contactIdentifier, NSIntege
 
 @interface SessionCipher : NSObject
 
+- (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(long)recipientId deviceId:(int)deviceId;
 
+- (instancetype)initWithSessionStore:(id<SessionStore>)sessionStore preKeyStore:(id<PreKeyStore>)preKeyStore signedPreKeyStore:(id<SignedPreKeyStore>)signedPreKeyStore identityKeyStore:(id<IdentityKeyStore>)identityKeyStore recipientId:(long)recipientId deviceId:(int)deviceId;
 
 @end

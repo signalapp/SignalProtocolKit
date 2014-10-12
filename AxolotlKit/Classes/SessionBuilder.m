@@ -43,7 +43,7 @@
     }
 }
 
--(void) processPrekeyBundle:(PreKeyBundle*)preKeyBundle{
+- (void) processPrekeyBundle:(PreKeyBundle*)preKeyBundle{
     [self verifyAndStoreIdentityKeys:preKeyBundle.identityKey contactIdentifier:preKeyBundle.contactIdentifier];
     
     if ([Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:preKeyBundle.identityKey data:preKeyBundle.signedPreKeyPublic]) {
@@ -51,10 +51,12 @@
     }
     
     SessionRecord *sessionRecord = [self.sessionStore loadSession:preKeyBundle.contactIdentifier deviceId:preKeyBundle.deviceId];
-    ECKeyPair *ourBaseKey        = [Curve25519 generateKeyPair];
-    NSData    *theirSignedPrekey = [preKeyBundle signedPreKeyPublic];
+    ECKeyPair *ourBaseKey         = [Curve25519 generateKeyPair];
+    NSData    *theirSignedPrekey  = preKeyBundle.signedPreKeyPublic;
+    NSData    *theirOneTimePrekey = preKeyBundle.preKeyPublic;
     
-    AliceAxolotlParameters *params = [[AliceAxolotlParameters alloc] initWithIdentityKey:[self.identityStore myIdentityKeyPair] theirIdentityKey:preKeyBundle.identityKey ourBaseKey:ourBaseKey theirSignedPreKey:theirSignedPrekey theirOneTimePreKey:preKeyBundle.preKeyPublic];
+    
+    AliceAxolotlParameters *params = [[AliceAxolotlParameters alloc] initWithIdentityKey:[self.identityStore myIdentityKeyPair] theirIdentityKey:preKeyBundle.identityKey ourBaseKey:ourBaseKey theirSignedPreKey:theirSignedPrekey theirOneTimePreKey:theirOneTimePrekey theirRatchetKey:theirSignedPrekey];
     
     if ([[sessionRecord sessionState] needsRefresh]){
         [sessionRecord archiveCurrentState];
@@ -67,29 +69,30 @@
     [[sessionRecord sessionState] setLocalRegistrationId:[self.identityStore localRegistrationId]];
     [[sessionRecord sessionState] setRemoteRegistrationId:preKeyBundle.registrationId];
     
-    [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:[sessionRecord sessionState]];
+    [self.sessionStore  storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
     [self.identityStore saveIdentityKeyAsTrusted:self.recipientId identityKey:preKeyBundle.identityKey];
 }
 
--(void) processPrekeyWhisperMessage:(PrekeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
-    
-    //[self verifyAndStoreIdentityKeys:message.identityKey contactIdentifier:];
+- (int) processPrekeyWhisperMessage:(PrekeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
     
     if ([sessionRecord hasSessionState:message.version baseKey:[message baseKey]]) {
-        // The session was already setup for V3. Skipping session establishement.
-        return;
+        return 0;
     }
     
     BOOL simultaneousInitiate  = [[sessionRecord sessionState] hasUnacknowledgedPreKeyMessage];
-    ECKeyPair *ourSignedPrekey = [self.prekeyStore loadSignedPrekey:message.prekeyID].keyPair;
+    ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore loadSignedPrekey:message.prekeyID].keyPair;
     
-    BobAxolotlParameters *params = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:[[self identityStore] myIdentityKeyPair] theirIdentityKey:message.identityKey ourSignedPrekey:ourSignedPrekey ourRatchetKey:ourSignedPrekey ourOneTimePrekey:[self.prekeyStore loadPrekey:message.prekeyID].keyPair theirBaseKey:[message baseKey]];
+    BobAxolotlParameters *params = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:[[self identityStore] myIdentityKeyPair]
+                                                                          theirIdentityKey:message.identityKey
+                                                                           ourSignedPrekey:ourSignedPrekey
+                                                                             ourRatchetKey:ourSignedPrekey
+                                                                          ourOneTimePrekey:[self.prekeyStore loadPreKey:message.prekeyID].keyPair
+                                                                              theirBaseKey:[message baseKey]];
     
-    if (!simultaneousInitiate) {
-        [sessionRecord reset];
-    } else{
-        [sessionRecord archiveCurrentState];
+    if (!sessionRecord.isFresh) {
+        <#statements#>
     }
+    
     
     [RatchetingSession initializeSession:[sessionRecord sessionState] sessionVersion:[message version] BobParameters:params];
     

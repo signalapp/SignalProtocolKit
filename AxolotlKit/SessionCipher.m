@@ -21,28 +21,61 @@
 #import "RootKey.h"
 #import "WhisperMessage.h"
 
+#import "SignedPreKeyStore.h"
+#import "PreKeyStore.h"
+
 #import <HKDFKit/HKDFKit.h>
 
 @interface SessionCipher ()
-@property int recipientId;
+@property long recipientId;
 @property int deviceId;
 @property (nonatomic, retain)   SessionBuilder *sessionBuilder;
+@property (nonatomic, readonly) id<IdentityKeyStore>identityKeyStore;
 @property (nonatomic, readonly) id<SessionStore> sessionStore;
-@property (nonatomic, readonly) id<PrekeyStore> prekeyStore;
+@property (nonatomic, readonly) id<PreKeyStore> prekeyStore;
+@property (nonatomic, readonly) id<SignedPreKeyStore> signedPreKeyStore;
 @end
 
 
 @implementation SessionCipher
 
--(WhisperMessage*)encryptMessage:(NSData*)paddedMessage{
+
+- (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(long)recipientId deviceId:(int)deviceId{
+    return [self initWithSessionStore:sessionStore
+                          preKeyStore:sessionStore
+                    signedPreKeyStore:sessionStore
+                     identityKeyStore:sessionStore
+                          recipientId:recipientId
+                             deviceId:deviceId];
+}
+
+- (instancetype)initWithSessionStore:(id<SessionStore>)sessionStore
+                         preKeyStore:(id<PreKeyStore>)preKeyStore
+                   signedPreKeyStore:(id<SignedPreKeyStore>)signedPreKeyStore
+                    identityKeyStore:(id<IdentityKeyStore>)identityKeyStore
+                         recipientId:(long)recipientId
+                            deviceId:(int)deviceId{
+    self = [super init];
+    
+    _sessionStore      = sessionStore;
+    _prekeyStore       = preKeyStore;
+    _signedPreKeyStore = signedPreKeyStore;
+    _identityKeyStore  = identityKeyStore;
+    _recipientId       = recipientId;
+    _deviceId          = deviceId;
+    
+    return self;
+}
+
+- (WhisperMessage*)encryptMessage:(NSData*)paddedMessage{
     
     SessionRecord *sessionRecord = [self.sessionStore loadSession:_recipientId deviceId:_deviceId];
-    SessionState  *session       = [sessionRecord sessionState];
-    ChainKey *chainKey           = [session senderChainKey];
-    MessageKeys *messageKeys     = [chainKey messageKeys];
-    NSData *senderRatchetKey     = [session senderRatchetKey];
-    int previousCounter          = [session previousCounter];
-    int sessionVersion           = [session version];
+    SessionState  *session       = sessionRecord.sessionState;
+    ChainKey *chainKey           = session.senderChainKey;
+    MessageKeys *messageKeys     = chainKey.messageKeys;
+    NSData *senderRatchetKey     = session.senderRatchetKey;
+    int previousCounter          = session.previousCounter;
+    int sessionVersion           = session.version;
     
     NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
     
@@ -61,35 +94,36 @@
     return cipherMessage;
 }
 
--(NSData*)decryptWhisperMessage:(WhisperMessage*)message{
+- (NSData*)decryptPreKeyWhisperMessage:(PrekeyWhisperMessage*)preKeyWhisperMessage{
     
-    if ([message isKindOfClass:[PrekeyWhisperMessage class]]) {
-        PrekeyWhisperMessage *prekeyMessage = (PrekeyWhisperMessage*)message;
-
-        SessionRecord *sessionRecord  = [self.sessionStore loadSession:_recipientId deviceId:_deviceId];
-        int unsignedPrekeyID          = [self.sessionBuilder process:sessionRecord prekeyWhisperMessage:prekeyMessage];
-        NSData *plaintext             = [self decryptWithSessionRecord:sessionRecord whisperMessage:message];
-        
-        [_sessionStore storeSession:_recipientId deviceId:_deviceId session:sessionRecord];
-        
-        if (unsignedPrekeyID >= 0) {
-            [_prekeyStore removePreKey:unsignedPrekeyID];
-        }
-        
-        return plaintext;
-    } else{
-        
-        if (![self.sessionStore containsSession:_recipientId deviceId:_deviceId]) {
-            @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %d, %d", _recipientId, _deviceId] userInfo:nil];
-        }
-        
-        SessionRecord  *sessionRecord  = [self.sessionStore loadSession:self.recipientId deviceId:_deviceId];
-        NSData         *plaintext      = [self decryptWithSessionRecord:sessionRecord whisperMessage:message];
-        
-        [_sessionStore storeSession:_recipientId deviceId:_deviceId session:sessionRecord];
-        
-        return plaintext;
+    SessionRecord *sessionRecord  = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
+    int unsignedPreKeyId = [self.sessionBuilder processPrekeyWhisperMessage:preKeyWhisperMessage withSession:sessionRecord];
+    
+    NSData *plaintext             = [self decryptWithSessionRecord:sessionRecord whisperMessage:message];
+    
+    [_sessionStore storeSession:_recipientId deviceId:_deviceId session:sessionRecord];
+    
+    if (unsignedPrekeyID >= 0) {
+        [_prekeyStore removePreKey:unsignedPrekeyID];
     }
+    
+    return plaintext;
+    
+    
+}
+
+- (NSData*)decryptWhisperMessage:(WhisperMessage*)message{
+        
+    if (![self.sessionStore containsSession:_recipientId deviceId:_deviceId]) {
+        @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %d, %d", _recipientId, _deviceId] userInfo:nil];
+    }
+    
+    SessionRecord  *sessionRecord  = [self.sessionStore loadSession:self.recipientId deviceId:_deviceId];
+    NSData         *plaintext      = [self decryptWithSessionRecord:sessionRecord whisperMessage:message];
+    
+    [_sessionStore storeSession:_recipientId deviceId:_deviceId session:sessionRecord];
+    
+    return plaintext;
 }
 
 

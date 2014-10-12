@@ -8,6 +8,103 @@
 
 #import "SessionRecord.h"
 
+#define ARCHIVED_STATES_MAX_LENGTH 40
+
+@interface SessionRecord()
+
+@property (nonatomic, retain) SessionState* sessionState;
+@property (nonatomic, retain) NSMutableArray* previousStates;
+@property (nonatomic) BOOL fresh;
+
+@end
+
+#define currentSessionStateKey   @"currentSessionStateKey"
+#define previousSessionsStateKey @"previousSessionStateKeys"
+
 @implementation SessionRecord
+
+- (instancetype)init{
+    self = [super init];
+    
+    self.fresh = YES;
+    
+    return self;
+}
+
+- (instancetype)initWithSessionState:(SessionState *)sessionState{
+    assert(sessionState);
+    self = [self init];
+    
+    self.sessionState = sessionState;
+    self.fresh = false;
+    
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [self init];
+    
+    self.fresh = false;
+    
+    self.previousStates = [aDecoder decodeObjectOfClass:[NSMutableArray class] forKey:previousSessionsStateKey];
+    self.sessionState   = [aDecoder decodeObjectOfClass:[SessionState class]   forKey:currentSessionStateKey];
+    
+    return self;
+}
+
+- (BOOL)hasSessionState:(int)version baseKey:(NSData *)aliceBaseKey{
+    if (self.sessionState.version == version && [aliceBaseKey isEqualToData:self.sessionState.aliceBaseKey]) {
+        return YES;
+    }
+    
+    for (SessionState *state in self.previousStates) {
+        if (state.version == version && [aliceBaseKey isEqualToData:self.sessionState.aliceBaseKey]) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (SessionState*)sessionState{
+    return self.sessionState;
+}
+
+- (NSMutableArray*)previousSessionStates{
+    return self.previousStates;
+}
+
+- (BOOL)isFresh{
+    return self.fresh;
+}
+
+- (void)archiveCurrentState{
+    [self promoteState:[SessionState new]];
+}
+
+- (void)promoteState:(SessionState *)promotedState{
+    [self.previousStates insertObject:self.sessionState atIndex:0];
+    self.sessionState = promotedState;
+    
+    if (self.previousStates.count > ARCHIVED_STATES_MAX_LENGTH) {
+        NSIndexSet *indexesToDelete = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(ARCHIVED_STATES_MAX_LENGTH, self.previousStates.count - ARCHIVED_STATES_MAX_LENGTH)];
+        [self.previousSessionStates removeObjectsAtIndexes:indexesToDelete];
+    }
+}
+
+- (void)setState:(SessionState *)sessionState{
+    self.sessionState = sessionState;
+}
+
+#pragma mark Serialization
+
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.previousStates forKey:previousSessionsStateKey];
+    [aCoder encodeObject:self.sessionState   forKey:currentSessionStateKey];
+}
 
 @end
