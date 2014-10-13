@@ -48,7 +48,7 @@
 + (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion AliceParameters:(AliceAxolotlParameters*)parameters{
     [session setVersion:sessionVersion];
     [session setRemoteIdentityKey:parameters.theirIdentityKey];
-    [session setLocalIdentityKey:[parameters.ourIdentityKeyPair publicKey]];
+    [session setLocalIdentityKey:parameters.ourIdentityKeyPair];
 
     ECKeyPair *sendingRatchetKey = [Curve25519 generateKeyPair];
     DHEResult *result            = [self DHEKeyAgreement:parameters];
@@ -63,7 +63,7 @@
     
     [session setVersion:sessionVersion];
     [session setRemoteIdentityKey:parameters.theirIdentityKey];
-    [session setLocalIdentityKey:[parameters.ourIdentityKeyPair publicKey]];
+    [session setLocalIdentityKey:parameters.ourIdentityKeyPair];
     
     DHEResult *result     = [self DHEKeyAgreement:parameters];
     

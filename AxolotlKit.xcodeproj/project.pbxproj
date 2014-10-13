@@ -111,7 +111,6 @@
 		B6B05C7A1980612F00238B0D /* PrekeyWhisperMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrekeyWhisperMessage.h; path = Models/PrekeyWhisperMessage.h; sourceTree = "<group>"; };
 		B6B05C7B1980612F00238B0D /* PrekeyWhisperMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrekeyWhisperMessage.m; path = Models/PrekeyWhisperMessage.m; sourceTree = "<group>"; };
 		B6B05C82198083B800238B0D /* AxolotlStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AxolotlStore.h; path = Models/AxolotlStore.h; sourceTree = "<group>"; };
-		B6B05C8619808BB800238B0D /* IdentityStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityStore.h; sourceTree = "<group>"; };
 		B6B05C8719808EE100238B0D /* SessionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionBuilder.h; path = Classes/SessionBuilder.h; sourceTree = "<group>"; };
 		B6B05C8819808EE100238B0D /* SessionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionBuilder.m; path = Classes/SessionBuilder.m; sourceTree = "<group>"; };
 		B6B05C8C1980919000238B0D /* AxolotlExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxolotlExceptions.h; sourceTree = "<group>"; };
@@ -362,7 +361,6 @@
 		B6B05C8519808B9800238B0D /* Identity Key */ = {
 			isa = PBXGroup;
 			children = (
-				B6B05C8619808BB800238B0D /* IdentityStore.h */,
 			);
 			name = "Identity Key";
 			sourceTree = "<group>";

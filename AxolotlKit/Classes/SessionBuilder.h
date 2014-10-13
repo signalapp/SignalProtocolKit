@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "IdentityStore.h"
+#import "IdentityKeyStore.h"
 #import "SessionStore.h"
 #import "SignedPreKeyStore.h"
 #import "PreKeyStore.h"
@@ -22,7 +22,7 @@ typedef PreKeyBundle*(^AxolotlFetchKey)   (NSInteger contactIdentifier, NSIntege
 @property(nonatomic, readonly)id<SessionStore>  sessionStore;
 @property(nonatomic, readonly)id<PreKeyStore>   prekeyStore ;
 @property(nonatomic, readonly)id<SignedPreKeyStore> signedPreKeyStore;
-@property(nonatomic, readonly)id<IdentityStore> identityStore;
+@property(nonatomic, readonly)id<IdentityKeyStore> identityStore;
 
 @property(nonatomic, readonly)AxolotlFetchKey fetchKeyBlock;
 

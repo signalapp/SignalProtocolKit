@@ -9,6 +9,7 @@
 #import "AxolotlParameters.h"
 #import "AliceAxolotlParameters.h"
 #import "BobAxolotlParameters.h"
+#im
 
 #import "SessionState.h"
 #import "SessionBuilder.h"
@@ -20,6 +21,9 @@
 
 #import "PrekeyBundle.h"
 
+#define CURRENT_VERSION 3
+#define MINUMUM_VERSION 3
+
 @interface SessionBuilder ()
 
 @property (nonatomic, readonly)int recipientId;
@@ -30,7 +34,6 @@
 @implementation SessionBuilder
 
 -(void)verifyAndStoreIdentityKeys:(NSData*)identityKey contactIdentifier:(NSInteger)contactId{
-    
     switch ([self.identityStore isTrustedIdentity:contactId identityKey:identityKey]) {
         case kIdentityKeyConflict:
             @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"Got new key, doesn't match the one stored" userInfo:nil];
@@ -44,45 +47,51 @@
 }
 
 - (void) processPrekeyBundle:(PreKeyBundle*)preKeyBundle{
+    
     [self verifyAndStoreIdentityKeys:preKeyBundle.identityKey contactIdentifier:preKeyBundle.contactIdentifier];
     
     if ([Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:preKeyBundle.identityKey data:preKeyBundle.signedPreKeyPublic]) {
         @throw [NSException exceptionWithName:InvalidKeyException reason:@"KeyIsNotValidlySigned" userInfo:nil];
     }
     
-    SessionRecord *sessionRecord = [self.sessionStore loadSession:preKeyBundle.contactIdentifier deviceId:preKeyBundle.deviceId];
-    ECKeyPair *ourBaseKey         = [Curve25519 generateKeyPair];
-    NSData    *theirSignedPrekey  = preKeyBundle.signedPreKeyPublic;
-    NSData    *theirOneTimePrekey = preKeyBundle.preKeyPublic;
+    SessionRecord *sessionRecord   = [self.sessionStore loadSession:preKeyBundle.contactIdentifier deviceId:preKeyBundle.deviceId];
+    ECKeyPair *ourBaseKey          = [Curve25519 generateKeyPair];
+    NSData    *theirSignedPreKey   = preKeyBundle.signedPreKeyPublic;
+    NSData    *theirOneTimePreKey  = preKeyBundle.preKeyPublic;
+    int       theirOneTimePreKeyId = preKeyBundle.preKeyId;
+    int       theirSignedPreKeyId  = preKeyBundle.signedPreKeyId;
     
+    AliceAxolotlParameters *params = [[AliceAxolotlParameters alloc] initWithIdentityKey:[self.identityStore identityKeyPair]
+                                                                        theirIdentityKey:preKeyBundle.identityKey
+                                                                              ourBaseKey:ourBaseKey
+                                                                       theirSignedPreKey:theirSignedPreKey
+                                                                      theirOneTimePreKey:theirOneTimePreKey
+                                                                         theirRatchetKey:theirSignedPreKey];
     
-    AliceAxolotlParameters *params = [[AliceAxolotlParameters alloc] initWithIdentityKey:[self.identityStore myIdentityKeyPair] theirIdentityKey:preKeyBundle.identityKey ourBaseKey:ourBaseKey theirSignedPreKey:theirSignedPrekey theirOneTimePreKey:theirOneTimePrekey theirRatchetKey:theirSignedPrekey];
-    
-    if ([[sessionRecord sessionState] needsRefresh]){
+    if (!sessionRecord.isFresh) {
         [sessionRecord archiveCurrentState];
-    } else{
-        [sessionRecord reset];
     }
     
-    [RatchetingSession initializeSession:[sessionRecord sessionState] sessionVersion:3 AliceParameters:params];
-    [[sessionRecord sessionState] setUnacknowledgedPreKeyMessage:preKeyBundle.preKeyId signedPreKey:[preKeyBundle signedPreKeyId] baseKey:ourBaseKey.publicKey];
-    [[sessionRecord sessionState] setLocalRegistrationId:[self.identityStore localRegistrationId]];
-    [[sessionRecord sessionState] setRemoteRegistrationId:preKeyBundle.registrationId];
+    [RatchetingSession initializeSession:[sessionRecord sessionState] sessionVersion:CURRENT_VERSION AliceParameters:params];
+    
+    [sessionRecord.sessionState setUnacknowledgedPreKeyMessage:theirOneTimePreKeyId signedPreKey:theirSignedPreKeyId baseKey:ourBaseKey.publicKey];
+    [sessionRecord.sessionState setLocalRegistrationId:self.identityStore.localRegistrationId];
+    [sessionRecord.sessionState setRemoteRegistrationId:preKeyBundle.registrationId];
+    [sessionRecord.sessionState setAliceBaseKey:ourBaseKey.publicKey];
     
     [self.sessionStore  storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
-    [self.identityStore saveIdentityKeyAsTrusted:self.recipientId identityKey:preKeyBundle.identityKey];
+    [self.identityStore saveRemoteIdentity:preKeyBundle.identityKey recipientId:self.recipientId];
 }
 
 - (int) processPrekeyWhisperMessage:(PrekeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
     
     if ([sessionRecord hasSessionState:message.version baseKey:[message baseKey]]) {
-        return 0;
+        return -1;
     }
     
-    BOOL simultaneousInitiate  = [[sessionRecord sessionState] hasUnacknowledgedPreKeyMessage];
     ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore loadSignedPrekey:message.prekeyID].keyPair;
     
-    BobAxolotlParameters *params = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:[[self identityStore] myIdentityKeyPair]
+    BobAxolotlParameters *params = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:self.identityStore.identityKeyPair
                                                                           theirIdentityKey:message.identityKey
                                                                            ourSignedPrekey:ourSignedPrekey
                                                                              ourRatchetKey:ourSignedPrekey
@@ -90,22 +99,19 @@
                                                                               theirBaseKey:[message baseKey]];
     
     if (!sessionRecord.isFresh) {
-        <#statements#>
+        [sessionRecord archiveCurrentState];
     }
     
+    [RatchetingSession initializeSession:sessionRecord.sessionState sessionVersion:message.version BobParameters:params];
     
-    [RatchetingSession initializeSession:[sessionRecord sessionState] sessionVersion:[message version] BobParameters:params];
-    
-    [[sessionRecord sessionState] setLocalRegistrationId:[[self identityStore] localRegistrationId]];
-    [[sessionRecord sessionState] setRemoteRegistrationId:message.registrationId];
-    [[sessionRecord sessionState] setAliceBaseKey:message.baseKey];
-    
-    if (simultaneousInitiate) {
-        [[sessionRecord sessionState]setNeedsRefresh:YES];
-    }
+    [sessionRecord.sessionState setLocalRegistrationId:self.identityStore.localRegistrationId];
+    [sessionRecord.sessionState setRemoteRegistrationId:message.registrationId];
+    [sessionRecord.sessionState setAliceBaseKey:message.baseKey];
     
     if (message.prekeyID >= 0 && message.prekeyID != 0xFFFFFF) {
-        [self.prekeyStore removePreKey:message.prekeyID];
+        return message.prekeyID;
+    } else{
+        return -1;
     }
 }
 

@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+@class ECKeyPair;
 
 @protocol IdentityKeyStore <NSObject>
 
-- (NSData*)identityKeyPair;
+- (ECKeyPair*)identityKeyPair;
 - (int)localRegistrationId;
 - (void)saveRemoteIdentity:(NSData*)identityKey recipientId:(long)recipientId;
 - (BOOL)isTrustedIdentityKey:(NSData*)identityKey recipientId:(long)recipientId;
