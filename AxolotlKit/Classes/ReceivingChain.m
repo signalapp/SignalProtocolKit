@@ -16,6 +16,15 @@
 
 @implementation ReceivingChain
 
+- (instancetype)initWithChainKey:(ChainKey *)chainKey senderRatchetKey:(NSData *)senderRatchet{
+    self = [super init];
+
+    self.chainKey         = chainKey;
+    self.senderRatchetKey = senderRatchet;
+
+    return self;
+}
+
 -(ChainKey *)chainKey{
     return self.chainKey;
 }

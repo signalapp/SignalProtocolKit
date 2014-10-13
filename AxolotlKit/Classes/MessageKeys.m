@@ -10,16 +10,19 @@
 
 @implementation MessageKeys
 
-- (instancetype)initWithCipherKey:(NSData*)cipherKey macKey:(NSData*)macKey iv:(NSData *)data{
+- (instancetype)initWithCipherKey:(NSData*)cipherKey macKey:(NSData*)macKey iv:(NSData *)data index:(int)index{
     self = [super init];
+    
     if (self) {
         _cipherKey = cipherKey;
-        _macKey = macKey;
-        _iv = data;
+        _macKey    = macKey;
+        _iv        = data;
+        _index     = index;
     }
-    
+
     return self;
 }
+
 -(NSString*) debugDescription {
     return [NSString stringWithFormat:@"cipherKey: %@\n macKey %@\n",self.cipherKey,self.macKey];
 }

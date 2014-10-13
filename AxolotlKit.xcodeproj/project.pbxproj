@@ -34,12 +34,13 @@
 		B63B2FDE197D8B9600E09F65 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2FA2197D8AFD00E09F65 /* UIKit.framework */; };
 		B63B2FE4197D8B9600E09F65 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B63B2FE2197D8B9600E09F65 /* InfoPlist.strings */; };
 		B63B2FE6197D8B9600E09F65 /* AxolotlKit_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B63B2FE5197D8B9600E09F65 /* AxolotlKit_Tests.m */; };
-		B6776003197E49D900A09623 /* AxolotlPlainMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6776002197E49D900A09623 /* AxolotlPlainMessage.m */; };
 		B677600C197E4CA500A09623 /* PreKeyBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = B677600B197E4CA500A09623 /* PreKeyBundle.m */; };
 		B68034C719CEFBFF00976441 /* ChainAndIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = B68034C619CEFBFF00976441 /* ChainAndIndex.m */; };
 		B6B05C791980611400238B0D /* WhisperMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C781980611400238B0D /* WhisperMessage.m */; };
 		B6B05C7C1980612F00238B0D /* PrekeyWhisperMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C7B1980612F00238B0D /* PrekeyWhisperMessage.m */; };
 		B6B05C8919808EE100238B0D /* SessionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C8819808EE100238B0D /* SessionBuilder.m */; };
+		B6CBA86B19EC805200CF915B /* WhisperTextProtocol.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CBA86A19EC805200CF915B /* WhisperTextProtocol.pb.m */; };
+		B6CBA86E19EC86D000CF915B /* NSData+versionInt.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CBA86D19EC86D000CF915B /* NSData+versionInt.m */; };
 		B6D41A2319DB4F8E00EE9BAA /* SessionCipherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D41A2219DB4F8E00EE9BAA /* SessionCipherTest.m */; };
 		B6D51DF21984BE9300A25F87 /* SignedPrekeyRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D51DF11984BE9300A25F87 /* SignedPrekeyRecord.m */; };
 		B6D51DF51984C0C500A25F87 /* PreKeyRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D51DF41984C0C500A25F87 /* PreKeyRecord.m */; };
@@ -62,7 +63,7 @@
 
 /* Begin PBXFileReference section */
 		579BF4C0139E4EFE91DCDBE3 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		AF02D80208AD47FC90EA6762 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		7E0CDE2E69758F762AF07EAD /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		B610BA6C197F9D1D00DDC97D /* AxolotlParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AxolotlParameters.h; path = Models/AxolotlParameters.h; sourceTree = "<group>"; };
 		B610BA71197FAC6500DDC97D /* RootKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootKey.h; path = Models/RootKey.h; sourceTree = "<group>"; };
 		B610BA72197FAC6500DDC97D /* RootKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RootKey.m; path = Models/RootKey.m; sourceTree = "<group>"; };
@@ -100,8 +101,6 @@
 		B63B2FE7197D8B9600E09F65 /* AxolotlKit Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AxolotlKit Tests-Prefix.pch"; sourceTree = "<group>"; };
 		B6481B6D197D868600D03A4D /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "Classes/NSData+Base64.h"; sourceTree = "<group>"; };
 		B6481B6E197D868600D03A4D /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "Classes/NSData+Base64.m"; sourceTree = "<group>"; };
-		B6776001197E49D900A09623 /* AxolotlPlainMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AxolotlPlainMessage.h; path = Models/AxolotlPlainMessage.h; sourceTree = "<group>"; };
-		B6776002197E49D900A09623 /* AxolotlPlainMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AxolotlPlainMessage.m; path = Models/AxolotlPlainMessage.m; sourceTree = "<group>"; };
 		B677600A197E4CA500A09623 /* PreKeyBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreKeyBundle.h; path = Models/PreKeyBundle.h; sourceTree = "<group>"; };
 		B677600B197E4CA500A09623 /* PreKeyBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreKeyBundle.m; path = Models/PreKeyBundle.m; sourceTree = "<group>"; };
 		B68034C519CEFBFF00976441 /* ChainAndIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChainAndIndex.h; path = Models/ChainAndIndex.h; sourceTree = "<group>"; };
@@ -125,6 +124,11 @@
 		B6B98FA7197D83DD00B16B5E /* SessionState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionState.m; path = Classes/SessionState.m; sourceTree = "<group>"; };
 		B6B98FBA197D83EC00B16B5E /* SessionCipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionCipher.h; path = ../SessionCipher.h; sourceTree = "<group>"; };
 		B6B98FBB197D83EC00B16B5E /* SessionCipher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionCipher.m; path = ../SessionCipher.m; sourceTree = "<group>"; };
+		B6CBA86919EC805200CF915B /* WhisperTextProtocol.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhisperTextProtocol.pb.h; path = AxolotlKit/Protobuffs/WhisperTextProtocol.pb.h; sourceTree = SOURCE_ROOT; };
+		B6CBA86A19EC805200CF915B /* WhisperTextProtocol.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhisperTextProtocol.pb.m; path = AxolotlKit/Protobuffs/WhisperTextProtocol.pb.m; sourceTree = SOURCE_ROOT; };
+		B6CBA86C19EC86D000CF915B /* NSData+versionInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+versionInt.h"; sourceTree = "<group>"; };
+		B6CBA86D19EC86D000CF915B /* NSData+versionInt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+versionInt.m"; sourceTree = "<group>"; };
+		B6CBA86F19EC87D400CF915B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../Constants.h; sourceTree = "<group>"; };
 		B6D41A2219DB4F8E00EE9BAA /* SessionCipherTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionCipherTest.m; sourceTree = "<group>"; };
 		B6D51DF01984BE9300A25F87 /* SignedPrekeyRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignedPrekeyRecord.h; path = Classes/SignedPrekeyRecord.h; sourceTree = "<group>"; };
 		B6D51DF11984BE9300A25F87 /* SignedPrekeyRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignedPrekeyRecord.m; path = Classes/SignedPrekeyRecord.m; sourceTree = "<group>"; };
@@ -140,6 +144,7 @@
 		B6F77FBC19B64B6000EE3F13 /* Chain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chain.h; sourceTree = "<group>"; };
 		B6FF6BC019ACC3F000E3C675 /* ChainKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChainKey.h; path = Classes/Models/ChainKey.h; sourceTree = "<group>"; };
 		B6FF6BC119ACC3F000E3C675 /* ChainKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChainKey.m; path = Classes/Models/ChainKey.m; sourceTree = "<group>"; };
+		F495DE842325B88491D3897A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +173,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0948EA1FE4D44B1DC142749F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F495DE842325B88491D3897A /* Pods.debug.xcconfig */,
+				7E0CDE2E69758F762AF07EAD /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A616BD9DC39D4B7BBBA02F80 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,8 +325,6 @@
 		B677600D197E4F9200A09623 /* Message Types */ = {
 			isa = PBXGroup;
 			children = (
-				B6776001197E49D900A09623 /* AxolotlPlainMessage.h */,
-				B6776002197E49D900A09623 /* AxolotlPlainMessage.m */,
 			);
 			name = "Message Types";
 			sourceTree = "<group>";
@@ -381,8 +393,8 @@
 				B6B98F7B197D838A00B16B5E /* AxolotlKit */,
 				B63B2FDF197D8B9600E09F65 /* AxolotlKit Tests */,
 				B6B98F7A197D838A00B16B5E /* Products */,
-				AF02D80208AD47FC90EA6762 /* Pods.xcconfig */,
 				A616BD9DC39D4B7BBBA02F80 /* Frameworks */,
+				0948EA1FE4D44B1DC142749F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -417,6 +429,11 @@
 		B6B98F95197D83DD00B16B5E /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B6CBA86F19EC87D400CF915B /* Constants.h */,
+				B6CBA86C19EC86D000CF915B /* NSData+versionInt.h */,
+				B6CBA86D19EC86D000CF915B /* NSData+versionInt.m */,
+				B6CBA86919EC805200CF915B /* WhisperTextProtocol.pb.h */,
+				B6CBA86A19EC805200CF915B /* WhisperTextProtocol.pb.m */,
 				B68034C519CEFBFF00976441 /* ChainAndIndex.h */,
 				B68034C619CEFBFF00976441 /* ChainAndIndex.m */,
 				B6B98FBA197D83EC00B16B5E /* SessionCipher.h */,
@@ -554,7 +571,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4C84E505DB8047FCBCA8F928 /* Check Pods Manifest.lock */ = {
@@ -584,7 +601,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EB649D62569F4A42A3167F85 /* Check Pods Manifest.lock */ = {
@@ -617,10 +634,10 @@
 				B6D51DF51984C0C500A25F87 /* PreKeyRecord.m in Sources */,
 				B6B05C7C1980612F00238B0D /* PrekeyWhisperMessage.m in Sources */,
 				B6FF6BC219ACC3F000E3C675 /* ChainKey.m in Sources */,
-				B6776003197E49D900A09623 /* AxolotlPlainMessage.m in Sources */,
 				B611CB6219844A5600FC54DA /* RatchetingSession.m in Sources */,
 				B6F34EB0197EDDB500B64572 /* AES-CBC.m in Sources */,
 				B60978B3197D9AD200DB3828 /* MessageKeys.m in Sources */,
+				B6CBA86E19EC86D000CF915B /* NSData+versionInt.m in Sources */,
 				B6D51DF21984BE9300A25F87 /* SignedPrekeyRecord.m in Sources */,
 				B61B6839198352570047EF87 /* SessionRecord.m in Sources */,
 				B68034C719CEFBFF00976441 /* ChainAndIndex.m in Sources */,
@@ -632,6 +649,7 @@
 				B63B2FAF197D8AFD00E09F65 /* AppDelegate.m in Sources */,
 				B6F77FB719B64A9400EE3F13 /* SendingChain.m in Sources */,
 				B63B2FAB197D8AFD00E09F65 /* main.m in Sources */,
+				B6CBA86B19EC805200CF915B /* WhisperTextProtocol.pb.m in Sources */,
 				B60978AE197D9ABF00DB3828 /* SessionCipher.m in Sources */,
 				B6B05C8919808EE100238B0D /* SessionBuilder.m in Sources */,
 			);
@@ -681,7 +699,7 @@
 /* Begin XCBuildConfiguration section */
 		B63B2FC6197D8AFE00E09F65 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AF02D80208AD47FC90EA6762 /* Pods.xcconfig */;
+			baseConfigurationReference = F495DE842325B88491D3897A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -699,7 +717,7 @@
 		};
 		B63B2FC7197D8AFE00E09F65 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AF02D80208AD47FC90EA6762 /* Pods.xcconfig */;
+			baseConfigurationReference = 7E0CDE2E69758F762AF07EAD /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -713,7 +731,7 @@
 		};
 		B63B2FEB197D8B9600E09F65 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AF02D80208AD47FC90EA6762 /* Pods.xcconfig */;
+			baseConfigurationReference = F495DE842325B88491D3897A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AxolotlKit.app/AxolotlKit";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -736,7 +754,7 @@
 		};
 		B63B2FEC197D8B9600E09F65 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AF02D80208AD47FC90EA6762 /* Pods.xcconfig */;
+			baseConfigurationReference = 7E0CDE2E69758F762AF07EAD /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AxolotlKit.app/AxolotlKit";
 				FRAMEWORK_SEARCH_PATHS = (

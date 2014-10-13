@@ -23,4 +23,6 @@ static NSString *CipherException               = @"AxolotlCipherIssue";
 
 static NSString *DuplicateMessageException     = @"AxolotlDuplicateMessage";
 
+static NSString *LegacyMessageException        = @"AxolotlLegacyMessageException";
+
 #endif

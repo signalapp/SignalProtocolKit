@@ -12,8 +12,7 @@
 
 @interface PreKeyRecord : NSObject
 
-- (int)Id;
-- (long)timeStamp;
-- (ECKeyPair*)keyPair;
+@property (nonatomic, readonly) int       Id;
+@property (nonatomic, readonly) ECKeyPair *keyPair;
 
 @end

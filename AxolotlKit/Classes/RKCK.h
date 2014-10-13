@@ -14,9 +14,9 @@
 
 @interface RKCK : NSObject
 
-@property (nonatomic,strong) RootKey *rootKey;
-@property (nonatomic,strong) id<Chain> chain;
+@property (nonatomic,strong) RootKey  *rootKey;
+@property (nonatomic,strong) ChainKey *chainKey;
 
--(instancetype) initWithRK:(RootKey*)rootKey CK:(id<Chain>)chainKey;
+-(instancetype) initWithRK:(RootKey*)rootKey CK:(ChainKey*)chainKey;
 
 @end

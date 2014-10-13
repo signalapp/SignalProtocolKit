@@ -11,12 +11,14 @@
 
 @interface PrekeyWhisperMessage : WhisperMessage
 
--(instancetype)initWithWhisperMessage:(WhisperMessage*)whisperMessage registrationId:(int)registrationId prekeyId:(int)prekeyId signedPrekeyId:(int)signedPrekeyId baseKey:(NSData*)baseKey identityKey:(NSData*)identityKey;
+- (instancetype)initWithWhisperMessage:(WhisperMessage*)whisperMessage registrationId:(int)registrationId prekeyId:(int)prekeyId signedPrekeyId:(int)signedPrekeyId baseKey:(NSData*)baseKey identityKey:(NSData*)identityKey;
 
 @property (nonatomic, readonly) int       registrationId;
 @property (nonatomic, readonly) int       prekeyID;
 @property (nonatomic, readonly) int       signedPrekeyId;
 @property (nonatomic, readonly) NSData    *baseKey;
 @property (nonatomic, readonly) NSData    *identityKey;
+
+- (WhisperMessage*)whisperMessage;
 
 @end

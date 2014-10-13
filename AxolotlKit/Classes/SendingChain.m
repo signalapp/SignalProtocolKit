@@ -16,6 +16,17 @@
 
 @implementation SendingChain
 
+- (instancetype)initWithChainKey:(ChainKey *)chainKey senderRatchetKeyPair:(ECKeyPair *)keyPair{
+    self = [super init];
+
+    if (self) {
+        _chainKey             = chainKey;
+        _senderRatchetKeyPair = keyPair;
+    }
+
+    return self;
+}
+
 -(ChainKey *)chainKey{
     return _chainKey;
 }

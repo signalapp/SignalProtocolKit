@@ -95,33 +95,28 @@
 }
 
 - (NSData*)decryptPreKeyWhisperMessage:(PrekeyWhisperMessage*)preKeyWhisperMessage{
+    SessionRecord *sessionRecord = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
+    int unsignedPreKeyId         = [self.sessionBuilder processPrekeyWhisperMessage:preKeyWhisperMessage withSession:sessionRecord];
+    NSData *plaintext            = [self decryptWithSessionRecord:sessionRecord whisperMessage:preKeyWhisperMessage.whisperMessage];
+
+    [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
     
-    SessionRecord *sessionRecord  = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
-    int unsignedPreKeyId = [self.sessionBuilder processPrekeyWhisperMessage:preKeyWhisperMessage withSession:sessionRecord];
-    
-    NSData *plaintext             = [self decryptWithSessionRecord:sessionRecord whisperMessage:message];
-    
-    [_sessionStore storeSession:_recipientId deviceId:_deviceId session:sessionRecord];
-    
-    if (unsignedPrekeyID >= 0) {
-        [_prekeyStore removePreKey:unsignedPrekeyID];
+    if (unsignedPreKeyId >= 0) {
+        [_prekeyStore removePreKey:unsignedPreKeyId];
     }
     
     return plaintext;
-    
-    
 }
 
 - (NSData*)decryptWhisperMessage:(WhisperMessage*)message{
-        
-    if (![self.sessionStore containsSession:_recipientId deviceId:_deviceId]) {
-        @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %d, %d", _recipientId, _deviceId] userInfo:nil];
+    if (![self.sessionStore containsSession:self.recipientId deviceId:self.deviceId]) {
+        @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %ld, %d", self.recipientId, self.deviceId] userInfo:nil];
     }
     
     SessionRecord  *sessionRecord  = [self.sessionStore loadSession:self.recipientId deviceId:_deviceId];
     NSData         *plaintext      = [self decryptWithSessionRecord:sessionRecord whisperMessage:message];
     
-    [_sessionStore storeSession:_recipientId deviceId:_deviceId session:sessionRecord];
+    [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
     
     return plaintext;
 }
@@ -189,11 +184,11 @@
             RKCK *senderChain = [receiverChain.rootKey createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourNewEphemeral];
             
             [sessionState setRootKey:senderChain.rootKey];
-            [sessionState addReceiverChain:theirEphemeral chainKey:receiverChain.chain.chainKey];
+            [sessionState addReceiverChain:theirEphemeral chainKey:receiverChain.chainKey];
             [sessionState setPreviousCounter:MAX(sessionState.senderChainKey.index -1 , 0)];
-            [sessionState setSenderChain:ourNewEphemeral chainKey:receiverChain.chain.chainKey];
+            [sessionState setSenderChain:ourNewEphemeral chainKey:receiverChain.chainKey];
             
-            return senderChain.chain.chainKey;
+            return senderChain.chainKey;
         }
     }
     @catch (NSException *exception) {

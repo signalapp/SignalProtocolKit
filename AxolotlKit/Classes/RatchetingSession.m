@@ -55,7 +55,7 @@
     RKCK *sendingChain           = [result.rootKey createChainWithTheirEphemeral:parameters.theirRatchetKey ourEphemeral:sendingRatchetKey];
 
     [session addReceiverChain:parameters.theirRatchetKey chainKey:[[ChainKey alloc]initWithData:result.chainKey index:0]];
-    [session setSenderChain:sendingRatchetKey chainKey:sendingChain.chain.chainKey];
+    [session setSenderChain:sendingRatchetKey chainKey:sendingChain.chain];
     [session setRootKey:sendingChain.rootKey];
 }
 

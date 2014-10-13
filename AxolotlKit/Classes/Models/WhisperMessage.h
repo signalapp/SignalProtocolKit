@@ -12,15 +12,15 @@
 
 @interface WhisperMessage : NSObject
 
--(instancetype)initWithVersion:(int)version macKey:(NSData*)macKey senderRatchetKey:(NSData*)senderRatchetKey previousCounter:(NSInteger)previousCounter counter:(NSInteger)counter cipherText:(NSData*)cipherText;
+-(instancetype)initWithVersion:(int)version macKey:(NSData*)macKey senderRatchetKey:(NSData*)senderRatchetKey previousCounter:(int)previousCounter counter:(int)counter cipherText:(NSData*)cipherText;
 
 @property (nonatomic, readonly) int       version;
-@property (nonatomic, readonly) NSData*   macKey;
-@property (nonatomic, readonly) NSData*   senderRatchetKey;
-@property (nonatomic, readonly) int previousCounter;
-@property (nonatomic, readonly) int counter;
-
-@property (nonatomic, readonly) NSData *cipherText;
+@property (nonatomic, readonly) NSData    *macKey;
+@property (nonatomic, readonly) NSData    *senderRatchetKey;
+@property (nonatomic, readonly) int       previousCounter;
+@property (nonatomic, readonly) int       counter;
+@property (nonatomic, readonly) NSData    *cipherText;
+@property (nonatomic, readonly) NSData    *serialized;
 
 -(void)verifyMacWithVersion:(int)messageVersion identityKey:(NSData*)identityKey receiverIdentityKey:(ECKeyPair*)receiverKeyPair macKey:(NSData*)macKey;
 

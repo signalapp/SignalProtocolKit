@@ -31,14 +31,15 @@
     return self;
 }
 
-- (instancetype)initWithSessionState:(SessionState *)sessionState{
-    assert(sessionState);
-    self = [self init];
-    
-    self.sessionState = sessionState;
-    self.fresh = false;
-    
-    return self;
+#pragma mark Serialization
+
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.previousStates forKey:previousSessionsStateKey];
+    [aCoder encodeObject:self.sessionState   forKey:currentSessionStateKey];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder{
@@ -48,6 +49,19 @@
     
     self.previousStates = [aDecoder decodeObjectOfClass:[NSMutableArray class] forKey:previousSessionsStateKey];
     self.sessionState   = [aDecoder decodeObjectOfClass:[SessionState class]   forKey:currentSessionStateKey];
+    
+    return self;
+}
+
+
+
+
+- (instancetype)initWithSessionState:(SessionState *)sessionState{
+    assert(sessionState);
+    self = [self init];
+    
+    self.sessionState = sessionState;
+    self.fresh = false;
     
     return self;
 }
@@ -94,17 +108,6 @@
 
 - (void)setState:(SessionState *)sessionState{
     self.sessionState = sessionState;
-}
-
-#pragma mark Serialization
-
-+ (BOOL)supportsSecureCoding{
-    return YES;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder{
-    [aCoder encodeObject:self.previousStates forKey:previousSessionsStateKey];
-    [aCoder encodeObject:self.sessionState   forKey:currentSessionStateKey];
 }
 
 @end

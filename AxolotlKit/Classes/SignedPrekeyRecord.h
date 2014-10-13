@@ -12,6 +12,6 @@
 
 @interface SignedPreKeyRecord : PreKeyRecord
 
-- (NSData*)signature;
+@property (nonatomic, readonly) NSData *signature;
 
 @end

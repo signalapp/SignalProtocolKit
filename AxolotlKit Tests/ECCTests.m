@@ -174,7 +174,7 @@ const Byte DJB_TYPE = 0x05;
     NSData *signature    = [NSData dataWithBytes:aliceSignature length:ECCSignatureLength];
     
     if (![Ed25519 verifySignature:signature publicKey:alicePublic data:ephemPublic]) {
-        XCTAssert(FALSE, @"Sig verification failed!");
+        XCTAssert(NO, @"Sig verification failed!");
     }
     
     for (int i=0;i<[signature length];i++) {
@@ -190,7 +190,7 @@ const Byte DJB_TYPE = 0x05;
         [modifiedSignature replaceBytesInRange:NSMakeRange(i, 1) withBytes:&replacedByte length:1];
         
         if ([Ed25519 verifySignature:modifiedSignature publicKey:alicePublic data:ephemPublic]) {
-            XCTAssert(FALSE, @"Modified signature shouldn't be verified correctly");
+            XCTAssert(NO, @"Modified signature shouldn't be verified correctly");
         }
     }
 
@@ -203,10 +203,10 @@ const Byte DJB_TYPE = 0x05;
     
     @try {
         __unused NSData *signature = [Ed25519 sign:data withKeyPair:keys];
-        XCTAssert(FALSE, @"Signature algorithm should have thrown on overflow");
+        XCTAssert(NO, @"Signature algorithm should have thrown on overflow");
     }
     @catch (NSException *exception) {
-        XCTAssert(TRUE, @"Signing overflow detected");
+        XCTAssert(NO, @"Signing overflow detected");
     }
 }
 

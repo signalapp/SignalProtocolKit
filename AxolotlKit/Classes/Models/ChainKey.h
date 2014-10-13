@@ -10,7 +10,7 @@
 #import "MessageKeys.h"
 #import <Foundation/Foundation.h>
 
-@interface ChainKey : NSObject <NSCoding>
+@interface ChainKey : NSObject <NSSecureCoding>
 
 -(instancetype)initWithData:(NSData*)chainKey index:(int)index;
 

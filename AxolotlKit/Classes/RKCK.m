@@ -12,18 +12,11 @@
 
 @implementation RKCK
 
-+(instancetype) initWithRK:(RootKey*)rootKey CK:(ChainKey *)chainKey{
-    RKCK *rkck = [[self alloc] init];
-    rkck.rootKey = rootKey;
-    rkck.chain = chainKey;
-    return rkck;
+- (instancetype)initWithRK:(RootKey*)rootKey CK:(ChainKey*)chainKey{
+    self = [super init];
+    self.rootKey = rootKey;
+    self.chain   = chainKey;
+    return self;
 }
-
-- (instancetype)createChainWithEphemeral:(ECKeyPair*)myEphemeral fromTheirProvideEphemeral:(NSData*)theirPublicEphemeral{
-    NSData *inputKeyMaterial = [Curve25519 generateSharedSecretFromPublicKey:theirPublicEphemeral andKeyPair:myEphemeral];
-    //return [[self class]initWithRootKey:self.RK sharedSecret:inputKeyMaterial];
-    return nil;
-}
-
 
 @end

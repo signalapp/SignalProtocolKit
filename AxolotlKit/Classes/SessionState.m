@@ -201,11 +201,11 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     
     for (MessageKeys *keys in messageKeyArray) {
         if (keys.index == counter) {
-            return true;
+            return YES;
         }
     }
     
-    return false;
+    return NO;
 }
 
 - (MessageKeys*)removeMessageKeys:(NSData*)senderRatcherKey counter:(int)counter{

@@ -13,8 +13,6 @@
 #import "PreKeyStore.h"
 #import "IdentityKeyStore.h"
 #import "SessionStore.h"
-
-#import "AxolotlPlainMessage.h"
 #import "PreKeyBundle.h"
 #import "PrekeyWhisperMessage.h"
 #import "SessionState.h"

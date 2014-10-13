@@ -10,14 +10,38 @@
 #import "TSDerivedSecrets.h"
 #import <CommonCrypto/CommonCrypto.h>
 
-
-
-
 @implementation ChainKey
+
+
+#define keySerializationKey @"keyKey"
+#define indexSerializationKey @"indexKey"
 
 #define kTSKeySeedLength 1
 static uint8_t kMessageKeySeed[kTSKeySeedLength]    = {01};
 static uint8_t kChainKeySeed[kTSKeySeedLength]      = {02};
+
+
+#pragma mark Serialization
+
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super init];
+    
+    _key = [aDecoder decodeObjectOfClass:[NSData class] forKey:keySerializationKey];
+    _index = [aDecoder decodeIntForKey:indexSerializationKey];
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:_key forKey:keySerializationKey];
+    [aCoder encodeInt:_index forKey:indexSerializationKey];
+}
+
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
+
+
 
 -(instancetype)initWithData:(NSData *)chainKey index:(int)index{
     

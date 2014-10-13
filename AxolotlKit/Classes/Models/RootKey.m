@@ -18,7 +18,8 @@
     
     TSDerivedSecrets *secrets = [TSDerivedSecrets derivedRatchetedSecretsWithSharedSecret:sharedSecret rootKey:self];
     
-    RKCK *newRKCK = [[RKCK alloc] initWithRK:[[RootKey alloc] initWithData:secrets.cipherKey] CK:[[ChainKey alloc] initWithData:secrets.macKey index:0]];
+    RKCK *newRKCK = [[RKCK alloc] initWithRK:[[RootKey alloc] initWithData:secrets.cipherKey]
+                                          CK:[[ChainKey alloc] initWithData:secrets.macKey index:0]];
     
     return newRKCK;
 }

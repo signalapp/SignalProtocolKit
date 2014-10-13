@@ -9,7 +9,6 @@
 #import "AxolotlParameters.h"
 #import "AliceAxolotlParameters.h"
 #import "BobAxolotlParameters.h"
-#im
 
 #import "SessionState.h"
 #import "SessionBuilder.h"
@@ -33,22 +32,11 @@
 
 @implementation SessionBuilder
 
--(void)verifyAndStoreIdentityKeys:(NSData*)identityKey contactIdentifier:(NSInteger)contactId{
-    switch ([self.identityStore isTrustedIdentity:contactId identityKey:identityKey]) {
-        case kIdentityKeyConflict:
-            @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"Got new key, doesn't match the one stored" userInfo:nil];
-            break;
-        case kIdentityKeyNotFound:
-            [self.identityStore saveIdentityKeyAsTrusted:contactId identityKey:identityKey];
-            break;
-        case kIdentityKeyMatching:
-            break;
-    }
-}
-
-- (void) processPrekeyBundle:(PreKeyBundle*)preKeyBundle{
+- (void)processPrekeyBundle:(PreKeyBundle*)preKeyBundle{
     
-    [self verifyAndStoreIdentityKeys:preKeyBundle.identityKey contactIdentifier:preKeyBundle.contactIdentifier];
+    if (![self.identityStore isTrustedIdentityKey:preKeyBundle.identityKey recipientId:self.recipientId]) {
+        @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"Identity key is not valid" userInfo:@{}];
+    }
     
     if ([Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:preKeyBundle.identityKey data:preKeyBundle.signedPreKeyPublic]) {
         @throw [NSException exceptionWithName:InvalidKeyException reason:@"KeyIsNotValidlySigned" userInfo:nil];
@@ -83,8 +71,7 @@
     [self.identityStore saveRemoteIdentity:preKeyBundle.identityKey recipientId:self.recipientId];
 }
 
-- (int) processPrekeyWhisperMessage:(PrekeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
-    
+- (int)processPrekeyWhisperMessage:(PrekeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
     if ([sessionRecord hasSessionState:message.version baseKey:[message baseKey]]) {
         return -1;
     }

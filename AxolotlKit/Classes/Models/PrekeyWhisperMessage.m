@@ -24,4 +24,8 @@
     return self;
 }
 
+- (WhisperMessage*)whisperMessage{
+    return (WhisperMessage*)self;
+}
+
 @end
