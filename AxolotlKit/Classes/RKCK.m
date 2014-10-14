@@ -15,7 +15,7 @@
 - (instancetype)initWithRK:(RootKey*)rootKey CK:(ChainKey*)chainKey{
     self = [super init];
     self.rootKey = rootKey;
-    self.chain   = chainKey;
+    self.chainKey   = chainKey;
     return self;
 }
 

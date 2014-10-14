@@ -4,16 +4,16 @@
 
 // @@protoc_insertion_point(imports)
 
-@class KeyExchangeMessage;
-@class KeyExchangeMessageBuilder;
-@class PreKeyWhisperMessage;
-@class PreKeyWhisperMessageBuilder;
-@class SenderKeyDistributionMessage;
-@class SenderKeyDistributionMessageBuilder;
-@class SenderKeyMessage;
-@class SenderKeyMessageBuilder;
-@class WhisperMessage;
-@class WhisperMessageBuilder;
+@class TSProtoKeyExchangeMessage;
+@class TSProtoKeyExchangeMessageBuilder;
+@class TSProtoPreKeyWhisperMessage;
+@class TSProtoPreKeyWhisperMessageBuilder;
+@class TSProtoSenderKeyDistributionMessage;
+@class TSProtoSenderKeyDistributionMessageBuilder;
+@class TSProtoSenderKeyMessage;
+@class TSProtoSenderKeyMessageBuilder;
+@class TSProtoWhisperMessage;
+@class TSProtoWhisperMessageBuilder;
 #ifndef __has_feature
   #define __has_feature(x) 0 // Compatibility with non-clang compilers.
 #endif // __has_feature
@@ -33,7 +33,7 @@
 + (void) registerAllExtensions:(PBMutableExtensionRegistry*) registry;
 @end
 
-@interface WhisperMessage : PBGeneratedMessage {
+@interface TSProtoWhisperMessage : PBGeneratedMessage {
 @private
   BOOL hasRatchetKey_:1;
   BOOL hasCiphertext_:1;
@@ -53,63 +53,63 @@
 @property (readonly) UInt32 previousCounter;
 @property (readonly, strong) NSData* ciphertext;
 
-+ (WhisperMessage*) defaultInstance;
-- (WhisperMessage*) defaultInstance;
++ (TSProtoWhisperMessage*) defaultInstance;
+- (TSProtoWhisperMessage*) defaultInstance;
 
 - (BOOL) isInitialized;
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (WhisperMessageBuilder*) builder;
-+ (WhisperMessageBuilder*) builder;
-+ (WhisperMessageBuilder*) builderWithPrototype:(WhisperMessage*) prototype;
-- (WhisperMessageBuilder*) toBuilder;
+- (TSProtoWhisperMessageBuilder*) builder;
++ (TSProtoWhisperMessageBuilder*) builder;
++ (TSProtoWhisperMessageBuilder*) builderWithPrototype:(TSProtoWhisperMessage*) prototype;
+- (TSProtoWhisperMessageBuilder*) toBuilder;
 
-+ (WhisperMessage*) parseFromData:(NSData*) data;
-+ (WhisperMessage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (WhisperMessage*) parseFromInputStream:(NSInputStream*) input;
-+ (WhisperMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (WhisperMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (WhisperMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoWhisperMessage*) parseFromData:(NSData*) data;
++ (TSProtoWhisperMessage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoWhisperMessage*) parseFromInputStream:(NSInputStream*) input;
++ (TSProtoWhisperMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoWhisperMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (TSProtoWhisperMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 @end
 
-@interface WhisperMessageBuilder : PBGeneratedMessageBuilder {
+@interface TSProtoWhisperMessageBuilder : PBGeneratedMessageBuilder {
 @private
-  WhisperMessage* result;
+  TSProtoWhisperMessage* result;
 }
 
-- (WhisperMessage*) defaultInstance;
+- (TSProtoWhisperMessage*) defaultInstance;
 
-- (WhisperMessageBuilder*) clear;
-- (WhisperMessageBuilder*) clone;
+- (TSProtoWhisperMessageBuilder*) clear;
+- (TSProtoWhisperMessageBuilder*) clone;
 
-- (WhisperMessage*) build;
-- (WhisperMessage*) buildPartial;
+- (TSProtoWhisperMessage*) build;
+- (TSProtoWhisperMessage*) buildPartial;
 
-- (WhisperMessageBuilder*) mergeFrom:(WhisperMessage*) other;
-- (WhisperMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (WhisperMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+- (TSProtoWhisperMessageBuilder*) mergeFrom:(TSProtoWhisperMessage*) other;
+- (TSProtoWhisperMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (TSProtoWhisperMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasRatchetKey;
 - (NSData*) ratchetKey;
-- (WhisperMessageBuilder*) setRatchetKey:(NSData*) value;
-- (WhisperMessageBuilder*) clearRatchetKey;
+- (TSProtoWhisperMessageBuilder*) setRatchetKey:(NSData*) value;
+- (TSProtoWhisperMessageBuilder*) clearRatchetKey;
 
 - (BOOL) hasCounter;
 - (UInt32) counter;
-- (WhisperMessageBuilder*) setCounter:(UInt32) value;
-- (WhisperMessageBuilder*) clearCounter;
+- (TSProtoWhisperMessageBuilder*) setCounter:(UInt32) value;
+- (TSProtoWhisperMessageBuilder*) clearCounter;
 
 - (BOOL) hasPreviousCounter;
 - (UInt32) previousCounter;
-- (WhisperMessageBuilder*) setPreviousCounter:(UInt32) value;
-- (WhisperMessageBuilder*) clearPreviousCounter;
+- (TSProtoWhisperMessageBuilder*) setPreviousCounter:(UInt32) value;
+- (TSProtoWhisperMessageBuilder*) clearPreviousCounter;
 
 - (BOOL) hasCiphertext;
 - (NSData*) ciphertext;
-- (WhisperMessageBuilder*) setCiphertext:(NSData*) value;
-- (WhisperMessageBuilder*) clearCiphertext;
+- (TSProtoWhisperMessageBuilder*) setCiphertext:(NSData*) value;
+- (TSProtoWhisperMessageBuilder*) clearCiphertext;
 @end
 
-@interface PreKeyWhisperMessage : PBGeneratedMessage {
+@interface TSProtoPreKeyWhisperMessage : PBGeneratedMessage {
 @private
   BOOL hasBaseKey_:1;
   BOOL hasIdentityKey_:1;
@@ -137,73 +137,73 @@
 @property (readonly, strong) NSData* identityKey;
 @property (readonly, strong) NSData* message;
 
-+ (PreKeyWhisperMessage*) defaultInstance;
-- (PreKeyWhisperMessage*) defaultInstance;
++ (TSProtoPreKeyWhisperMessage*) defaultInstance;
+- (TSProtoPreKeyWhisperMessage*) defaultInstance;
 
 - (BOOL) isInitialized;
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (PreKeyWhisperMessageBuilder*) builder;
-+ (PreKeyWhisperMessageBuilder*) builder;
-+ (PreKeyWhisperMessageBuilder*) builderWithPrototype:(PreKeyWhisperMessage*) prototype;
-- (PreKeyWhisperMessageBuilder*) toBuilder;
+- (TSProtoPreKeyWhisperMessageBuilder*) builder;
++ (TSProtoPreKeyWhisperMessageBuilder*) builder;
++ (TSProtoPreKeyWhisperMessageBuilder*) builderWithPrototype:(TSProtoPreKeyWhisperMessage*) prototype;
+- (TSProtoPreKeyWhisperMessageBuilder*) toBuilder;
 
-+ (PreKeyWhisperMessage*) parseFromData:(NSData*) data;
-+ (PreKeyWhisperMessage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (PreKeyWhisperMessage*) parseFromInputStream:(NSInputStream*) input;
-+ (PreKeyWhisperMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (PreKeyWhisperMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (PreKeyWhisperMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoPreKeyWhisperMessage*) parseFromData:(NSData*) data;
++ (TSProtoPreKeyWhisperMessage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoPreKeyWhisperMessage*) parseFromInputStream:(NSInputStream*) input;
++ (TSProtoPreKeyWhisperMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoPreKeyWhisperMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (TSProtoPreKeyWhisperMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 @end
 
-@interface PreKeyWhisperMessageBuilder : PBGeneratedMessageBuilder {
+@interface TSProtoPreKeyWhisperMessageBuilder : PBGeneratedMessageBuilder {
 @private
-  PreKeyWhisperMessage* result;
+  TSProtoPreKeyWhisperMessage* result;
 }
 
-- (PreKeyWhisperMessage*) defaultInstance;
+- (TSProtoPreKeyWhisperMessage*) defaultInstance;
 
-- (PreKeyWhisperMessageBuilder*) clear;
-- (PreKeyWhisperMessageBuilder*) clone;
+- (TSProtoPreKeyWhisperMessageBuilder*) clear;
+- (TSProtoPreKeyWhisperMessageBuilder*) clone;
 
-- (PreKeyWhisperMessage*) build;
-- (PreKeyWhisperMessage*) buildPartial;
+- (TSProtoPreKeyWhisperMessage*) build;
+- (TSProtoPreKeyWhisperMessage*) buildPartial;
 
-- (PreKeyWhisperMessageBuilder*) mergeFrom:(PreKeyWhisperMessage*) other;
-- (PreKeyWhisperMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (PreKeyWhisperMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+- (TSProtoPreKeyWhisperMessageBuilder*) mergeFrom:(TSProtoPreKeyWhisperMessage*) other;
+- (TSProtoPreKeyWhisperMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (TSProtoPreKeyWhisperMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasRegistrationId;
 - (UInt32) registrationId;
-- (PreKeyWhisperMessageBuilder*) setRegistrationId:(UInt32) value;
-- (PreKeyWhisperMessageBuilder*) clearRegistrationId;
+- (TSProtoPreKeyWhisperMessageBuilder*) setRegistrationId:(UInt32) value;
+- (TSProtoPreKeyWhisperMessageBuilder*) clearRegistrationId;
 
 - (BOOL) hasPreKeyId;
 - (UInt32) preKeyId;
-- (PreKeyWhisperMessageBuilder*) setPreKeyId:(UInt32) value;
-- (PreKeyWhisperMessageBuilder*) clearPreKeyId;
+- (TSProtoPreKeyWhisperMessageBuilder*) setPreKeyId:(UInt32) value;
+- (TSProtoPreKeyWhisperMessageBuilder*) clearPreKeyId;
 
 - (BOOL) hasSignedPreKeyId;
 - (UInt32) signedPreKeyId;
-- (PreKeyWhisperMessageBuilder*) setSignedPreKeyId:(UInt32) value;
-- (PreKeyWhisperMessageBuilder*) clearSignedPreKeyId;
+- (TSProtoPreKeyWhisperMessageBuilder*) setSignedPreKeyId:(UInt32) value;
+- (TSProtoPreKeyWhisperMessageBuilder*) clearSignedPreKeyId;
 
 - (BOOL) hasBaseKey;
 - (NSData*) baseKey;
-- (PreKeyWhisperMessageBuilder*) setBaseKey:(NSData*) value;
-- (PreKeyWhisperMessageBuilder*) clearBaseKey;
+- (TSProtoPreKeyWhisperMessageBuilder*) setBaseKey:(NSData*) value;
+- (TSProtoPreKeyWhisperMessageBuilder*) clearBaseKey;
 
 - (BOOL) hasIdentityKey;
 - (NSData*) identityKey;
-- (PreKeyWhisperMessageBuilder*) setIdentityKey:(NSData*) value;
-- (PreKeyWhisperMessageBuilder*) clearIdentityKey;
+- (TSProtoPreKeyWhisperMessageBuilder*) setIdentityKey:(NSData*) value;
+- (TSProtoPreKeyWhisperMessageBuilder*) clearIdentityKey;
 
 - (BOOL) hasMessage;
 - (NSData*) message;
-- (PreKeyWhisperMessageBuilder*) setMessage:(NSData*) value;
-- (PreKeyWhisperMessageBuilder*) clearMessage;
+- (TSProtoPreKeyWhisperMessageBuilder*) setMessage:(NSData*) value;
+- (TSProtoPreKeyWhisperMessageBuilder*) clearMessage;
 @end
 
-@interface KeyExchangeMessage : PBGeneratedMessage {
+@interface TSProtoKeyExchangeMessage : PBGeneratedMessage {
 @private
   BOOL hasBaseKey_:1;
   BOOL hasRatchetKey_:1;
@@ -227,68 +227,68 @@
 @property (readonly, strong) NSData* identityKey;
 @property (readonly, strong) NSData* baseKeySignature;
 
-+ (KeyExchangeMessage*) defaultInstance;
-- (KeyExchangeMessage*) defaultInstance;
++ (TSProtoKeyExchangeMessage*) defaultInstance;
+- (TSProtoKeyExchangeMessage*) defaultInstance;
 
 - (BOOL) isInitialized;
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (KeyExchangeMessageBuilder*) builder;
-+ (KeyExchangeMessageBuilder*) builder;
-+ (KeyExchangeMessageBuilder*) builderWithPrototype:(KeyExchangeMessage*) prototype;
-- (KeyExchangeMessageBuilder*) toBuilder;
+- (TSProtoKeyExchangeMessageBuilder*) builder;
++ (TSProtoKeyExchangeMessageBuilder*) builder;
++ (TSProtoKeyExchangeMessageBuilder*) builderWithPrototype:(TSProtoKeyExchangeMessage*) prototype;
+- (TSProtoKeyExchangeMessageBuilder*) toBuilder;
 
-+ (KeyExchangeMessage*) parseFromData:(NSData*) data;
-+ (KeyExchangeMessage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (KeyExchangeMessage*) parseFromInputStream:(NSInputStream*) input;
-+ (KeyExchangeMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (KeyExchangeMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (KeyExchangeMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoKeyExchangeMessage*) parseFromData:(NSData*) data;
++ (TSProtoKeyExchangeMessage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoKeyExchangeMessage*) parseFromInputStream:(NSInputStream*) input;
++ (TSProtoKeyExchangeMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoKeyExchangeMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (TSProtoKeyExchangeMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 @end
 
-@interface KeyExchangeMessageBuilder : PBGeneratedMessageBuilder {
+@interface TSProtoKeyExchangeMessageBuilder : PBGeneratedMessageBuilder {
 @private
-  KeyExchangeMessage* result;
+  TSProtoKeyExchangeMessage* result;
 }
 
-- (KeyExchangeMessage*) defaultInstance;
+- (TSProtoKeyExchangeMessage*) defaultInstance;
 
-- (KeyExchangeMessageBuilder*) clear;
-- (KeyExchangeMessageBuilder*) clone;
+- (TSProtoKeyExchangeMessageBuilder*) clear;
+- (TSProtoKeyExchangeMessageBuilder*) clone;
 
-- (KeyExchangeMessage*) build;
-- (KeyExchangeMessage*) buildPartial;
+- (TSProtoKeyExchangeMessage*) build;
+- (TSProtoKeyExchangeMessage*) buildPartial;
 
-- (KeyExchangeMessageBuilder*) mergeFrom:(KeyExchangeMessage*) other;
-- (KeyExchangeMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (KeyExchangeMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+- (TSProtoKeyExchangeMessageBuilder*) mergeFrom:(TSProtoKeyExchangeMessage*) other;
+- (TSProtoKeyExchangeMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (TSProtoKeyExchangeMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasId;
 - (UInt32) id;
-- (KeyExchangeMessageBuilder*) setId:(UInt32) value;
-- (KeyExchangeMessageBuilder*) clearId;
+- (TSProtoKeyExchangeMessageBuilder*) setId:(UInt32) value;
+- (TSProtoKeyExchangeMessageBuilder*) clearId;
 
 - (BOOL) hasBaseKey;
 - (NSData*) baseKey;
-- (KeyExchangeMessageBuilder*) setBaseKey:(NSData*) value;
-- (KeyExchangeMessageBuilder*) clearBaseKey;
+- (TSProtoKeyExchangeMessageBuilder*) setBaseKey:(NSData*) value;
+- (TSProtoKeyExchangeMessageBuilder*) clearBaseKey;
 
 - (BOOL) hasRatchetKey;
 - (NSData*) ratchetKey;
-- (KeyExchangeMessageBuilder*) setRatchetKey:(NSData*) value;
-- (KeyExchangeMessageBuilder*) clearRatchetKey;
+- (TSProtoKeyExchangeMessageBuilder*) setRatchetKey:(NSData*) value;
+- (TSProtoKeyExchangeMessageBuilder*) clearRatchetKey;
 
 - (BOOL) hasIdentityKey;
 - (NSData*) identityKey;
-- (KeyExchangeMessageBuilder*) setIdentityKey:(NSData*) value;
-- (KeyExchangeMessageBuilder*) clearIdentityKey;
+- (TSProtoKeyExchangeMessageBuilder*) setIdentityKey:(NSData*) value;
+- (TSProtoKeyExchangeMessageBuilder*) clearIdentityKey;
 
 - (BOOL) hasBaseKeySignature;
 - (NSData*) baseKeySignature;
-- (KeyExchangeMessageBuilder*) setBaseKeySignature:(NSData*) value;
-- (KeyExchangeMessageBuilder*) clearBaseKeySignature;
+- (TSProtoKeyExchangeMessageBuilder*) setBaseKeySignature:(NSData*) value;
+- (TSProtoKeyExchangeMessageBuilder*) clearBaseKeySignature;
 @end
 
-@interface SenderKeyMessage : PBGeneratedMessage {
+@interface TSProtoSenderKeyMessage : PBGeneratedMessage {
 @private
   BOOL hasCiphertext_:1;
   BOOL hasId_:1;
@@ -304,58 +304,58 @@
 @property (readonly) UInt32 iteration;
 @property (readonly, strong) NSData* ciphertext;
 
-+ (SenderKeyMessage*) defaultInstance;
-- (SenderKeyMessage*) defaultInstance;
++ (TSProtoSenderKeyMessage*) defaultInstance;
+- (TSProtoSenderKeyMessage*) defaultInstance;
 
 - (BOOL) isInitialized;
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (SenderKeyMessageBuilder*) builder;
-+ (SenderKeyMessageBuilder*) builder;
-+ (SenderKeyMessageBuilder*) builderWithPrototype:(SenderKeyMessage*) prototype;
-- (SenderKeyMessageBuilder*) toBuilder;
+- (TSProtoSenderKeyMessageBuilder*) builder;
++ (TSProtoSenderKeyMessageBuilder*) builder;
++ (TSProtoSenderKeyMessageBuilder*) builderWithPrototype:(TSProtoSenderKeyMessage*) prototype;
+- (TSProtoSenderKeyMessageBuilder*) toBuilder;
 
-+ (SenderKeyMessage*) parseFromData:(NSData*) data;
-+ (SenderKeyMessage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (SenderKeyMessage*) parseFromInputStream:(NSInputStream*) input;
-+ (SenderKeyMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (SenderKeyMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (SenderKeyMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoSenderKeyMessage*) parseFromData:(NSData*) data;
++ (TSProtoSenderKeyMessage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoSenderKeyMessage*) parseFromInputStream:(NSInputStream*) input;
++ (TSProtoSenderKeyMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoSenderKeyMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (TSProtoSenderKeyMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 @end
 
-@interface SenderKeyMessageBuilder : PBGeneratedMessageBuilder {
+@interface TSProtoSenderKeyMessageBuilder : PBGeneratedMessageBuilder {
 @private
-  SenderKeyMessage* result;
+  TSProtoSenderKeyMessage* result;
 }
 
-- (SenderKeyMessage*) defaultInstance;
+- (TSProtoSenderKeyMessage*) defaultInstance;
 
-- (SenderKeyMessageBuilder*) clear;
-- (SenderKeyMessageBuilder*) clone;
+- (TSProtoSenderKeyMessageBuilder*) clear;
+- (TSProtoSenderKeyMessageBuilder*) clone;
 
-- (SenderKeyMessage*) build;
-- (SenderKeyMessage*) buildPartial;
+- (TSProtoSenderKeyMessage*) build;
+- (TSProtoSenderKeyMessage*) buildPartial;
 
-- (SenderKeyMessageBuilder*) mergeFrom:(SenderKeyMessage*) other;
-- (SenderKeyMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (SenderKeyMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+- (TSProtoSenderKeyMessageBuilder*) mergeFrom:(TSProtoSenderKeyMessage*) other;
+- (TSProtoSenderKeyMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (TSProtoSenderKeyMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasId;
 - (UInt32) id;
-- (SenderKeyMessageBuilder*) setId:(UInt32) value;
-- (SenderKeyMessageBuilder*) clearId;
+- (TSProtoSenderKeyMessageBuilder*) setId:(UInt32) value;
+- (TSProtoSenderKeyMessageBuilder*) clearId;
 
 - (BOOL) hasIteration;
 - (UInt32) iteration;
-- (SenderKeyMessageBuilder*) setIteration:(UInt32) value;
-- (SenderKeyMessageBuilder*) clearIteration;
+- (TSProtoSenderKeyMessageBuilder*) setIteration:(UInt32) value;
+- (TSProtoSenderKeyMessageBuilder*) clearIteration;
 
 - (BOOL) hasCiphertext;
 - (NSData*) ciphertext;
-- (SenderKeyMessageBuilder*) setCiphertext:(NSData*) value;
-- (SenderKeyMessageBuilder*) clearCiphertext;
+- (TSProtoSenderKeyMessageBuilder*) setCiphertext:(NSData*) value;
+- (TSProtoSenderKeyMessageBuilder*) clearCiphertext;
 @end
 
-@interface SenderKeyDistributionMessage : PBGeneratedMessage {
+@interface TSProtoSenderKeyDistributionMessage : PBGeneratedMessage {
 @private
   BOOL hasChainKey_:1;
   BOOL hasSigningKey_:1;
@@ -375,60 +375,60 @@
 @property (readonly, strong) NSData* chainKey;
 @property (readonly, strong) NSData* signingKey;
 
-+ (SenderKeyDistributionMessage*) defaultInstance;
-- (SenderKeyDistributionMessage*) defaultInstance;
++ (TSProtoSenderKeyDistributionMessage*) defaultInstance;
+- (TSProtoSenderKeyDistributionMessage*) defaultInstance;
 
 - (BOOL) isInitialized;
 - (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (SenderKeyDistributionMessageBuilder*) builder;
-+ (SenderKeyDistributionMessageBuilder*) builder;
-+ (SenderKeyDistributionMessageBuilder*) builderWithPrototype:(SenderKeyDistributionMessage*) prototype;
-- (SenderKeyDistributionMessageBuilder*) toBuilder;
+- (TSProtoSenderKeyDistributionMessageBuilder*) builder;
++ (TSProtoSenderKeyDistributionMessageBuilder*) builder;
++ (TSProtoSenderKeyDistributionMessageBuilder*) builderWithPrototype:(TSProtoSenderKeyDistributionMessage*) prototype;
+- (TSProtoSenderKeyDistributionMessageBuilder*) toBuilder;
 
-+ (SenderKeyDistributionMessage*) parseFromData:(NSData*) data;
-+ (SenderKeyDistributionMessage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (SenderKeyDistributionMessage*) parseFromInputStream:(NSInputStream*) input;
-+ (SenderKeyDistributionMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (SenderKeyDistributionMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (SenderKeyDistributionMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoSenderKeyDistributionMessage*) parseFromData:(NSData*) data;
++ (TSProtoSenderKeyDistributionMessage*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoSenderKeyDistributionMessage*) parseFromInputStream:(NSInputStream*) input;
++ (TSProtoSenderKeyDistributionMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (TSProtoSenderKeyDistributionMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (TSProtoSenderKeyDistributionMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 @end
 
-@interface SenderKeyDistributionMessageBuilder : PBGeneratedMessageBuilder {
+@interface TSProtoSenderKeyDistributionMessageBuilder : PBGeneratedMessageBuilder {
 @private
-  SenderKeyDistributionMessage* result;
+  TSProtoSenderKeyDistributionMessage* result;
 }
 
-- (SenderKeyDistributionMessage*) defaultInstance;
+- (TSProtoSenderKeyDistributionMessage*) defaultInstance;
 
-- (SenderKeyDistributionMessageBuilder*) clear;
-- (SenderKeyDistributionMessageBuilder*) clone;
+- (TSProtoSenderKeyDistributionMessageBuilder*) clear;
+- (TSProtoSenderKeyDistributionMessageBuilder*) clone;
 
-- (SenderKeyDistributionMessage*) build;
-- (SenderKeyDistributionMessage*) buildPartial;
+- (TSProtoSenderKeyDistributionMessage*) build;
+- (TSProtoSenderKeyDistributionMessage*) buildPartial;
 
-- (SenderKeyDistributionMessageBuilder*) mergeFrom:(SenderKeyDistributionMessage*) other;
-- (SenderKeyDistributionMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (SenderKeyDistributionMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+- (TSProtoSenderKeyDistributionMessageBuilder*) mergeFrom:(TSProtoSenderKeyDistributionMessage*) other;
+- (TSProtoSenderKeyDistributionMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (TSProtoSenderKeyDistributionMessageBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 
 - (BOOL) hasId;
 - (UInt32) id;
-- (SenderKeyDistributionMessageBuilder*) setId:(UInt32) value;
-- (SenderKeyDistributionMessageBuilder*) clearId;
+- (TSProtoSenderKeyDistributionMessageBuilder*) setId:(UInt32) value;
+- (TSProtoSenderKeyDistributionMessageBuilder*) clearId;
 
 - (BOOL) hasIteration;
 - (UInt32) iteration;
-- (SenderKeyDistributionMessageBuilder*) setIteration:(UInt32) value;
-- (SenderKeyDistributionMessageBuilder*) clearIteration;
+- (TSProtoSenderKeyDistributionMessageBuilder*) setIteration:(UInt32) value;
+- (TSProtoSenderKeyDistributionMessageBuilder*) clearIteration;
 
 - (BOOL) hasChainKey;
 - (NSData*) chainKey;
-- (SenderKeyDistributionMessageBuilder*) setChainKey:(NSData*) value;
-- (SenderKeyDistributionMessageBuilder*) clearChainKey;
+- (TSProtoSenderKeyDistributionMessageBuilder*) setChainKey:(NSData*) value;
+- (TSProtoSenderKeyDistributionMessageBuilder*) clearChainKey;
 
 - (BOOL) hasSigningKey;
 - (NSData*) signingKey;
-- (SenderKeyDistributionMessageBuilder*) setSigningKey:(NSData*) value;
-- (SenderKeyDistributionMessageBuilder*) clearSigningKey;
+- (TSProtoSenderKeyDistributionMessageBuilder*) setSigningKey:(NSData*) value;
+- (TSProtoSenderKeyDistributionMessageBuilder*) clearSigningKey;
 @end
 
 

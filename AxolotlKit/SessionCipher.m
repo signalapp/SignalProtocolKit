@@ -79,7 +79,7 @@
     
     NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
     
-    WhisperMessage *cipherMessage = [[WhisperMessage alloc] initWithVersion:sessionVersion macKey:messageKeys.macKey senderRatchetKey:senderRatchetKey previousCounter:previousCounter counter:chainKey.index cipherText:ciphertextBody];
+    WhisperMessage *cipherMessage = [[WhisperMessage alloc] initWithVersion:sessionVersion macKey:messageKeys.macKey senderRatchetKey:senderRatchetKey counter:chainKey.index previousCounter:previousCounter cipherText:ciphertextBody senderIdentityKey:session.localIdentityKey.publicKey receiverIdentityKey:session.remoteIdentityKey];
     
     if ([session hasUnacknowledgedPreKeyMessage]){
         UnacknowledgedPreKeyMessageItems *items = [session unacknowledgedPreKeyMessageItems];
@@ -162,7 +162,7 @@
     ChainKey *chainKey = [self getOrCreateChainKeys:sessionState theirEphemeral:theirEphemeral];
     MessageKeys *messageKeys = [self getOrCreateMessageKeysForSession:sessionState theirEphemeral:theirEphemeral chainKey:chainKey counter:counter];
     
-    [message verifyMacWithVersion:messageVersion identityKey:sessionState.remoteIdentityKey receiverIdentityKey:sessionState.localIdentityKey macKey:messageKeys.macKey];
+    [message verifyMacWithVersion:messageVersion senderIdentityKey:sessionState.remoteIdentityKey receiverIdentityKey:sessionState.localIdentityKey.publicKey macKey:messageKeys.macKey];
     
     NSData *plaintext = [AES_CBC decryptCBCMode:message.cipherText withKey:messageKeys.cipherKey withIV:messageKeys.iv];
     
