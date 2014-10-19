@@ -13,6 +13,7 @@
 
 #import "NSData+Base64.h"
 #import "SessionBuilder.h"
+#import "SessionStore.h"
 #import "AES-CBC.h"
 #import "AxolotlParameters.h"
 #import "MessageKeys.h"
@@ -27,13 +28,13 @@
 #import <HKDFKit/HKDFKit.h>
 
 @interface SessionCipher ()
+
 @property long recipientId;
 @property int deviceId;
-@property (nonatomic, retain)   SessionBuilder *sessionBuilder;
-@property (nonatomic, readonly) id<IdentityKeyStore>identityKeyStore;
-@property (nonatomic, readonly) id<SessionStore> sessionStore;
-@property (nonatomic, readonly) id<PreKeyStore> prekeyStore;
-@property (nonatomic, readonly) id<SignedPreKeyStore> signedPreKeyStore;
+@property (nonatomic, retain) id<SessionStore> sessionStore;
+@property (nonatomic, retain) id<PreKeyStore>  prekeyStore;
+@property (nonatomic, retain) SessionBuilder   *sessionBuilder;
+
 @end
 
 
@@ -56,13 +57,19 @@
                          recipientId:(long)recipientId
                             deviceId:(int)deviceId{
     self = [super init];
-    
-    _sessionStore      = sessionStore;
-    _prekeyStore       = preKeyStore;
-    _signedPreKeyStore = signedPreKeyStore;
-    _identityKeyStore  = identityKeyStore;
-    _recipientId       = recipientId;
-    _deviceId          = deviceId;
+
+    if (self){
+        
+        _recipientId       = recipientId;
+        _deviceId          = deviceId;
+        _sessionBuilder    = [[SessionBuilder alloc] initWithSessionStore:sessionStore
+                                                              preKeyStore:preKeyStore
+                                                        signedPreKeyStore:signedPreKeyStore
+                                                         identityKeyStore:identityKeyStore
+                                                              recipientId:recipientId
+                                                                 deviceId:deviceId];
+        
+    }
     
     return self;
 }
@@ -79,13 +86,25 @@
     
     NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
     
-    WhisperMessage *cipherMessage = [[WhisperMessage alloc] initWithVersion:sessionVersion macKey:messageKeys.macKey senderRatchetKey:senderRatchetKey counter:chainKey.index previousCounter:previousCounter cipherText:ciphertextBody senderIdentityKey:session.localIdentityKey.publicKey receiverIdentityKey:session.remoteIdentityKey];
+    WhisperMessage *cipherMessage = [[WhisperMessage alloc] initWithVersion:sessionVersion
+                                                                     macKey:messageKeys.macKey
+                                                           senderRatchetKey:senderRatchetKey
+                                                                    counter:chainKey.index
+                                                            previousCounter:previousCounter
+                                                                 cipherText:ciphertextBody
+                                                          senderIdentityKey:session.localIdentityKey.publicKey
+                                                        receiverIdentityKey:session.remoteIdentityKey];
     
     if ([session hasUnacknowledgedPreKeyMessage]){
         UnacknowledgedPreKeyMessageItems *items = [session unacknowledgedPreKeyMessageItems];
         int localRegistrationId = [session localRegistrationId];
         
-        cipherMessage = [[PrekeyWhisperMessage alloc] initWithWhisperMessage:cipherMessage registrationId:localRegistrationId prekeyId:items.preKeyId signedPrekeyId:items.signedPreKeyId baseKey:items.baseKey identityKey:[session.localIdentityKey publicKey]];
+        cipherMessage = [[PrekeyWhisperMessage alloc] initWithWhisperMessage:cipherMessage
+                                                              registrationId:localRegistrationId
+                                                                    prekeyId:items.preKeyId
+                                                              signedPrekeyId:items.signedPreKeyId
+                                                                     baseKey:items.baseKey
+                                                                 identityKey:[session.localIdentityKey publicKey]];
     }
     
     [session setSenderChainKey:[chainKey nextChainKey]];

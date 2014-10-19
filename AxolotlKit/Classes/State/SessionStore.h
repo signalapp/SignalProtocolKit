@@ -11,16 +11,16 @@
 
 @protocol SessionStore <NSObject>
 
--(SessionRecord*)loadSession:(long)contactIdentifier deviceId:(int)deviceId;
+- (SessionRecord*)loadSession:(long)contactIdentifier deviceId:(int)deviceId;
 
--(NSArray*)countSubDevicesSessions:(long)contactIdentifier;
+- (NSArray*)subDevicesSessions:(long)contactIdentifier;
 
--(void)storeSession:(long)contactIdentifier deviceId:(int)deviceId session:(SessionRecord*)session;
+- (void)storeSession:(long)contactIdentifier deviceId:(int)deviceId session:(SessionRecord*)session;
 
--(BOOL)containsSession:(long)contactIdentifier deviceId:(int)deviceId;
+- (BOOL)containsSession:(long)contactIdentifier deviceId:(int)deviceId;
 
--(void)deleteSessionForContact:(long)contactIdentifier deviceId:(int)deviceId;
+- (void)deleteSessionForContact:(long)contactIdentifier deviceId:(int)deviceId;
 
--(void)deleteAllSessionsForContact:(long)contactIdentifier;
+- (void)deleteAllSessionsForContact:(long)contactIdentifier;
 
 @end

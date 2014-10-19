@@ -10,6 +10,7 @@
 #import "AliceAxolotlParameters.h"
 #import "BobAxolotlParameters.h"
 
+#import "AxolotlStore.h"
 #import "SessionState.h"
 #import "SessionBuilder.h"
 #import "PrekeyWhisperMessage.h"
@@ -25,12 +26,45 @@
 
 @interface SessionBuilder ()
 
-@property (nonatomic, readonly)int recipientId;
+@property (nonatomic, readonly)long recipientId;
 @property (nonatomic, readonly)int deviceId;
+
+@property(nonatomic, readonly)id<SessionStore>  sessionStore;
+@property(nonatomic, readonly)id<PreKeyStore>   prekeyStore ;
+@property(nonatomic, readonly)id<SignedPreKeyStore> signedPreKeyStore;
+@property(nonatomic, readonly)id<IdentityKeyStore> identityStore;
+
 
 @end
 
 @implementation SessionBuilder
+
+- (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(long)recipientId deviceId:(int)deviceId{
+    return [self initWithSessionStore:sessionStore
+                          preKeyStore:sessionStore
+                    signedPreKeyStore:sessionStore
+                     identityKeyStore:sessionStore
+                          recipientId:recipientId
+                             deviceId:deviceId];
+}
+
+- (instancetype)initWithSessionStore:(id<SessionStore>)sessionStore
+                         preKeyStore:(id<PreKeyStore>)preKeyStore
+                   signedPreKeyStore:(id<SignedPreKeyStore>)signedPreKeyStore
+                    identityKeyStore:(id<IdentityKeyStore>)identityKeyStore
+                         recipientId:(long)recipientId
+                            deviceId:(int)deviceId{
+    self = [super init];
+    
+    _sessionStore      = sessionStore;
+    _prekeyStore       = preKeyStore;
+    _signedPreKeyStore = signedPreKeyStore;
+    _identityStore     = identityKeyStore;
+    _recipientId       = recipientId;
+    _deviceId          = deviceId;
+    
+    return self;
+}
 
 - (void)processPrekeyBundle:(PreKeyBundle*)preKeyBundle{
     

@@ -17,14 +17,14 @@
 
 @interface SessionBuilder : NSObject
 
-typedef PreKeyBundle*(^AxolotlFetchKey)   (NSInteger contactIdentifier, NSInteger deviceId);
+- (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(long)recipientId deviceId:(int)deviceId;
 
-@property(nonatomic, readonly)id<SessionStore>  sessionStore;
-@property(nonatomic, readonly)id<PreKeyStore>   prekeyStore ;
-@property(nonatomic, readonly)id<SignedPreKeyStore> signedPreKeyStore;
-@property(nonatomic, readonly)id<IdentityKeyStore> identityStore;
-
-@property(nonatomic, readonly)AxolotlFetchKey fetchKeyBlock;
+- (instancetype)initWithSessionStore:(id<SessionStore>)sessionStore
+                         preKeyStore:(id<PreKeyStore>)preKeyStore
+                   signedPreKeyStore:(id<SignedPreKeyStore>)signedPreKeyStore
+                    identityKeyStore:(id<IdentityKeyStore>)identityKeyStore
+                         recipientId:(long)recipientId
+                            deviceId:(int)deviceId;
 
 - (void)processPrekeyBundle:(PreKeyBundle*)preKeyBundle;
 - (int)processPrekeyWhisperMessage:(PrekeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord;

@@ -21,7 +21,6 @@
 		B611CB6819844E7C00FC54DA /* BobAxolotlParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = B611CB6719844E7C00FC54DA /* BobAxolotlParameters.m */; };
 		B61B6839198352570047EF87 /* SessionRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B61B6838198352570047EF87 /* SessionRecord.m */; };
 		B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B61E841C19D1780D004FC382 /* HKDFTest.m */; };
-		B62F96B319EAA57E004CA958 /* InMemoryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B62F96B219EAA57E004CA958 /* InMemoryStore.m */; };
 		B63B2F9F197D8AFD00E09F65 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2F9E197D8AFD00E09F65 /* Foundation.framework */; };
 		B63B2FA1197D8AFD00E09F65 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2FA0197D8AFD00E09F65 /* CoreGraphics.framework */; };
 		B63B2FA3197D8AFD00E09F65 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2FA2197D8AFD00E09F65 /* UIKit.framework */; };
@@ -36,6 +35,7 @@
 		B63B2FE6197D8B9600E09F65 /* AxolotlKit_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B63B2FE5197D8B9600E09F65 /* AxolotlKit_Tests.m */; };
 		B677600C197E4CA500A09623 /* PreKeyBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = B677600B197E4CA500A09623 /* PreKeyBundle.m */; };
 		B68034C719CEFBFF00976441 /* ChainAndIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = B68034C619CEFBFF00976441 /* ChainAndIndex.m */; };
+		B6A3490319F1A4B4008A3E01 /* AxolotlInMemoryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A3490219F1A4B4008A3E01 /* AxolotlInMemoryStore.m */; };
 		B6B05C791980611400238B0D /* WhisperMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C781980611400238B0D /* WhisperMessage.m */; };
 		B6B05C7C1980612F00238B0D /* PrekeyWhisperMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C7B1980612F00238B0D /* PrekeyWhisperMessage.m */; };
 		B6B05C8919808EE100238B0D /* SessionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C8819808EE100238B0D /* SessionBuilder.m */; };
@@ -76,8 +76,6 @@
 		B61B6837198352570047EF87 /* SessionRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionRecord.h; path = Classes/Sessions/SessionRecord.h; sourceTree = "<group>"; };
 		B61B6838198352570047EF87 /* SessionRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionRecord.m; path = Classes/Sessions/SessionRecord.m; sourceTree = "<group>"; };
 		B61E841C19D1780D004FC382 /* HKDFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKDFTest.m; sourceTree = "<group>"; };
-		B62F96B119EAA57E004CA958 /* InMemoryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InMemoryStore.h; sourceTree = "<group>"; };
-		B62F96B219EAA57E004CA958 /* InMemoryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InMemoryStore.m; sourceTree = "<group>"; };
 		B62F96B419EAA7A7004CA958 /* SessionStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionStore.h; path = State/SessionStore.h; sourceTree = "<group>"; };
 		B62F96B819EAA881004CA958 /* IdentityKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IdentityKeyStore.h; path = State/IdentityKeyStore.h; sourceTree = "<group>"; };
 		B62F96B919EAA8C5004CA958 /* SignedPreKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignedPreKeyStore.h; path = State/SignedPreKeyStore.h; sourceTree = "<group>"; };
@@ -105,6 +103,8 @@
 		B677600B197E4CA500A09623 /* PreKeyBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreKeyBundle.m; path = Models/PreKeyBundle.m; sourceTree = "<group>"; };
 		B68034C519CEFBFF00976441 /* ChainAndIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChainAndIndex.h; path = Models/ChainAndIndex.h; sourceTree = "<group>"; };
 		B68034C619CEFBFF00976441 /* ChainAndIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChainAndIndex.m; path = Models/ChainAndIndex.m; sourceTree = "<group>"; };
+		B6A3490119F1A4B4008A3E01 /* AxolotlInMemoryStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxolotlInMemoryStore.h; sourceTree = "<group>"; };
+		B6A3490219F1A4B4008A3E01 /* AxolotlInMemoryStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxolotlInMemoryStore.m; sourceTree = "<group>"; };
 		B6B05C771980611400238B0D /* WhisperMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhisperMessage.h; path = Models/WhisperMessage.h; sourceTree = "<group>"; };
 		B6B05C781980611400238B0D /* WhisperMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhisperMessage.m; path = Models/WhisperMessage.m; sourceTree = "<group>"; };
 		B6B05C7A1980612F00238B0D /* PrekeyWhisperMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrekeyWhisperMessage.h; path = Models/PrekeyWhisperMessage.h; sourceTree = "<group>"; };
@@ -246,15 +246,6 @@
 			name = Ratchet;
 			sourceTree = "<group>";
 		};
-		B62F96B019EAA552004CA958 /* Testing Additions */ = {
-			isa = PBXGroup;
-			children = (
-				B62F96B119EAA57E004CA958 /* InMemoryStore.h */,
-				B62F96B219EAA57E004CA958 /* InMemoryStore.m */,
-			);
-			name = "Testing Additions";
-			sourceTree = "<group>";
-		};
 		B62F96B719EAA81A004CA958 /* State */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,12 +284,13 @@
 		B63B2FDF197D8B9600E09F65 /* AxolotlKit Tests */ = {
 			isa = PBXGroup;
 			children = (
-				B62F96B019EAA552004CA958 /* Testing Additions */,
 				B61E841719D172BC004FC382 /* ECC */,
 				B61E841819D176D7004FC382 /* HKDF */,
 				B61E841F19D1813A004FC382 /* Ratchet */,
 				B63B2FE5197D8B9600E09F65 /* AxolotlKit_Tests.m */,
 				B63B2FE0197D8B9600E09F65 /* Supporting Files */,
+				B6A3490119F1A4B4008A3E01 /* AxolotlInMemoryStore.h */,
+				B6A3490219F1A4B4008A3E01 /* AxolotlInMemoryStore.m */,
 			);
 			path = "AxolotlKit Tests";
 			sourceTree = "<group>";
@@ -660,8 +652,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */,
-				B62F96B319EAA57E004CA958 /* InMemoryStore.m in Sources */,
 				B6D41A2319DB4F8E00EE9BAA /* SessionCipherTest.m in Sources */,
+				B6A3490319F1A4B4008A3E01 /* AxolotlInMemoryStore.m in Sources */,
 				B63B2FE6197D8B9600E09F65 /* AxolotlKit_Tests.m in Sources */,
 				B6E37AE019CF107C00E619CA /* ECCTests.m in Sources */,
 			);
