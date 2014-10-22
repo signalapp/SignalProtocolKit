@@ -11,6 +11,17 @@
 
 @protocol SessionStore <NSObject>
 
+
+
+/**
+ *  Returns a copy of the SessionRecord corresponding to the recipientId + deviceId tuple or a new SessionRecord if one does not currently exist.
+ *
+ *  @param contactIdentifier The recipientId of the remote client.
+ *  @param deviceId          The deviceId of the remote client.
+ *
+ *  @return a copy of the SessionRecord corresponding to the recipientId + deviceId tuple.
+ */
+
 - (SessionRecord*)loadSession:(long)contactIdentifier deviceId:(int)deviceId;
 
 - (NSArray*)subDevicesSessions:(long)contactIdentifier;

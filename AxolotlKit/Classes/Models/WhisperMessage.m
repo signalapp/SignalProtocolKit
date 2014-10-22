@@ -90,6 +90,8 @@
     NSData *theirMac = [self.serialized subdataWithRange:NSMakeRange(self.serialized.length - MAC_LENGTH, MAC_LENGTH)];
     NSData *ourMac   = [self macWithVersion:messageVersion identityKey:senderIdentityKey receiverIdentityKey:receiverIdentityKey macKey:macKey serialized:data];
     
+    NSLog(@"MAC KEY : %@", macKey);
+    
     if (![theirMac isEqualToData:ourMac]) {
         @throw [NSException exceptionWithName:InvalidMessageException reason:@"Bad Mac!" userInfo:@{}];
     }
@@ -114,10 +116,11 @@
     
     uint8_t ourHmac[CC_SHA256_DIGEST_LENGTH] = {0};
     CCHmacContext context;
-    CCHmacInit(&context, kCCHmacAlgSHA256, [macKey bytes], [macKey length]);
+    CCHmacInit  (&context, kCCHmacAlgSHA256, [macKey bytes], [macKey length]);
     CCHmacUpdate(&context, [senderIdentityKey bytes], [senderIdentityKey length]);
     CCHmacUpdate(&context, [receiverIdentityKey bytes], [receiverIdentityKey length]);
-    CCHmacFinal(&context, &ourHmac);
+    CCHmacUpdate(&context, [serialized bytes], [serialized length]);
+    CCHmacFinal (&context, &ourHmac);
     
     return [NSData dataWithBytes:ourHmac length:CC_SHA256_DIGEST_LENGTH];
 }

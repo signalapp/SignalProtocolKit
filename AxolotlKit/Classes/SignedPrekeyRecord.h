@@ -13,5 +13,8 @@
 @interface SignedPreKeyRecord : PreKeyRecord
 
 @property (nonatomic, readonly) NSData *signature;
+@property (nonatomic, readonly) NSDate *generatedAt;
+
+- (instancetype)initWithId:(int)identifier keyPair:(ECKeyPair *)keyPair signature:(NSData*)signature generatedAt:(NSDate*)generatedAt;
 
 @end

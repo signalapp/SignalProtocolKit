@@ -106,6 +106,16 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 
 @implementation SessionState
 
+- (instancetype)init{
+    self = [super init];
+    
+    if (self) {
+        self.receivingChains = [NSMutableArray array];
+    }
+    
+    return self;
+}
+
 - (NSData*)senderRatchetKey{
     return [[self senderRatchetKeyPair] publicKey];
 }
@@ -156,7 +166,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     ChainAndIndex *chainAndIndex = [self receiverChain:senderEphemeral];
     ReceivingChain *chain        = (ReceivingChain*)chainAndIndex.chain;
     
-    ReceivingChain *newChain     = [chain copy];
+    ReceivingChain *newChain     = [[ReceivingChain alloc] initWithChainKey:[[ChainKey alloc] initWithData:[chain.chainKey.key copy] index:chain.chainKey.index] senderRatchetKey:chain.senderRatchetKey];
     newChain.chainKey            = nextChainKey;
     
     [self.receivingChains insertObject:newChain atIndex:chainAndIndex.index];
@@ -165,7 +175,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 - (void)addReceiverChain:(NSData*)senderRatchetKey chainKey:(ChainKey*)chainKey{
     
     ReceivingChain *receivingChain =  [[ReceivingChain alloc] initWithChainKey:chainKey senderRatchetKey:senderRatchetKey];
-
+    
     [self.receivingChains addObject:receivingChain];
     
     if ([self.receivingChains count] > 5) {

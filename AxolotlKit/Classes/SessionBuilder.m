@@ -13,7 +13,7 @@
 #import "AxolotlStore.h"
 #import "SessionState.h"
 #import "SessionBuilder.h"
-#import "PrekeyWhisperMessage.h"
+#import "PreKeyWhisperMessage.h"
 #import "RatchetingSession.h"
 
 #import <25519/Curve25519.h>
@@ -71,17 +71,17 @@
     if (![self.identityStore isTrustedIdentityKey:preKeyBundle.identityKey recipientId:self.recipientId]) {
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"Identity key is not valid" userInfo:@{}];
     }
-    
-    if ([Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:preKeyBundle.identityKey data:preKeyBundle.signedPreKeyPublic]) {
+
+    if (![Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:preKeyBundle.identityKey data:preKeyBundle.signedPreKeyPublic]) {
         @throw [NSException exceptionWithName:InvalidKeyException reason:@"KeyIsNotValidlySigned" userInfo:nil];
     }
     
-    SessionRecord *sessionRecord   = [self.sessionStore loadSession:preKeyBundle.contactIdentifier deviceId:preKeyBundle.deviceId];
-    ECKeyPair *ourBaseKey          = [Curve25519 generateKeyPair];
-    NSData    *theirSignedPreKey   = preKeyBundle.signedPreKeyPublic;
-    NSData    *theirOneTimePreKey  = preKeyBundle.preKeyPublic;
-    int       theirOneTimePreKeyId = preKeyBundle.preKeyId;
-    int       theirSignedPreKeyId  = preKeyBundle.signedPreKeyId;
+    SessionRecord *sessionRecord       = [self.sessionStore loadSession:preKeyBundle.registrationId deviceId:preKeyBundle.deviceId];
+    ECKeyPair     *ourBaseKey          = [Curve25519 generateKeyPair];
+    NSData        *theirSignedPreKey   = preKeyBundle.signedPreKeyPublic;
+    NSData        *theirOneTimePreKey  = preKeyBundle.preKeyPublic;
+    int           theirOneTimePreKeyId = preKeyBundle.preKeyId;
+    int           theirSignedPreKeyId  = preKeyBundle.signedPreKeyId;
     
     AliceAxolotlParameters *params = [[AliceAxolotlParameters alloc] initWithIdentityKey:[self.identityStore identityKeyPair]
                                                                         theirIdentityKey:preKeyBundle.identityKey
@@ -105,12 +105,12 @@
     [self.identityStore saveRemoteIdentity:preKeyBundle.identityKey recipientId:self.recipientId];
 }
 
-- (int)processPrekeyWhisperMessage:(PrekeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
+- (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
     if ([sessionRecord hasSessionState:message.version baseKey:[message baseKey]]) {
         return -1;
     }
     
-    ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore loadSignedPrekey:message.prekeyID].keyPair;
+    ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore loadSignedPrekey:message.signedPrekeyId].keyPair;
     
     BobAxolotlParameters *params = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:self.identityStore.identityKeyPair
                                                                           theirIdentityKey:message.identityKey

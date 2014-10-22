@@ -13,7 +13,7 @@
 #import "PreKeyStore.h"
 #import "PreKeyBundle.h"
 
-@class PrekeyWhisperMessage;
+@class PreKeyWhisperMessage;
 
 @interface SessionBuilder : NSObject
 
@@ -27,6 +27,6 @@
                             deviceId:(int)deviceId;
 
 - (void)processPrekeyBundle:(PreKeyBundle*)preKeyBundle;
-- (int)processPrekeyWhisperMessage:(PrekeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord;
+- (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord;
 
 @end

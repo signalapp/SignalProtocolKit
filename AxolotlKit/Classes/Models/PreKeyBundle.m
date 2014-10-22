@@ -10,4 +10,29 @@
 
 @implementation PreKeyBundle
 
+- (instancetype)initWithRegistrationId:(long)registrationId
+                              deviceId:(int)deviceId
+                              preKeyId:(int)preKeyId
+                          preKeyPublic:(NSData*)preKeyPublic
+                    signedPreKeyPublic:(NSData*)signedPreKeyPublic
+                        signedPreKeyId:(int)signedPreKeyId
+                 signedPreKeySignature:(NSData*)signedPreKeySignature
+                           identityKey:(NSData*)identityKey{
+
+    self = [super init];
+
+    if (self) {
+        _identityKey           = identityKey;
+        _registrationId        = registrationId;
+        _deviceId              = deviceId;
+        _preKeyPublic          = preKeyPublic;
+        _preKeyId              = preKeyId;
+        _signedPreKeyPublic    = signedPreKeyPublic;
+        _signedPreKeyId        = signedPreKeyId;
+        _signedPreKeySignature = signedPreKeySignature;
+    }
+
+    return self;
+}
+
 @end

@@ -206,7 +206,7 @@ const Byte DJB_TYPE = 0x05;
         XCTAssert(NO, @"Signature algorithm should have thrown on overflow");
     }
     @catch (NSException *exception) {
-        XCTAssert(NO, @"Signing overflow detected");
+        XCTAssert(YES, @"Signing overflow detected");
     }
 }
 

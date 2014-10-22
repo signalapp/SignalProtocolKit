@@ -12,5 +12,20 @@
 
 @implementation SignedPreKeyRecord
 
+- (instancetype)initWithId:(int)identifier keyPair:(ECKeyPair *)keyPair signature:(NSData*)signature generatedAt:(NSDate *)generatedAt{
+    self = [super initWithId:identifier keyPair:keyPair];
+    
+    if (self) {
+        _signature = signature;
+        _generatedAt = generatedAt;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithId:(int)identifier keyPair:(ECKeyPair*)keyPair{
+    NSAssert(FALSE, @"Signed PreKeys need a signature");
+    return nil;
+}
 
 @end

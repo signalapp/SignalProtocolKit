@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SessionState.h"
 #import "Chain.h"
-@class RootKey;
+#import "RootKey.h"
 @class ECKeyPair;
 
 @interface RKCK : NSObject

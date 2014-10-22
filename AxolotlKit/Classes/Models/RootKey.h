@@ -10,8 +10,11 @@
 @class RKCK;
 @class ECKeyPair;
 
-@interface RootKey : NSData
+@interface RootKey : NSObject
 
+- (instancetype)initWithData:(NSData *)data;
 - (RKCK*)createChainWithTheirEphemeral:(NSData*)theirEphemeral ourEphemeral:(ECKeyPair*)ourEphemeral;
+
+@property (nonatomic, readonly) NSData *keyData;
 
 @end

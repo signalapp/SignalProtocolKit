@@ -25,12 +25,4 @@
     return self;
 }
 
--(ChainKey *)chainKey{
-    return self.chainKey;
-}
-
--(void)setChainKey:(ChainKey*)nextChainKey{
-    self.chainKey = nextChainKey;
-}
-
 @end

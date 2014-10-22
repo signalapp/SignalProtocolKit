@@ -26,7 +26,11 @@
 - (instancetype)init{
     self = [super init];
     
-    self.fresh = YES;
+    if (self) {
+        _fresh = YES;
+        _sessionState = [SessionState new];
+        _previousStates = [NSMutableArray new];
+    }
     
     return self;
 }
@@ -54,8 +58,6 @@
 }
 
 
-
-
 - (instancetype)initWithSessionState:(SessionState *)sessionState{
     assert(sessionState);
     self = [self init];
@@ -81,15 +83,15 @@
 }
 
 - (SessionState*)sessionState{
-    return self.sessionState;
+    return _sessionState;
 }
 
 - (NSMutableArray*)previousSessionStates{
-    return self.previousStates;
+    return _previousStates;
 }
 
 - (BOOL)isFresh{
-    return self.fresh;
+    return _fresh;
 }
 
 - (void)archiveCurrentState{

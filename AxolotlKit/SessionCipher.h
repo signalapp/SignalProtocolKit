@@ -14,7 +14,7 @@
 #import "IdentityKeyStore.h"
 #import "SessionStore.h"
 #import "PreKeyBundle.h"
-#import "PrekeyWhisperMessage.h"
+#import "PreKeyWhisperMessage.h"
 #import "SessionState.h"
 #import "WhisperMessage.h"
 
@@ -34,5 +34,9 @@ typedef PreKeyBundle*(^AxolotlFetchKey)   (NSInteger contactIdentifier, NSIntege
 - (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(long)recipientId deviceId:(int)deviceId;
 
 - (instancetype)initWithSessionStore:(id<SessionStore>)sessionStore preKeyStore:(id<PreKeyStore>)preKeyStore signedPreKeyStore:(id<SignedPreKeyStore>)signedPreKeyStore identityKeyStore:(id<IdentityKeyStore>)identityKeyStore recipientId:(long)recipientId deviceId:(int)deviceId;
+
+- (WhisperMessage*)encryptMessage:(NSData*)paddedMessage;
+
+- (NSData*)decrypt:(WhisperMessage*)whisperMessage;
 
 @end

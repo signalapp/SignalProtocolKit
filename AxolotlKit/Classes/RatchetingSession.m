@@ -28,12 +28,13 @@
 @implementation DHEResult
 
 - (instancetype)initWithMasterKey:(NSData*)data{
+    NSAssert([data length] != 32*4, @"DHE Result is expected to be the result of 4 DHEs outputting 32 bytes each");
     
     self                           = [super init];
     const char *HKDFDefaultSalt[4] = {0};
     NSData *salt                   = [NSData dataWithBytes:HKDFDefaultSalt length:sizeof(HKDFDefaultSalt)];
     NSData *info                   = [@"WhisperText" dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *derivedMaterial        = [HKDFKit deriveKey:data info:info salt:salt outputSize:96];
+    NSData *derivedMaterial        = [HKDFKit deriveKey:data info:info salt:salt outputSize:64];
     _rootKey                       = [[RootKey alloc] initWithData:[derivedMaterial subdataWithRange:NSMakeRange(0, 32)]];
     _chainKey                      = [derivedMaterial subdataWithRange:NSMakeRange(32, 32)];
 
@@ -93,6 +94,8 @@
         [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirBaseKey andKeyPair:params.ourOneTimePrekey]];
     
     }
+    
+    NSLog(@"DHE MasterKey: %@", masterKey);
     
     return [[DHEResult alloc] initWithMasterKey:masterKey];
 }

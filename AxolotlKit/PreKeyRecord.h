@@ -15,4 +15,6 @@
 @property (nonatomic, readonly) int       Id;
 @property (nonatomic, readonly) ECKeyPair *keyPair;
 
+- (instancetype)initWithId:(int)identifier keyPair:(ECKeyPair*)keyPair;
+
 @end

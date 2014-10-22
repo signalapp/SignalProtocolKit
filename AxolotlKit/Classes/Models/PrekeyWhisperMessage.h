@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "WhisperMessage.h"
 
-@interface PrekeyWhisperMessage : WhisperMessage
+@interface PreKeyWhisperMessage : WhisperMessage
 
-- (instancetype)initWithWhisperMessage:(WhisperMessage*)whisperMessage registrationId:(int)registrationId prekeyId:(int)prekeyId signedPrekeyId:(int)signedPrekeyId baseKey:(NSData*)baseKey identityKey:(NSData*)identityKey;
+- (instancetype)initWithWhisperMessage:(WhisperMessage*)whisperMessage registrationId:(long)registrationId prekeyId:(int)prekeyId signedPrekeyId:(int)signedPrekeyId baseKey:(NSData*)baseKey identityKey:(NSData*)identityKey;
 
-@property (nonatomic, readonly) int       registrationId;
+@property (nonatomic, readonly) long      registrationId;
 @property (nonatomic, readonly) int       prekeyID;
 @property (nonatomic, readonly) int       signedPrekeyId;
 @property (nonatomic, readonly) NSData    *baseKey;

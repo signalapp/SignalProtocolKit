@@ -7,19 +7,151 @@
 //
 
 #import "AxolotlInMemoryStore.h"
+#import "AxolotlExceptions.h"
 
 @interface AxolotlInMemoryStore ()
 
-@property NSDictionary *sessionRecords;
+@property NSMutableDictionary *sessionRecords;
+
+// Signed PreKey Store
+
+@property NSMutableDictionary *preKeyStore;
+@property NSMutableDictionary *signedPreKeyStore;
+
+@property NSMutableDictionary *trustedKeys;
+
+@property ECKeyPair *_identityKeyPair;
+@property int _localRegistrationId;
 
 @end
 
 @implementation AxolotlInMemoryStore
 
+
+# pragma mark General
+
+- (instancetype)init{
+    self = [super init];
+    
+    if (self) {
+        self._identityKeyPair     = [Curve25519 generateKeyPair];
+        self._localRegistrationId = arc4random() % 16380;
+        
+        _preKeyStore = [NSMutableDictionary dictionary];
+        _signedPreKeyStore = [NSMutableDictionary dictionary];
+        _trustedKeys = [NSMutableDictionary dictionary];
+        _sessionRecords = [NSMutableDictionary dictionary];
+    }
+    
+    return self;
+}
+
+# pragma mark Signed PreKey Store
+
+- (SignedPreKeyRecord *)loadSignedPrekey:(int)signedPreKeyId{
+    if (![[self.signedPreKeyStore allKeys] containsObject:[NSNumber numberWithInt:signedPreKeyId]]) {
+        @throw [NSException exceptionWithName:InvalidKeyIdException reason:@"No such signedprekeyrecord" userInfo:nil];
+    }
+    
+    return [self.signedPreKeyStore objectForKey:[NSNumber numberWithInt:signedPreKeyId]];
+}
+
+- (NSArray *)loadSignedPreKeys{
+    NSMutableArray *results = [NSMutableArray array];
+    
+    for (SignedPreKeyRecord *signedPrekey in [self.signedPreKeyStore allValues]) {
+        [results addObject:signedPrekey];
+    }
+    
+    return results;
+}
+
+- (void)storeSignedPreKey:(int)signedPreKeyId signedPreKeyRecord:(SignedPreKeyRecord *)signedPreKeyRecord{
+    [self.signedPreKeyStore setObject:signedPreKeyRecord forKey:[NSNumber numberWithInteger:signedPreKeyId]];
+}
+
+- (BOOL)containsSignedPreKey:(int)signedPreKeyId{
+    if ([[self.signedPreKeyStore allKeys] containsObject:[NSNumber numberWithInteger:signedPreKeyId]]) {
+        return TRUE;
+    }
+    
+    return FALSE;
+}
+
+- (void)removeSignedPreKey:(int)signedPrekeyId{
+    [self.signedPreKeyStore removeObjectForKey:[NSNumber numberWithInteger:signedPrekeyId]];
+}
+
+# pragma mark PreKey Store
+
+- (PreKeyRecord *)loadPreKey:(int)preKeyId{
+    if (![[self.preKeyStore allKeys] containsObject:[NSNumber numberWithInt:preKeyId]]) {
+        @throw [NSException exceptionWithName:InvalidKeyIdException reason:@"No such signedprekeyrecord" userInfo:nil];
+    }
+    
+    return [self.preKeyStore objectForKey:[NSNumber numberWithInt:preKeyId]];
+}
+
+- (NSArray *)loadPreKeys{
+    NSMutableArray *results = [NSMutableArray array];
+    
+    for (PreKeyRecord *prekey in [self.preKeyStore allValues]) {
+        [results addObject:prekey];
+    }
+    
+    return results;
+}
+
+- (void)storePreKey:(int)preKeyId preKeyRecord:(PreKeyRecord *)record{
+    [self.preKeyStore setObject:record forKey:[NSNumber numberWithInt:preKeyId]];
+}
+
+- (BOOL)containsPreKey:(int)preKeyId{
+    if ([[self.preKeyStore allKeys] containsObject:[NSNumber numberWithInteger:preKeyId]]) {
+        return TRUE;
+    }
+    
+    return FALSE;
+}
+
+- (void)removePreKey:(int)preKeyId{
+    [self.preKeyStore removeObjectForKey:[NSNumber numberWithInt:preKeyId]];
+}
+
+# pragma mark IdentityKeyStore
+
+- (ECKeyPair *)identityKeyPair{
+    return __identityKeyPair;
+}
+
+- (int)localRegistrationId{
+    return __localRegistrationId;
+}
+
+- (void)saveRemoteIdentity:(NSData *)identityKey recipientId:(long)recipientId{
+    [self.trustedKeys setObject:identityKey forKey:[NSNumber numberWithLong:recipientId]];
+}
+
+- (BOOL)isTrustedIdentityKey:(NSData *)identityKey recipientId:(long)recipientId{
+    NSData *data = [self.trustedKeys objectForKey:[NSNumber numberWithLong:recipientId]];
+    
+    if (data) {
+        return [data isEqualToData:identityKey];
+    }
+    
+    return identityKey;
+}
+
 # pragma mark Session Store
 
 -(SessionRecord*)loadSession:(long)contactIdentifier deviceId:(int)deviceId{
-    return [[self deviceSessionRecordsForContactIdentifier:contactIdentifier] objectForKey:[[NSNumber numberWithInt:deviceId] stringValue]];
+    SessionRecord *sessionRecord = [[self deviceSessionRecordsForContactIdentifier:contactIdentifier] objectForKey:[NSNumber numberWithInteger:deviceId]];
+    
+    if (!sessionRecord) {
+        sessionRecord = [SessionRecord new];
+    }
+    
+    return sessionRecord;
 }
 
 - (NSArray*)subDevicesSessions:(long)contactIdentifier{
@@ -27,16 +159,24 @@
 }
 
 - (NSDictionary*)deviceSessionRecordsForContactIdentifier:(long)contactIdentifier{
-    return [self.sessionRecords objectForKey:[[NSNumber numberWithLong:contactIdentifier] stringValue]];
+    return [self.sessionRecords objectForKey:[NSNumber numberWithLong:contactIdentifier]];
 }
 
 - (void)storeSession:(long)contactIdentifier deviceId:(int)deviceId session:(SessionRecord *)session{
-    [self.sessionRecords setValue:@{[NSNumber numberWithInt:deviceId]:session} forKey:[[NSNumber numberWithLong:contactIdentifier] stringValue]];
+    NSAssert(session, @"Session can't be nil");
+    [self.sessionRecords setObject:@{[NSNumber numberWithInt:deviceId]:session} forKey:[NSNumber numberWithLong:contactIdentifier]];
 }
 
 - (BOOL)containsSession:(long)contactIdentifier deviceId:(int)deviceId{
     
+    NSLog(@"Store: %@", self.sessionRecords);
+    
+    if ([[self.sessionRecords objectForKey:[NSNumber numberWithLong:contactIdentifier]] objectForKey:[NSNumber numberWithInt:deviceId]]){
+        return YES;
+    }
+    return NO;
 }
+
 
 @end
 

@@ -11,7 +11,7 @@
 #import "RKCK.h"
 #import "MessageKeys.h"
 #import "Chain.h"
-@class RootKey;
+#import "RootKey.h"
 
 @interface UnacknowledgedPreKeyMessageItems : NSObject
 
@@ -74,7 +74,7 @@
 - (UnacknowledgedPreKeyMessageItems*)unacknowledgedPreKeyMessageItems;
 - (void)clearUnacknowledgedPreKeyMessage;
 
-@property(nonatomic)int remoteRegistrationId;
-@property(nonatomic)int localRegistrationId;
+@property(nonatomic)long remoteRegistrationId;
+@property(nonatomic)long localRegistrationId;
 
 @end
