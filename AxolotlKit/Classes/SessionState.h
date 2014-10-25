@@ -31,7 +31,7 @@
 @property(nonatomic)BOOL needsRefresh;
 @property(nonatomic)int  version;
 @property(nonatomic)NSData *remoteIdentityKey;
-@property(nonatomic)ECKeyPair *localIdentityKey;
+@property(nonatomic)NSData *localIdentityKey;
 @property(nonatomic)int previousCounter;
 @property(nonatomic)RootKey *rootKey;
 

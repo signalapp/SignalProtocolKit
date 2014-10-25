@@ -17,8 +17,8 @@
     self = [super init];
     
     if (self) {
-        self.ourIdentityKeyPair = myIdentityKey;
-        self.theirIdentityKey   = theirIdentityKey;
+        _ourIdentityKeyPair     = myIdentityKey;
+        _theirIdentityKey       = theirIdentityKey;
         _ourBaseKey             = ourBaseKey;
         _theirSignedPreKey      = theirSignedPreKey;
         _theirOneTimePrekey     = theirOneTimePreKey;

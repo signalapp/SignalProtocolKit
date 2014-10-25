@@ -98,7 +98,7 @@
                                                                     counter:chainKey.index
                                                             previousCounter:previousCounter
                                                                  cipherText:ciphertextBody
-                                                          senderIdentityKey:session.localIdentityKey.publicKey
+                                                          senderIdentityKey:session.localIdentityKey
                                                         receiverIdentityKey:session.remoteIdentityKey];
     
     if ([session hasUnacknowledgedPreKeyMessage]){
@@ -110,7 +110,7 @@
                                                                     prekeyId:items.preKeyId
                                                               signedPrekeyId:items.signedPreKeyId
                                                                      baseKey:items.baseKey
-                                                                 identityKey:[session.localIdentityKey publicKey]];
+                                                                 identityKey:session.localIdentityKey];
     }
     
     [session setSenderChainKey:[chainKey nextChainKey]];
@@ -165,7 +165,10 @@
         return [self decryptWithSessionState:sessionState whisperMessage:message];
     }
     @catch (NSException *exception) {
-        [exceptions addObject:exception];
+        if ([exception.name isEqualToString:InvalidMessageException]) {
+            NSLog(@"Exception: %@", exception.reason);
+            [exceptions addObject:exception];
+        }
     }
     
     for (SessionState *previousState in previousStates) {
@@ -196,7 +199,7 @@
     ChainKey *chainKey = [self getOrCreateChainKeys:sessionState theirEphemeral:theirEphemeral];
     MessageKeys *messageKeys = [self getOrCreateMessageKeysForSession:sessionState theirEphemeral:theirEphemeral chainKey:chainKey counter:counter];
     
-    [message verifyMacWithVersion:messageVersion senderIdentityKey:sessionState.remoteIdentityKey receiverIdentityKey:sessionState.localIdentityKey.publicKey macKey:messageKeys.macKey];
+    [message verifyMacWithVersion:messageVersion senderIdentityKey:sessionState.remoteIdentityKey receiverIdentityKey:sessionState.localIdentityKey macKey:messageKeys.macKey];
     
     NSData *plaintext = [AES_CBC decryptCBCMode:message.cipherText withKey:messageKeys.cipherKey withIV:messageKeys.iv];
     

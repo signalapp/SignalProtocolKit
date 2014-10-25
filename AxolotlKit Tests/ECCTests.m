@@ -31,7 +31,7 @@ const Byte DJB_TYPE = 0x05;
     if ([privateKey length] != ECCKeyLength && [publicKey length] != ECCKeyLength) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Public or Private key is not required size" userInfo:@{@"PrivateKey":privateKey, @"Public Key":publicKey}];
     }
-
+    
     ECKeyPair *keyPair  = [ECKeyPair new];
     memcpy(keyPair->publicKey,  [publicKey  bytes], ECCKeyLength);
     memcpy(keyPair->privateKey, [privateKey bytes], ECCKeyLength);

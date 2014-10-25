@@ -13,10 +13,8 @@
 @interface AliceAxolotlParameters : NSObject<AxolotlParameters>
 
 @property (nonatomic, readonly)ECKeyPair *ourBaseKey;
-
 @property (nonatomic, readonly)NSData* theirSignedPreKey;
 @property (nonatomic, readonly)NSData* theirRatchetKey;
-
 @property (nonatomic, readonly)NSData* theirOneTimePrekey;
 
 - (instancetype)initWithIdentityKey:(ECKeyPair*)myIdentityKey theirIdentityKey:(NSData*)theirIdentityKey ourBaseKey:(ECKeyPair*)ourBaseKey theirSignedPreKey:(NSData*)theirSignedPreKey theirOneTimePreKey:(NSData*)theirOneTimePreKey theirRatchetKey:(NSData*)theirRatchetKey;

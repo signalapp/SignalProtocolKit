@@ -25,10 +25,17 @@
     
     NSData *message = [[[[[[[TSProtoWhisperMessage builder] setRatchetKey:senderRatchetKey] setCounter:counter] setPreviousCounter:previousCounter] setCiphertext:cipherText] build] data];
     
+    NSLog(@"messageData: %@", message);
     NSMutableData *versionAndMessage = [versionData mutableCopy];
     [versionAndMessage appendData:message];
     
-    NSData *mac     = [self macWithVersion:version identityKey:senderIdentityKey receiverIdentityKey:receiverIdentityKey macKey:macKey serialized:versionData];
+    NSLog(@"MAKING MESSAGE WITH VERSION %d IDENTITY KEY %@ RECEIVER IDENTITY KEY %@  MAC KEY %@ SERIALIZED %@", version, senderIdentityKey, receiverIdentityKey, macKey,versionAndMessage);
+    
+    NSData *mac     = [self macWithVersion:version
+                               identityKey:senderIdentityKey
+                       receiverIdentityKey:receiverIdentityKey
+                                    macKey:macKey
+                                serialized:versionAndMessage];
     
     [versionAndMessage appendData:mac];
     
@@ -43,8 +50,6 @@
     
     return self;
 }
-
-/// !! THROWS if not valid range!! CATCH IT
 
 - (instancetype)initWithData:(NSData*)serialized{
     if (serialized.length <= (VERSION_LENGTH + MAC_LENGTH)) {
@@ -88,9 +93,16 @@
     
     NSData *data     = [self.serialized subdataWithRange:NSMakeRange(0, self.serialized.length - MAC_LENGTH)];
     NSData *theirMac = [self.serialized subdataWithRange:NSMakeRange(self.serialized.length - MAC_LENGTH, MAC_LENGTH)];
-    NSData *ourMac   = [self macWithVersion:messageVersion identityKey:senderIdentityKey receiverIdentityKey:receiverIdentityKey macKey:macKey serialized:data];
+    NSData *ourMac   = [self macWithVersion:messageVersion
+                                identityKey:senderIdentityKey
+                        receiverIdentityKey:receiverIdentityKey
+                                     macKey:macKey
+                                 serialized:data];
     
-    NSLog(@"MAC KEY : %@", macKey);
+    NSLog(@"Their Mac: %@", macKey);
+    NSLog(@"Our Mac: %@", ourMac);
+    
+    NSLog(@"Receiving MESSAGE WITH VERSION %d IDENTITY KEY %@ RECEIVER IDENTITY KEY %@  MAC KEY %@ SERIALIZED %@", messageVersion, senderIdentityKey, receiverIdentityKey, macKey, data);
     
     if (![theirMac isEqualToData:ourMac]) {
         @throw [NSException exceptionWithName:InvalidMessageException reason:@"Bad Mac!" userInfo:@{}];

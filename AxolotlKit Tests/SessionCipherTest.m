@@ -36,14 +36,14 @@
     [super tearDown];
 }
 
-//- (void)testBasicSession{
-//    SessionRecord *aliceSessionRecord = [SessionRecord new];
-//    SessionRecord *bobSessionRecord   = [SessionRecord new];
-//    
-//    [self sessionInitialization:aliceSessionRecord.sessionState bobSessionState:bobSessionRecord.sessionState];
-//    
-//    [self runInteractionWithAliceRecord:aliceSessionRecord bobRecord:bobSessionRecord];
-//}
+- (void)testBasicSession{
+    SessionRecord *aliceSessionRecord = [SessionRecord new];
+    SessionRecord *bobSessionRecord   = [SessionRecord new];
+    
+    [self sessionInitialization:aliceSessionRecord.sessionState bobSessionState:bobSessionRecord.sessionState];
+    
+    [self runInteractionWithAliceRecord:aliceSessionRecord bobRecord:bobSessionRecord];
+}
 
 -(void)sessionInitialization:(SessionState*)aliceSessionState bobSessionState:(SessionState*)bobSessionState{
     
@@ -63,8 +63,8 @@
     [RatchetingSession initializeSession:aliceSessionState sessionVersion:3 AliceParameters:aliceParams];
     
     
-    XCTAssert([aliceSessionState.remoteIdentityKey isEqualToData:bobSessionState.localIdentityKey.publicKey]);
-    XCTAssert([aliceSessionState.rootKey.keyData isEqualToData:bobSessionState.rootKey.keyData]);
+    XCTAssert([aliceSessionState.remoteIdentityKey isEqualToData:bobSessionState.localIdentityKey]);
+    
     
 }
 

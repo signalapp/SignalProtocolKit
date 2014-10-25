@@ -19,6 +19,7 @@
 		B611CB6219844A5600FC54DA /* RatchetingSession.m in Sources */ = {isa = PBXBuildFile; fileRef = B611CB6119844A5600FC54DA /* RatchetingSession.m */; };
 		B611CB6519844D8500FC54DA /* AliceAxolotlParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = B611CB6419844D8500FC54DA /* AliceAxolotlParameters.m */; };
 		B611CB6819844E7C00FC54DA /* BobAxolotlParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = B611CB6719844E7C00FC54DA /* BobAxolotlParameters.m */; };
+		B619AF1419FC148D00E33198 /* ProtobuffsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B619AF1319FC148D00E33198 /* ProtobuffsTests.m */; };
 		B61B6839198352570047EF87 /* SessionRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B61B6838198352570047EF87 /* SessionRecord.m */; };
 		B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B61E841C19D1780D004FC382 /* HKDFTest.m */; };
 		B63B2F9F197D8AFD00E09F65 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2F9E197D8AFD00E09F65 /* Foundation.framework */; };
@@ -33,13 +34,13 @@
 		B63B2FDE197D8B9600E09F65 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2FA2197D8AFD00E09F65 /* UIKit.framework */; };
 		B63B2FE4197D8B9600E09F65 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B63B2FE2197D8B9600E09F65 /* InfoPlist.strings */; };
 		B63B2FE6197D8B9600E09F65 /* AxolotlKit_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B63B2FE5197D8B9600E09F65 /* AxolotlKit_Tests.m */; };
+		B654B03419FACCB6000458F0 /* RatchetingSessionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B654B03319FACCB6000458F0 /* RatchetingSessionTest.m */; };
 		B677600C197E4CA500A09623 /* PreKeyBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = B677600B197E4CA500A09623 /* PreKeyBundle.m */; };
 		B68034C719CEFBFF00976441 /* ChainAndIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = B68034C619CEFBFF00976441 /* ChainAndIndex.m */; };
 		B6A3490319F1A4B4008A3E01 /* AxolotlInMemoryStore.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A3490219F1A4B4008A3E01 /* AxolotlInMemoryStore.m */; };
 		B6B05C791980611400238B0D /* WhisperMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C781980611400238B0D /* WhisperMessage.m */; };
 		B6B05C7C1980612F00238B0D /* PreKeyWhisperMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C7B1980612F00238B0D /* PreKeyWhisperMessage.m */; };
 		B6B05C8919808EE100238B0D /* SessionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C8819808EE100238B0D /* SessionBuilder.m */; };
-		B6B2656E19F8488E00D2AFDC /* AxolotlTestParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B2656D19F8488E00D2AFDC /* AxolotlTestParameters.m */; };
 		B6BB8C3519F7E773008A5895 /* SessionBuilderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */; };
 		B6CBA86B19EC805200CF915B /* WhisperTextProtocol.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CBA86A19EC805200CF915B /* WhisperTextProtocol.pb.m */; };
 		B6CBA86E19EC86D000CF915B /* NSData+versionInt.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CBA86D19EC86D000CF915B /* NSData+versionInt.m */; };
@@ -75,6 +76,7 @@
 		B611CB6419844D8500FC54DA /* AliceAxolotlParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AliceAxolotlParameters.m; path = Models/AliceAxolotlParameters.m; sourceTree = "<group>"; };
 		B611CB6619844E7C00FC54DA /* BobAxolotlParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BobAxolotlParameters.h; path = Models/BobAxolotlParameters.h; sourceTree = "<group>"; };
 		B611CB6719844E7C00FC54DA /* BobAxolotlParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BobAxolotlParameters.m; path = Models/BobAxolotlParameters.m; sourceTree = "<group>"; };
+		B619AF1319FC148D00E33198 /* ProtobuffsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtobuffsTests.m; sourceTree = "<group>"; };
 		B61B6837198352570047EF87 /* SessionRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionRecord.h; path = Classes/Sessions/SessionRecord.h; sourceTree = "<group>"; };
 		B61B6838198352570047EF87 /* SessionRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionRecord.m; path = Classes/Sessions/SessionRecord.m; sourceTree = "<group>"; };
 		B61E841C19D1780D004FC382 /* HKDFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKDFTest.m; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		B63B2FE7197D8B9600E09F65 /* AxolotlKit Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AxolotlKit Tests-Prefix.pch"; sourceTree = "<group>"; };
 		B6481B6D197D868600D03A4D /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSData+Base64.h"; path = "Classes/NSData+Base64.h"; sourceTree = "<group>"; };
 		B6481B6E197D868600D03A4D /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSData+Base64.m"; path = "Classes/NSData+Base64.m"; sourceTree = "<group>"; };
+		B654B03319FACCB6000458F0 /* RatchetingSessionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatchetingSessionTest.m; sourceTree = "<group>"; };
 		B677600A197E4CA500A09623 /* PreKeyBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreKeyBundle.h; path = Models/PreKeyBundle.h; sourceTree = "<group>"; };
 		B677600B197E4CA500A09623 /* PreKeyBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreKeyBundle.m; path = Models/PreKeyBundle.m; sourceTree = "<group>"; };
 		B68034C519CEFBFF00976441 /* ChainAndIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChainAndIndex.h; path = Models/ChainAndIndex.h; sourceTree = "<group>"; };
@@ -115,7 +118,6 @@
 		B6B05C8719808EE100238B0D /* SessionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionBuilder.h; path = Classes/SessionBuilder.h; sourceTree = "<group>"; };
 		B6B05C8819808EE100238B0D /* SessionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionBuilder.m; path = Classes/SessionBuilder.m; sourceTree = "<group>"; };
 		B6B05C8C1980919000238B0D /* AxolotlExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxolotlExceptions.h; sourceTree = "<group>"; };
-		B6B2656D19F8488E00D2AFDC /* AxolotlTestParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxolotlTestParameters.m; sourceTree = "<group>"; };
 		B6B98F7D197D838A00B16B5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6B98F96197D83DD00B16B5E /* RKCK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKCK.h; sourceTree = "<group>"; };
 		B6B98F97197D83DD00B16B5E /* RKCK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKCK.m; sourceTree = "<group>"; };
@@ -226,6 +228,14 @@
 			name = AxoltolKeys;
 			sourceTree = "<group>";
 		};
+		B619AF1219FC147500E33198 /* Protobuffs */ = {
+			isa = PBXGroup;
+			children = (
+				B619AF1319FC148D00E33198 /* ProtobuffsTests.m */,
+			);
+			name = Protobuffs;
+			sourceTree = "<group>";
+		};
 		B61E841719D172BC004FC382 /* ECC */ = {
 			isa = PBXGroup;
 			children = (
@@ -246,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				B6D41A2219DB4F8E00EE9BAA /* SessionCipherTest.m */,
+				B654B03319FACCB6000458F0 /* RatchetingSessionTest.m */,
 			);
 			name = Ratchet;
 			sourceTree = "<group>";
@@ -288,6 +299,7 @@
 		B63B2FDF197D8B9600E09F65 /* AxolotlKit Tests */ = {
 			isa = PBXGroup;
 			children = (
+				B619AF1219FC147500E33198 /* Protobuffs */,
 				B61E841719D172BC004FC382 /* ECC */,
 				B61E841819D176D7004FC382 /* HKDF */,
 				B61E841F19D1813A004FC382 /* Ratchet */,
@@ -296,7 +308,6 @@
 				B6A3490119F1A4B4008A3E01 /* AxolotlInMemoryStore.h */,
 				B6A3490219F1A4B4008A3E01 /* AxolotlInMemoryStore.m */,
 				B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */,
-				B6B2656D19F8488E00D2AFDC /* AxolotlTestParameters.m */,
 			);
 			path = "AxolotlKit Tests";
 			sourceTree = "<group>";
@@ -658,11 +669,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */,
+				B619AF1419FC148D00E33198 /* ProtobuffsTests.m in Sources */,
 				B6D41A2319DB4F8E00EE9BAA /* SessionCipherTest.m in Sources */,
 				B6A3490319F1A4B4008A3E01 /* AxolotlInMemoryStore.m in Sources */,
 				B63B2FE6197D8B9600E09F65 /* AxolotlKit_Tests.m in Sources */,
+				B654B03419FACCB6000458F0 /* RatchetingSessionTest.m in Sources */,
 				B6BB8C3519F7E773008A5895 /* SessionBuilderTests.m in Sources */,
-				B6B2656E19F8488E00D2AFDC /* AxolotlTestParameters.m in Sources */,
 				B6E37AE019CF107C00E619CA /* ECCTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

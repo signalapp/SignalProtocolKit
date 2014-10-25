@@ -28,7 +28,7 @@
 @implementation DHEResult
 
 - (instancetype)initWithMasterKey:(NSData*)data{
-    NSAssert([data length] != 32*4, @"DHE Result is expected to be the result of 4 DHEs outputting 32 bytes each");
+    NSAssert([data length] != 32*4 || [data length] != 32*3, @"DHE Result is expected to be the result of 3 or 4 DHEs outputting 32 bytes each");
     
     self                           = [super init];
     const char *HKDFDefaultSalt[4] = {0};
@@ -47,29 +47,33 @@
 @implementation RatchetingSession
 
 + (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion AliceParameters:(AliceAxolotlParameters*)parameters{
-    [session setVersion:sessionVersion];
-    [session setRemoteIdentityKey:parameters.theirIdentityKey];
-    [session setLocalIdentityKey:parameters.ourIdentityKeyPair];
-
     ECKeyPair *sendingRatchetKey = [Curve25519 generateKeyPair];
-    DHEResult *result            = [self DHEKeyAgreement:parameters];
-    RKCK *sendingChain           = [result.rootKey createChainWithTheirEphemeral:parameters.theirRatchetKey ourEphemeral:sendingRatchetKey];
-
-    [session addReceiverChain:parameters.theirRatchetKey chainKey:[[ChainKey alloc]initWithData:result.chainKey index:0]];
-    [session setSenderChain:sendingRatchetKey chainKey:sendingChain.chainKey];
-    [session setRootKey:sendingChain.rootKey];
+    [self initializeSession:session sessionVersion:sessionVersion AliceParameters:parameters senderRatchet:sendingRatchetKey];
 }
 
 + (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion BobParameters:(BobAxolotlParameters*)parameters{
     
     [session setVersion:sessionVersion];
     [session setRemoteIdentityKey:parameters.theirIdentityKey];
-    [session setLocalIdentityKey:parameters.ourIdentityKeyPair];
+    [session setLocalIdentityKey:parameters.ourIdentityKeyPair.publicKey];
     
     DHEResult *result     = [self DHEKeyAgreement:parameters];
     
     [session setSenderChain:parameters.ourRatchetKey chainKey:[[ChainKey alloc]initWithData:result.chainKey index:0]];
     [session setRootKey:result.rootKey];
+}
+
++ (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion AliceParameters:(AliceAxolotlParameters*)parameters senderRatchet:(ECKeyPair*)sendingRatchet{
+    [session setVersion:sessionVersion];
+    [session setRemoteIdentityKey:parameters.theirIdentityKey];
+    [session setLocalIdentityKey:parameters.ourIdentityKeyPair.publicKey];
+    
+    DHEResult *result            = [self DHEKeyAgreement:parameters];
+    RKCK *sendingChain           = [result.rootKey createChainWithTheirEphemeral:parameters.theirRatchetKey ourEphemeral:sendingRatchet];
+    
+    [session addReceiverChain:parameters.theirRatchetKey chainKey:[[ChainKey alloc]initWithData:result.chainKey index:0]];
+    [session setSenderChain:sendingRatchet chainKey:sendingChain.chainKey];
+    [session setRootKey:sendingChain.rootKey];
 }
 
 + (DHEResult*)DHEKeyAgreement:(id<AxolotlParameters>)parameters{
@@ -83,16 +87,18 @@
         [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirSignedPreKey andKeyPair:params.ourIdentityKeyPair]];
         [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirIdentityKey andKeyPair:params.ourBaseKey]];
         [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirSignedPreKey andKeyPair:params.ourBaseKey]];
-        [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirOneTimePrekey andKeyPair:params.ourBaseKey]];
-
+        if (params.theirOneTimePrekey) {
+            [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirOneTimePrekey andKeyPair:params.ourBaseKey]];
+        }
     } else if ([parameters isKindOfClass:[BobAxolotlParameters class]]){
         BobAxolotlParameters *params = (BobAxolotlParameters*)parameters;
 
         [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirIdentityKey andKeyPair:params.ourSignedPrekey]];
         [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirBaseKey andKeyPair:params.ourIdentityKeyPair]];
         [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirBaseKey andKeyPair:params.ourSignedPrekey]];
-        [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirBaseKey andKeyPair:params.ourOneTimePrekey]];
-    
+        if (params.ourOneTimePrekey) {
+            [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirBaseKey andKeyPair:params.ourOneTimePrekey]];
+        }
     }
     
     NSLog(@"DHE MasterKey: %@", masterKey);

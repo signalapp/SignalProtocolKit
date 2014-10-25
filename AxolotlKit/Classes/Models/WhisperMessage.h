@@ -23,4 +23,6 @@
 
 - (void)verifyMacWithVersion:(int)messageVersion senderIdentityKey:(NSData *)senderIdentityKey receiverIdentityKey:(NSData*)receiverIdentityKey macKey:(NSData *)macKey;
 
+- (instancetype)initWithData:(NSData*)serialized;
+
 @end
