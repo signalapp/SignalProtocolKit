@@ -125,6 +125,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 
 - (BOOL)hasReceiverChain:(NSData*)senderRatchet{
+    NSLog(@"Receiver chains: %@", _receivingChains);
     return [self receiverChainKey:senderRatchet] != nil;
 }
 

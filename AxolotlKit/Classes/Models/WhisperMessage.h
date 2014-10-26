@@ -19,10 +19,10 @@
 @property (nonatomic, readonly) NSData    *cipherText;
 @property (nonatomic, readonly) NSData    *serialized;
 
+- (instancetype)initWithData:(NSData*)serialized;
+
 - (instancetype)initWithVersion:(int)version macKey:(NSData*)macKey senderRatchetKey:(NSData*)senderRatchetKey counter:(int)counter previousCounter:(int)previousCounter cipherText:(NSData*)cipherText senderIdentityKey:(NSData*)senderIdentityKey receiverIdentityKey:(NSData*)receiverIdentityKey;
 
 - (void)verifyMacWithVersion:(int)messageVersion senderIdentityKey:(NSData *)senderIdentityKey receiverIdentityKey:(NSData*)receiverIdentityKey macKey:(NSData *)macKey;
-
-- (instancetype)initWithData:(NSData*)serialized;
 
 @end

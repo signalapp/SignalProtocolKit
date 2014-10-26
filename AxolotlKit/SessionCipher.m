@@ -91,7 +91,6 @@
 
     NSLog(@"MAC KEY: %@", messageKeys.macKey);
     
-
     WhisperMessage *cipherMessage = [[WhisperMessage alloc] initWithVersion:sessionVersion
                                                                      macKey:messageKeys.macKey
                                                            senderRatchetKey:senderRatchetKey
@@ -193,13 +192,13 @@
         @throw [NSException exceptionWithName:InvalidMessageException reason:[NSString stringWithFormat:@"Got message version %d but was expecting %d", message.version, sessionState.version] userInfo:nil];
     }
     
-    int messageVersion = message.version;
     NSData *theirEphemeral = message.senderRatchetKey;
     int counter = message.counter;
-    ChainKey *chainKey = [self getOrCreateChainKeys:sessionState theirEphemeral:theirEphemeral];
+    ChainKey *chainKey       = [self getOrCreateChainKeys:sessionState theirEphemeral:theirEphemeral];
     MessageKeys *messageKeys = [self getOrCreateMessageKeysForSession:sessionState theirEphemeral:theirEphemeral chainKey:chainKey counter:counter];
     
-    [message verifyMacWithVersion:messageVersion senderIdentityKey:sessionState.remoteIdentityKey receiverIdentityKey:sessionState.localIdentityKey macKey:messageKeys.macKey];
+    NSLog(@"Decryption Message Keys: %@ mac: %@", messageKeys.cipherKey, messageKeys.macKey);
+    //[message verifyMacWithVersion:messageVersion senderIdentityKey:sessionState.remoteIdentityKey receiverIdentityKey:sessionState.localIdentityKey macKey:messageKeys.macKey];
     
     NSData *plaintext = [AES_CBC decryptCBCMode:message.cipherText withKey:messageKeys.cipherKey withIV:messageKeys.iv];
     
@@ -212,8 +211,10 @@
     
     @try {
         if ([sessionState hasReceiverChain:theirEphemeral]) {
+            NSLog(@"Has already chain");
             return [sessionState receiverChainKey:theirEphemeral];
         } else{
+            NSLog(@"Doesn't have chain");
             RootKey *rootKey = [sessionState rootKey];
             ECKeyPair *ourEphemeral = [sessionState senderRatchetKeyPair];
             RKCK *receiverChain = [rootKey createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourEphemeral];
@@ -223,9 +224,9 @@
             [sessionState setRootKey:senderChain.rootKey];
             [sessionState addReceiverChain:theirEphemeral chainKey:receiverChain.chainKey];
             [sessionState setPreviousCounter:MAX(sessionState.senderChainKey.index-1 , 0)];
-            [sessionState setSenderChain:ourNewEphemeral chainKey:receiverChain.chainKey];
+            [sessionState setSenderChain:ourNewEphemeral chainKey:senderChain.chainKey];
             
-            return senderChain.chainKey;
+            return receiverChain.chainKey;
         }
     }
     @catch (NSException *exception) {

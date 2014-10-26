@@ -28,13 +28,27 @@
     [super tearDown];
 }
 
-- (void)testExample {
+- (void)testProtoSerialization {
+    NSData *ratchetKey = [@"RatchetKey" dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *cipherText = [@"CipherText" dataUsingEncoding:NSUTF8StringEncoding];
+    int    counter = 2;
+    int    previousCounter = 1;
     
-    NSData *macKey =
-    WhisperMessage *whisperMessage = [[WhisperMessage alloc]initWithVersion:3 macKey:<#(NSData *)#> senderRatchetKey:<#(NSData *)#> counter:<#(int)#> previousCounter:<#(int)#> cipherText:<#(NSData *)#> senderIdentityKey:<#(NSData *)#> receiverIdentityKey:<#(NSData *)#>]
+    TSProtoWhisperMessage *helloMessage = [[[[[[[TSProtoWhisperMessage builder]
+                                                setCounter:1]
+                                               setRatchetKey:ratchetKey]
+                                              setCiphertext:cipherText]
+                                             setCounter:counter]
+                                            setPreviousCounter:previousCounter] build];
     
-    PreKeyWhisperMessage *preKeyMessage = [[PreKeyWhisperMessage alloc] initWithWhisperMessage:<#(WhisperMessage *)#> registrationId:<#(long)#> prekeyId:<#(int)#> signedPrekeyId:<#(int)#> baseKey:<#(NSData *)#> identityKey:<#(NSData *)#>]
+    NSData *serializedMessage = [helloMessage data];
     
+    TSProtoWhisperMessage *deserialized = [TSProtoWhisperMessage parseFromData:serializedMessage];
+    
+    XCTAssert(deserialized.counter == counter);
+    XCTAssert(deserialized.previousCounter == previousCounter);
+    XCTAssert([deserialized.ratchetKey isEqualToData:ratchetKey]);
+    XCTAssert([deserialized.ciphertext isEqualToData:cipherText]);
 }
 
 

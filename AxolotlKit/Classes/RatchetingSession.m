@@ -101,8 +101,6 @@
         }
     }
     
-    NSLog(@"DHE MasterKey: %@", masterKey);
-    
     return [[DHEResult alloc] initWithMasterKey:masterKey];
 }
 

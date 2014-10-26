@@ -16,6 +16,7 @@
 #import "RatchetingSession.h"
 #import "SessionBuilder.h"
 #import "SessionCipher.h"
+#import "Chainkey.h"
 
 #import "SessionState.h"
 
@@ -73,6 +74,10 @@
     AxolotlInMemoryStore *aliceStore  = [AxolotlInMemoryStore new];
     AxolotlInMemoryStore *bobStore    = [AxolotlInMemoryStore new];
     
+    NSData *aliceMacKey = aliceSessionRecord.sessionState.senderChainKey.messageKeys.macKey;
+    NSData *aliceCipherKey = aliceSessionRecord.sessionState.senderChainKey.messageKeys.cipherKey;
+    
+    
     [aliceStore storeSession:2L deviceId:1 session:aliceSessionRecord];
     [bobStore   storeSession:3L deviceId:1 session:bobSessionRecord];
     
@@ -81,6 +86,8 @@
     
     NSData *alicePlainText     = [@"This is a plaintext message!" dataUsingEncoding:NSUTF8StringEncoding];
     WhisperMessage *cipherText = [aliceSessionCipher encryptMessage:alicePlainText];
+    
+    
 
     NSData *bobPlaintext = [bobSessionCipher decrypt:cipherText];
     
