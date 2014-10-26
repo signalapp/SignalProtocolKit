@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B63B2FB5197D8AFD00E09F65"
+               BlueprintIdentifier = "B63B2FDA197D8B9600E09F65"
                BuildableName = "AxolotlKitTests.xctest"
                BlueprintName = "AxolotlKitTests"
                ReferencedContainer = "container:AxolotlKit.xcodeproj">
@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B63B2FB5197D8AFD00E09F65"
+               BlueprintIdentifier = "B63B2FDA197D8B9600E09F65"
                BuildableName = "AxolotlKitTests.xctest"
                BlueprintName = "AxolotlKitTests"
                ReferencedContainer = "container:AxolotlKit.xcodeproj">

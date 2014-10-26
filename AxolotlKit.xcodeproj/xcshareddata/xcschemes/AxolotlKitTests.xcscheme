@@ -23,6 +23,15 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B63B2F9C197D8AFD00E09F65"
+            BuildableName = "AxolotlKit.app"
+            BlueprintName = "AxolotlKit"
+            ReferencedContainer = "container:AxolotlKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -33,6 +42,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B63B2F9C197D8AFD00E09F65"
+            BuildableName = "AxolotlKit.app"
+            BlueprintName = "AxolotlKit"
+            ReferencedContainer = "container:AxolotlKit.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -42,6 +60,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B63B2F9C197D8AFD00E09F65"
+            BuildableName = "AxolotlKit.app"
+            BlueprintName = "AxolotlKit"
+            ReferencedContainer = "container:AxolotlKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

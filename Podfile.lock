@@ -13,4 +13,4 @@ SPEC CHECKSUMS:
   HKDFKit: 5998cf1bbb611e7ecc6bd3eaaef8c7a7da7be949
   ProtocolBuffers: a834d6fe4ae0cc94d081b864e4948bdd483ad228
 
-COCOAPODS: 0.34.1
+COCOAPODS: 0.34.4

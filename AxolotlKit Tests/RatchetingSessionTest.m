@@ -63,6 +63,10 @@
     [super tearDown];
 }
 
+/**
+ *  Test with Android Test Vectors
+ */
+
 - (void)testSessionInitializationAndFirstEncrypt {
     
     Byte aliceIdentityPrivateKey [] = {(Byte) 0x58, (Byte) 0x20, (Byte) 0xD9, (Byte) 0x2B,
@@ -360,10 +364,7 @@
     
     [bobStore storeSession:5L deviceId:1 session:bobSessionRecord];
     
-   SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:5L deviceId:1];
-    
-    
-    
+    SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:5L deviceId:1];
     
     NSData *plainData = [bobSessionCipher decrypt:message];
     

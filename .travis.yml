@@ -1,0 +1,12 @@
+before_install: 
+- brew update
+- brew unlink xctool
+- brew install xctool
+- sudo gem install cocoapods
+- pod install
+
+language: objective-c
+xcode_sdk: iphonesimulator8.0
+install: true
+xcode_workspace: AxolotlKit.xcworkspace
+xcode_scheme: AxolotlKit

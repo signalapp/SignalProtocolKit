@@ -65,18 +65,12 @@
     
     
     XCTAssert([aliceSessionState.remoteIdentityKey isEqualToData:bobSessionState.localIdentityKey]);
-    
-    
 }
 
 - (void)runInteractionWithAliceRecord:(SessionRecord*)aliceSessionRecord bobRecord:(SessionRecord*)bobSessionRecord {
     
     AxolotlInMemoryStore *aliceStore  = [AxolotlInMemoryStore new];
     AxolotlInMemoryStore *bobStore    = [AxolotlInMemoryStore new];
-    
-    NSData *aliceMacKey = aliceSessionRecord.sessionState.senderChainKey.messageKeys.macKey;
-    NSData *aliceCipherKey = aliceSessionRecord.sessionState.senderChainKey.messageKeys.cipherKey;
-    
     
     [aliceStore storeSession:2L deviceId:1 session:aliceSessionRecord];
     [bobStore   storeSession:3L deviceId:1 session:bobSessionRecord];
