@@ -89,8 +89,6 @@
 
     NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
 
-    NSLog(@"MAC KEY: %@", messageKeys.macKey);
-    
     WhisperMessage *cipherMessage = [[WhisperMessage alloc] initWithVersion:sessionVersion
                                                                      macKey:messageKeys.macKey
                                                            senderRatchetKey:senderRatchetKey
@@ -143,7 +141,6 @@
 - (NSData*)decryptWhisperMessage:(WhisperMessage*)message{
     
     if (![self.sessionStore containsSession:self.recipientId deviceId:self.deviceId]) {
-        NSLog(@"%@", self.sessionStore);
         @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %ld, %d", self.recipientId, self.deviceId] userInfo:nil];
     }
     
@@ -166,8 +163,9 @@
     }
     @catch (NSException *exception) {
         if ([exception.name isEqualToString:InvalidMessageException]) {
-            NSLog(@"Exception: %@", exception.reason);
             [exceptions addObject:exception];
+        } else {
+            @throw exception;
         }
     }
     
@@ -184,7 +182,6 @@
 }
 
 -(NSData*)decryptWithSessionState:(SessionState*)sessionState whisperMessage:(WhisperMessage*)message{
-    
     if (![sessionState hasSenderChain]) {
         @throw [NSException exceptionWithName:InvalidMessageException reason:@"Uninitialized session!" userInfo:nil];
     }
@@ -192,14 +189,14 @@
     if (message.version != sessionState.version) {
         @throw [NSException exceptionWithName:InvalidMessageException reason:[NSString stringWithFormat:@"Got message version %d but was expecting %d", message.version, sessionState.version] userInfo:nil];
     }
-    
-    NSData *theirEphemeral = message.senderRatchetKey;
-    int counter = message.counter;
+
+    int messageVersion       = message.version;
+    NSData *theirEphemeral   = message.senderRatchetKey;
+    int counter              = message.counter;
     ChainKey *chainKey       = [self getOrCreateChainKeys:sessionState theirEphemeral:theirEphemeral];
     MessageKeys *messageKeys = [self getOrCreateMessageKeysForSession:sessionState theirEphemeral:theirEphemeral chainKey:chainKey counter:counter];
     
-    NSLog(@"Decryption Message Keys: %@ mac: %@", messageKeys.cipherKey, messageKeys.macKey);
-    //[message verifyMacWithVersion:messageVersion senderIdentityKey:sessionState.remoteIdentityKey receiverIdentityKey:sessionState.localIdentityKey macKey:messageKeys.macKey];
+    [message verifyMacWithVersion:messageVersion senderIdentityKey:sessionState.remoteIdentityKey receiverIdentityKey:sessionState.localIdentityKey macKey:messageKeys.macKey];
     
     NSData *plaintext = [AES_CBC decryptCBCMode:message.cipherText withKey:messageKeys.cipherKey withIV:messageKeys.iv];
     
@@ -209,13 +206,10 @@
 }
 
 - (ChainKey*)getOrCreateChainKeys:(SessionState*)sessionState theirEphemeral:(NSData*)theirEphemeral{
-    
     @try {
         if ([sessionState hasReceiverChain:theirEphemeral]) {
-            NSLog(@"Has already chain");
             return [sessionState receiverChainKey:theirEphemeral];
         } else{
-            NSLog(@"Doesn't have chain");
             RootKey *rootKey = [sessionState rootKey];
             ECKeyPair *ourEphemeral = [sessionState senderRatchetKeyPair];
             RKCK *receiverChain = [rootKey createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourEphemeral];

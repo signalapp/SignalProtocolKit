@@ -8,38 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "ECKeyPair+ECKeyPairTesting.h"
 
 #import <25519/Curve25519.h>
 #import <25519/Ed25519.h>
-
-const Byte DJB_TYPE = 0x05;
-
-@implementation ECKeyPair (testing)
-
-+(ECKeyPair*)keyPairWithPrivateKey:(NSData*)privateKey publicKey:(NSData*)publicKey{
-    
-    if ([privateKey length] == 33) {
-        privateKey = [privateKey subdataWithRange:NSMakeRange(1, 32)];
-    }
-    
-    if (([publicKey length]  == 33)) {
-        if ([[publicKey subdataWithRange:NSMakeRange(0, 1)] isEqualToData:[NSData dataWithBytes:&DJB_TYPE length:1]]) {
-            publicKey = [publicKey subdataWithRange:NSMakeRange(1, 32)];
-        }
-    }
-    
-    if ([privateKey length] != ECCKeyLength && [publicKey length] != ECCKeyLength) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Public or Private key is not required size" userInfo:@{@"PrivateKey":privateKey, @"Public Key":publicKey}];
-    }
-    
-    ECKeyPair *keyPair  = [ECKeyPair new];
-    memcpy(keyPair->publicKey,  [publicKey  bytes], ECCKeyLength);
-    memcpy(keyPair->privateKey, [privateKey bytes], ECCKeyLength);
-    
-    return keyPair;
-}
-
-@end
 
 @interface ECCTests : XCTestCase
 

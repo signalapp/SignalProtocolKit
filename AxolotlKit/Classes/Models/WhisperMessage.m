@@ -9,6 +9,7 @@
 #import "Constants.h"
 #import "WhisperMessage.h"
 #import "WhisperTextProtocol.pb.h"
+#import "NSData+keyVersionByte.h"
 
 #import <CommonCrypto/CommonCrypto.h>
 
@@ -20,24 +21,24 @@
 - (instancetype)initWithVersion:(int)version macKey:(NSData*)macKey senderRatchetKey:(NSData*)senderRatchetKey counter:(int)counter previousCounter:(int)previousCounter cipherText:(NSData*)cipherText senderIdentityKey:(NSData*)senderIdentityKey receiverIdentityKey:(NSData*)receiverIdentityKey{
     self = [super init];
     
-    Byte versionByte = [self intsToByteHigh:version low:CURRENT_VERSION];
-    NSData *versionData = [NSData dataWithBytes:&versionByte length:1];
+    Byte   versionByte    = [self intsToByteHigh:version low:CURRENT_VERSION];
+    NSMutableData *serialized  = [NSMutableData dataWithBytes:&versionByte length:1];
+
+    NSData *message       = [[[[[[[TSProtoWhisperMessage builder]
+                                    setRatchetKey:senderRatchetKey]
+                                    setCounter:counter]
+                                    setPreviousCounter:previousCounter]
+                                    setCiphertext:cipherText]
+                                    build] data];
+    [serialized appendData:message];
     
-    NSData *message = [[[[[[[TSProtoWhisperMessage builder] setRatchetKey:senderRatchetKey] setCounter:counter] setPreviousCounter:previousCounter] setCiphertext:cipherText] build] data];
-    
-    NSLog(@"messageData: %@", message);
-    NSMutableData *versionAndMessage = [versionData mutableCopy];
-    [versionAndMessage appendData:message];
-    
-    NSLog(@"MAKING MESSAGE WITH VERSION %d IDENTITY KEY %@ RECEIVER IDENTITY KEY %@  MAC KEY %@ SERIALIZED %@", version, senderIdentityKey, receiverIdentityKey, macKey,versionAndMessage);
-    
-    NSData *mac     = [self macWithVersion:version
-                               identityKey:senderIdentityKey
-                       receiverIdentityKey:receiverIdentityKey
+    NSData *mac = [self macWithVersion:version
+                               identityKey:[senderIdentityKey prependKeyType]
+                       receiverIdentityKey:[receiverIdentityKey prependKeyType]
                                     macKey:macKey
-                                serialized:versionAndMessage];
+                                serialized:serialized];
     
-    [versionAndMessage appendData:mac];
+    [serialized appendData:mac];
     
     if (self) {
         _version          = version;
@@ -45,7 +46,7 @@
         _previousCounter  = previousCounter;
         _counter          = counter;
         _cipherText       = cipherText;
-        _serialized       = versionAndMessage;
+        _serialized       = serialized;
     }
     
     return self;
@@ -57,13 +58,11 @@
     }
     
     Byte version;
-    [serialized getBytes:&version length:1];
+    [serialized getBytes:&version length:VERSION_LENGTH];
     
     NSData *messageAndMac = [serialized subdataWithRange:NSMakeRange(VERSION_LENGTH, serialized.length - VERSION_LENGTH)];
     
     NSData *message = [messageAndMac subdataWithRange:NSMakeRange(0, messageAndMac.length - MAC_LENGTH)];
-    
-    //NSData *mac     = [messageAndMac subdataWithRange:NSMakeRange(message.length,MAC_LENGTH)];
     
     if ([self highBitsToIntFromByte:version] < MINIMUM_SUPPORTED_VERSION) {
         @throw [NSException exceptionWithName:LegacyMessageException reason:@"Message was sent with an unsupported version of the TextSecure protocol." userInfo:@{}];
@@ -80,7 +79,7 @@
     }
     
     _serialized       = serialized;
-    _senderRatchetKey = whisperMessage.ratchetKey;
+    _senderRatchetKey = [whisperMessage.ratchetKey removeKeyType];
     _version          = [self highBitsToIntFromByte:version];
     _counter          = whisperMessage.counter;
     _previousCounter  = whisperMessage.previousCounter;
@@ -94,15 +93,13 @@
     NSData *data     = [self.serialized subdataWithRange:NSMakeRange(0, self.serialized.length - MAC_LENGTH)];
     NSData *theirMac = [self.serialized subdataWithRange:NSMakeRange(self.serialized.length - MAC_LENGTH, MAC_LENGTH)];
     NSData *ourMac   = [self macWithVersion:messageVersion
-                                identityKey:senderIdentityKey
-                        receiverIdentityKey:receiverIdentityKey
+                                identityKey:[senderIdentityKey prependKeyType]
+                        receiverIdentityKey:[receiverIdentityKey prependKeyType]
                                      macKey:macKey
                                  serialized:data];
     
     NSLog(@"Their Mac: %@", macKey);
     NSLog(@"Our Mac: %@", ourMac);
-    
-    NSLog(@"Receiving MESSAGE WITH VERSION %d IDENTITY KEY %@ RECEIVER IDENTITY KEY %@  MAC KEY %@ SERIALIZED %@", messageVersion, senderIdentityKey, receiverIdentityKey, macKey, data);
     
     if (![theirMac isEqualToData:ourMac]) {
         @throw [NSException exceptionWithName:InvalidMessageException reason:@"Bad Mac!" userInfo:@{}];
@@ -134,19 +131,7 @@
     CCHmacUpdate(&context, [serialized bytes], [serialized length]);
     CCHmacFinal (&context, &ourHmac);
     
-    return [NSData dataWithBytes:ourHmac length:CC_SHA256_DIGEST_LENGTH];
+    return [NSData dataWithBytes:ourHmac length:MAC_LENGTH];
 }
-
-- (NSData*)computeSHA256HMAC:(NSData*)dataToHMAC withHMACKey:(NSData*)HMACKey{
-    uint8_t ourHmac[CC_SHA256_DIGEST_LENGTH] = {0};
-    CCHmac(kCCHmacAlgSHA256,
-           [HMACKey bytes],
-           [HMACKey length],
-           [dataToHMAC bytes],
-           [dataToHMAC  length],
-           ourHmac);
-    return [NSData dataWithBytes:ourHmac length:CC_SHA256_DIGEST_LENGTH];
-}
-
 
 @end

@@ -41,6 +41,10 @@
 		B6B05C791980611400238B0D /* WhisperMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C781980611400238B0D /* WhisperMessage.m */; };
 		B6B05C7C1980612F00238B0D /* PreKeyWhisperMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C7B1980612F00238B0D /* PreKeyWhisperMessage.m */; };
 		B6B05C8919808EE100238B0D /* SessionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C8819808EE100238B0D /* SessionBuilder.m */; };
+		B6B3E63C19FD3D8A0035422D /* WhisperMessageSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B3E63B19FD3D8A0035422D /* WhisperMessageSerialization.m */; };
+		B6B3E63F19FD40AF0035422D /* NSData+keyVersionByte.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B3E63E19FD40AF0035422D /* NSData+keyVersionByte.m */; };
+		B6B3E64319FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B3E64219FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.m */; };
+		B6B3E64419FD5C8E0035422D /* ECKeyPair+ECKeyPairTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B3E64219FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.m */; };
 		B6BB8C3519F7E773008A5895 /* SessionBuilderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */; };
 		B6CBA86B19EC805200CF915B /* WhisperTextProtocol.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CBA86A19EC805200CF915B /* WhisperTextProtocol.pb.m */; };
 		B6D41A2319DB4F8E00EE9BAA /* SessionCipherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D41A2219DB4F8E00EE9BAA /* SessionCipherTest.m */; };
@@ -116,6 +120,11 @@
 		B6B05C8719808EE100238B0D /* SessionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SessionBuilder.h; path = Classes/SessionBuilder.h; sourceTree = "<group>"; };
 		B6B05C8819808EE100238B0D /* SessionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SessionBuilder.m; path = Classes/SessionBuilder.m; sourceTree = "<group>"; };
 		B6B05C8C1980919000238B0D /* AxolotlExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxolotlExceptions.h; sourceTree = "<group>"; };
+		B6B3E63B19FD3D8A0035422D /* WhisperMessageSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperMessageSerialization.m; sourceTree = "<group>"; };
+		B6B3E63D19FD40AF0035422D /* NSData+keyVersionByte.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+keyVersionByte.h"; sourceTree = "<group>"; };
+		B6B3E63E19FD40AF0035422D /* NSData+keyVersionByte.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+keyVersionByte.m"; sourceTree = "<group>"; };
+		B6B3E64119FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ECKeyPair+ECKeyPairTesting.h"; path = "Util/ECKeyPair+ECKeyPairTesting.h"; sourceTree = "<group>"; };
+		B6B3E64219FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ECKeyPair+ECKeyPairTesting.m"; path = "Util/ECKeyPair+ECKeyPairTesting.m"; sourceTree = "<group>"; };
 		B6B98F7D197D838A00B16B5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6B98F96197D83DD00B16B5E /* RKCK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKCK.h; sourceTree = "<group>"; };
 		B6B98F97197D83DD00B16B5E /* RKCK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKCK.m; sourceTree = "<group>"; };
@@ -219,6 +228,7 @@
 		B619AF1219FC147500E33198 /* Protobuffs */ = {
 			isa = PBXGroup;
 			children = (
+				B6B3E63B19FD3D8A0035422D /* WhisperMessageSerialization.m */,
 				B619AF1319FC148D00E33198 /* ProtobuffsTests.m */,
 			);
 			name = Protobuffs;
@@ -293,8 +303,7 @@
 				B61E841F19D1813A004FC382 /* Ratchet */,
 				B63B2FE5197D8B9600E09F65 /* AxolotlKit_Tests.m */,
 				B63B2FE0197D8B9600E09F65 /* Supporting Files */,
-				B6A3490119F1A4B4008A3E01 /* AxolotlInMemoryStore.h */,
-				B6A3490219F1A4B4008A3E01 /* AxolotlInMemoryStore.m */,
+				B6B3E64019FD5B0D0035422D /* Util */,
 				B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */,
 			);
 			path = "AxolotlKit Tests";
@@ -367,13 +376,6 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		B6B05C8519808B9800238B0D /* Identity Key */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Identity Key";
-			sourceTree = "<group>";
-		};
 		B6B05C8A19808F6600238B0D /* Prekey */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,6 +383,17 @@
 				B677600B197E4CA500A09623 /* PreKeyBundle.m */,
 			);
 			name = Prekey;
+			sourceTree = "<group>";
+		};
+		B6B3E64019FD5B0D0035422D /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				B6B3E64119FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.h */,
+				B6B3E64219FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.m */,
+				B6A3490119F1A4B4008A3E01 /* AxolotlInMemoryStore.h */,
+				B6A3490219F1A4B4008A3E01 /* AxolotlInMemoryStore.m */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 		B6B98F6F197D838A00B16B5E = {
@@ -407,6 +420,8 @@
 		B6B98F7B197D838A00B16B5E /* AxolotlKit */ = {
 			isa = PBXGroup;
 			children = (
+				B6B3E63D19FD40AF0035422D /* NSData+keyVersionByte.h */,
+				B6B3E63E19FD40AF0035422D /* NSData+keyVersionByte.m */,
 				B6986736197F4D550038A6C1 /* Cryptography */,
 				B6B98F95197D83DD00B16B5E /* Classes */,
 				B6481B6C197D867500D03A4D /* Utility */,
@@ -434,7 +449,6 @@
 				B6B98FBA197D83EC00B16B5E /* SessionCipher.h */,
 				B6B98FBB197D83EC00B16B5E /* SessionCipher.m */,
 				B6B05C8A19808F6600238B0D /* Prekey */,
-				B6B05C8519808B9800238B0D /* Identity Key */,
 				B6B05C81198082BA00238B0D /* Sessions */,
 				B60978AC197D8D5400DB3828 /* Model */,
 				B6B98F9A197D83DD00B16B5E /* TSDerivedSecrets.h */,
@@ -635,6 +649,7 @@
 				B611CB6819844E7C00FC54DA /* BobAxolotlParameters.m in Sources */,
 				B60978B1197D9AD200DB3828 /* TSDerivedSecrets.m in Sources */,
 				B611CB6519844D8500FC54DA /* AliceAxolotlParameters.m in Sources */,
+				B6B3E64319FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.m in Sources */,
 				B6D51DF51984C0C500A25F87 /* PreKeyRecord.m in Sources */,
 				B6B05C7C1980612F00238B0D /* PreKeyWhisperMessage.m in Sources */,
 				B6FF6BC219ACC3F000E3C675 /* ChainKey.m in Sources */,
@@ -647,6 +662,7 @@
 				B677600C197E4CA500A09623 /* PreKeyBundle.m in Sources */,
 				B6F77FBA19B64AB300EE3F13 /* ReceivingChain.m in Sources */,
 				B6B05C791980611400238B0D /* WhisperMessage.m in Sources */,
+				B6B3E63F19FD40AF0035422D /* NSData+keyVersionByte.m in Sources */,
 				B60978B7197D9AD200DB3828 /* SessionState.m in Sources */,
 				B60978B9197D9AD200DB3828 /* NSData+Base64.m in Sources */,
 				B63B2FAF197D8AFD00E09F65 /* AppDelegate.m in Sources */,
@@ -662,6 +678,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6B3E64419FD5C8E0035422D /* ECKeyPair+ECKeyPairTesting.m in Sources */,
 				B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */,
 				B619AF1419FC148D00E33198 /* ProtobuffsTests.m in Sources */,
 				B6D41A2319DB4F8E00EE9BAA /* SessionCipherTest.m in Sources */,
@@ -670,6 +687,7 @@
 				B654B03419FACCB6000458F0 /* RatchetingSessionTest.m in Sources */,
 				B6BB8C3519F7E773008A5895 /* SessionBuilderTests.m in Sources */,
 				B6E37AE019CF107C00E619CA /* ECCTests.m in Sources */,
+				B6B3E63C19FD3D8A0035422D /* WhisperMessageSerialization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

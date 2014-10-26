@@ -19,33 +19,7 @@
 #import "SessionRecord.h"
 #import "ChainKey.h"
 
-@implementation ECKeyPair (testing)
-
-+(ECKeyPair*)keyPairWithPrivateKey:(NSData*)privateKey publicKey:(NSData*)publicKey{
-    const Byte DJB_TYPE = 0x05;
-    
-    if ([privateKey length] == 33) {
-        privateKey = [privateKey subdataWithRange:NSMakeRange(1, 32)];
-    }
-    
-    if (([publicKey length]  == 33)) {
-        if ([[publicKey subdataWithRange:NSMakeRange(0, 1)] isEqualToData:[NSData dataWithBytes:&DJB_TYPE length:1]]) {
-            publicKey = [publicKey subdataWithRange:NSMakeRange(1, 32)];
-        }
-    }
-    
-    if ([privateKey length] != ECCKeyLength && [publicKey length] != ECCKeyLength) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Public or Private key is not required size" userInfo:@{@"PrivateKey":privateKey, @"Public Key":publicKey}];
-    }
-    
-    ECKeyPair *keyPair  = [ECKeyPair new];
-    memcpy(keyPair->publicKey,  [publicKey  bytes], ECCKeyLength);
-    memcpy(keyPair->privateKey, [privateKey bytes], ECCKeyLength);
-    
-    return keyPair;
-}
-
-@end
+#import "ECKeyPair+ECKeyPairTesting.h"
 
 @interface RatchetingSessionTest : XCTestCase
 
@@ -356,12 +330,10 @@
     WhisperMessage *message = [aliceSessionCipher encryptMessage:alicePlaintextData];
     XCTAssert([aliceCipherTextData isEqualToData:message.cipherText]);
     
-   
     // Logging's Bob's Session initialization and first message decryption
     
     XCTAssert([bobRootKeyData isEqualToData:bobSessionRecord.sessionState.rootKey.keyData]);
-    //XCTAssert([bobChainKeyData isEqualToData:[bobSessionRecord.sessionState receiverChainKey:bobBasePublicKeyData]]);
-    
+        
     [bobStore storeSession:5L deviceId:1 session:bobSessionRecord];
     
     SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:5L deviceId:1];
