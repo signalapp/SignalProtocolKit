@@ -158,9 +158,8 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     if (receiverChain == nil) {
         return nil;
     } else{
-        return [receiverChain.chainKey copy];
+        return [[ChainKey alloc] initWithData:receiverChain.chainKey.key index:receiverChain.chainKey.index];
     }
-    
 }
 
 - (void)setReceiverChainKey:(NSData*)senderEphemeral chainKey:(ChainKey*)nextChainKey{

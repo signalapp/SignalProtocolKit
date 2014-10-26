@@ -74,7 +74,6 @@
     XCTAssert([bobStore containsSession:ALICE_RECIPIENT_ID deviceId:1]);
     XCTAssert([bobStore loadSession:ALICE_RECIPIENT_ID deviceId:1].sessionState.version == 3);
     XCTAssert([bobStore loadSession:ALICE_RECIPIENT_ID deviceId:1].sessionState.aliceBaseKey != nil);
-    
 }
 
 

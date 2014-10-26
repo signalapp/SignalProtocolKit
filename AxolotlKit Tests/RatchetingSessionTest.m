@@ -67,7 +67,7 @@
  *  Test with Android Test Vectors
  */
 
-- (void)testSessionInitializationAndFirstEncrypt {
+- (void)testSessionInitializationAndRatcheting {
     
     Byte aliceIdentityPrivateKey [] = {(Byte) 0x58, (Byte) 0x20, (Byte) 0xD9, (Byte) 0x2B,
         (Byte) 0xBF, (Byte) 0x3E, (Byte) 0x74, (Byte) 0x80,
@@ -370,137 +370,35 @@
     
     XCTAssert([plainData isEqualToData:alicePlaintextData]);
     
+    for (int i = 0; i<100; i++) {
+        NSData *message = [[NSString stringWithFormat:@"Message: %i", i] dataUsingEncoding:NSUTF8StringEncoding];
+        
+        WhisperMessage *encrypted = [aliceSessionCipher encryptMessage:message];
+        
+        XCTAssert([message isEqualToData:[bobSessionCipher decrypt:encrypted]]);
+    }
     
-    
-    //NSData *plaintext = [bobSessionCipher decrypt:[[PreKeyWhisperMessage alloc] initWithData:aliceCipherMessageData]];
-    
-    //XCTAssert([plaintext isEqualToData:alicePlaintextData]);
-}
+    for (int i = 0; i<100; i++) {
+        NSData *message = [[NSString stringWithFormat:@"Message: %i", i] dataUsingEncoding:NSUTF8StringEncoding];
+        
+        WhisperMessage *encrypted = [bobSessionCipher encryptMessage:message];
+        
+        XCTAssert([message isEqualToData:[aliceSessionCipher decrypt:encrypted]]);
+    }
 
-//- (void)testRatchetingSessionAsBob {
-//    Byte bobPublic [] = {(Byte) 0x05, (Byte) 0x2c, (Byte) 0xb4, (Byte) 0x97,
-//        (Byte) 0x76, (Byte) 0xb8, (Byte) 0x77, (Byte) 0x02,
-//        (Byte) 0x05, (Byte) 0x74, (Byte) 0x5a, (Byte) 0x3a,
-//        (Byte) 0x6e, (Byte) 0x24, (Byte) 0xf5, (Byte) 0x79,
-//        (Byte) 0xcd, (Byte) 0xb4, (Byte) 0xba, (Byte) 0x7a,
-//        (Byte) 0x89, (Byte) 0x04, (Byte) 0x10, (Byte) 0x05,
-//        (Byte) 0x92, (Byte) 0x8e, (Byte) 0xbb, (Byte) 0xad,
-//        (Byte) 0xc9, (Byte) 0xc0, (Byte) 0x5a, (Byte) 0xd4,
-//        (Byte) 0x58};
-//    
-//    Byte bobPrivate [] = {(Byte) 0xa1, (Byte) 0xca, (Byte) 0xb4, (Byte) 0x8f,
-//        (Byte) 0x7c, (Byte) 0x89, (Byte) 0x3f, (Byte) 0xaf,
-//        (Byte) 0xa9, (Byte) 0x88, (Byte) 0x0a, (Byte) 0x28,
-//        (Byte) 0xc3, (Byte) 0xb4, (Byte) 0x99, (Byte) 0x9d,
-//        (Byte) 0x28, (Byte) 0xd6, (Byte) 0x32, (Byte) 0x95,
-//        (Byte) 0x62, (Byte) 0xd2, (Byte) 0x7a, (Byte) 0x4e,
-//        (Byte) 0xa4, (Byte) 0xe2, (Byte) 0x2e, (Byte) 0x9f,
-//        (Byte) 0xf1, (Byte) 0xbd, (Byte) 0xd6, (Byte) 0x5a};
-//    
-//    Byte bobIdentityPublic []   = {(Byte) 0x05, (Byte) 0xf1, (Byte) 0xf4, (Byte) 0x38,
-//        (Byte) 0x74, (Byte) 0xf6, (Byte) 0x96, (Byte) 0x69,
-//        (Byte) 0x56, (Byte) 0xc2, (Byte) 0xdd, (Byte) 0x47,
-//        (Byte) 0x3f, (Byte) 0x8f, (Byte) 0xa1, (Byte) 0x5a,
-//        (Byte) 0xde, (Byte) 0xb7, (Byte) 0x1d, (Byte) 0x1c,
-//        (Byte) 0xb9, (Byte) 0x91, (Byte) 0xb2, (Byte) 0x34,
-//        (Byte) 0x16, (Byte) 0x92, (Byte) 0x32, (Byte) 0x4c,
-//        (Byte) 0xef, (Byte) 0xb1, (Byte) 0xc5, (Byte) 0xe6,
-//        (Byte) 0x26};
-//    
-//    Byte bobIdentityPrivate []   = {(Byte) 0x48, (Byte) 0x75, (Byte) 0xcc, (Byte) 0x69,
-//        (Byte) 0xdd, (Byte) 0xf8, (Byte) 0xea, (Byte) 0x07,
-//        (Byte) 0x19, (Byte) 0xec, (Byte) 0x94, (Byte) 0x7d,
-//        (Byte) 0x61, (Byte) 0x08, (Byte) 0x11, (Byte) 0x35,
-//        (Byte) 0x86, (Byte) 0x8d, (Byte) 0x5f, (Byte) 0xd8,
-//        (Byte) 0x01, (Byte) 0xf0, (Byte) 0x2c, (Byte) 0x02,
-//        (Byte) 0x25, (Byte) 0xe5, (Byte) 0x16, (Byte) 0xdf,
-//        (Byte) 0x21, (Byte) 0x56, (Byte) 0x60, (Byte) 0x5e};
-//    
-//    Byte aliceBasePublic [] = {(Byte) 0x05, (Byte) 0x47, (Byte) 0x2d, (Byte) 0x1f,
-//        (Byte) 0xb1, (Byte) 0xa9, (Byte) 0x86, (Byte) 0x2c,
-//        (Byte) 0x3a, (Byte) 0xf6, (Byte) 0xbe, (Byte) 0xac,
-//        (Byte) 0xa8, (Byte) 0x92, (Byte) 0x02, (Byte) 0x77,
-//        (Byte) 0xe2, (Byte) 0xb2, (Byte) 0x6f, (Byte) 0x4a,
-//        (Byte) 0x79, (Byte) 0x21, (Byte) 0x3e, (Byte) 0xc7,
-//        (Byte) 0xc9, (Byte) 0x06, (Byte) 0xae, (Byte) 0xb3,
-//        (Byte) 0x5e, (Byte) 0x03, (Byte) 0xcf, (Byte) 0x89,
-//        (Byte) 0x50};
-//    
-//    Byte aliceEphemeralPublic [] = {(Byte) 0x05, (Byte) 0x6c, (Byte) 0x3e, (Byte) 0x0d,
-//        (Byte) 0x1f, (Byte) 0x52, (Byte) 0x02, (Byte) 0x83,
-//        (Byte) 0xef, (Byte) 0xcc, (Byte) 0x55, (Byte) 0xfc,
-//        (Byte) 0xa5, (Byte) 0xe6, (Byte) 0x70, (Byte) 0x75,
-//        (Byte) 0xb9, (Byte) 0x04, (Byte) 0x00, (Byte) 0x7f,
-//        (Byte) 0x18, (Byte) 0x81, (Byte) 0xd1, (Byte) 0x51,
-//        (Byte) 0xaf, (Byte) 0x76, (Byte) 0xdf, (Byte) 0x18,
-//        (Byte) 0xc5, (Byte) 0x1d, (Byte) 0x29, (Byte) 0xd3,
-//        (Byte) 0x4b};
-//    
-//    Byte aliceIdentityPublic [] = {(Byte) 0x05, (Byte) 0xb4, (Byte) 0xa8, (Byte) 0x45,
-//        (Byte) 0x56, (Byte) 0x60, (Byte) 0xad, (Byte) 0xa6,
-//        (Byte) 0x5b, (Byte) 0x40, (Byte) 0x10, (Byte) 0x07,
-//        (Byte) 0xf6, (Byte) 0x15, (Byte) 0xe6, (Byte) 0x54,
-//        (Byte) 0x04, (Byte) 0x17, (Byte) 0x46, (Byte) 0x43,
-//        (Byte) 0x2e, (Byte) 0x33, (Byte) 0x39, (Byte) 0xc6,
-//        (Byte) 0x87, (Byte) 0x51, (Byte) 0x49, (Byte) 0xbc,
-//        (Byte) 0xee, (Byte) 0xfc, (Byte) 0xb4, (Byte) 0x2b,
-//        (Byte) 0x4a};
-//    
-//    Byte senderChain [] = {(Byte)0xd2, (Byte)0x2f, (Byte)0xd5, (Byte)0x6d, (Byte)0x3f,
-//        (Byte)0xec, (Byte)0x81, (Byte)0x9c, (Byte)0xf4, (Byte)0xc3,
-//        (Byte)0xd5, (Byte)0x0c, (Byte)0x56, (Byte)0xed, (Byte)0xfb,
-//        (Byte)0x1c, (Byte)0x28, (Byte)0x0a, (Byte)0x1b, (Byte)0x31,
-//        (Byte)0x96, (Byte)0x45, (Byte)0x37, (Byte)0xf1, (Byte)0xd1,
-//        (Byte)0x61, (Byte)0xe1, (Byte)0xc9, (Byte)0x31, (Byte)0x48,
-//        (Byte)0xe3, (Byte)0x6b};
-//    
-//    NSData *bobPublicKey  = [NSData dataWithBytes:bobIdentityPublic  length:33];
-//    NSData *bobPrivateKey = [NSData dataWithBytes:bobIdentityPrivate length:32];
-//    ECKeyPair *bobIdentityKey = [ECKeyPair keyPairWithPrivateKey:bobPrivateKey publicKey:bobPublicKey];
-//    
-//    NSData *bobEphemeralPublicKey  = [NSData dataWithBytes:bobPublic length:33];
-//    NSData *bobEphemeralPrivateKey = [NSData dataWithBytes:bobPrivate length:32];
-//    ECKeyPair *bobEphemeral = [ECKeyPair keyPairWithPrivateKey:bobEphemeralPrivateKey publicKey:bobEphemeralPublicKey];
-//    
-//    NSData *aliceIdentityPublicKey = [[NSData dataWithBytes:aliceIdentityPublic length:33] subdataWithRange:NSMakeRange(1, 32)];
-//    NSData *aliceBasePublicKey = [[NSData dataWithBytes:aliceBasePublic length:33] subdataWithRange:NSMakeRange(1, 32)];
-//    NSData *aliceEphemeralKey = [[NSData dataWithBytes:aliceEphemeralPublic length:33] subdataWithRange:NSMakeRange(1, 32)];
-//    
-//    BobAxolotlParameters *bobAxolotlParameters = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:bobIdentityKey theirIdentityKey:aliceIdentityPublicKey ourSignedPrekey:bobEphemeral ourRatchetKey:bobEphemeral ourOneTimePrekey:nil theirBaseKey:aliceBasePublicKey];
-//    
-//    SessionState *session = [SessionState new];
-//    
-//    [RatchetingSession initializeSession:session sessionVersion:3 BobParameters:<#(BobAxolotlParameters *)#>]
-//    
-//    
-//        IdentityKey     bobIdentityKeyPublic   = new IdentityKey(bobIdentityPublic, 0);
-//        ECPrivateKey    bobIdentityKeyPrivate  = Curve.decodePrivatePoint(bobIdentityPrivate);
-//        IdentityKeyPair bobIdentityKey         = new IdentityKeyPair(bobIdentityKeyPublic, bobIdentityKeyPrivate);
-//        ECPublicKey     bobEphemeralPublicKey  = Curve.decodePoint(bobPublic, 0);
-//        ECPrivateKey    bobEphemeralPrivateKey = Curve.decodePrivatePoint(bobPrivate);
-//        ECKeyPair       bobEphemeralKey        = new ECKeyPair(bobEphemeralPublicKey, bobEphemeralPrivateKey);
-//        ECKeyPair       bobBaseKey             = bobEphemeralKey;
-//        
-//        ECPublicKey     aliceBasePublicKey       = Curve.decodePoint(aliceBasePublic, 0);
-//        ECPublicKey     aliceEphemeralPublicKey  = Curve.decodePoint(aliceEphemeralPublic, 0);
-//        IdentityKey     aliceIdentityPublicKey   = new IdentityKey(aliceIdentityPublic, 0);
-//        
-//        BobAxolotlParameters parameters = BobAxolotlParameters.newBuilder()
-//        .setOurIdentityKey(bobIdentityKey)
-//        .setOurSignedPreKey(bobBaseKey)
-//        .setOurRatchetKey(bobEphemeralKey)
-//        .setOurOneTimePreKey(Optional.<ECKeyPair>absent())
-//        .setTheirIdentityKey(aliceIdentityPublicKey)
-//        .setTheirBaseKey(aliceBasePublicKey)
-//        .create();
-//        
-//        SessionState session = new SessionState();
-//        
-//        RatchetingSession.initializeSession(session, 2, parameters);
-//        
-//        assertTrue(session.getLocalIdentityKey().equals(bobIdentityKey.getPublicKey()));
-//        assertTrue(session.getRemoteIdentityKey().equals(aliceIdentityPublicKey));
-//        assertTrue(Arrays.equals(session.getSenderChainKey().getKey(), senderChain));
-//}
+    NSMutableArray *plainTexts      = [NSMutableArray new];
+    NSMutableArray *cipherMessages = [NSMutableArray new];
+    
+    for (int i = 0 ; i < 100; i++) {
+        NSData *message = [[NSString stringWithFormat:@"Message: %i", i] dataUsingEncoding:NSUTF8StringEncoding];
+        [plainTexts addObject:message];
+        [cipherMessages addObject:[bobSessionCipher encryptMessage:message]];
+    }
+    
+    for (int i = 0; i < plainTexts.count; i++) {
+        XCTAssert([[aliceSessionCipher decrypt:[cipherMessages objectAtIndex:i]] isEqualToData:[plainTexts objectAtIndex:i]]);
+    }
+    
+}
 
 @end

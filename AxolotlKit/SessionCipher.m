@@ -143,6 +143,7 @@
 - (NSData*)decryptWhisperMessage:(WhisperMessage*)message{
     
     if (![self.sessionStore containsSession:self.recipientId deviceId:self.deviceId]) {
+        NSLog(@"%@", self.sessionStore);
         @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %ld, %d", self.recipientId, self.deviceId] userInfo:nil];
     }
     

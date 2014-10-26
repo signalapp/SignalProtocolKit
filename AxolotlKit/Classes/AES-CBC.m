@@ -16,19 +16,19 @@
 
 #pragma mark AESCBC Mode
 
-+(NSData*)encryptCBCMode:(NSData*)dataToEncrypt withKey:(NSData*)key withIV:(NSData*)iv{
-    NSAssert(dataToEncrypt, @"Missing data to encrypt");
++(NSData*)encryptCBCMode:(NSData*)data withKey:(NSData*)key withIV:(NSData*)iv{
+    NSAssert(data, @"Missing data to encrypt");
     NSAssert([key length] == 32, @"AES key should be 128 bits");
-    NSAssert([iv  length] == 16, @"AE-CBC IV should be 128 bits");
+    NSAssert([iv  length] == 16, @"AES-CBC IV should be 128 bits");
     
-    size_t bufferSize           = [dataToEncrypt length] + kCCBlockSizeAES128;
+    size_t bufferSize           = [data length] + kCCBlockSizeAES128;
     void* buffer                = malloc(bufferSize);
     
     size_t bytesEncrypted    = 0;
     CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmAES128, kCCOptionPKCS7Padding,
                                           [key bytes], [key length],
                                           [iv bytes],
-                                          [dataToEncrypt bytes], [dataToEncrypt length],
+                                          [data bytes], [data length],
                                           buffer, bufferSize,
                                           &bytesEncrypted);
     
@@ -40,16 +40,16 @@
     }
 }
 
-+(NSData*) decryptCBCMode:(NSData*)dataToDecrypt withKey:(NSData*)key withIV:(NSData*)iv {
++(NSData*) decryptCBCMode:(NSData*)data withKey:(NSData*)key withIV:(NSData*)iv {
 
-    size_t bufferSize           = [dataToDecrypt length] + kCCBlockSizeAES128;
+    size_t bufferSize           = [data length] + kCCBlockSizeAES128;
     void* buffer                = malloc(bufferSize);
     
     size_t bytesDecrypted    = 0;
     CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt, kCCAlgorithmAES128, kCCOptionPKCS7Padding,
                                           [key bytes], [key length],
                                           [iv bytes],
-                                          [dataToDecrypt bytes], [dataToDecrypt length],
+                                          [data bytes], [data length],
                                           buffer, bufferSize,
                                           &bytesDecrypted);
     

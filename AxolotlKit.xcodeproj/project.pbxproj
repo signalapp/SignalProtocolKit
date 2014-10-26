@@ -43,7 +43,6 @@
 		B6B05C8919808EE100238B0D /* SessionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B05C8819808EE100238B0D /* SessionBuilder.m */; };
 		B6BB8C3519F7E773008A5895 /* SessionBuilderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */; };
 		B6CBA86B19EC805200CF915B /* WhisperTextProtocol.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CBA86A19EC805200CF915B /* WhisperTextProtocol.pb.m */; };
-		B6CBA86E19EC86D000CF915B /* NSData+versionInt.m in Sources */ = {isa = PBXBuildFile; fileRef = B6CBA86D19EC86D000CF915B /* NSData+versionInt.m */; };
 		B6D41A2319DB4F8E00EE9BAA /* SessionCipherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D41A2219DB4F8E00EE9BAA /* SessionCipherTest.m */; };
 		B6D51DF21984BE9300A25F87 /* SignedPrekeyRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D51DF11984BE9300A25F87 /* SignedPrekeyRecord.m */; };
 		B6D51DF51984C0C500A25F87 /* PreKeyRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D51DF41984C0C500A25F87 /* PreKeyRecord.m */; };
@@ -131,8 +130,6 @@
 		B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionBuilderTests.m; sourceTree = "<group>"; };
 		B6CBA86919EC805200CF915B /* WhisperTextProtocol.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WhisperTextProtocol.pb.h; path = AxolotlKit/Protobuffs/WhisperTextProtocol.pb.h; sourceTree = SOURCE_ROOT; };
 		B6CBA86A19EC805200CF915B /* WhisperTextProtocol.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WhisperTextProtocol.pb.m; path = AxolotlKit/Protobuffs/WhisperTextProtocol.pb.m; sourceTree = SOURCE_ROOT; };
-		B6CBA86C19EC86D000CF915B /* NSData+versionInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+versionInt.h"; sourceTree = "<group>"; };
-		B6CBA86D19EC86D000CF915B /* NSData+versionInt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+versionInt.m"; sourceTree = "<group>"; };
 		B6CBA86F19EC87D400CF915B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../Constants.h; sourceTree = "<group>"; };
 		B6D41A2219DB4F8E00EE9BAA /* SessionCipherTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionCipherTest.m; sourceTree = "<group>"; };
 		B6D51DF01984BE9300A25F87 /* SignedPrekeyRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignedPrekeyRecord.h; path = Classes/SignedPrekeyRecord.h; sourceTree = "<group>"; };
@@ -430,8 +427,6 @@
 			isa = PBXGroup;
 			children = (
 				B6CBA86F19EC87D400CF915B /* Constants.h */,
-				B6CBA86C19EC86D000CF915B /* NSData+versionInt.h */,
-				B6CBA86D19EC86D000CF915B /* NSData+versionInt.m */,
 				B6CBA86919EC805200CF915B /* WhisperTextProtocol.pb.h */,
 				B6CBA86A19EC805200CF915B /* WhisperTextProtocol.pb.m */,
 				B68034C519CEFBFF00976441 /* ChainAndIndex.h */,
@@ -646,7 +641,6 @@
 				B611CB6219844A5600FC54DA /* RatchetingSession.m in Sources */,
 				B6F34EB0197EDDB500B64572 /* AES-CBC.m in Sources */,
 				B60978B3197D9AD200DB3828 /* MessageKeys.m in Sources */,
-				B6CBA86E19EC86D000CF915B /* NSData+versionInt.m in Sources */,
 				B6D51DF21984BE9300A25F87 /* SignedPrekeyRecord.m in Sources */,
 				B61B6839198352570047EF87 /* SessionRecord.m in Sources */,
 				B68034C719CEFBFF00976441 /* ChainAndIndex.m in Sources */,
