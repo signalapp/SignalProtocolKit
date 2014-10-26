@@ -10,11 +10,11 @@
 #import "Chain.h"
 #import <25519/Curve25519.h>
 
-@interface ReceivingChain : NSObject <Chain>
+@interface ReceivingChain : NSObject <Chain, NSSecureCoding>
 
 - (instancetype)initWithChainKey:(ChainKey*)chainKey senderRatchetKey:(NSData*)senderRatchet;
 
-@property NSMutableArray *messageKeys;
+@property NSMutableArray *messageKeysList;
 @property NSData *senderRatchetKey;
 
 @end

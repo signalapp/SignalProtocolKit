@@ -13,27 +13,35 @@
 #import "Chain.h"
 #import "RootKey.h"
 
-@interface UnacknowledgedPreKeyMessageItems : NSObject
+/**
+ *  Pending PreKeys
+ */
 
-@property int preKeyId;
-@property int signedPreKeyId;
-@property (nonatomic, copy)NSData* baseKey;
+@interface PendingPreKey : NSObject <NSSecureCoding>
+
+@property (readonly) int preKeyId;
+@property (readonly) int signedPreKeyId;
+@property (readonly) NSData *baseKey;
+
+-(instancetype)initWithBaseKey:(NSData*)baseKey preKeyId:(int)preKeyId signedPreKeyId:(int)signedPrekeyId;
 
 @end
 
-@interface SessionState : NSObject<NSCoding>
+@interface SessionState : NSObject <NSSecureCoding>
 
 /**
  *  AxolotlSessions are either retreived from the database or initiated on new discussions. They are serialized before being stored to make storing abstractions significantly simpler. Because we propose no abstraction for a contact and TextSecure has multi-device (multiple sessions with same identity key) support, the identityKeys need to be added manually.
  */
 
-@property(nonatomic, copy)NSData *aliceBaseKey;
-@property(nonatomic)BOOL needsRefresh;
-@property(nonatomic)int  version;
-@property(nonatomic)NSData *remoteIdentityKey;
-@property(nonatomic)NSData *localIdentityKey;
-@property(nonatomic)int previousCounter;
-@property(nonatomic)RootKey *rootKey;
+@property(nonatomic) int  version;
+@property(nonatomic, copy) NSData *aliceBaseKey;
+@property(nonatomic) NSData *remoteIdentityKey;
+@property(nonatomic) NSData *localIdentityKey;
+@property(nonatomic) int previousCounter;
+@property(nonatomic) RootKey *rootKey;
+
+@property(nonatomic)long remoteRegistrationId;
+@property(nonatomic)long localRegistrationId;
 
 - (NSData*)senderRatchetKey;
 - (ECKeyPair*)senderRatchetKeyPair;
@@ -59,22 +67,9 @@
 
 - (void)setMessageKeys:(NSData*)senderRatchetKey messageKeys:(MessageKeys*)messageKeys;
 
-- (void)setPendingKeyExchange:(int)sequence ourBaseKey:(ECKeyPair*)ourBaseKey ourRatchetKey:(ECKeyPair*)ourRatchetKey identityKeyPair:(NSData*)ourIdentityKeyPair;
-
-- (int)pendingKeyExchangeSequence;
-
-- (ECKeyPair*)pendingKeyExchangeBaseKey;
-- (ECKeyPair*)pendingKeyExchangeRatchetKey;
-- (ECKeyPair*)pendingKeyExchangeIdentityKey;
-
-- (BOOL) hasPendingKeyExchange;
-
 - (void)setUnacknowledgedPreKeyMessage:(int)preKeyId signedPreKey:(int)signedPreKeyId baseKey:(NSData*)baseKey;
 - (BOOL)hasUnacknowledgedPreKeyMessage;
-- (UnacknowledgedPreKeyMessageItems*)unacknowledgedPreKeyMessageItems;
+- (PendingPreKey*)unacknowledgedPreKeyMessageItems;
 - (void)clearUnacknowledgedPreKeyMessage;
-
-@property(nonatomic)long remoteRegistrationId;
-@property(nonatomic)long localRegistrationId;
 
 @end

@@ -13,21 +13,16 @@
 #import "ChainAndIndex.h"
 
 
-/**
- *  Pending PreKeys
- */
-
-@interface PendingPreKey : NSObject
-
-@property (readonly) int preKeyId;
-@property (readonly) int signedPreKeyId;
-@property (readonly) NSData *baseKey;
-
--(instancetype)initWithBaseKey:(NSData*)baseKey preKeyId:(int)preKeyId signedPreKeyId:(int)signedPrekeyId;
-
-@end
-
 @implementation PendingPreKey
+
+static NSString* const kCoderPreKeyId       = @"kCoderPreKeyId";
+static NSString* const kCoderSignedPreKeyId = @"kCoderSignedPreKeyId";
+static NSString* const kCoderBaseKey        = @"kCoderBaseKey";
+
+
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
 
 -(instancetype)initWithBaseKey:(NSData*)baseKey preKeyId:(int)preKeyId signedPreKeyId:(int)signedPrekeyId{
     self = [super init];
@@ -39,58 +34,17 @@
     return self;
 }
 
-@end
-
-/**
- *  Pending Key Exchanges
- */
-
-@interface PendingKeyExchange : NSObject
-
-@property int sequence;
-@property ECKeyPair *ourBaseKey;
-#warning DO WE REALLY NEED A COPY OF THE IDENTITY KEY HERE?
-@property ECKeyPair *ourIdentityKey;
-@property ECKeyPair *ourRatchetKey;
-
--(instancetype)initWithBaseKey:(ECKeyPair*)baseKey ourIdentityKey:(ECKeyPair*)ourIdentityKey ratchetKey:(ECKeyPair*)ratchetKey sequence:(int)sequence;
-
-@end
-
-@implementation PendingKeyExchange
-
--(instancetype)initWithBaseKey:(ECKeyPair*)baseKey ourIdentityKey:(ECKeyPair*)ourIdentityKey ratchetKey:(ECKeyPair*)ratchetKey sequence:(int)sequence{
-    self = [super init];
-    if (self) {
-        _ourBaseKey     = baseKey;
-        _ourIdentityKey = ourIdentityKey;
-        _ourRatchetKey  = ratchetKey;
-        _sequence       = sequence;
-    }
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    self = [self initWithBaseKey:[aDecoder decodeObjectOfClass:[NSData class] forKey:kCoderBaseKey]
+                        preKeyId:[aDecoder decodeIntForKey:kCoderPreKeyId]
+                  signedPreKeyId:[aDecoder decodeIntForKey:kCoderSignedPreKeyId]];
     return self;
 }
 
-@end
-
-#pragma mark Keys for coder
-
-static NSString* const kCoderPN               = @"kCoderPN";
-static NSString* const kCoderRootKey          = @"kCoderRoot";
-static NSString* const kCoderReceiverChains   = @"kCoderReceiverChains";
-static NSString* const kCoderSendingChain     = @"kCoderSendingChain";
-static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
-#warning missing serialization
-
-@implementation UnacknowledgedPreKeyMessageItems
-
-- (instancetype)initWithPreKeyId:(int)preKeyId signedPreKeyId:(int)signedPrekeyId baseKey:(NSData*)baseKey{
-    self = [super init];
-    if (self) {
-        self.preKeyId       = preKeyId;
-        self.signedPreKeyId = signedPrekeyId;
-        self.baseKey        = baseKey;
-    }
-    return self;
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:_baseKey forKey:kCoderBaseKey];
+    [aCoder encodeInt:_preKeyId forKey:kCoderPreKeyId];
+    [aCoder encodeInt:_signedPreKeyId forKey:kCoderSignedPreKeyId];
 }
 
 @end
@@ -99,12 +53,29 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 
 @property SendingChain       *sendingChain;               // The outgoing sending chain
 @property NSMutableArray     *receivingChains;            // NSArray of ReceivingChains
-@property PendingKeyExchange *pendingKeyExchange;
 @property PendingPreKey      *pendingPreKey;
 
 @end
 
+#pragma mark Keys for coder
+
+static NSString* const kCoderVersion          = @"kCoderVersion";
+static NSString* const kCoderAliceBaseKey     = @"kCoderAliceBaseKey";
+static NSString* const kCoderRemoteIDKey      = @"kCoderRemoteIDKey";
+static NSString* const kCoderLocalIDKey       = @"kCoderLocalIDKey";
+static NSString* const kCoderPreviousCounter  = @"kCoderPreviousCounter";
+static NSString* const kCoderRootKey          = @"kCoderRoot";
+static NSString* const kCoderLocalRegID       = @"kCoderLocalRegID";
+static NSString* const kCoderRemoteRegID      = @"kCoderRemoteRegID";
+static NSString* const kCoderReceiverChains   = @"kCoderReceiverChains";
+static NSString* const kCoderSendingChain     = @"kCoderSendingChain";
+static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
+
 @implementation SessionState
+
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
 
 - (instancetype)init{
     self = [super init];
@@ -116,6 +87,40 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    self = [self init];
+    
+    if (self) {
+        self.version              = [aDecoder decodeIntForKey:kCoderVersion];
+        self.aliceBaseKey         = [aDecoder decodeObjectOfClass:[NSData class] forKey:kCoderAliceBaseKey];
+        self.remoteIdentityKey    = [aDecoder decodeObjectOfClass:[NSData class] forKey:kCoderRemoteIDKey];
+        self.localIdentityKey     = [aDecoder decodeObjectOfClass:[NSData class] forKey:kCoderLocalIDKey];
+        self.previousCounter      = [aDecoder decodeIntForKey:kCoderPreviousCounter];
+        self.rootKey              = [aDecoder decodeObjectOfClass:[NSData class] forKey:kCoderRootKey];
+        self.remoteRegistrationId = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:kCoderRemoteRegID] longValue];
+        self.localRegistrationId  = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:kCoderLocalRegID] longValue];
+        self.sendingChain         = [aDecoder decodeObjectOfClass:[SendingChain class] forKey:kCoderSendingChain];
+        self.receivingChains      = [aDecoder decodeObjectOfClass:[NSArray class] forKey:kCoderReceiverChains];
+        self.pendingPreKey        = [aDecoder decodeObjectOfClass:[PendingPreKey class] forKey:kCoderPendingPrekey];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeInt:self.version forKey:kCoderVersion];
+    [aCoder encodeObject:self.aliceBaseKey forKey:kCoderAliceBaseKey];
+    [aCoder encodeObject:self.remoteIdentityKey forKey:kCoderRemoteIDKey];
+    [aCoder encodeObject:self.localIdentityKey forKey:kCoderLocalIDKey];
+    [aCoder encodeInt:self.previousCounter forKey:kCoderPreviousCounter];
+    [aCoder encodeObject:self.rootKey forKey:kCoderRootKey];
+    [aCoder encodeObject:[NSNumber numberWithLong:self.remoteRegistrationId] forKey:kCoderRemoteRegID];
+    [aCoder encodeObject:[NSNumber numberWithLong:self.localRegistrationId] forKey:kCoderLocalRegID];
+    [aCoder encodeObject:self.sendingChain forKey:kCoderSendingChain];
+    [aCoder encodeObject:self.receivingChains forKey:kCoderReceiverChains];
+    [aCoder encodeObject:self.pendingPreKey forKey:kCoderPendingPrekey];
+}
+
 - (NSData*)senderRatchetKey{
     return [[self senderRatchetKeyPair] publicKey];
 }
@@ -125,7 +130,6 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 
 - (BOOL)hasReceiverChain:(NSData*)senderRatchet{
-    NSLog(@"Receiver chains: %@", _receivingChains);
     return [self receiverChainKey:senderRatchet] != nil;
 }
 
@@ -153,7 +157,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 
 - (ChainKey*)receiverChainKey:(NSData*)senderRatchetKey{
     ChainAndIndex  *receiverChainAndIndex = [self receiverChain:senderRatchetKey];
-    ReceivingChain *receiverChain         = receiverChainAndIndex.chain;
+    ReceivingChain *receiverChain         = (ReceivingChain*)receiverChainAndIndex.chain;
     
     if (receiverChain == nil) {
         return nil;
@@ -169,7 +173,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     ReceivingChain *newChain     = [[ReceivingChain alloc] initWithChainKey:[[ChainKey alloc] initWithData:[chain.chainKey.key copy] index:chain.chainKey.index] senderRatchetKey:chain.senderRatchetKey];
     newChain.chainKey            = nextChainKey;
     
-    [self.receivingChains insertObject:newChain atIndex:chainAndIndex.index];
+    [self.receivingChains replaceObjectAtIndex:chainAndIndex.index withObject:newChain];
 }
 
 - (void)addReceiverChain:(NSData*)senderRatchetKey chainKey:(ChainKey*)chainKey{
@@ -207,7 +211,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
         return false;
     }
     
-    NSArray *messageKeyArray = receivingChain.messageKeys;
+    NSArray *messageKeyArray = receivingChain.messageKeysList;
     
     for (MessageKeys *keys in messageKeyArray) {
         if (keys.index == counter) {
@@ -226,7 +230,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
         return nil;
     }
     
-    NSMutableArray *messageList = receivingChain.messageKeys;
+    NSMutableArray *messageList = receivingChain.messageKeysList;
     
     MessageKeys *result;
     
@@ -255,33 +259,8 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 
 - (void)setMessageKeys:(NSData*)senderRatchetKey messageKeys:(MessageKeys*)messageKeys{
     ChainAndIndex  *chainAndIndex = [self receiverChain:senderRatchetKey];
-    ReceivingChain *chain         = chainAndIndex.chain;
-    [chain.messageKeys addObject:messageKeys];
-}
-
-- (void)setPendingKeyExchange:(int)sequence ourBaseKey:(ECKeyPair*)ourBaseKey ourRatchetKey:(ECKeyPair*)ourRatchetKey identityKeyPair:(NSData*)ourIdentityKeyPair{
-    PendingKeyExchange *pendingKeyExchange = [[PendingKeyExchange alloc] initWithBaseKey:ourBaseKey ourIdentityKey:ourRatchetKey ratchetKey:ourRatchetKey sequence:sequence];
-    self.pendingKeyExchange = pendingKeyExchange;
-}
-
-- (int)pendingKeyExchangeSequence{
-    return self.pendingKeyExchange.sequence;
-}
-
-- (ECKeyPair*)pendingKeyExchangeBaseKey{
-    return self.pendingKeyExchange.ourBaseKey;
-}
-
-- (ECKeyPair*)pendingKeyExchangeRatchetKey{
-    return self.pendingKeyExchange.ourRatchetKey;
-}
-
-- (ECKeyPair*)pendingKeyExchangeIdentityKey{
-    return self.pendingKeyExchange.ourIdentityKey;
-}
-
-- (BOOL) hasPendingKeyExchange{
-    return self.pendingKeyExchange?YES:NO;
+    ReceivingChain *chain         = (ReceivingChain*)chainAndIndex.chain;
+    [chain.messageKeysList addObject:messageKeys];
 }
 
 - (void)setUnacknowledgedPreKeyMessage:(int)preKeyId signedPreKey:(int)signedPreKeyId baseKey:(NSData*)baseKey{

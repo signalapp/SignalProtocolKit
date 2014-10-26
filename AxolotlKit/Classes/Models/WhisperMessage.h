@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CipherMessage.h"
 
 @class ECKeyPair;
 
-@interface WhisperMessage : NSObject
+@interface WhisperMessage : NSObject <CipherMessage>
 
 @property (nonatomic, readonly) int       version;
 @property (nonatomic, readonly) NSData    *senderRatchetKey;

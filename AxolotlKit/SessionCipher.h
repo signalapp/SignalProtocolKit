@@ -35,8 +35,8 @@ typedef PreKeyBundle*(^AxolotlFetchKey)   (NSInteger contactIdentifier, NSIntege
 
 - (instancetype)initWithSessionStore:(id<SessionStore>)sessionStore preKeyStore:(id<PreKeyStore>)preKeyStore signedPreKeyStore:(id<SignedPreKeyStore>)signedPreKeyStore identityKeyStore:(id<IdentityKeyStore>)identityKeyStore recipientId:(long)recipientId deviceId:(int)deviceId;
 
-- (WhisperMessage*)encryptMessage:(NSData*)paddedMessage;
+- (id<CipherMessage>)encryptMessage:(NSData*)paddedMessage;
 
-- (NSData*)decrypt:(WhisperMessage*)whisperMessage;
+- (NSData*)decrypt:(id<CipherMessage>)whisperMessage;
 
 @end

@@ -7,10 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-
 @class ChainKey;
 
-@protocol Chain <NSObject>
+@protocol Chain <NSObject, NSSecureCoding>
 
 -(ChainKey*)chainKey;
 -(void)setChainKey:(ChainKey*)chainKey;

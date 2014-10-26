@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SessionState.h"
 
-@interface SessionRecord : NSObject<NSSecureCoding>
+@interface SessionRecord : NSObject <NSSecureCoding>
 
 - (instancetype)init;
 - (instancetype)initWithSessionState:(SessionState*)sessionState;

@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "Chain.h"
 
-@class ECKeyPair;
+#import <25519/Curve25519.h>
 
-@interface SendingChain : NSObject<Chain>
+@interface SendingChain : NSObject <Chain, NSSecureCoding>
 
 -(instancetype)initWithChainKey:(ChainKey*)chainKey senderRatchetKeyPair:(ECKeyPair*)keyPair;
 

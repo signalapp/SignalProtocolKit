@@ -7,10 +7,11 @@
 //
 
 #import "PreKeyWhisperMessage.h"
+#import "Constants.h"
+#import "WhisperTextProtocol.pb.h"
+#import "SerializationUtilities.h"
 
 @implementation PreKeyWhisperMessage
-
-@synthesize version=_version, senderRatchetKey=_senderRatchetKey, previousCounter=_previousCounter, counter=_counter, cipherText=_cipherText, serialized=_serialized;
 
 -(instancetype)initWithWhisperMessage:(WhisperMessage*)whisperMessage registrationId:(long)registrationId prekeyId:(int)prekeyId signedPrekeyId:(int)signedPrekeyId baseKey:(NSData*)baseKey identityKey:(NSData*)identityKey{
     
@@ -28,12 +29,40 @@
         _signedPrekeyId      = signedPrekeyId;
         _baseKey             = baseKey;
         _identityKey         = identityKey;
+        _message             = whisperMessage;
     }
     return self;
 }
 
-- (WhisperMessage*)whisperMessage{
-    return (WhisperMessage*)self;
+- (instancetype)initWithData:(NSData *)serialized{
+    self = [super init];
+    
+    if (self) {
+        Byte version;
+        [serialized getBytes:&version length:1];
+        _version = [SerializationUtilities highBitsToIntFromByte:version];
+        
+        if (_version > CURRENT_VERSION && _version < MINIMUM_SUPPORTED_VERSION) {
+            @throw [NSException exceptionWithName:InvalidVersionException reason:@"Unknown version" userInfo:@{@"version":[NSNumber numberWithInt:_version]}];
+        }
+        
+        NSData *message = [serialized subdataWithRange:NSMakeRange(1, serialized.length-1)];
+        
+        TSProtoPreKeyWhisperMessage *preKeyWhisperMessage = [TSProtoPreKeyWhisperMessage parseFromData:message];
+        
+        if (!preKeyWhisperMessage.hasSignedPreKeyId || !preKeyWhisperMessage.hasBaseKey || !preKeyWhisperMessage.hasIdentityKey || !preKeyWhisperMessage.hasMessage) {
+            @throw [NSException exceptionWithName:InvalidMessageException reason:@"Incomplete Message" userInfo:@{}];
+        }
+        
+        _serialized = serialized;
+        _registrationId = preKeyWhisperMessage.registrationId;
+        _prekeyID       = preKeyWhisperMessage.preKeyId;
+        _signedPrekeyId = preKeyWhisperMessage.signedPreKeyId;
+        _baseKey        = preKeyWhisperMessage.baseKey;
+        _identityKey    = preKeyWhisperMessage.identityKey;
+        _message        = [[WhisperMessage alloc] initWithData:preKeyWhisperMessage.message];
+    }
+    return self;
 }
 
 @end

@@ -169,8 +169,6 @@
 
 - (BOOL)containsSession:(long)contactIdentifier deviceId:(int)deviceId{
     
-    NSLog(@"Store: %@", self.sessionRecords);
-    
     if ([[self.sessionRecords objectForKey:[NSNumber numberWithLong:contactIdentifier]] objectForKey:[NSNumber numberWithInt:deviceId]]){
         return YES;
     }

@@ -12,44 +12,42 @@
 
 @implementation ChainKey
 
-
-#define keySerializationKey @"keyKey"
-#define indexSerializationKey @"indexKey"
+static NSString* const kCoderKey     = @"kCoderKey";
+static NSString* const kCoderIndex   = @"kCoderIndex";
 
 #define kTSKeySeedLength 1
+
 static uint8_t kMessageKeySeed[kTSKeySeedLength]    = {01};
 static uint8_t kChainKeySeed[kTSKeySeedLength]      = {02};
-
-
-#pragma mark Serialization
-
-- (id)initWithCoder:(NSCoder *)aDecoder{
-    self = [super init];
-    
-    _key = [aDecoder decodeObjectOfClass:[NSData class] forKey:keySerializationKey];
-    _index = [aDecoder decodeIntForKey:indexSerializationKey];
-    
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder{
-    [aCoder encodeObject:_key forKey:keySerializationKey];
-    [aCoder encodeInt:_index forKey:indexSerializationKey];
-}
 
 + (BOOL)supportsSecureCoding{
     return YES;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    self   = [super init];
+    
+    if (self) {
+        _key   = [aDecoder decodeObjectOfClass:[NSData class] forKey:kCoderKey];
+        _index = [aDecoder decodeIntForKey:kCoderIndex];
+    }
+    
+    return self;
+}
 
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:_key forKey:kCoderKey];
+    [aCoder encodeInt:_index  forKey:kCoderIndex];
+}
 
 -(instancetype)initWithData:(NSData *)chainKey index:(int)index{
-    
     self = [super init];
+    
     if (self) {
         _key   = chainKey;
         _index = index;
     }
+    
     return self;
 }
 

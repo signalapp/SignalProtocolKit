@@ -76,7 +76,7 @@
     return self;
 }
 
-- (WhisperMessage*)encryptMessage:(NSData*)paddedMessage{
+- (id<CipherMessage>)encryptMessage:(NSData*)paddedMessage{
     
     SessionRecord *sessionRecord = [self.sessionStore loadSession:_recipientId deviceId:_deviceId];
     SessionState  *session       = sessionRecord.sessionState;
@@ -89,7 +89,7 @@
 
     NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
 
-    WhisperMessage *cipherMessage = [[WhisperMessage alloc] initWithVersion:sessionVersion
+    id<CipherMessage> cipherMessage = [[WhisperMessage alloc] initWithVersion:sessionVersion
                                                                      macKey:messageKeys.macKey
                                                            senderRatchetKey:senderRatchetKey
                                                                     counter:chainKey.index
@@ -99,7 +99,7 @@
                                                         receiverIdentityKey:session.remoteIdentityKey];
     
     if ([session hasUnacknowledgedPreKeyMessage]){
-        UnacknowledgedPreKeyMessageItems *items = [session unacknowledgedPreKeyMessageItems];
+        PendingPreKey *items = [session unacknowledgedPreKeyMessageItems];
         long localRegistrationId = [session localRegistrationId];
         
         cipherMessage = [[PreKeyWhisperMessage alloc] initWithWhisperMessage:cipherMessage
@@ -116,7 +116,7 @@
     return cipherMessage;
 }
 
-- (NSData*)decrypt:(WhisperMessage*)whisperMessage{
+- (NSData*)decrypt:(id<CipherMessage>)whisperMessage{
     if ([whisperMessage isKindOfClass:[PreKeyWhisperMessage class]]) {
         return [self decryptPreKeyWhisperMessage:(PreKeyWhisperMessage*)whisperMessage];
     } else{
@@ -127,7 +127,7 @@
 - (NSData*)decryptPreKeyWhisperMessage:(PreKeyWhisperMessage*)preKeyWhisperMessage{
     SessionRecord *sessionRecord = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
     int unsignedPreKeyId         = [self.sessionBuilder processPrekeyWhisperMessage:preKeyWhisperMessage withSession:sessionRecord];
-    NSData *plaintext            = [self decryptWithSessionRecord:sessionRecord whisperMessage:preKeyWhisperMessage.whisperMessage];
+    NSData *plaintext            = [self decryptWithSessionRecord:sessionRecord whisperMessage:preKeyWhisperMessage.message];
 
     [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
     

@@ -25,4 +25,6 @@ static NSString *DuplicateMessageException     = @"AxolotlDuplicateMessage";
 
 static NSString *LegacyMessageException        = @"AxolotlLegacyMessageException";
 
+static NSString *InvalidVersionException       = @"AxolotlInvalidVersionException";
+
 #endif
