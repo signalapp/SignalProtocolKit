@@ -304,10 +304,10 @@
 				B61E841719D172BC004FC382 /* ECC */,
 				B61E841819D176D7004FC382 /* HKDF */,
 				B61E841F19D1813A004FC382 /* Ratchet */,
+				B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */,
 				B63B2FE5197D8B9600E09F65 /* AxolotlKit_Tests.m */,
 				B63B2FE0197D8B9600E09F65 /* Supporting Files */,
 				B6B3E64019FD5B0D0035422D /* Util */,
-				B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */,
 			);
 			path = "AxolotlKit Tests";
 			sourceTree = "<group>";

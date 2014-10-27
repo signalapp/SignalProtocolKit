@@ -139,7 +139,7 @@
         return [data isEqualToData:identityKey];
     }
     
-    return identityKey;
+    return YES; // Trust on first use
 }
 
 # pragma mark Session Store
