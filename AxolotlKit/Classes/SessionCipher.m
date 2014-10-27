@@ -11,7 +11,7 @@
 #import <25519/Curve25519.h>
 #import <25519/Ed25519.h>
 
-#import "NSData+Base64.h"
+#import "AxolotlExceptions.h"
 #import "SessionBuilder.h"
 #import "SessionStore.h"
 #import "AES-CBC.h"

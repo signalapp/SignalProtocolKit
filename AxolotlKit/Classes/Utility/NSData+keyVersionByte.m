@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
 //
 
+#import "AxolotlExceptions.h"
 #import "NSData+keyVersionByte.h"
 
 @implementation NSData (keyVersionByte)

@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
 //
 
+#import "AxolotlExceptions.h"
 #import "MessageKeys.h"
 #import "AES-CBC.h"
 #import <Security/Security.h>

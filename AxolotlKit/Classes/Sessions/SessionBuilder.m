@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
 //
 
+#import "AxolotlExceptions.h"
 #import "AxolotlParameters.h"
 #import "AliceAxolotlParameters.h"
 #import "BobAxolotlParameters.h"
