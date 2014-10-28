@@ -7,9 +7,9 @@ Pod::Spec.new do |s|
   s.license      = { :type => "GPLv2", :file => "LICENSE" }
   s.author             = { "Frederic Jacobs" => "github@fredericjacobs.com" }
   s.social_media_url   = "http://twitter.com/FredericJacobs"
-  s.source       = { :git => "https://github.com/FredericJacobs/AxolotlKit.git", :tag => "#{s.version} }
-  s.source_files  = "AxlotlKit/Classes/*.{h,m}", "AxolotlKit/Classes/**/*.{h,m}"
-  s.public_header_files = "AxlotlKit/Classes/*.{h}", "AxolotlKit/Classes/**/*.{h}"
+  s.source       = { :git => "https://github.com/FredericJacobs/AxolotlKit.git", :tag => "#{s.version}" }
+  s.source_files  = "AxolotlKit/Classes/*.{h,m}", "AxolotlKit/Classes/**/*.{h,m}"
+  s.public_header_files = "AxolotlKit/Classes/*.{h}", "AxolotlKit/Classes/**/*.{h}"
   s.dependency   '25519',   '~> 1.8'
   s.dependency   'HKDFKit', '~> 0.0.3'
   s.dependency   'ProtocolBuffers', '~> 1.9.2'
