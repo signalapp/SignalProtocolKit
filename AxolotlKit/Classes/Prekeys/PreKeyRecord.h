@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface PreKeyRecord : NSObject
+@interface PreKeyRecord : NSObject <NSSecureCoding>
 
 @property (nonatomic, readonly) int       Id;
 @property (nonatomic, readonly) ECKeyPair *keyPair;

@@ -11,6 +11,8 @@
 #import "AliceAxolotlParameters.h"
 #import "BobAxolotlParameters.h"
 
+#import "NSData+keyVersionByte.h"
+
 #import "AxolotlStore.h"
 #import "SessionState.h"
 #import "SessionBuilder.h"
@@ -68,24 +70,26 @@
 }
 
 - (void)processPrekeyBundle:(PreKeyBundle*)preKeyBundle{
+    NSData *theirIdentityKey  = preKeyBundle.identityKey.removeKeyType;
+    NSData *theirSignedPreKey = preKeyBundle.signedPreKeyPublic.removeKeyType;
     
-    if (![self.identityStore isTrustedIdentityKey:preKeyBundle.identityKey recipientId:self.recipientId]) {
+    if (![self.identityStore isTrustedIdentityKey:theirIdentityKey recipientId:self.recipientId]) {
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"Identity key is not valid" userInfo:@{}];
     }
 
-    if (![Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:preKeyBundle.identityKey data:preKeyBundle.signedPreKeyPublic]) {
+    if (![Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:theirIdentityKey data:theirSignedPreKey]) {
         @throw [NSException exceptionWithName:InvalidKeyException reason:@"KeyIsNotValidlySigned" userInfo:nil];
     }
     
     SessionRecord *sessionRecord       = [self.sessionStore loadSession:preKeyBundle.registrationId deviceId:preKeyBundle.deviceId];
     ECKeyPair     *ourBaseKey          = [Curve25519 generateKeyPair];
-    NSData        *theirSignedPreKey   = preKeyBundle.signedPreKeyPublic;
-    NSData        *theirOneTimePreKey  = preKeyBundle.preKeyPublic;
+    NSData        *theirOneTimePreKey  = preKeyBundle.preKeyPublic.removeKeyType;
     int           theirOneTimePreKeyId = preKeyBundle.preKeyId;
     int           theirSignedPreKeyId  = preKeyBundle.signedPreKeyId;
     
+    
     AliceAxolotlParameters *params = [[AliceAxolotlParameters alloc] initWithIdentityKey:[self.identityStore identityKeyPair]
-                                                                        theirIdentityKey:preKeyBundle.identityKey
+                                                                        theirIdentityKey:theirIdentityKey
                                                                               ourBaseKey:ourBaseKey
                                                                        theirSignedPreKey:theirSignedPreKey
                                                                       theirOneTimePreKey:theirOneTimePreKey
@@ -103,13 +107,13 @@
     [sessionRecord.sessionState setAliceBaseKey:ourBaseKey.publicKey];
     
     [self.sessionStore  storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
-    [self.identityStore saveRemoteIdentity:preKeyBundle.identityKey recipientId:self.recipientId];
+    [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
 }
 
 - (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
 
     int    messageVersion    = message.version;
-    NSData *theirIdentityKey = message.identityKey;
+    NSData *theirIdentityKey = message.identityKey.removeKeyType;
 
     if (![self.identityStore isTrustedIdentityKey:theirIdentityKey recipientId:self.recipientId]) {
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"There is a previously known identity key." userInfo:@{}];
@@ -132,18 +136,20 @@
 
 - (int)processPrekeyV3:(PreKeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
     
-    if ([sessionRecord hasSessionState:message.version baseKey:[message baseKey]]) {
+    NSData *baseKey = message.baseKey.removeKeyType;
+    
+    if ([sessionRecord hasSessionState:message.version baseKey:baseKey]) {
         return -1;
     }
     
     ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore loadSignedPrekey:message.signedPrekeyId].keyPair;
     
     BobAxolotlParameters *params = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:self.identityStore.identityKeyPair
-                                                                          theirIdentityKey:message.identityKey
+                                                                          theirIdentityKey:message.identityKey.removeKeyType
                                                                            ourSignedPrekey:ourSignedPrekey
                                                                              ourRatchetKey:ourSignedPrekey
                                                                           ourOneTimePrekey:[self.prekeyStore loadPreKey:message.prekeyID].keyPair
-                                                                              theirBaseKey:[message baseKey]];
+                                                                              theirBaseKey:baseKey];
     
     if (!sessionRecord.isFresh) {
         [sessionRecord archiveCurrentState];
@@ -153,14 +159,13 @@
     
     [sessionRecord.sessionState setLocalRegistrationId:self.identityStore.localRegistrationId];
     [sessionRecord.sessionState setRemoteRegistrationId:message.registrationId];
-    [sessionRecord.sessionState setAliceBaseKey:message.baseKey];
+    [sessionRecord.sessionState setAliceBaseKey:baseKey];
     
     if (message.prekeyID >= 0 && message.prekeyID != 0xFFFFFF) {
         return message.prekeyID;
     } else{
         return -1;
     }
-    
 }
 
 @end

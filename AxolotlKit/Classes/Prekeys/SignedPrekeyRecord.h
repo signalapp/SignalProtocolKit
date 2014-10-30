@@ -10,7 +10,7 @@
 #import "PreKeyRecord.h"
 #import <25519/Curve25519.h>
 
-@interface SignedPreKeyRecord : PreKeyRecord
+@interface SignedPreKeyRecord : PreKeyRecord <NSSecureCoding>
 
 @property (nonatomic, readonly) NSData *signature;
 @property (nonatomic, readonly) NSDate *generatedAt;

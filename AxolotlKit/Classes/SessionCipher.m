@@ -11,6 +11,8 @@
 #import <25519/Curve25519.h>
 #import <25519/Ed25519.h>
 
+#import "NSData+keyVersionByte.h"
+
 #import "AxolotlExceptions.h"
 #import "SessionBuilder.h"
 #import "SessionStore.h"
@@ -61,10 +63,10 @@
 
     if (self){
         
-        _recipientId       = recipientId;
-        _deviceId          = deviceId;
-        _sessionStore      = sessionStore;
-        _sessionBuilder    = [[SessionBuilder alloc] initWithSessionStore:sessionStore
+        self.recipientId       = recipientId;
+        self.deviceId          = deviceId;
+        self.sessionStore      = sessionStore;
+        self.sessionBuilder    = [[SessionBuilder alloc] initWithSessionStore:sessionStore
                                                               preKeyStore:preKeyStore
                                                         signedPreKeyStore:signedPreKeyStore
                                                          identityKeyStore:identityKeyStore
@@ -78,7 +80,7 @@
 
 - (id<CipherMessage>)encryptMessage:(NSData*)paddedMessage{
     
-    SessionRecord *sessionRecord = [self.sessionStore loadSession:_recipientId deviceId:_deviceId];
+    SessionRecord *sessionRecord = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
     SessionState  *session       = sessionRecord.sessionState;
     ChainKey *chainKey           = session.senderChainKey;
     MessageKeys *messageKeys     = chainKey.messageKeys;
@@ -90,13 +92,13 @@
     NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
 
     id<CipherMessage> cipherMessage = [[WhisperMessage alloc] initWithVersion:sessionVersion
-                                                                     macKey:messageKeys.macKey
-                                                           senderRatchetKey:senderRatchetKey
-                                                                    counter:chainKey.index
-                                                            previousCounter:previousCounter
-                                                                 cipherText:ciphertextBody
-                                                          senderIdentityKey:session.localIdentityKey
-                                                        receiverIdentityKey:session.remoteIdentityKey];
+                                                                       macKey:messageKeys.macKey
+                                                             senderRatchetKey:senderRatchetKey.prependKeyType
+                                                                      counter:chainKey.index
+                                                              previousCounter:previousCounter
+                                                                   cipherText:ciphertextBody
+                                                            senderIdentityKey:session.localIdentityKey.prependKeyType
+                                                          receiverIdentityKey:session.remoteIdentityKey.prependKeyType];
     
     if ([session hasUnacknowledgedPreKeyMessage]){
         PendingPreKey *items = [session unacknowledgedPreKeyMessageItems];
@@ -106,12 +108,12 @@
                                                               registrationId:localRegistrationId
                                                                     prekeyId:items.preKeyId
                                                               signedPrekeyId:items.signedPreKeyId
-                                                                     baseKey:items.baseKey
-                                                                 identityKey:session.localIdentityKey];
+                                                                     baseKey:items.baseKey.prependKeyType
+                                                                 identityKey:session.localIdentityKey.prependKeyType];
     }
     
     [session setSenderChainKey:[chainKey nextChainKey]];
-    [self.sessionStore storeSession:_recipientId deviceId:_deviceId session:sessionRecord];
+    [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
     
     return cipherMessage;
 }
@@ -132,7 +134,7 @@
     [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
     
     if (unsignedPreKeyId >= 0) {
-        [_prekeyStore removePreKey:unsignedPreKeyId];
+        [self.prekeyStore removePreKey:unsignedPreKeyId];
     }
     
     return plaintext;
@@ -144,7 +146,7 @@
         @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %ld, %d", self.recipientId, self.deviceId] userInfo:nil];
     }
     
-    SessionRecord  *sessionRecord  = [self.sessionStore loadSession:self.recipientId deviceId:_deviceId];
+    SessionRecord  *sessionRecord  = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
     NSData         *plaintext      = [self decryptWithSessionRecord:sessionRecord whisperMessage:message];
     
     [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
@@ -191,7 +193,7 @@
     }
 
     int messageVersion       = message.version;
-    NSData *theirEphemeral   = message.senderRatchetKey;
+    NSData *theirEphemeral   = message.senderRatchetKey.removeKeyType;
     int counter              = message.counter;
     ChainKey *chainKey       = [self getOrCreateChainKeys:sessionState theirEphemeral:theirEphemeral];
     MessageKeys *messageKeys = [self getOrCreateMessageKeysForSession:sessionState theirEphemeral:theirEphemeral chainKey:chainKey counter:counter];

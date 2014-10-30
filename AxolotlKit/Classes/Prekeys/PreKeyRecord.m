@@ -8,8 +8,14 @@
 
 #import "PreKeyRecord.h"
 
+static NSString* const kCoderPreKeyId        = @"kCoderPreKeyId";
+static NSString* const kCoderPreKeyPair      = @"kCoderPreKeyPair";
 
 @implementation PreKeyRecord
+
++ (BOOL)supportsSecureCoding{
+    return YES;
+}
 
 - (instancetype)initWithId:(int)identifier keyPair:(ECKeyPair*)keyPair{
     self = [super init];
@@ -21,5 +27,16 @@
     
     return self;
 }
+
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    return [self initWithId:[aDecoder decodeIntForKey:kCoderPreKeyId] keyPair:[aDecoder decodeObjectOfClass:[ECKeyPair class] forKey:kCoderPreKeyPair]];
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeInteger:_Id forKey:kCoderPreKeyId];
+    [aCoder encodeObject:_keyPair forKey:kCoderPreKeyPair];
+}
+
+
 
 @end

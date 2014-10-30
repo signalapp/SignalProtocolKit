@@ -13,21 +13,9 @@
 #import "PreKeyStore.h"
 #import "IdentityKeyStore.h"
 #import "SessionStore.h"
-#import "PreKeyBundle.h"
 #import "PreKeyWhisperMessage.h"
 #import "SessionState.h"
 #import "WhisperMessage.h"
-
-#define currentVersion 3
-
-#pragma mark Axolotl Processed Message Completion Block
-
-typedef void (^AxolotlDecryptCompletionBlock) (NSError *error, NSData *decryptedMessage);
-typedef void (^AxolotlEncryptCompletionBlock) (NSError *error, WhisperMessage *encryptedMessage);
-
-#pragma mark Fetch Keying Material
-
-typedef PreKeyBundle*(^AxolotlFetchKey)   (NSInteger contactIdentifier, NSInteger deviceId);
 
 @interface SessionCipher : NSObject
 
