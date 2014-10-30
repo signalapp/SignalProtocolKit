@@ -12,6 +12,11 @@
 #import "WhisperTextProtocol.pb.h"
 #import "SerializationUtilities.h"
 
+@interface PreKeyWhisperMessage ()
+@property (nonatomic, readwrite) NSData *identityKey;
+@property (nonatomic, readwrite) NSData *baseKey;
+@end
+
 @implementation PreKeyWhisperMessage
 
 -(instancetype)initWithWhisperMessage:(WhisperMessage*)whisperMessage registrationId:(long)registrationId prekeyId:(int)prekeyId signedPrekeyId:(int)signedPrekeyId baseKey:(NSData*)baseKey identityKey:(NSData*)identityKey{

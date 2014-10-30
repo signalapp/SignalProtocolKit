@@ -30,10 +30,10 @@
 @property (nonatomic, readonly)long recipientId;
 @property (nonatomic, readonly)int deviceId;
 
-@property(nonatomic, readonly)id<SessionStore>  sessionStore;
-@property(nonatomic, readonly)id<PreKeyStore>   prekeyStore ;
+@property(nonatomic, readonly)id<SessionStore>      sessionStore;
+@property(nonatomic, readonly)id<PreKeyStore>       prekeyStore ;
 @property(nonatomic, readonly)id<SignedPreKeyStore> signedPreKeyStore;
-@property(nonatomic, readonly)id<IdentityKeyStore> identityStore;
+@property(nonatomic, readonly)id<IdentityKeyStore>  identityStore;
 
 
 @end
@@ -107,6 +107,31 @@
 }
 
 - (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
+
+    int    messageVersion    = message.version;
+    NSData *theirIdentityKey = message.identityKey;
+
+    if (![self.identityStore isTrustedIdentityKey:theirIdentityKey recipientId:self.recipientId]) {
+        @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"There is a previously known identity key." userInfo:@{}];
+    }
+    
+    int unSignedPrekeyId = -1;
+    
+    switch (messageVersion) {
+        case 3:
+            unSignedPrekeyId = [self processPrekeyV3:message withSession:sessionRecord];
+            break;
+        default:
+            @throw [NSException exceptionWithName:InvalidVersionException reason:@"Trying to initialize with unknown version" userInfo:@{}];
+            break;
+    }
+    
+    [self.identityStore saveRemoteIdentity:message.identityKey recipientId:self.recipientId];
+    return unSignedPrekeyId;
+}
+
+- (int)processPrekeyV3:(PreKeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
+    
     if ([sessionRecord hasSessionState:message.version baseKey:[message baseKey]]) {
         return -1;
     }
@@ -135,6 +160,7 @@
     } else{
         return -1;
     }
+    
 }
 
 @end
