@@ -339,7 +339,6 @@
 				B6E07F3C19FE49010091446D /* Constants.h */,
 				B6E07F3D19FE49010091446D /* Crypto */,
 				B6E07F4019FE49010091446D /* Groups */,
-				B6E07F4119FE49010091446D /* Models */,
 				B6E07F4219FE49010091446D /* Prekeys */,
 				B6E07F4919FE49010091446D /* Protobuffs */,
 				B6E07F4D19FE49010091446D /* Ratchet */,
@@ -378,13 +377,6 @@
 			children = (
 			);
 			path = Groups;
-			sourceTree = "<group>";
-		};
-		B6E07F4119FE49010091446D /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		B6E07F4219FE49010091446D /* Prekeys */ = {

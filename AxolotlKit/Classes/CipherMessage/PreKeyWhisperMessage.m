@@ -40,7 +40,7 @@
     return self;
 }
 
-- (instancetype)initWithData:(NSData *)serialized{
+- (instancetype)initWithData:(NSData*)serialized{
     self = [super init];
     
     if (self) {
@@ -60,7 +60,7 @@
             @throw [NSException exceptionWithName:InvalidMessageException reason:@"Incomplete Message" userInfo:@{}];
         }
         
-        _serialized = serialized;
+        _serialized     = serialized;
         _registrationId = preKeyWhisperMessage.registrationId;
         _prekeyID       = preKeyWhisperMessage.preKeyId;
         _signedPrekeyId = preKeyWhisperMessage.signedPreKeyId;
