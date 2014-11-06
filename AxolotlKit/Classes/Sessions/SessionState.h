@@ -40,8 +40,8 @@
 @property(nonatomic) int previousCounter;
 @property(nonatomic) RootKey *rootKey;
 
-@property(nonatomic)long remoteRegistrationId;
-@property(nonatomic)long localRegistrationId;
+@property(nonatomic)int remoteRegistrationId;
+@property(nonatomic)int localRegistrationId;
 
 - (NSData*)senderRatchetKey;
 - (ECKeyPair*)senderRatchetKeyPair;
