@@ -102,7 +102,7 @@
     
     if ([session hasUnacknowledgedPreKeyMessage]){
         PendingPreKey *items = [session unacknowledgedPreKeyMessageItems];
-        long localRegistrationId = [session localRegistrationId];
+        int localRegistrationId = [session localRegistrationId];
         
         cipherMessage = [[PreKeyWhisperMessage alloc] initWithWhisperMessage:cipherMessage
                                                               registrationId:localRegistrationId

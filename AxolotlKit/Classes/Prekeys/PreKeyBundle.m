@@ -10,7 +10,7 @@
 
 @implementation PreKeyBundle
 
-- (instancetype)initWithRegistrationId:(long)registrationId
+- (instancetype)initWithRegistrationId:(int)registrationId
                               deviceId:(int)deviceId
                               preKeyId:(int)preKeyId
                           preKeyPublic:(NSData*)preKeyPublic
