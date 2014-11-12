@@ -130,7 +130,7 @@
             break;
     }
     
-    [self.identityStore saveRemoteIdentity:message.identityKey recipientId:self.recipientId];
+    [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
     return unSignedPrekeyId;
 }
 

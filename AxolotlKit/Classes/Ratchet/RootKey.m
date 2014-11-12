@@ -12,7 +12,27 @@
 #import <25519/Curve25519.h>
 #import "ChainKey.h"
 
+static NSString* const kCoderData      = @"kCoderData";
+
 @implementation RootKey
+
++(BOOL)supportsSecureCoding{
+    return YES;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:_keyData forKey:kCoderData];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    self = [super init];
+    
+    if (self) {
+        _keyData = [aDecoder decodeObjectOfClass:[NSData class] forKey:kCoderData];
+    }
+    
+    return self;
+}
 
 - (instancetype)initWithData:(NSData *)data{
     self = [super init];
