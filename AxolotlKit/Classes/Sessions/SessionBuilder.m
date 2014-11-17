@@ -29,7 +29,7 @@
 
 @interface SessionBuilder ()
 
-@property (nonatomic, readonly)long recipientId;
+@property (nonatomic, readonly)NSString* recipientId;
 @property (nonatomic, readonly)int deviceId;
 
 @property(nonatomic, readonly)id<SessionStore>      sessionStore;
@@ -42,7 +42,7 @@
 
 @implementation SessionBuilder
 
-- (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(long)recipientId deviceId:(int)deviceId{
+- (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(NSString*)recipientId deviceId:(int)deviceId{
     return [self initWithSessionStore:sessionStore
                           preKeyStore:sessionStore
                     signedPreKeyStore:sessionStore
@@ -55,7 +55,7 @@
                          preKeyStore:(id<PreKeyStore>)preKeyStore
                    signedPreKeyStore:(id<SignedPreKeyStore>)signedPreKeyStore
                     identityKeyStore:(id<IdentityKeyStore>)identityKeyStore
-                         recipientId:(long)recipientId
+                         recipientId:(NSString*)recipientId
                             deviceId:(int)deviceId{
     self = [super init];
     
@@ -81,7 +81,7 @@
         @throw [NSException exceptionWithName:InvalidKeyException reason:@"KeyIsNotValidlySigned" userInfo:nil];
     }
     
-    SessionRecord *sessionRecord       = [self.sessionStore loadSession:preKeyBundle.registrationId deviceId:preKeyBundle.deviceId];
+    SessionRecord *sessionRecord       = [self.sessionStore loadSession:self.recipientId deviceId:preKeyBundle.deviceId];
     ECKeyPair     *ourBaseKey          = [Curve25519 generateKeyPair];
     NSData        *theirOneTimePreKey  = preKeyBundle.preKeyPublic.removeKeyType;
     int           theirOneTimePreKeyId = preKeyBundle.preKeyId;

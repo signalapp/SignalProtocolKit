@@ -128,12 +128,12 @@
     return __localRegistrationId;
 }
 
-- (void)saveRemoteIdentity:(NSData *)identityKey recipientId:(long)recipientId{
-    [self.trustedKeys setObject:identityKey forKey:[NSNumber numberWithLong:recipientId]];
+- (void)saveRemoteIdentity:(NSData *)identityKey recipientId:(NSString*)recipientId{
+    [self.trustedKeys setObject:identityKey forKey:recipientId];
 }
 
-- (BOOL)isTrustedIdentityKey:(NSData *)identityKey recipientId:(long)recipientId{
-    NSData *data = [self.trustedKeys objectForKey:[NSNumber numberWithLong:recipientId]];
+- (BOOL)isTrustedIdentityKey:(NSData *)identityKey recipientId:(NSString*)recipientId{
+    NSData *data = [self.trustedKeys objectForKey:recipientId];
     
     if (data) {
         return [data isEqualToData:identityKey];
@@ -144,7 +144,7 @@
 
 # pragma mark Session Store
 
--(SessionRecord*)loadSession:(long)contactIdentifier deviceId:(int)deviceId{
+-(SessionRecord*)loadSession:(NSString*)contactIdentifier deviceId:(int)deviceId{
     SessionRecord *sessionRecord = [[self deviceSessionRecordsForContactIdentifier:contactIdentifier] objectForKey:[NSNumber numberWithInteger:deviceId]];
     
     if (!sessionRecord) {
@@ -154,22 +154,22 @@
     return sessionRecord;
 }
 
-- (NSArray*)subDevicesSessions:(long)contactIdentifier{
+- (NSArray*)subDevicesSessions:(NSString*)contactIdentifier{
     return [[self deviceSessionRecordsForContactIdentifier:contactIdentifier] allKeys];
 }
 
-- (NSDictionary*)deviceSessionRecordsForContactIdentifier:(long)contactIdentifier{
-    return [self.sessionRecords objectForKey:[NSNumber numberWithLong:contactIdentifier]];
+- (NSDictionary*)deviceSessionRecordsForContactIdentifier:(NSString*)contactIdentifier{
+    return [self.sessionRecords objectForKey:contactIdentifier];
 }
 
-- (void)storeSession:(long)contactIdentifier deviceId:(int)deviceId session:(SessionRecord *)session{
+- (void)storeSession:(NSString*)contactIdentifier deviceId:(int)deviceId session:(SessionRecord *)session{
     NSAssert(session, @"Session can't be nil");
-    [self.sessionRecords setObject:@{[NSNumber numberWithInt:deviceId]:session} forKey:[NSNumber numberWithLong:contactIdentifier]];
+    [self.sessionRecords setObject:@{[NSNumber numberWithInt:deviceId]:session} forKey:contactIdentifier];
 }
 
-- (BOOL)containsSession:(long)contactIdentifier deviceId:(int)deviceId{
+- (BOOL)containsSession:(NSString*)contactIdentifier deviceId:(int)deviceId{
     
-    if ([[self.sessionRecords objectForKey:[NSNumber numberWithLong:contactIdentifier]] objectForKey:[NSNumber numberWithInt:deviceId]]){
+    if ([[self.sessionRecords objectForKey:contactIdentifier] objectForKey:[NSNumber numberWithInt:deviceId]]){
         return YES;
     }
     return NO;

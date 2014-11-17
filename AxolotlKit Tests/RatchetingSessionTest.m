@@ -315,6 +315,8 @@
     
     [RatchetingSession initializeSession:bobSessionRecord.sessionState sessionVersion:3 BobParameters:bobAxolotlParams];
     
+    NSString *aliceIdentifier = @"+483294823482";
+    NSString *bobIdentifier = @"+389424728942";
 
     // Logging Alice's Session initialization and first message encryption
     XCTAssert([[@"This is a plaintext message." dataUsingEncoding:NSUTF8StringEncoding] isEqualToData:alicePlaintextData], @"Encoding is not correct");
@@ -324,8 +326,8 @@
     XCTAssert([aliceSendingIVKeyData isEqualToData:aliceSessionRecord.sessionState.senderChainKey.messageKeys.iv]);
     XCTAssert([aliceSendingMacKeyData isEqualToData:aliceSessionRecord.sessionState.senderChainKey.messageKeys.macKey]);
     
-    [aliceStore storeSession:5L deviceId:1 session:aliceSessionRecord];
-    SessionCipher *aliceSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:aliceStore recipientId:5L deviceId:1];
+    [aliceStore storeSession:bobIdentifier deviceId:1 session:aliceSessionRecord];
+    SessionCipher *aliceSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:aliceStore recipientId:bobIdentifier deviceId:1];
     
     WhisperMessage *message = [aliceSessionCipher encryptMessage:alicePlaintextData];
     XCTAssert([aliceCipherTextData isEqualToData:message.cipherText]);
@@ -334,9 +336,9 @@
     
     XCTAssert([bobRootKeyData isEqualToData:bobSessionRecord.sessionState.rootKey.keyData]);
         
-    [bobStore storeSession:5L deviceId:1 session:bobSessionRecord];
+    [bobStore storeSession:aliceIdentifier deviceId:1 session:bobSessionRecord];
     
-    SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:5L deviceId:1];
+    SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:aliceIdentifier deviceId:1];
     
     NSData *plainData = [bobSessionCipher decrypt:message];
     

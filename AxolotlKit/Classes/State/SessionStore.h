@@ -22,16 +22,16 @@
  *  @return a copy of the SessionRecord corresponding to the recipientId + deviceId tuple.
  */
 
-- (SessionRecord*)loadSession:(long)contactIdentifier deviceId:(int)deviceId;
+- (SessionRecord*)loadSession:(NSString*)contactIdentifier deviceId:(int)deviceId;
 
-- (NSArray*)subDevicesSessions:(long)contactIdentifier;
+- (NSArray*)subDevicesSessions:(NSString*)contactIdentifier;
 
-- (void)storeSession:(long)contactIdentifier deviceId:(int)deviceId session:(SessionRecord*)session;
+- (void)storeSession:(NSString*)contactIdentifier deviceId:(int)deviceId session:(SessionRecord*)session;
 
-- (BOOL)containsSession:(long)contactIdentifier deviceId:(int)deviceId;
+- (BOOL)containsSession:(NSString*)contactIdentifier deviceId:(int)deviceId;
 
-- (void)deleteSessionForContact:(long)contactIdentifier deviceId:(int)deviceId;
+- (void)deleteSessionForContact:(NSString*)contactIdentifier deviceId:(int)deviceId;
 
-- (void)deleteAllSessionsForContact:(long)contactIdentifier;
+- (void)deleteAllSessionsForContact:(NSString*)contactIdentifier;
 
 @end

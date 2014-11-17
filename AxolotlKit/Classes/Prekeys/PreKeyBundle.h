@@ -10,14 +10,14 @@
 
 @interface PreKeyBundle : NSObject
 
-@property (nonatomic, readonly) NSData *identityKey;
-@property (nonatomic, readonly) int    registrationId;
-@property (nonatomic, readonly) int    deviceId;
-@property (nonatomic, readonly) NSData *signedPreKeyPublic;
-@property (nonatomic, readonly) NSData *preKeyPublic;
-@property (nonatomic, readonly) int    preKeyId;
-@property (nonatomic, readonly) int    signedPreKeyId;
-@property (nonatomic, readonly) NSData *signedPreKeySignature;
+@property (nonatomic, readonly) NSData   *identityKey;
+@property (nonatomic, readonly) int      registrationId;
+@property (nonatomic, readonly) int      deviceId;
+@property (nonatomic, readonly) NSData   *signedPreKeyPublic;
+@property (nonatomic, readonly) NSData   *preKeyPublic;
+@property (nonatomic, readonly) int      preKeyId;
+@property (nonatomic, readonly) int      signedPreKeyId;
+@property (nonatomic, readonly) NSData   *signedPreKeySignature;
 
 - (instancetype)initWithRegistrationId:(int)registrationId
                               deviceId:(int)deviceId

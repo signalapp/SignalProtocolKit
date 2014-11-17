@@ -31,7 +31,7 @@
 
 @interface SessionCipher ()
 
-@property long recipientId;
+@property NSString* recipientId;
 @property int deviceId;
 
 @property (nonatomic, retain) id<SessionStore> sessionStore;
@@ -44,7 +44,7 @@
 @implementation SessionCipher
 
 
-- (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(long)recipientId deviceId:(int)deviceId{
+- (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(NSString*)recipientId deviceId:(int)deviceId{
     return [self initWithSessionStore:sessionStore
                           preKeyStore:sessionStore
                     signedPreKeyStore:sessionStore
@@ -57,12 +57,11 @@
                          preKeyStore:(id<PreKeyStore>)preKeyStore
                    signedPreKeyStore:(id<SignedPreKeyStore>)signedPreKeyStore
                     identityKeyStore:(id<IdentityKeyStore>)identityKeyStore
-                         recipientId:(long)recipientId
+                         recipientId:(NSString*)recipientId
                             deviceId:(int)deviceId{
     self = [super init];
 
     if (self){
-        
         self.recipientId       = recipientId;
         self.deviceId          = deviceId;
         self.sessionStore      = sessionStore;
@@ -142,7 +141,7 @@
 
 - (NSData*)decryptWhisperMessage:(WhisperMessage*)message{
     if (![self.sessionStore containsSession:self.recipientId deviceId:self.deviceId]) {
-        @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %ld, %d", self.recipientId, self.deviceId] userInfo:nil];
+        @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %@, %d", self.recipientId, self.deviceId] userInfo:nil];
     }
     
     SessionRecord  *sessionRecord  = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];

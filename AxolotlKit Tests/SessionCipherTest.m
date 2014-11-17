@@ -69,20 +69,21 @@
 
 - (void)runInteractionWithAliceRecord:(SessionRecord*)aliceSessionRecord bobRecord:(SessionRecord*)bobSessionRecord {
     
+    NSString *aliceIdentifier = @"+3728378173821";
+    NSString *bobIdentifier   = @"bob@gmail.com";
+    
     AxolotlInMemoryStore *aliceStore  = [AxolotlInMemoryStore new];
     AxolotlInMemoryStore *bobStore    = [AxolotlInMemoryStore new];
     
-    [aliceStore storeSession:2L deviceId:1 session:aliceSessionRecord];
-    [bobStore   storeSession:3L deviceId:1 session:bobSessionRecord];
+    [aliceStore storeSession:bobIdentifier deviceId:1 session:aliceSessionRecord];
+    [bobStore   storeSession:aliceIdentifier deviceId:1 session:bobSessionRecord];
     
-    SessionCipher *aliceSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:aliceStore recipientId:2L deviceId:1];
-    SessionCipher *bobSessionCipher   = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:3L deviceId:1];
+    SessionCipher *aliceSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:aliceStore recipientId:bobIdentifier deviceId:1];
+    SessionCipher *bobSessionCipher   = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:aliceIdentifier deviceId:1];
     
     NSData *alicePlainText     = [@"This is a plaintext message!" dataUsingEncoding:NSUTF8StringEncoding];
     WhisperMessage *cipherText = [aliceSessionCipher encryptMessage:alicePlainText];
     
-    
-
     NSData *bobPlaintext = [bobSessionCipher decrypt:cipherText];
     
     XCTAssert([bobPlaintext isEqualToData:alicePlainText]);

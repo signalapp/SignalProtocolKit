@@ -43,8 +43,8 @@
 
 - (void)testBasicPreKey {
     
-    long BOB_RECIPIENT_ID   = 5L;
-    long ALICE_RECIPIENT_ID = 3L;
+    NSString *BOB_RECIPIENT_ID   = @"+3828923892";
+    NSString *ALICE_RECIPIENT_ID = @"alice@gmail.com";
 
     AxolotlInMemoryStore *aliceStore = [AxolotlInMemoryStore new];
     SessionBuilder       *aliceSessionBuilder = [[SessionBuilder alloc] initWithAxolotlStore:aliceStore recipientId:BOB_RECIPIENT_ID deviceId:1];
@@ -93,8 +93,8 @@
 
 - (void)testBasicPreKeyMITM {
     
-    long BOB_RECIPIENT_ID   = 5L;
-    long ALICE_RECIPIENT_ID = 3L;
+    NSString *BOB_RECIPIENT_ID   = @"+3828923892";
+    NSString *ALICE_RECIPIENT_ID = @"alice@gmail.com";
     
     AxolotlInMemoryStore *aliceStore = [AxolotlInMemoryStore new];
     SessionBuilder       *aliceSessionBuilder = [[SessionBuilder alloc] initWithAxolotlStore:aliceStore recipientId:BOB_RECIPIENT_ID deviceId:1];
