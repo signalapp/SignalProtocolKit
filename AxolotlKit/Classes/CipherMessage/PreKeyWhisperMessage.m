@@ -15,6 +15,7 @@
 @interface PreKeyWhisperMessage ()
 @property (nonatomic, readwrite) NSData *identityKey;
 @property (nonatomic, readwrite) NSData *baseKey;
+@property (nonatomic, readwrite) NSData *serialized;
 @end
 
 @implementation PreKeyWhisperMessage
@@ -24,19 +25,33 @@
     self = [super init];
     
     if (self) {
-        _version             = whisperMessage.version;
-        _senderRatchetKey    = whisperMessage.senderRatchetKey;
-        _previousCounter     = whisperMessage.previousCounter;
-        _counter             = whisperMessage.counter;
-        _cipherText          = whisperMessage.cipherText;
-        _serialized          = whisperMessage.serialized;
         _registrationId      = registrationId;
+        _version             = whisperMessage.version;
         _prekeyID            = prekeyId;
         _signedPrekeyId      = signedPrekeyId;
         _baseKey             = baseKey;
         _identityKey         = identityKey;
         _message             = whisperMessage;
     }
+    
+    TSProtoPreKeyWhisperMessageBuilder *builder = [TSProtoPreKeyWhisperMessage builder];
+    [builder setSignedPreKeyId:signedPrekeyId];
+    [builder setBaseKey:baseKey];
+    [builder setIdentityKey:identityKey];
+    [builder setMessage:whisperMessage.serialized];
+    [builder setRegistrationId:registrationId];
+    
+    if (prekeyId != -1) {
+        [builder setPreKeyId:prekeyId];
+    }
+    
+    Byte versionByte          = [SerializationUtilities intsToByteHigh:_version low:CURRENT_VERSION];
+    NSMutableData *serialized = [NSMutableData dataWithBytes:&versionByte length:1];
+    NSData *messageBytes      = builder.build.data;
+    [serialized appendData:messageBytes];
+    
+    _serialized          = [NSData dataWithData:serialized];
+    
     return self;
 }
 
