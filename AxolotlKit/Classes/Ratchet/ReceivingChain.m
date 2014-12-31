@@ -45,6 +45,7 @@ static NSString* const kCoderMessageKeys   = @"kCoderMessageKeys";
 
     self.chainKey         = chainKey;
     self.senderRatchetKey = senderRatchet;
+    self.messageKeysList  = [NSMutableArray array];
 
     return self;
 }

@@ -170,7 +170,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     ChainAndIndex *chainAndIndex = [self receiverChain:senderEphemeral];
     ReceivingChain *chain        = (ReceivingChain*)chainAndIndex.chain;
     
-    ReceivingChain *newChain     = [[ReceivingChain alloc] initWithChainKey:[[ChainKey alloc] initWithData:[chain.chainKey.key copy] index:chain.chainKey.index] senderRatchetKey:chain.senderRatchetKey];
+    ReceivingChain *newChain     = chain;
     newChain.chainKey            = nextChainKey;
     
     [self.receivingChains replaceObjectAtIndex:chainAndIndex.index withObject:newChain];
@@ -210,7 +210,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     if (!receivingChain) {
         return false;
     }
-    
+
     NSArray *messageKeyArray = receivingChain.messageKeysList;
     
     for (MessageKeys *keys in messageKeyArray) {
@@ -218,7 +218,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
             return YES;
         }
     }
-    
+
     return NO;
 }
 
@@ -247,20 +247,15 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 
 -(void)setReceiverChain:(int)index updatedChain:(ReceivingChain*)recvchain{
-    for(ReceivingChain *chain in self.receivingChains){
-        if(recvchain.chainKey.index == index){
-            [self.receivingChains removeObject:chain];
-            break;
-        }
-    }
-    
-    [self.receivingChains addObject:self];
+    [self.receivingChains replaceObjectAtIndex:index withObject:recvchain];
 }
 
 - (void)setMessageKeys:(NSData*)senderRatchetKey messageKeys:(MessageKeys*)messageKeys{
     ChainAndIndex  *chainAndIndex = [self receiverChain:senderRatchetKey];
     ReceivingChain *chain         = (ReceivingChain*)chainAndIndex.chain;
     [chain.messageKeysList addObject:messageKeys];
+    
+    [self setReceiverChain:chainAndIndex.index updatedChain:chain];
 }
 
 - (void)setUnacknowledgedPreKeyMessage:(int)preKeyId signedPreKey:(int)signedPreKeyId baseKey:(NSData*)baseKey{
