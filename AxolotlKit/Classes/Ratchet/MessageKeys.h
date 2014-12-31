@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MessageKeys : NSObject
+@interface MessageKeys : NSObject <NSSecureCoding>
 
 - (instancetype)initWithCipherKey:(NSData*)cipherKey macKey:(NSData*)macKey iv:(NSData*)data index:(int)index;
 
