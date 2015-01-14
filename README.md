@@ -1,4 +1,4 @@
-# AxolotlKit [![Build Status](https://travis-ci.org/WhisperSystems/AxolotlKit.svg?branch=master)](https://travis-ci.org/FredericJacobs/AxolotlKit)
+# AxolotlKit [![Build Status](https://travis-ci.org/WhisperSystems/AxolotlKit.svg?branch=master)](https://travis-ci.org/WhisperSystems/AxolotlKit)
 
 AxolotlKit is a free (as in Freedom) implementation of the Axolotl protocol, written in Objective-C.
 
