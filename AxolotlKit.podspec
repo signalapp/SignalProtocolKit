@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "AxolotlKit"
-  s.version      = "0.5"
+  s.version      = "0.6"
   s.summary      = "AxolotlKit is a Free implementation of the Axolotl protocol in Objective-C"
   s.homepage     = "https://github.com/WhisperSystems/AxolotlKit"
   s.license      = "GPLv2"
@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.dependency   '25519',   '~> 1.8'
   s.dependency   'HKDFKit', '~> 0.0.3'
-  s.dependency   'ProtocolBuffers', '~> 1.9.2'
+  s.dependency   'ProtocolBuffers', '~> 1.9.7'
 end
