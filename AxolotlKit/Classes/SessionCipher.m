@@ -267,4 +267,24 @@
 }
 
 
+- (int)remoteRegistrationId{
+    SessionRecord *record = [self.sessionStore loadSession:self.recipientId deviceId:_deviceId];
+    
+    if (!record) {
+        @throw [NSException exceptionWithName:NoSessionException reason:@"Trying to get registration Id of a non-existing session." userInfo:nil];
+    }
+    
+    return record.sessionState.remoteRegistrationId;
+}
+
+- (int)sessionVersion{
+    SessionRecord *record = [self.sessionStore loadSession:self.recipientId deviceId:_deviceId];
+    
+    if (!record) {
+        @throw [NSException exceptionWithName:NoSessionException reason:@"Trying to get the version of a non-existing session." userInfo:nil];
+    }
+    
+    return record.sessionState.version;
+}
+
 @end

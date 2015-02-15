@@ -27,4 +27,7 @@
 
 - (NSData*)decrypt:(id<CipherMessage>)whisperMessage;
 
+- (int)remoteRegistrationId;
+- (int)sessionVersion;
+
 @end
