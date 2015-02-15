@@ -11,6 +11,7 @@
 		719C4E40588B7AD1F1DD22FC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9F87ECA041E727CC457415 /* libPods.a */; };
 		B619AF1419FC148D00E33198 /* ProtobuffsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B619AF1319FC148D00E33198 /* ProtobuffsTests.m */; };
 		B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B61E841C19D1780D004FC382 /* HKDFTest.m */; };
+		B62EFBF01A9140190072ADD3 /* PreKeyBundleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B62EFBEF1A9140190072ADD3 /* PreKeyBundleTests.m */; };
 		B63B2F9F197D8AFD00E09F65 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2F9E197D8AFD00E09F65 /* Foundation.framework */; };
 		B63B2FA1197D8AFD00E09F65 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2FA0197D8AFD00E09F65 /* CoreGraphics.framework */; };
 		B63B2FA3197D8AFD00E09F65 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B63B2FA2197D8AFD00E09F65 /* UIKit.framework */; };
@@ -72,6 +73,7 @@
 		AD9F87ECA041E727CC457415 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B619AF1319FC148D00E33198 /* ProtobuffsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtobuffsTests.m; sourceTree = "<group>"; };
 		B61E841C19D1780D004FC382 /* HKDFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKDFTest.m; sourceTree = "<group>"; };
+		B62EFBEF1A9140190072ADD3 /* PreKeyBundleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreKeyBundleTests.m; sourceTree = "<group>"; };
 		B63B2F9D197D8AFD00E09F65 /* AxolotlKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AxolotlKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B63B2F9E197D8AFD00E09F65 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B63B2FA0197D8AFD00E09F65 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -260,6 +262,7 @@
 		B63B2FDF197D8B9600E09F65 /* AxolotlKit Tests */ = {
 			isa = PBXGroup;
 			children = (
+				B62EFBEF1A9140190072ADD3 /* PreKeyBundleTests.m */,
 				B619AF1219FC147500E33198 /* Protobuffs */,
 				B61E841719D172BC004FC382 /* ECC */,
 				B61E841819D176D7004FC382 /* HKDF */,
@@ -682,6 +685,7 @@
 				B6A3490319F1A4B4008A3E01 /* AxolotlInMemoryStore.m in Sources */,
 				B63B2FE6197D8B9600E09F65 /* AxolotlKit_Tests.m in Sources */,
 				B654B03419FACCB6000458F0 /* RatchetingSessionTest.m in Sources */,
+				B62EFBF01A9140190072ADD3 /* PreKeyBundleTests.m in Sources */,
 				B6BB8C3519F7E773008A5895 /* SessionBuilderTests.m in Sources */,
 				B6E37AE019CF107C00E619CA /* ECCTests.m in Sources */,
 				B6B3E63C19FD3D8A0035422D /* WhisperMessageSerialization.m in Sources */,

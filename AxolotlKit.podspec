@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "AxolotlKit"
-  s.version      = "0.6.1"
+  s.version      = "0.6.2"
   s.summary      = "AxolotlKit is a Free implementation of the Axolotl protocol in Objective-C"
   s.homepage     = "https://github.com/WhisperSystems/AxolotlKit"
   s.license      = "GPLv2"

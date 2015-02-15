@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PreKeyBundle : NSObject
+@interface PreKeyBundle : NSObject <NSSecureCoding>
 
 @property (nonatomic, readonly) NSData   *identityKey;
 @property (nonatomic, readonly) int      registrationId;
