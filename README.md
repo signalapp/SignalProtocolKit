@@ -4,6 +4,10 @@ AxolotlKit is a free (as in Freedom) implementation of the Axolotl protocol, wri
 
 ![AxolotlKit](http://cl.ly/WYR4/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f373635392f323131353834382f36303637346365322d393035632d313165332d396233622d6634663830613766363533342e706e67.png)
 
+## Documentation
+
+Browse the [API reference](http://cocoadocs.org/docsets/AxolotlKit/) on CocoaDocs.
+
 ### Status
 
 Axolotl is currently being reviewed. All scrutiny welcome. Once ready, it will be distributed via CocoaPods. 
