@@ -168,20 +168,4 @@
 
 }
 
-- (void)testSignatureOverflow{
-    ECKeyPair *keys = [Curve25519 generateKeyPair];
-    Byte message [4096] = {};
-    NSData *data = [NSData dataWithBytes:&message length:4096];
-    
-    @try {
-        __unused NSData *signature = [Ed25519 sign:data withKeyPair:keys];
-        XCTAssert(NO, @"Signature algorithm should have thrown on overflow");
-    }
-    @catch (NSException *exception) {
-        XCTAssert(YES, @"Signing overflow detected");
-    }
-}
-
-
-
 @end
