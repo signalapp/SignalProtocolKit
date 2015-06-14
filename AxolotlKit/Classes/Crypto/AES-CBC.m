@@ -34,7 +34,10 @@
                                           &bytesEncrypted);
     
     if (cryptStatus == kCCSuccess){
-        return [NSData dataWithBytesNoCopy:buffer length:bytesEncrypted];
+        NSData *data = [NSData dataWithBytes:buffer length:bytesEncrypted];
+        free(buffer);
+        
+        return data;
     } else{
         free(buffer);
         @throw [NSException exceptionWithName:CipherException reason:@"We encountered an issue while encrypting." userInfo:nil];
@@ -55,7 +58,10 @@
                                           &bytesDecrypted);
     
     if (cryptStatus == kCCSuccess) {
-        return [NSData dataWithBytesNoCopy:buffer length:bytesDecrypted];
+        NSData *plaintext = [NSData dataWithBytes:buffer length:bytesDecrypted];
+        free(buffer);
+
+        return plaintext;
     } else{
         free(buffer);
         @throw [NSException exceptionWithName:CipherException reason:@"We encountered an issue while decrypting." userInfo:nil];

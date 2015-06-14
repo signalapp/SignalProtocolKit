@@ -1,16 +1,16 @@
 PODS:
-  - 25519 (1.8)
+  - 25519 (2.0.1)
   - HKDFKit (0.0.3)
   - ProtocolBuffers (1.9.7)
 
 DEPENDENCIES:
-  - 25519 (~> 1.8)
+  - 25519 (~> 2.0.1)
   - HKDFKit (~> 0.0.3)
   - ProtocolBuffers (~> 1.9.7)
 
 SPEC CHECKSUMS:
-  25519: 601ffb5d258aa33d642062d6fa4096db210e02e7
-  HKDFKit: 5998cf1bbb611e7ecc6bd3eaaef8c7a7da7be949
-  ProtocolBuffers: 37fdd327d36856f965ea9029b5ec0c7120e3a452
+  '25519': cd3f6f0658ac9dd4f95d7fb906378e1d0649c46c
+  HKDFKit: c058305d6f64b84f28c50bd7aa89574625bcb62a
+  ProtocolBuffers: 0682a66dec85e5a45bd53a2f44b8b987a0ba845f
 
-COCOAPODS: 0.35.0
+COCOAPODS: 0.37.2

@@ -59,12 +59,14 @@
                             deviceId:(int)deviceId{
     self = [super init];
     
-    _sessionStore      = sessionStore;
-    _prekeyStore       = preKeyStore;
-    _signedPreKeyStore = signedPreKeyStore;
-    _identityStore     = identityKeyStore;
-    _recipientId       = recipientId;
-    _deviceId          = deviceId;
+    if (self) {
+        _sessionStore      = sessionStore;
+        _prekeyStore       = preKeyStore;
+        _signedPreKeyStore = signedPreKeyStore;
+        _identityStore     = identityKeyStore;
+        _recipientId       = recipientId;
+        _deviceId          = deviceId;
+    }
     
     return self;
 }
