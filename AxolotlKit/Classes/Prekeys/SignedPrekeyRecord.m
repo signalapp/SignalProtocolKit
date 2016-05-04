@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
 //
 
-#import "SignedPreKeyRecord.h"
+#import "SignedPrekeyRecord.h"
 
 static NSString* const kCoderPreKeyId        = @"kCoderPreKeyId";
 static NSString* const kCoderPreKeyPair      = @"kCoderPreKeyPair";
