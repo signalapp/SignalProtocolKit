@@ -1,3 +1,6 @@
+*Deprecation Warning*: It is recommended that [libsignal-protocol-c](https://github.com/whispersystems/libsignal-protocol-c) be used for all new applications.
+
+
 # SignalProtocolKit [![Build Status](https://travis-ci.org/WhisperSystems/AxolotlKit.svg?branch=master)](https://travis-ci.org/WhisperSystems/AxolotlKit)
 
 SignalProtocolKit is an implementation of the Signal protocol, written in Objective-C.
