@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
 //
 
-#import <25519/Curve25519.h>
+#import <Curve25519Kit/Curve25519.h>
 #import <Foundation/Foundation.h>
 
 

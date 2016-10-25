@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Chain.h"
 
-#import <25519/Curve25519.h>
+#import <Curve25519Kit/Curve25519.h>
 
 @interface SendingChain : NSObject <Chain, NSSecureCoding>
 

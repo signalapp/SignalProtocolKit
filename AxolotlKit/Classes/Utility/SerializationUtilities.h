@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CommonCrypto/CommonCrypto.h>
 
 #define MAC_LENGTH 8
 
