@@ -117,7 +117,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     [aCoder encodeObject:[NSNumber numberWithInt:self.remoteRegistrationId] forKey:kCoderRemoteRegID];
     [aCoder encodeObject:[NSNumber numberWithInt:self.localRegistrationId] forKey:kCoderLocalRegID];
     [aCoder encodeObject:self.sendingChain forKey:kCoderSendingChain];
-    [aCoder encodeObject:self.receivingChains forKey:kCoderReceiverChains];
+    [aCoder encodeObject:[self.receivingChains mutableCopy] forKey:kCoderReceiverChains];
     [aCoder encodeObject:self.pendingPreKey forKey:kCoderPendingPrekey];
 }
 
