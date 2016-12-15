@@ -16,6 +16,11 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+
+    // required to avoid crash:
+    // "Application windows are expected to have a root view controller at the end of application launch"
+
+    [self.window setRootViewController:[UIViewController new]];
     return YES;
 }
 

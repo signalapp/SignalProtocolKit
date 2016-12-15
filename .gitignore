@@ -22,3 +22,4 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+test_output

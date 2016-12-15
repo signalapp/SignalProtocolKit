@@ -1,0 +1,8 @@
+# For more information about this configuration visit
+# https://github.com/fastlane/fastlane/tree/master/scan#scanfile
+
+# In general, you can use the options available
+# scan --help
+
+scheme "AxolotlKit"
+

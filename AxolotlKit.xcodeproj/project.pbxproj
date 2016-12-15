@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		30BDB6D632952E18074FD70B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9F87ECA041E727CC457415 /* libPods.a */; };
-		719C4E40588B7AD1F1DD22FC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9F87ECA041E727CC457415 /* libPods.a */; };
+		053B67B83D50637758B1B452 /* libPods-AxolotlKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75608451B1B3A2376073DF48 /* libPods-AxolotlKit.a */; };
+		6D26FD663E5FAC929BC98FE5 /* libPods-AxolotlKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF744C9D36F3B6418C094847 /* libPods-AxolotlKitTests.a */; };
 		B619AF1419FC148D00E33198 /* ProtobuffsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B619AF1319FC148D00E33198 /* ProtobuffsTests.m */; };
 		B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B61E841C19D1780D004FC382 /* HKDFTest.m */; };
 		B62EFBF01A9140190072ADD3 /* PreKeyBundleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B62EFBEF1A9140190072ADD3 /* PreKeyBundleTests.m */; };
@@ -70,7 +70,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		AD9F87ECA041E727CC457415 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		273B59DE0B6958AC58F56CBC /* Pods-AxolotlKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AxolotlKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AxolotlKit/Pods-AxolotlKit.debug.xcconfig"; sourceTree = "<group>"; };
+		535B95F3C3486538E9B66E8B /* Pods-AxolotlKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AxolotlKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AxolotlKitTests/Pods-AxolotlKitTests.release.xcconfig"; sourceTree = "<group>"; };
+		75608451B1B3A2376073DF48 /* libPods-AxolotlKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AxolotlKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A301BD7DC87662E4F12CE89C /* Pods-AxolotlKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AxolotlKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-AxolotlKit/Pods-AxolotlKit.release.xcconfig"; sourceTree = "<group>"; };
 		B619AF1319FC148D00E33198 /* ProtobuffsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtobuffsTests.m; sourceTree = "<group>"; };
 		B61E841C19D1780D004FC382 /* HKDFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKDFTest.m; sourceTree = "<group>"; };
 		B62EFBEF1A9140190072ADD3 /* PreKeyBundleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreKeyBundleTests.m; sourceTree = "<group>"; };
@@ -160,8 +163,8 @@
 		B6E07F7819FE49010091446D /* SerializationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializationUtilities.h; sourceTree = "<group>"; };
 		B6E07F7919FE49010091446D /* SerializationUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializationUtilities.m; sourceTree = "<group>"; };
 		B6E37ADF19CF107C00E619CA /* ECCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECCTests.m; sourceTree = "<group>"; };
-		C47E7DDC756D06556C4541B0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		F1351BCBFEF67F0F64D4C98C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		F18946391DB22E6D23D4168E /* Pods-AxolotlKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AxolotlKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AxolotlKitTests/Pods-AxolotlKitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		FF744C9D36F3B6418C094847 /* libPods-AxolotlKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AxolotlKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,7 +175,7 @@
 				B63B2FA1197D8AFD00E09F65 /* CoreGraphics.framework in Frameworks */,
 				B63B2FA3197D8AFD00E09F65 /* UIKit.framework in Frameworks */,
 				B63B2F9F197D8AFD00E09F65 /* Foundation.framework in Frameworks */,
-				30BDB6D632952E18074FD70B /* libPods.a in Frameworks */,
+				053B67B83D50637758B1B452 /* libPods-AxolotlKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,7 +186,7 @@
 				B63B2FDC197D8B9600E09F65 /* XCTest.framework in Frameworks */,
 				B63B2FDE197D8B9600E09F65 /* UIKit.framework in Frameworks */,
 				B63B2FDD197D8B9600E09F65 /* Foundation.framework in Frameworks */,
-				719C4E40588B7AD1F1DD22FC /* libPods.a in Frameworks */,
+				6D26FD663E5FAC929BC98FE5 /* libPods-AxolotlKitTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,7 +200,8 @@
 				B63B2FA0197D8AFD00E09F65 /* CoreGraphics.framework */,
 				B63B2FA2197D8AFD00E09F65 /* UIKit.framework */,
 				B63B2FB7197D8AFD00E09F65 /* XCTest.framework */,
-				AD9F87ECA041E727CC457415 /* libPods.a */,
+				75608451B1B3A2376073DF48 /* libPods-AxolotlKit.a */,
+				FF744C9D36F3B6418C094847 /* libPods-AxolotlKitTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -304,7 +308,7 @@
 				B63B2FDF197D8B9600E09F65 /* AxolotlKit Tests */,
 				B6B98F7A197D838A00B16B5E /* Products */,
 				A616BD9DC39D4B7BBBA02F80 /* Frameworks */,
-				F56DC7A75D226F3057DF227B /* Pods */,
+				E253D8CE20A28C7C5B6EF9D0 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -472,11 +476,13 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		F56DC7A75D226F3057DF227B /* Pods */ = {
+		E253D8CE20A28C7C5B6EF9D0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C47E7DDC756D06556C4541B0 /* Pods.debug.xcconfig */,
-				F1351BCBFEF67F0F64D4C98C /* Pods.release.xcconfig */,
+				273B59DE0B6958AC58F56CBC /* Pods-AxolotlKit.debug.xcconfig */,
+				A301BD7DC87662E4F12CE89C /* Pods-AxolotlKit.release.xcconfig */,
+				F18946391DB22E6D23D4168E /* Pods-AxolotlKitTests.debug.xcconfig */,
+				535B95F3C3486538E9B66E8B /* Pods-AxolotlKitTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -488,11 +494,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B63B2FC5197D8AFE00E09F65 /* Build configuration list for PBXNativeTarget "AxolotlKit" */;
 			buildPhases = (
-				2873D560FFC1302C095EDD03 /* Check Pods Manifest.lock */,
+				CF91F5B0680A0D6B156CC067 /* [CP] Check Pods Manifest.lock */,
 				B63B2F99197D8AFD00E09F65 /* Sources */,
 				B63B2F9A197D8AFD00E09F65 /* Frameworks */,
 				B63B2F9B197D8AFD00E09F65 /* Resources */,
-				9C925C121D5B8E571ED994DC /* Copy Pods Resources */,
+				1DFAB5EBB173B09F224A6D30 /* [CP] Embed Pods Frameworks */,
+				8CB33842ECF2BD7AD5FB982F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -507,11 +514,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B63B2FEA197D8B9600E09F65 /* Build configuration list for PBXNativeTarget "AxolotlKitTests" */;
 			buildPhases = (
-				99597A930ADDD17377AADBA4 /* Check Pods Manifest.lock */,
+				F7D1D7822CA76333BE3F65B0 /* [CP] Check Pods Manifest.lock */,
 				B63B2FD7197D8B9600E09F65 /* Sources */,
 				B63B2FD8197D8B9600E09F65 /* Frameworks */,
 				B63B2FD9197D8B9600E09F65 /* Resources */,
-				A51F70DA7E9DF4FF44373955 /* Copy Pods Resources */,
+				72AE5FCBF75F8EC4F08F3417 /* [CP] Embed Pods Frameworks */,
+				826D88D030861B8DEF83B1EA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -529,7 +537,7 @@
 		B6B98F70197D838A00B16B5E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Frederic Jacobs";
 				TargetAttributes = {
 					B63B2FDA197D8B9600E09F65 = {
@@ -577,64 +585,94 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2873D560FFC1302C095EDD03 /* Check Pods Manifest.lock */ = {
+		1DFAB5EBB173B09F224A6D30 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AxolotlKit/Pods-AxolotlKit-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		99597A930ADDD17377AADBA4 /* Check Pods Manifest.lock */ = {
+		72AE5FCBF75F8EC4F08F3417 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AxolotlKitTests/Pods-AxolotlKitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9C925C121D5B8E571ED994DC /* Copy Pods Resources */ = {
+		826D88D030861B8DEF83B1EA /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AxolotlKitTests/Pods-AxolotlKitTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A51F70DA7E9DF4FF44373955 /* Copy Pods Resources */ = {
+		8CB33842ECF2BD7AD5FB982F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AxolotlKit/Pods-AxolotlKit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF91F5B0680A0D6B156CC067 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F7D1D7822CA76333BE3F65B0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -724,10 +762,11 @@
 /* Begin XCBuildConfiguration section */
 		B63B2FC6197D8AFE00E09F65 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C47E7DDC756D06556C4541B0 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 273B59DE0B6958AC58F56CBC /* Pods-AxolotlKit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AxolotlKit/AxolotlKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -742,10 +781,11 @@
 		};
 		B63B2FC7197D8AFE00E09F65 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1351BCBFEF67F0F64D4C98C /* Pods.release.xcconfig */;
+			baseConfigurationReference = A301BD7DC87662E4F12CE89C /* Pods-AxolotlKit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AxolotlKit/AxolotlKit-Prefix.pch";
 				INFOPLIST_FILE = "AxolotlKit/AxolotlKit-Info.plist";
@@ -756,9 +796,10 @@
 		};
 		B63B2FEB197D8B9600E09F65 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C47E7DDC756D06556C4541B0 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = F18946391DB22E6D23D4168E /* Pods-AxolotlKitTests.debug.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AxolotlKit.app/AxolotlKit";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -772,16 +813,17 @@
 				);
 				INFOPLIST_FILE = "AxolotlKit Tests/AxolotlKit Tests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AxolotlKit.app/AxolotlKit";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
 		B63B2FEC197D8B9600E09F65 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1351BCBFEF67F0F64D4C98C /* Pods.release.xcconfig */;
+			baseConfigurationReference = 535B95F3C3486538E9B66E8B /* Pods-AxolotlKitTests.release.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/AxolotlKit.app/AxolotlKit";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -791,14 +833,13 @@
 				GCC_PREFIX_HEADER = "AxolotlKit Tests/AxolotlKit Tests-Prefix.pch";
 				INFOPLIST_FILE = "AxolotlKit Tests/AxolotlKit Tests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AxolotlKit.app/AxolotlKit";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
 		B6B98F8D197D838A00B16B5E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C47E7DDC756D06556C4541B0 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -810,16 +851,20 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -833,7 +878,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)/**",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
@@ -848,7 +893,6 @@
 		};
 		B6B98F8E197D838A00B16B5E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1351BCBFEF67F0F64D4C98C /* Pods.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -860,8 +904,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -870,6 +916,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -877,7 +924,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(inherited)/**",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
