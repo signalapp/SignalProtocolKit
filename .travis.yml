@@ -1,8 +1,3 @@
-before_install: 
-- pod install
-
 language: objective-c
-xcode_sdk: iphonesimulator8.1
-install: true
-xcode_workspace: AxolotlKit.xcworkspace
-xcode_scheme: AxolotlKit
+
+script: bin/ci
