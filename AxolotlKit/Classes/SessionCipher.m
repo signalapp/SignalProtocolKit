@@ -29,6 +29,11 @@
 
 #import <HKDFKit/HKDFKit.h>
 
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(major, minor) \
+    ([[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){.majorVersion = major, .minorVersion = minor, .patchVersion = 0}])
+
+static dispatch_queue_t _sessionCipherDispatchQueue;
+
 @interface SessionCipher ()
 
 @property NSString* recipientId;
@@ -77,8 +82,31 @@
     return self;
 }
 
+#pragma mark - dispatch queue 
+
++ (dispatch_queue_t)getSessionCipherDispatchQueue;
+{
+    if (_sessionCipherDispatchQueue) {
+        return _sessionCipherDispatchQueue;
+    } else {
+        return dispatch_get_main_queue();
+    }
+}
+
++ (void)setSessionCipherDispatchQueue:(dispatch_queue_t)dispatchQueue
+{
+    _sessionCipherDispatchQueue = dispatchQueue;
+}
+
+- (void)assertOnSessionCipherDispatchQueue
+{
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(10, 0)) {
+        dispatch_assert_queue([[self class] getSessionCipherDispatchQueue]);
+    } // else, skip assert as it's a development convenience.
+}
+
 - (id<CipherMessage>)encryptMessage:(NSData*)paddedMessage{
-    
+    [self assertOnSessionCipherDispatchQueue];
     SessionRecord *sessionRecord = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
     SessionState  *session       = sessionRecord.sessionState;
     ChainKey *chainKey           = session.senderChainKey;
@@ -118,6 +146,7 @@
 }
 
 - (NSData*)decrypt:(id<CipherMessage>)whisperMessage{
+    [self assertOnSessionCipherDispatchQueue];
     if ([whisperMessage isKindOfClass:[PreKeyWhisperMessage class]]) {
         return [self decryptPreKeyWhisperMessage:(PreKeyWhisperMessage*)whisperMessage];
     } else{
@@ -126,6 +155,7 @@
 }
 
 - (NSData*)decryptPreKeyWhisperMessage:(PreKeyWhisperMessage*)preKeyWhisperMessage{
+    [self assertOnSessionCipherDispatchQueue];
     SessionRecord *sessionRecord = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
     int unsignedPreKeyId         = [self.sessionBuilder processPrekeyWhisperMessage:preKeyWhisperMessage withSession:sessionRecord];
     NSData *plaintext            = [self decryptWithSessionRecord:sessionRecord whisperMessage:preKeyWhisperMessage.message];
@@ -140,6 +170,7 @@
 }
 
 - (NSData*)decryptWhisperMessage:(WhisperMessage*)message{
+    [self assertOnSessionCipherDispatchQueue];
     if (![self.sessionStore containsSession:self.recipientId deviceId:self.deviceId]) {
         @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %@, %d", self.recipientId, self.deviceId] userInfo:nil];
     }
@@ -154,6 +185,7 @@
 
 
 -(NSData*)decryptWithSessionRecord:(SessionRecord*)sessionRecord whisperMessage:(WhisperMessage*)message{
+    [self assertOnSessionCipherDispatchQueue];
     SessionState   *sessionState   = [sessionRecord sessionState];
     NSArray        *previousStates = [sessionRecord previousSessionStates];
     NSMutableArray *exceptions     = [NSMutableArray array];
@@ -182,6 +214,7 @@
 }
 
 -(NSData*)decryptWithSessionState:(SessionState*)sessionState whisperMessage:(WhisperMessage*)message{
+    [self assertOnSessionCipherDispatchQueue];
     if (![sessionState hasSenderChain]) {
         @throw [NSException exceptionWithName:InvalidMessageException reason:@"Uninitialized session!" userInfo:nil];
     }
@@ -206,6 +239,7 @@
 }
 
 - (ChainKey*)getOrCreateChainKeys:(SessionState*)sessionState theirEphemeral:(NSData*)theirEphemeral{
+    [self assertOnSessionCipherDispatchQueue];
     @try {
         if ([sessionState hasReceiverChain:theirEphemeral]) {
             return [sessionState receiverChainKey:theirEphemeral];
@@ -230,7 +264,7 @@
 }
 
 - (MessageKeys*)getOrCreateMessageKeysForSession:(SessionState*)sessionState theirEphemeral:(NSData*)theirEphemeral chainKey:(ChainKey*)chainKey counter:(int)counter{
-    
+    [self assertOnSessionCipherDispatchQueue];
     if (chainKey.index > counter) {
         if ([sessionState hasMessageKeys:theirEphemeral counter:counter]) {
             return [sessionState removeMessageKeys:theirEphemeral counter:counter];
@@ -268,6 +302,7 @@
 
 
 - (int)remoteRegistrationId{
+    [self assertOnSessionCipherDispatchQueue];
     SessionRecord *record = [self.sessionStore loadSession:self.recipientId deviceId:_deviceId];
     
     if (!record) {
@@ -278,6 +313,7 @@
 }
 
 - (int)sessionVersion{
+    [self assertOnSessionCipherDispatchQueue];
     SessionRecord *record = [self.sessionStore loadSession:self.recipientId deviceId:_deviceId];
     
     if (!record) {
