@@ -1,3 +1,5 @@
 language: objective-c
 
+osx_image: xcode8
+
 script: bin/ci
