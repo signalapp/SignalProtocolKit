@@ -77,7 +77,11 @@
         
         _serialized     = serialized;
         _registrationId = preKeyWhisperMessage.registrationId;
-        _prekeyID       = preKeyWhisperMessage.preKeyId;
+
+        // This method is called when decrypting a received PreKeyMessage, but to be symmetrical with
+        // encrypting a PreKeyWhisperMessage before sending, we use "-1" to indicate *no* unsignd prekey was
+        // included.
+        _prekeyID       = preKeyWhisperMessage.hasPreKeyId ? preKeyWhisperMessage.preKeyId : -1;
         _signedPrekeyId = preKeyWhisperMessage.signedPreKeyId;
         _baseKey        = preKeyWhisperMessage.baseKey;
         _identityKey    = preKeyWhisperMessage.identityKey;
