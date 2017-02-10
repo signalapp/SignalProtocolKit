@@ -1,9 +1,5 @@
 //
-//  SessionBuilder.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 23/07/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import "AxolotlExceptions.h"
@@ -26,6 +22,8 @@
 
 #define CURRENT_VERSION 3
 #define MINUMUM_VERSION 3
+
+const int kPreKeyOfLastResortId = 0xFFFFFF;
 
 @interface SessionBuilder ()
 
@@ -162,11 +160,11 @@
     [sessionRecord.sessionState setLocalRegistrationId:self.identityStore.localRegistrationId];
     [sessionRecord.sessionState setRemoteRegistrationId:message.registrationId];
     [sessionRecord.sessionState setAliceBaseKey:baseKey];
-    
-    if (message.prekeyID >= 0 && message.prekeyID != 0xFFFFFF) {
-        return message.prekeyID;
-    } else{
-        return -1;
+
+    if (message.prekeyID >= 0 && message.prekeyID != kPreKeyOfLastResortId) {
+      return message.prekeyID;
+    } else {
+      return -1;
     }
 }
 
