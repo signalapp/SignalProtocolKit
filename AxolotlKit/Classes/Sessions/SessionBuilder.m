@@ -163,8 +163,8 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 
     if (message.prekeyID >= 0 && message.prekeyID != kPreKeyOfLastResortId) {
       return message.prekeyID;
-    } else{
-        return -1;
+    } else {
+      return -1;
     }
 }
 
