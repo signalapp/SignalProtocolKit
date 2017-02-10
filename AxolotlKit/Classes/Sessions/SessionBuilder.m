@@ -143,12 +143,19 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     }
     
     ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore loadSignedPrekey:message.signedPrekeyId].keyPair;
-    
+
+    ECKeyPair *_Nullable ourOneTimePreKey;
+    if (message.prekeyID >= 0) {
+        ourOneTimePreKey = [self.prekeyStore loadPreKey:message.prekeyID].keyPair;
+    } else {
+        NSLog(@"Processing PreKey message which had no one-time prekey.");
+    }
+
     BobAxolotlParameters *params = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:self.identityStore.identityKeyPair
                                                                           theirIdentityKey:message.identityKey.removeKeyType
                                                                            ourSignedPrekey:ourSignedPrekey
                                                                              ourRatchetKey:ourSignedPrekey
-                                                                          ourOneTimePrekey:[self.prekeyStore loadPreKey:message.prekeyID].keyPair
+                                                                          ourOneTimePrekey:ourOneTimePreKey
                                                                               theirBaseKey:baseKey];
     
     if (!sessionRecord.isFresh) {
@@ -161,10 +168,11 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     [sessionRecord.sessionState setRemoteRegistrationId:message.registrationId];
     [sessionRecord.sessionState setAliceBaseKey:baseKey];
 
+    // If we used a prekey and it wasn't the prekey of last resort
     if (message.prekeyID >= 0 && message.prekeyID != kPreKeyOfLastResortId) {
-      return message.prekeyID;
+        return message.prekeyID;
     } else {
-      return -1;
+        return -1;
     }
 }
 

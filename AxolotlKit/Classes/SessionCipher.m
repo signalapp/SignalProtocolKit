@@ -161,7 +161,8 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
     NSData *plaintext            = [self decryptWithSessionRecord:sessionRecord whisperMessage:preKeyWhisperMessage.message];
 
     [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
-    
+
+    // If there was an unsigned PreKey
     if (unsignedPreKeyId >= 0) {
         [self.prekeyStore removePreKey:unsignedPreKeyId];
     }
