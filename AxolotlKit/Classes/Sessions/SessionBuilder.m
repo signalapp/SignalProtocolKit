@@ -142,8 +142,18 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
         return -1;
     }
     
-    ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore loadSignedPrekey:message.signedPrekeyId].keyPair;
-
+    ECKeyPair *ourSignedPrekey = nil;
+    @try {
+        ourSignedPrekey = [self.signedPreKeyStore loadSignedPrekey:message.signedPrekeyId].keyPair;
+    } @catch (NSException *exception) {
+        NSLog(@"%@ %s Couldn't find signed prekey for id: %d, %@",
+              self.tag,
+              __PRETTY_FUNCTION__,
+              message.signedPrekeyId,
+              exception);
+        return -1;
+    }
+    
     ECKeyPair *_Nullable ourOneTimePreKey;
     if (message.prekeyID >= 0) {
         ourOneTimePreKey = [self.prekeyStore loadPreKey:message.prekeyID].keyPair;
@@ -174,6 +184,18 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     } else {
         return -1;
     }
+}
+
+#pragma mark - Logging
+
++ (NSString *)tag
+{
+    return [NSString stringWithFormat:@"[%@]", self.class];
+}
+
+- (NSString *)tag
+{
+    return self.class.tag;
 }
 
 @end
