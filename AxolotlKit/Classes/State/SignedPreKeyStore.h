@@ -1,9 +1,5 @@
 //
-//  SignedPrekeyStore.h
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 12/10/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -12,6 +8,8 @@
 @protocol SignedPreKeyStore <NSObject>
 
 - (SignedPreKeyRecord*)loadSignedPrekey:(int)signedPreKeyId;
+
+- (nullable SignedPreKeyRecord *)loadSignedPrekeyOrNil:(int)signedPreKeyId;
 
 - (NSArray*)loadSignedPreKeys;
 
