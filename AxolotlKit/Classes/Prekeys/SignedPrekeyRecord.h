@@ -1,9 +1,5 @@
 //
-//  SignedPrekeyRecord.h
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 26/07/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,7 +10,11 @@
 
 @property (nonatomic, readonly) NSData *signature;
 @property (nonatomic, readonly) NSDate *generatedAt;
+// Defaults to NO.  Should only be set after the service accepts this record.
+@property (nonatomic, readonly) BOOL wasAcceptedByService;
 
 - (instancetype)initWithId:(int)identifier keyPair:(ECKeyPair *)keyPair signature:(NSData*)signature generatedAt:(NSDate*)generatedAt;
+
+- (void)markAsAcceptedByService;
 
 @end
