@@ -105,9 +105,10 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     [sessionRecord.sessionState setLocalRegistrationId:self.identityStore.localRegistrationId];
     [sessionRecord.sessionState setRemoteRegistrationId:preKeyBundle.registrationId];
     [sessionRecord.sessionState setAliceBaseKey:ourBaseKey.publicKey];
-    
-    [self.sessionStore  storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
+
+    // Saving invalidates any existing sessions, so be sure to save *before* storing the new session.
     [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
+    [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
 }
 
 - (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
