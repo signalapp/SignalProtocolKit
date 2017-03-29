@@ -1,9 +1,5 @@
 //
-//  SessionRecord.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 25/07/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import "SessionRecord.h"
@@ -86,7 +82,8 @@
     return _sessionState;
 }
 
-- (NSMutableArray*)previousSessionStates{
+- (NSMutableArray<SessionState *> *)previousSessionStates
+{
     return _previousStates;
 }
 
