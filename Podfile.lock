@@ -1,18 +1,33 @@
 PODS:
   - 25519 (2.0.2)
+  - AxolotlKit (0.8.1):
+    - 25519 (~> 2.0.1)
+    - CocoaLumberjack
+    - HKDFKit (~> 0.0.3)
+    - ProtocolBuffers (~> 1.9.8)
+  - CocoaLumberjack (3.1.0):
+    - CocoaLumberjack/Default (= 3.1.0)
+    - CocoaLumberjack/Extensions (= 3.1.0)
+  - CocoaLumberjack/Default (3.1.0)
+  - CocoaLumberjack/Extensions (3.1.0):
+    - CocoaLumberjack/Default
   - HKDFKit (0.0.3)
   - ProtocolBuffers (1.9.11)
 
 DEPENDENCIES:
-  - 25519 (~> 2.0.1)
-  - HKDFKit (~> 0.0.3)
-  - ProtocolBuffers (~> 1.9.7)
+  - AxolotlKit (from `.`)
+
+EXTERNAL SOURCES:
+  AxolotlKit:
+    :path: "."
 
 SPEC CHECKSUMS:
   '25519': dc4bad7e2dbcbf1efa121068a705a44cd98c80fc
+  AxolotlKit: a9530d6835baae0f204b1f6b9dd79b7901176f0d
+  CocoaLumberjack: 8311463ddf9ee86a06ef92a071dd656c89244500
   HKDFKit: c058305d6f64b84f28c50bd7aa89574625bcb62a
   ProtocolBuffers: d509225eb2ea43d9582a59e94348fcf86e2abd65
 
-PODFILE CHECKSUM: '06848fa45c5d7bf1e817b59f9c1ecc26ed88ea85'
+PODFILE CHECKSUM: 620aef96f4f83d45f76ba8405fc626a76a47f95f
 
 COCOAPODS: 1.2.0
