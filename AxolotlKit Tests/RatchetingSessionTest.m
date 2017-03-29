@@ -1,10 +1,7 @@
 //
-//  RatchetingSessionTest.m
-//  AxolotlKit
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
-//  Created by Frederic Jacobs on 24/10/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
-//
+
 #import <XCTest/XCTest.h>
 
 #import <25519/Curve25519.h>
@@ -135,7 +132,10 @@
         (Byte) 0x05, (Byte) 0x40, (Byte) 0xE0, (Byte) 0xD8,
         (Byte) 0x45, (Byte) 0xDF, (Byte) 0xA2, (Byte) 0xF0,
         (Byte) 0x78, (Byte) 0x1E, (Byte) 0xBA, (Byte) 0x42};
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSData *bobPreKeyPrivateKeyData =  [NSData dataWithBytes:bobPreKeyPrivateKey length:32];
+#pragma clang diagnostic pop
    
     
     Byte bobPreKeyPublicKey [] = {(Byte) 0x05, (Byte) 0x52, (Byte) 0x02, (Byte) 0xA7,
@@ -147,7 +147,10 @@
         (Byte) 0xDF, (Byte) 0x51, (Byte) 0x38, (Byte) 0xA5,
         (Byte) 0xFC, (Byte) 0xD9, (Byte) 0xB6, (Byte) 0xC8,
         (Byte) 0x44};
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSData *bobPreKeyPublicKeyData =  [NSData dataWithBytes:bobPreKeyPublicKey length:33];
+#pragma clang diagnostic pop
  
     Byte aliceSendingRatchetPrivate [] = {(Byte) 0x98, (Byte) 0x04, (Byte) 0x0B, (Byte) 0xAE,
         (Byte) 0x6B, (Byte) 0x3D, (Byte) 0x02, (Byte) 0x9C,
@@ -178,7 +181,10 @@
         (Byte) 0x11, (Byte) 0xBF, (Byte) 0xA1, (Byte) 0xAA,
         (Byte) 0x16, (Byte) 0xAE, (Byte) 0xF3, (Byte) 0x6A,
         (Byte) 0x91, (Byte) 0xCD, (Byte) 0x1A, (Byte) 0x9B};
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSData *aliceRootKeyData =  [NSData dataWithBytes:aliceRootKey length:32];
+#pragma clang diagnostic pop
   
     Byte aliceSendingChainKey [] = {(Byte) 0x8A, (Byte) 0xA2, (Byte) 0x05, (Byte) 0xEA,
         (Byte) 0x17, (Byte) 0x00, (Byte) 0xC0, (Byte) 0x85,
@@ -244,7 +250,10 @@
         (Byte) 0xC2, (Byte) 0x8C, (Byte) 0x1C, (Byte) 0x6E,
         (Byte) 0x7C, (Byte) 0x48, (Byte) 0xB6, (Byte) 0x91,
         (Byte) 0x26, (Byte) 0x9B, (Byte) 0xF2, (Byte) 0xE6};
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSData *bobSessionRecordRootKeyData =  [NSData dataWithBytes:bobSessionRecordRootKey length:32];
+#pragma clang diagnostic pop
 
     Byte alicePlaintext [] = {(Byte) 0x54, (Byte) 0x68, (Byte) 0x69, (Byte) 0x73,
         (Byte) 0x20, (Byte) 0x69, (Byte) 0x73, (Byte) 0x20,
@@ -276,7 +285,10 @@
         (Byte) 0xC3, (Byte) 0xA6, (Byte) 0x96, (Byte) 0x06,
         (Byte) 0xAB, (Byte) 0xBE, (Byte) 0x2E, (Byte) 0x31,
         (Byte) 0x63, (Byte) 0x88};
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSData *AliceSerializedWhisperMessageData =  [NSData dataWithBytes:AliceSerializedWhisperMessage length:82];
+#pragma clang diagnostic pop
    
     Byte aliceCipherText [] = {(Byte) 0x9E, (Byte) 0xF2, (Byte) 0xD0, (Byte) 0xE1,
         (Byte) 0x30, (Byte) 0x4C, (Byte) 0x01, (Byte) 0xE0,
@@ -469,8 +481,10 @@
         (Byte) 0x05, (Byte) 0x40, (Byte) 0xE0, (Byte) 0xD8,
         (Byte) 0x45, (Byte) 0xDF, (Byte) 0xA2, (Byte) 0xF0,
         (Byte) 0x78, (Byte) 0x1E, (Byte) 0xBA, (Byte) 0x42};
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSData *bobPreKeyPrivateKeyData =  [NSData dataWithBytes:bobPreKeyPrivateKey length:32];
-    
+#pragma clang diagnostic pop
     
     Byte bobPreKeyPublicKey [] = {(Byte) 0x05, (Byte) 0x52, (Byte) 0x02, (Byte) 0xA7,
         (Byte) 0xDE, (Byte) 0x5D, (Byte) 0x6C, (Byte) 0x23,
@@ -481,7 +495,10 @@
         (Byte) 0xDF, (Byte) 0x51, (Byte) 0x38, (Byte) 0xA5,
         (Byte) 0xFC, (Byte) 0xD9, (Byte) 0xB6, (Byte) 0xC8,
         (Byte) 0x44};
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSData *bobPreKeyPublicKeyData =  [NSData dataWithBytes:bobPreKeyPublicKey length:33];
+#pragma clang diagnostic pop
     
     Byte aliceSendingRatchetPrivate [] = {(Byte) 0x98, (Byte) 0x04, (Byte) 0x0B, (Byte) 0xAE,
         (Byte) 0x6B, (Byte) 0x3D, (Byte) 0x02, (Byte) 0x9C,
@@ -512,7 +529,10 @@
         (Byte) 0x11, (Byte) 0xBF, (Byte) 0xA1, (Byte) 0xAA,
         (Byte) 0x16, (Byte) 0xAE, (Byte) 0xF3, (Byte) 0x6A,
         (Byte) 0x91, (Byte) 0xCD, (Byte) 0x1A, (Byte) 0x9B};
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSData *aliceRootKeyData =  [NSData dataWithBytes:aliceRootKey length:32];
+#pragma clang diagnostic pop
     
     Byte aliceSendingChainKey [] = {(Byte) 0x8A, (Byte) 0xA2, (Byte) 0x05, (Byte) 0xEA,
         (Byte) 0x17, (Byte) 0x00, (Byte) 0xC0, (Byte) 0x85,
@@ -578,7 +598,10 @@
         (Byte) 0xC2, (Byte) 0x8C, (Byte) 0x1C, (Byte) 0x6E,
         (Byte) 0x7C, (Byte) 0x48, (Byte) 0xB6, (Byte) 0x91,
         (Byte) 0x26, (Byte) 0x9B, (Byte) 0xF2, (Byte) 0xE6};
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSData *bobSessionRecordRootKeyData =  [NSData dataWithBytes:bobSessionRecordRootKey length:32];
+#pragma clang diagnostic pop
     
     Byte alicePlaintext [] = {(Byte) 0x54, (Byte) 0x68, (Byte) 0x69, (Byte) 0x73,
         (Byte) 0x20, (Byte) 0x69, (Byte) 0x73, (Byte) 0x20,
@@ -610,7 +633,10 @@
         (Byte) 0xC3, (Byte) 0xA6, (Byte) 0x96, (Byte) 0x06,
         (Byte) 0xAB, (Byte) 0xBE, (Byte) 0x2E, (Byte) 0x31,
         (Byte) 0x63, (Byte) 0x88};
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
     NSData *AliceSerializedWhisperMessageData =  [NSData dataWithBytes:AliceSerializedWhisperMessage length:82];
+#pragma clang diagnostic pop
     
     Byte aliceCipherText [] = {(Byte) 0x9E, (Byte) 0xF2, (Byte) 0xD0, (Byte) 0xE1,
         (Byte) 0x30, (Byte) 0x4C, (Byte) 0x01, (Byte) 0xE0,

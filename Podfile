@@ -1,4 +1,4 @@
-platform :ios, '6.0'
+platform :ios, '8.0'
 
 target 'AxolotlKit' do
   pod '25519',           '~> 2.0.1', :inhibit_warnings => true

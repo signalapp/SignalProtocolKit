@@ -2,7 +2,7 @@
 //  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
-#import "SignedPreKeyRecord.h"
+#import "SignedPrekeyRecord.h"
 
 static NSString* const kCoderPreKeyId        = @"kCoderPreKeyId";
 static NSString* const kCoderPreKeyPair      = @"kCoderPreKeyPair";

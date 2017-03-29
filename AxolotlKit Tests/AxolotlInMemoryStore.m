@@ -1,17 +1,15 @@
 //
-//  AxolotlInMemoryStore.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 17/10/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import "AxolotlInMemoryStore.h"
 #import "AxolotlExceptions.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface AxolotlInMemoryStore ()
 
-@property NSMutableDictionary *sessionRecords;
+@property NSMutableDictionary<NSString *, NSMutableDictionary *> *sessionRecords;
 
 // Signed PreKey Store
 
@@ -56,7 +54,17 @@
     return [self.signedPreKeyStore objectForKey:[NSNumber numberWithInt:signedPreKeyId]];
 }
 
-- (NSArray *)loadSignedPreKeys{
+- (nullable SignedPreKeyRecord *)loadSignedPrekeyOrNil:(int)signedPreKeyId
+{
+    if ([self containsSignedPreKey:signedPreKeyId]) {
+        return [self loadSignedPrekey:signedPreKeyId];
+    } else {
+        return nil;
+    }
+}
+
+- (NSArray<SignedPreKeyRecord *> *)loadSignedPreKeys
+{
     NSMutableArray *results = [NSMutableArray array];
     
     for (SignedPreKeyRecord *signedPrekey in [self.signedPreKeyStore allValues]) {
@@ -158,13 +166,20 @@
     return [[self deviceSessionRecordsForContactIdentifier:contactIdentifier] allKeys];
 }
 
-- (NSDictionary*)deviceSessionRecordsForContactIdentifier:(NSString*)contactIdentifier{
+- (NSMutableDictionary *)deviceSessionRecordsForContactIdentifier:(NSString *)contactIdentifier
+{
     return [self.sessionRecords objectForKey:contactIdentifier];
 }
 
 - (void)storeSession:(NSString*)contactIdentifier deviceId:(int)deviceId session:(SessionRecord *)session{
     NSAssert(session, @"Session can't be nil");
-    [self.sessionRecords setObject:@{[NSNumber numberWithInt:deviceId]:session} forKey:contactIdentifier];
+    NSMutableDictionary *deviceSessions = self.sessionRecords[contactIdentifier];
+    if (!deviceSessions) {
+        deviceSessions = [NSMutableDictionary new];
+    }
+    deviceSessions[@(deviceId)] = session;
+
+    self.sessionRecords[contactIdentifier] = deviceSessions;
 }
 
 - (BOOL)containsSession:(NSString*)contactIdentifier deviceId:(int)deviceId{
@@ -175,6 +190,18 @@
     return NO;
 }
 
+- (void)deleteSessionForContact:(NSString *)contactIdentifier deviceId:(int)deviceId
+{
+    NSMutableDictionary<NSNumber *, SessionRecord *> *sessions =
+        [self deviceSessionRecordsForContactIdentifier:contactIdentifier];
+    [sessions removeObjectForKey:@(deviceId)];
+}
+
+- (void)deleteAllSessionsForContact:(NSString *)contactIdentifier
+{
+    [self.sessionRecords removeObjectForKey:contactIdentifier];
+}
 
 @end
 
+NS_ASSUME_NONNULL_END
