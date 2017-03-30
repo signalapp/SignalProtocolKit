@@ -31,31 +31,6 @@
 		B6B3E64419FD5C8E0035422D /* ECKeyPair+ECKeyPairTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B3E64219FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.m */; };
 		B6BB8C3519F7E773008A5895 /* SessionBuilderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */; };
 		B6D41A2319DB4F8E00EE9BAA /* SessionCipherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D41A2219DB4F8E00EE9BAA /* SessionCipherTest.m */; };
-		B6E07F7A19FE49010091446D /* PreKeyWhisperMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F3919FE49010091446D /* PreKeyWhisperMessage.m */; };
-		B6E07F7B19FE49010091446D /* WhisperMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F3B19FE49010091446D /* WhisperMessage.m */; };
-		B6E07F7C19FE49010091446D /* AES-CBC.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F3F19FE49010091446D /* AES-CBC.m */; };
-		B6E07F7D19FE49010091446D /* PreKeyBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F4419FE49010091446D /* PreKeyBundle.m */; };
-		B6E07F7E19FE49010091446D /* PreKeyRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F4619FE49010091446D /* PreKeyRecord.m */; };
-		B6E07F7F19FE49010091446D /* SignedPrekeyRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F4819FE49010091446D /* SignedPrekeyRecord.m */; };
-		B6E07F8019FE49010091446D /* WhisperTextProtocol.pb.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F4B19FE49010091446D /* WhisperTextProtocol.pb.m */; };
-		B6E07F8119FE49010091446D /* WhisperTextProtocol.proto in Resources */ = {isa = PBXBuildFile; fileRef = B6E07F4C19FE49010091446D /* WhisperTextProtocol.proto */; };
-		B6E07F8219FE49010091446D /* AliceAxolotlParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F4F19FE49010091446D /* AliceAxolotlParameters.m */; };
-		B6E07F8319FE49010091446D /* BobAxolotlParameters.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F5219FE49010091446D /* BobAxolotlParameters.m */; };
-		B6E07F8419FE49010091446D /* ChainAndIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F5519FE49010091446D /* ChainAndIndex.m */; };
-		B6E07F8519FE49010091446D /* ChainKey.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F5719FE49010091446D /* ChainKey.m */; };
-		B6E07F8619FE49010091446D /* MessageKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F5919FE49010091446D /* MessageKeys.m */; };
-		B6E07F8719FE49010091446D /* RatchetingSession.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F5B19FE49010091446D /* RatchetingSession.m */; };
-		B6E07F8819FE49010091446D /* ReceivingChain.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F5D19FE49010091446D /* ReceivingChain.m */; };
-		B6E07F8919FE49010091446D /* RKCK.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F5F19FE49010091446D /* RKCK.m */; };
-		B6E07F8A19FE49010091446D /* RootKey.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F6119FE49010091446D /* RootKey.m */; };
-		B6E07F8B19FE49010091446D /* SendingChain.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F6319FE49010091446D /* SendingChain.m */; };
-		B6E07F8C19FE49010091446D /* TSDerivedSecrets.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F6519FE49010091446D /* TSDerivedSecrets.m */; };
-		B6E07F8D19FE49010091446D /* SessionCipher.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F6719FE49010091446D /* SessionCipher.m */; };
-		B6E07F8E19FE49010091446D /* SessionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F6A19FE49010091446D /* SessionBuilder.m */; };
-		B6E07F8F19FE49010091446D /* SessionRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F6C19FE49010091446D /* SessionRecord.m */; };
-		B6E07F9019FE49010091446D /* SessionState.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F6E19FE49010091446D /* SessionState.m */; };
-		B6E07F9119FE49010091446D /* NSData+keyVersionByte.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F7719FE49010091446D /* NSData+keyVersionByte.m */; };
-		B6E07F9219FE49010091446D /* SerializationUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E07F7919FE49010091446D /* SerializationUtilities.m */; };
 		B6E37AE019CF107C00E619CA /* ECCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E37ADF19CF107C00E619CA /* ECCTests.m */; };
 /* End PBXBuildFile section */
 
@@ -100,68 +75,8 @@
 		B6B3E63B19FD3D8A0035422D /* WhisperMessageSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperMessageSerialization.m; sourceTree = "<group>"; };
 		B6B3E64119FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ECKeyPair+ECKeyPairTesting.h"; path = "Util/ECKeyPair+ECKeyPairTesting.h"; sourceTree = "<group>"; };
 		B6B3E64219FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ECKeyPair+ECKeyPairTesting.m"; path = "Util/ECKeyPair+ECKeyPairTesting.m"; sourceTree = "<group>"; };
-		B6B98F7D197D838A00B16B5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionBuilderTests.m; sourceTree = "<group>"; };
 		B6D41A2219DB4F8E00EE9BAA /* SessionCipherTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionCipherTest.m; sourceTree = "<group>"; };
-		B6E07F3519FE49010091446D /* AxolotlExceptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxolotlExceptions.h; sourceTree = "<group>"; };
-		B6E07F3719FE49010091446D /* CipherMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CipherMessage.h; sourceTree = "<group>"; };
-		B6E07F3819FE49010091446D /* PreKeyWhisperMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreKeyWhisperMessage.h; sourceTree = "<group>"; };
-		B6E07F3919FE49010091446D /* PreKeyWhisperMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreKeyWhisperMessage.m; sourceTree = "<group>"; };
-		B6E07F3A19FE49010091446D /* WhisperMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhisperMessage.h; sourceTree = "<group>"; };
-		B6E07F3B19FE49010091446D /* WhisperMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperMessage.m; sourceTree = "<group>"; };
-		B6E07F3C19FE49010091446D /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		B6E07F3E19FE49010091446D /* AES-CBC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AES-CBC.h"; sourceTree = "<group>"; };
-		B6E07F3F19FE49010091446D /* AES-CBC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AES-CBC.m"; sourceTree = "<group>"; };
-		B6E07F4319FE49010091446D /* PreKeyBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreKeyBundle.h; sourceTree = "<group>"; };
-		B6E07F4419FE49010091446D /* PreKeyBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreKeyBundle.m; sourceTree = "<group>"; };
-		B6E07F4519FE49010091446D /* PreKeyRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreKeyRecord.h; sourceTree = "<group>"; };
-		B6E07F4619FE49010091446D /* PreKeyRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreKeyRecord.m; sourceTree = "<group>"; };
-		B6E07F4719FE49010091446D /* SignedPrekeyRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignedPrekeyRecord.h; sourceTree = "<group>"; };
-		B6E07F4819FE49010091446D /* SignedPrekeyRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignedPrekeyRecord.m; sourceTree = "<group>"; };
-		B6E07F4A19FE49010091446D /* WhisperTextProtocol.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhisperTextProtocol.pb.h; sourceTree = "<group>"; };
-		B6E07F4B19FE49010091446D /* WhisperTextProtocol.pb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhisperTextProtocol.pb.m; sourceTree = "<group>"; };
-		B6E07F4C19FE49010091446D /* WhisperTextProtocol.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WhisperTextProtocol.proto; sourceTree = "<group>"; };
-		B6E07F4E19FE49010091446D /* AliceAxolotlParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AliceAxolotlParameters.h; sourceTree = "<group>"; };
-		B6E07F4F19FE49010091446D /* AliceAxolotlParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AliceAxolotlParameters.m; sourceTree = "<group>"; };
-		B6E07F5019FE49010091446D /* AxolotlParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxolotlParameters.h; sourceTree = "<group>"; };
-		B6E07F5119FE49010091446D /* BobAxolotlParameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BobAxolotlParameters.h; sourceTree = "<group>"; };
-		B6E07F5219FE49010091446D /* BobAxolotlParameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BobAxolotlParameters.m; sourceTree = "<group>"; };
-		B6E07F5319FE49010091446D /* Chain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chain.h; sourceTree = "<group>"; };
-		B6E07F5419FE49010091446D /* ChainAndIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainAndIndex.h; sourceTree = "<group>"; };
-		B6E07F5519FE49010091446D /* ChainAndIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChainAndIndex.m; sourceTree = "<group>"; };
-		B6E07F5619FE49010091446D /* ChainKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainKey.h; sourceTree = "<group>"; };
-		B6E07F5719FE49010091446D /* ChainKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChainKey.m; sourceTree = "<group>"; };
-		B6E07F5819FE49010091446D /* MessageKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageKeys.h; sourceTree = "<group>"; };
-		B6E07F5919FE49010091446D /* MessageKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageKeys.m; sourceTree = "<group>"; };
-		B6E07F5A19FE49010091446D /* RatchetingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatchetingSession.h; sourceTree = "<group>"; };
-		B6E07F5B19FE49010091446D /* RatchetingSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatchetingSession.m; sourceTree = "<group>"; };
-		B6E07F5C19FE49010091446D /* ReceivingChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceivingChain.h; sourceTree = "<group>"; };
-		B6E07F5D19FE49010091446D /* ReceivingChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceivingChain.m; sourceTree = "<group>"; };
-		B6E07F5E19FE49010091446D /* RKCK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKCK.h; sourceTree = "<group>"; };
-		B6E07F5F19FE49010091446D /* RKCK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKCK.m; sourceTree = "<group>"; };
-		B6E07F6019FE49010091446D /* RootKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootKey.h; sourceTree = "<group>"; };
-		B6E07F6119FE49010091446D /* RootKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootKey.m; sourceTree = "<group>"; };
-		B6E07F6219FE49010091446D /* SendingChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendingChain.h; sourceTree = "<group>"; };
-		B6E07F6319FE49010091446D /* SendingChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendingChain.m; sourceTree = "<group>"; };
-		B6E07F6419FE49010091446D /* TSDerivedSecrets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSDerivedSecrets.h; sourceTree = "<group>"; };
-		B6E07F6519FE49010091446D /* TSDerivedSecrets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSDerivedSecrets.m; sourceTree = "<group>"; };
-		B6E07F6619FE49010091446D /* SessionCipher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionCipher.h; sourceTree = "<group>"; };
-		B6E07F6719FE49010091446D /* SessionCipher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionCipher.m; sourceTree = "<group>"; };
-		B6E07F6919FE49010091446D /* SessionBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionBuilder.h; sourceTree = "<group>"; };
-		B6E07F6A19FE49010091446D /* SessionBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionBuilder.m; sourceTree = "<group>"; };
-		B6E07F6B19FE49010091446D /* SessionRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionRecord.h; sourceTree = "<group>"; };
-		B6E07F6C19FE49010091446D /* SessionRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionRecord.m; sourceTree = "<group>"; };
-		B6E07F6D19FE49010091446D /* SessionState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionState.h; sourceTree = "<group>"; };
-		B6E07F6E19FE49010091446D /* SessionState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionState.m; sourceTree = "<group>"; };
-		B6E07F7019FE49010091446D /* AxolotlStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxolotlStore.h; sourceTree = "<group>"; };
-		B6E07F7119FE49010091446D /* IdentityKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentityKeyStore.h; sourceTree = "<group>"; };
-		B6E07F7219FE49010091446D /* PreKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreKeyStore.h; sourceTree = "<group>"; };
-		B6E07F7319FE49010091446D /* SessionStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionStore.h; sourceTree = "<group>"; };
-		B6E07F7419FE49010091446D /* SignedPreKeyStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignedPreKeyStore.h; sourceTree = "<group>"; };
-		B6E07F7619FE49010091446D /* NSData+keyVersionByte.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+keyVersionByte.h"; sourceTree = "<group>"; };
-		B6E07F7719FE49010091446D /* NSData+keyVersionByte.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+keyVersionByte.m"; sourceTree = "<group>"; };
-		B6E07F7819FE49010091446D /* SerializationUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializationUtilities.h; sourceTree = "<group>"; };
-		B6E07F7919FE49010091446D /* SerializationUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializationUtilities.m; sourceTree = "<group>"; };
 		B6E37ADF19CF107C00E619CA /* ECCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECCTests.m; sourceTree = "<group>"; };
 		F18946391DB22E6D23D4168E /* Pods-AxolotlKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AxolotlKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AxolotlKitTests/Pods-AxolotlKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		FF744C9D36F3B6418C094847 /* libPods-AxolotlKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AxolotlKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,7 +219,6 @@
 			isa = PBXGroup;
 			children = (
 				B63B2FA4197D8AFD00E09F65 /* AxolotlKit App */,
-				B6B98F7B197D838A00B16B5E /* AxolotlKit */,
 				B63B2FDF197D8B9600E09F65 /* AxolotlKit Tests */,
 				B6B98F7A197D838A00B16B5E /* Products */,
 				A616BD9DC39D4B7BBBA02F80 /* Frameworks */,
@@ -319,161 +233,6 @@
 				B63B2FDB197D8B9600E09F65 /* AxolotlKitTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		B6B98F7B197D838A00B16B5E /* AxolotlKit */ = {
-			isa = PBXGroup;
-			children = (
-				B6E07F3419FE49010091446D /* Classes */,
-				B6B98F7C197D838A00B16B5E /* Supporting Files */,
-			);
-			path = AxolotlKit;
-			sourceTree = "<group>";
-		};
-		B6B98F7C197D838A00B16B5E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B6B98F7D197D838A00B16B5E /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B6E07F3419FE49010091446D /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				B6E07F3519FE49010091446D /* AxolotlExceptions.h */,
-				B6E07F3619FE49010091446D /* CipherMessage */,
-				B6E07F3C19FE49010091446D /* Constants.h */,
-				B6E07F3D19FE49010091446D /* Crypto */,
-				B6E07F4019FE49010091446D /* Groups */,
-				B6E07F4219FE49010091446D /* Prekeys */,
-				B6E07F4919FE49010091446D /* Protobuffs */,
-				B6E07F4D19FE49010091446D /* Ratchet */,
-				B6E07F6619FE49010091446D /* SessionCipher.h */,
-				B6E07F6719FE49010091446D /* SessionCipher.m */,
-				B6E07F6819FE49010091446D /* Sessions */,
-				B6E07F6F19FE49010091446D /* State */,
-				B6E07F7519FE49010091446D /* Utility */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		B6E07F3619FE49010091446D /* CipherMessage */ = {
-			isa = PBXGroup;
-			children = (
-				B6E07F3719FE49010091446D /* CipherMessage.h */,
-				B6E07F3819FE49010091446D /* PreKeyWhisperMessage.h */,
-				B6E07F3919FE49010091446D /* PreKeyWhisperMessage.m */,
-				B6E07F3A19FE49010091446D /* WhisperMessage.h */,
-				B6E07F3B19FE49010091446D /* WhisperMessage.m */,
-			);
-			path = CipherMessage;
-			sourceTree = "<group>";
-		};
-		B6E07F3D19FE49010091446D /* Crypto */ = {
-			isa = PBXGroup;
-			children = (
-				B6E07F3E19FE49010091446D /* AES-CBC.h */,
-				B6E07F3F19FE49010091446D /* AES-CBC.m */,
-			);
-			path = Crypto;
-			sourceTree = "<group>";
-		};
-		B6E07F4019FE49010091446D /* Groups */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Groups;
-			sourceTree = "<group>";
-		};
-		B6E07F4219FE49010091446D /* Prekeys */ = {
-			isa = PBXGroup;
-			children = (
-				B6E07F4319FE49010091446D /* PreKeyBundle.h */,
-				B6E07F4419FE49010091446D /* PreKeyBundle.m */,
-				B6E07F4519FE49010091446D /* PreKeyRecord.h */,
-				B6E07F4619FE49010091446D /* PreKeyRecord.m */,
-				B6E07F4719FE49010091446D /* SignedPrekeyRecord.h */,
-				B6E07F4819FE49010091446D /* SignedPrekeyRecord.m */,
-			);
-			path = Prekeys;
-			sourceTree = "<group>";
-		};
-		B6E07F4919FE49010091446D /* Protobuffs */ = {
-			isa = PBXGroup;
-			children = (
-				B6E07F4A19FE49010091446D /* WhisperTextProtocol.pb.h */,
-				B6E07F4B19FE49010091446D /* WhisperTextProtocol.pb.m */,
-				B6E07F4C19FE49010091446D /* WhisperTextProtocol.proto */,
-			);
-			path = Protobuffs;
-			sourceTree = "<group>";
-		};
-		B6E07F4D19FE49010091446D /* Ratchet */ = {
-			isa = PBXGroup;
-			children = (
-				B6E07F4E19FE49010091446D /* AliceAxolotlParameters.h */,
-				B6E07F4F19FE49010091446D /* AliceAxolotlParameters.m */,
-				B6E07F5019FE49010091446D /* AxolotlParameters.h */,
-				B6E07F5119FE49010091446D /* BobAxolotlParameters.h */,
-				B6E07F5219FE49010091446D /* BobAxolotlParameters.m */,
-				B6E07F5319FE49010091446D /* Chain.h */,
-				B6E07F5419FE49010091446D /* ChainAndIndex.h */,
-				B6E07F5519FE49010091446D /* ChainAndIndex.m */,
-				B6E07F5619FE49010091446D /* ChainKey.h */,
-				B6E07F5719FE49010091446D /* ChainKey.m */,
-				B6E07F5819FE49010091446D /* MessageKeys.h */,
-				B6E07F5919FE49010091446D /* MessageKeys.m */,
-				B6E07F5A19FE49010091446D /* RatchetingSession.h */,
-				B6E07F5B19FE49010091446D /* RatchetingSession.m */,
-				B6E07F5C19FE49010091446D /* ReceivingChain.h */,
-				B6E07F5D19FE49010091446D /* ReceivingChain.m */,
-				B6E07F5E19FE49010091446D /* RKCK.h */,
-				B6E07F5F19FE49010091446D /* RKCK.m */,
-				B6E07F6019FE49010091446D /* RootKey.h */,
-				B6E07F6119FE49010091446D /* RootKey.m */,
-				B6E07F6219FE49010091446D /* SendingChain.h */,
-				B6E07F6319FE49010091446D /* SendingChain.m */,
-				B6E07F6419FE49010091446D /* TSDerivedSecrets.h */,
-				B6E07F6519FE49010091446D /* TSDerivedSecrets.m */,
-			);
-			path = Ratchet;
-			sourceTree = "<group>";
-		};
-		B6E07F6819FE49010091446D /* Sessions */ = {
-			isa = PBXGroup;
-			children = (
-				B6E07F6919FE49010091446D /* SessionBuilder.h */,
-				B6E07F6A19FE49010091446D /* SessionBuilder.m */,
-				B6E07F6B19FE49010091446D /* SessionRecord.h */,
-				B6E07F6C19FE49010091446D /* SessionRecord.m */,
-				B6E07F6D19FE49010091446D /* SessionState.h */,
-				B6E07F6E19FE49010091446D /* SessionState.m */,
-			);
-			path = Sessions;
-			sourceTree = "<group>";
-		};
-		B6E07F6F19FE49010091446D /* State */ = {
-			isa = PBXGroup;
-			children = (
-				B6E07F7019FE49010091446D /* AxolotlStore.h */,
-				B6E07F7119FE49010091446D /* IdentityKeyStore.h */,
-				B6E07F7219FE49010091446D /* PreKeyStore.h */,
-				B6E07F7319FE49010091446D /* SessionStore.h */,
-				B6E07F7419FE49010091446D /* SignedPreKeyStore.h */,
-			);
-			path = State;
-			sourceTree = "<group>";
-		};
-		B6E07F7519FE49010091446D /* Utility */ = {
-			isa = PBXGroup;
-			children = (
-				B6E07F7619FE49010091446D /* NSData+keyVersionByte.h */,
-				B6E07F7719FE49010091446D /* NSData+keyVersionByte.m */,
-				B6E07F7819FE49010091446D /* SerializationUtilities.h */,
-				B6E07F7919FE49010091446D /* SerializationUtilities.m */,
-			);
-			path = Utility;
 			sourceTree = "<group>";
 		};
 		E253D8CE20A28C7C5B6EF9D0 /* Pods */ = {
@@ -568,7 +327,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6E07F8119FE49010091446D /* WhisperTextProtocol.proto in Resources */,
 				B63B2FA9197D8AFD00E09F65 /* InfoPlist.strings in Resources */,
 				B63B2FB1197D8AFD00E09F65 /* Images.xcassets in Resources */,
 			);
@@ -682,33 +440,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6E07F8819FE49010091446D /* ReceivingChain.m in Sources */,
-				B6E07F8419FE49010091446D /* ChainAndIndex.m in Sources */,
-				B6E07F9219FE49010091446D /* SerializationUtilities.m in Sources */,
-				B6E07F8919FE49010091446D /* RKCK.m in Sources */,
-				B6E07F8519FE49010091446D /* ChainKey.m in Sources */,
-				B6E07F7E19FE49010091446D /* PreKeyRecord.m in Sources */,
-				B6E07F7A19FE49010091446D /* PreKeyWhisperMessage.m in Sources */,
-				B6E07F8019FE49010091446D /* WhisperTextProtocol.pb.m in Sources */,
-				B6E07F9019FE49010091446D /* SessionState.m in Sources */,
-				B6E07F8319FE49010091446D /* BobAxolotlParameters.m in Sources */,
-				B6E07F8619FE49010091446D /* MessageKeys.m in Sources */,
-				B6E07F7B19FE49010091446D /* WhisperMessage.m in Sources */,
-				B6E07F8219FE49010091446D /* AliceAxolotlParameters.m in Sources */,
 				B6B3E64319FD5BC70035422D /* ECKeyPair+ECKeyPairTesting.m in Sources */,
-				B6E07F7D19FE49010091446D /* PreKeyBundle.m in Sources */,
-				B6E07F8F19FE49010091446D /* SessionRecord.m in Sources */,
-				B6E07F8719FE49010091446D /* RatchetingSession.m in Sources */,
 				B63B2FAF197D8AFD00E09F65 /* AppDelegate.m in Sources */,
-				B6E07F9119FE49010091446D /* NSData+keyVersionByte.m in Sources */,
-				B6E07F7C19FE49010091446D /* AES-CBC.m in Sources */,
-				B6E07F8B19FE49010091446D /* SendingChain.m in Sources */,
-				B6E07F8D19FE49010091446D /* SessionCipher.m in Sources */,
-				B6E07F8C19FE49010091446D /* TSDerivedSecrets.m in Sources */,
-				B6E07F7F19FE49010091446D /* SignedPrekeyRecord.m in Sources */,
-				B6E07F8A19FE49010091446D /* RootKey.m in Sources */,
 				B63B2FAB197D8AFD00E09F65 /* main.m in Sources */,
-				B6E07F8E19FE49010091446D /* SessionBuilder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

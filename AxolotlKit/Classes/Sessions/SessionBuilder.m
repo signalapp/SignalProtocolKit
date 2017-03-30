@@ -149,7 +149,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     if (message.prekeyID >= 0) {
         ourOneTimePreKey = [self.prekeyStore loadPreKey:message.prekeyID].keyPair;
     } else {
-        NSLog(@"Processing PreKey message which had no one-time prekey.");
+        DDLogWarn(@"%@ Processing PreKey message which had no one-time prekey.", self.tag);
     }
 
     BobAxolotlParameters *params = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:self.identityStore.identityKeyPair
@@ -175,6 +175,18 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     } else {
         return -1;
     }
+}
+
+#pragma mark - Logging
+
++ (NSString *)tag
+{
+    return [NSString stringWithFormat:@"[%@]", self.class];
+}
+
+- (NSString *)tag
+{
+    return self.class.tag;
 }
 
 @end

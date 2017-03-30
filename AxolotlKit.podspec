@@ -10,10 +10,12 @@ Pod::Spec.new do |s|
   s.source                = { :git => "https://github.com/WhisperSystems/AxolotlKit.git", :tag => "#{s.version}" }
   s.source_files          = "AxolotlKit/Classes/*.{h,m}", "AxolotlKit/Classes/**/*.{h,m}"
   s.public_header_files   = "AxolotlKit/Classes/*.{h}", "AxolotlKit/Classes/**/*.{h}"
+  s.prefix_header_file    = "AxolotlKit/Classes/Prefix.h"
   s.ios.deployment_target = "6.0"
   s.osx.deployment_target = "10.8"
   s.requires_arc          = true
   s.dependency            '25519',   '~> 2.0.1'
   s.dependency            'HKDFKit', '~> 0.0.3'
   s.dependency            'ProtocolBuffers', '~> 1.9.8'
+  s.dependency            'CocoaLumberjack'
 end
