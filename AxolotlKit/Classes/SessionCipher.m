@@ -1,9 +1,5 @@
 //
-//  TSAxolotlRatchet.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 1/12/14.
-//  Copyright (c) 2014 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import "SessionCipher.h"
@@ -188,11 +184,12 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
 -(NSData*)decryptWithSessionRecord:(SessionRecord*)sessionRecord whisperMessage:(WhisperMessage*)message{
     [self assertOnSessionCipherDispatchQueue];
     SessionState   *sessionState   = [sessionRecord sessionState];
-    NSArray        *previousStates = [sessionRecord previousSessionStates];
     NSMutableArray *exceptions     = [NSMutableArray array];
     
     @try {
-        return [self decryptWithSessionState:sessionState whisperMessage:message];
+        NSData *decrypteData = [self decryptWithSessionState:sessionState whisperMessage:message];
+        DDLogDebug(@"%@ successfully decrypted with current session state: %@", self.tag, sessionState);
+        return decrypteData;
     }
     @catch (NSException *exception) {
         if ([exception.name isEqualToString:InvalidMessageException]) {
@@ -201,14 +198,32 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
             @throw exception;
         }
     }
-    
-    for (SessionState *previousState in previousStates) {
-        @try {
-            return [self decryptWithSessionState:previousState whisperMessage:message];
-        }
-        @catch (NSException *exception) {
-            [exceptions addObject:exception];
-        }
+
+    // If we can decrypt the message with an "old" session state, that means the sender is using an "old" session.
+    // In which case, we promote that session to "active" so as to converge on a single session for sending/receiving.
+    __block NSUInteger stateToPromoteIdx;
+    __block NSData *decryptedData;
+    [[sessionRecord previousSessionStates]
+        enumerateObjectsUsingBlock:^(SessionState *_Nonnull previousState, NSUInteger idx, BOOL *_Nonnull stop) {
+            @try {
+                decryptedData = [self decryptWithSessionState:previousState whisperMessage:message];
+                DDLogInfo(@"%@ successfully decrypted with PREVIOUS session state: %@", self.tag, previousState);
+                NSAssert(decryptedData != nil, @"Expected exception or non-nil data");
+                stateToPromoteIdx = idx;
+                *stop = YES;
+            } @catch (NSException *exception) {
+                [exceptions addObject:exception];
+            }
+        }];
+
+    if (decryptedData) {
+        SessionState *sessionStateToPromote = [sessionRecord previousSessionStates][stateToPromoteIdx];
+        NSAssert(sessionStateToPromote != nil, @"the session state we just used is now missing");
+        DDLogInfo(@"%@ promoting session: %@", self.tag, sessionStateToPromote);
+        [[sessionRecord previousSessionStates] removeObjectAtIndex:stateToPromoteIdx];
+        [sessionRecord promoteState:sessionStateToPromote];
+
+        return decryptedData;
     }
     
     @throw [NSException exceptionWithName:InvalidMessageException reason:@"No valid sessions" userInfo:@{@"Exceptions":exceptions}];
@@ -322,6 +337,18 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
     }
     
     return record.sessionState.version;
+}
+
+#pragma mark - Logging
+
++ (NSString *)tag
+{
+    return [NSString stringWithFormat:@"[%@]", self.class];
+}
+
+- (NSString *)tag
+{
+    return self.class.tag;
 }
 
 @end
