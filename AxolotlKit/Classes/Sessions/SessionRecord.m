@@ -91,6 +91,11 @@
     return _fresh;
 }
 
+- (void)markAsUnFresh
+{
+    self.fresh = false;
+}
+
 - (void)archiveCurrentState{
     [self promoteState:[SessionState new]];
 }

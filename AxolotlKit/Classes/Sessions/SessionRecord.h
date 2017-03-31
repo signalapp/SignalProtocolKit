@@ -15,6 +15,7 @@
 - (NSMutableArray<SessionState *> *)previousSessionStates;
 
 - (BOOL)isFresh;
+- (void)markAsUnFresh;
 - (void)archiveCurrentState;
 - (void)promoteState:(SessionState*)promotedState;
 - (void)setState:(SessionState*)sessionState;
