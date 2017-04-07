@@ -8,5 +8,5 @@
 #ifdef DEBUG
 static const NSUInteger ddLogLevel = DDLogLevelAll;
 #else
-static const NSUInteger ddLogLevel = DDLogLevelInfo;
+static const NSUInteger ddLogLevel = DDLogLevelAll;
 #endif
