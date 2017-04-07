@@ -96,9 +96,11 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
 
 - (void)assertOnSessionCipherDispatchQueue
 {
+#ifdef DEBUG
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(10, 0)) {
         dispatch_assert_queue([[self class] getSessionCipherDispatchQueue]);
     } // else, skip assert as it's a development convenience.
+#endif
 }
 
 - (id<CipherMessage>)encryptMessage:(NSData*)paddedMessage{
