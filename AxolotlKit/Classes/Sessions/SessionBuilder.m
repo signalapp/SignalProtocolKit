@@ -73,7 +73,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     NSData *theirIdentityKey  = preKeyBundle.identityKey.removeKeyType;
     NSData *theirSignedPreKey = preKeyBundle.signedPreKeyPublic.removeKeyType;
     
-    if (![self.identityStore isTrustedIdentityKey:theirIdentityKey recipientId:self.recipientId]) {
+    if (![self.identityStore isTrustedIdentityKey:theirIdentityKey recipientId:self.recipientId direction:TSMessageDirectionOutgoing]) {
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"Identity key is not valid" userInfo:@{}];
     }
 
@@ -116,7 +116,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     int    messageVersion    = message.version;
     NSData *theirIdentityKey = message.identityKey.removeKeyType;
 
-    if (![self.identityStore isTrustedIdentityKey:theirIdentityKey recipientId:self.recipientId]) {
+    if (![self.identityStore isTrustedIdentityKey:theirIdentityKey recipientId:self.recipientId direction:TSMessageDirectionIncoming]) {
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"There is a previously known identity key." userInfo:@{}];
     }
     
