@@ -87,6 +87,11 @@
     return _previousStates;
 }
 
+- (void)removePreviousSessionStates
+{
+    [_previousStates removeAllObjects];
+}
+
 - (BOOL)isFresh{
     return _fresh;
 }
