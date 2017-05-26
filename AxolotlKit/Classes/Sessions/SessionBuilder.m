@@ -100,7 +100,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     }
     
     [RatchetingSession initializeSession:[sessionRecord sessionState] sessionVersion:CURRENT_VERSION AliceParameters:params];
-    
+
+    DDLogInfo(@"setUnacknowledgedPreKeyMessage for: %@ with preKeyId: %d", self.recipientId, theirOneTimePreKeyId);
+
     [sessionRecord.sessionState setUnacknowledgedPreKeyMessage:theirOneTimePreKeyId signedPreKey:theirSignedPreKeyId baseKey:ourBaseKey.publicKey];
     [sessionRecord.sessionState setLocalRegistrationId:self.identityStore.localRegistrationId];
     [sessionRecord.sessionState setRemoteRegistrationId:preKeyBundle.registrationId];

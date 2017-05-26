@@ -144,6 +144,8 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
         PendingPreKey *items = [sessionState unacknowledgedPreKeyMessageItems];
         int localRegistrationId = [sessionState localRegistrationId];
 
+        DDLogInfo(@"Building PreKeyWhisperMessage for: %@ with preKeyId: %d", self.recipientId, items.preKeyId);
+
         cipherMessage =
             [[PreKeyWhisperMessage alloc] initWithWhisperMessage:cipherMessage
                                                   registrationId:localRegistrationId
