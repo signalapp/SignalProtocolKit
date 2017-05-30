@@ -32,12 +32,12 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
 
 @interface SessionCipher ()
 
-@property NSString* recipientId;
-@property int deviceId;
+@property (nonatomic, readonly) NSString *recipientId;
+@property (nonatomic, readonly) int deviceId;
 
-@property (nonatomic, retain) id<SessionStore> sessionStore;
-@property (nonatomic, retain) SessionBuilder   *sessionBuilder;
-@property (nonatomic, retain) id<PreKeyStore>  prekeyStore;
+@property (nonatomic, readonly) id<SessionStore> sessionStore;
+@property (nonatomic, readonly) SessionBuilder *sessionBuilder;
+@property (nonatomic, readonly) id<PreKeyStore> prekeyStore;
 
 @end
 
@@ -63,16 +63,15 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
     self = [super init];
 
     if (self){
-        self.recipientId       = recipientId;
-        self.deviceId          = deviceId;
-        self.sessionStore      = sessionStore;
-        self.sessionBuilder    = [[SessionBuilder alloc] initWithSessionStore:sessionStore
-                                                              preKeyStore:preKeyStore
-                                                        signedPreKeyStore:signedPreKeyStore
-                                                         identityKeyStore:identityKeyStore
-                                                              recipientId:recipientId
-                                                                 deviceId:deviceId];
-        
+        _recipientId = recipientId;
+        _deviceId = deviceId;
+        _sessionStore = sessionStore;
+        _sessionBuilder = [[SessionBuilder alloc] initWithSessionStore:sessionStore
+                                                           preKeyStore:preKeyStore
+                                                     signedPreKeyStore:signedPreKeyStore
+                                                      identityKeyStore:identityKeyStore
+                                                           recipientId:recipientId
+                                                              deviceId:deviceId];
     }
     
     return self;
@@ -106,38 +105,39 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
 - (id<CipherMessage>)encryptMessage:(NSData*)paddedMessage{
     [self assertOnSessionCipherDispatchQueue];
     SessionRecord *sessionRecord = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
-    SessionState  *session       = sessionRecord.sessionState;
-    ChainKey *chainKey           = session.senderChainKey;
+    SessionState *sessionState = sessionRecord.sessionState;
+    ChainKey *chainKey = sessionState.senderChainKey;
     MessageKeys *messageKeys     = chainKey.messageKeys;
-    NSData *senderRatchetKey     = session.senderRatchetKey;
-    int previousCounter          = session.previousCounter;
-    int sessionVersion           = session.version;
-    
+    NSData *senderRatchetKey = sessionState.senderRatchetKey;
+    int previousCounter = sessionState.previousCounter;
+    int sessionVersion = sessionState.version;
 
     NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
 
-    id<CipherMessage> cipherMessage = [[WhisperMessage alloc] initWithVersion:sessionVersion
-                                                                       macKey:messageKeys.macKey
-                                                             senderRatchetKey:senderRatchetKey.prependKeyType
-                                                                      counter:chainKey.index
-                                                              previousCounter:previousCounter
-                                                                   cipherText:ciphertextBody
-                                                            senderIdentityKey:session.localIdentityKey.prependKeyType
-                                                          receiverIdentityKey:session.remoteIdentityKey.prependKeyType];
-    
-    if ([session hasUnacknowledgedPreKeyMessage]){
-        PendingPreKey *items = [session unacknowledgedPreKeyMessageItems];
-        int localRegistrationId = [session localRegistrationId];
-        
-        cipherMessage = [[PreKeyWhisperMessage alloc] initWithWhisperMessage:cipherMessage
-                                                              registrationId:localRegistrationId
-                                                                    prekeyId:items.preKeyId
-                                                              signedPrekeyId:items.signedPreKeyId
-                                                                     baseKey:items.baseKey.prependKeyType
-                                                                 identityKey:session.localIdentityKey.prependKeyType];
+    id<CipherMessage> cipherMessage =
+        [[WhisperMessage alloc] initWithVersion:sessionVersion
+                                         macKey:messageKeys.macKey
+                               senderRatchetKey:senderRatchetKey.prependKeyType
+                                        counter:chainKey.index
+                                previousCounter:previousCounter
+                                     cipherText:ciphertextBody
+                              senderIdentityKey:sessionState.localIdentityKey.prependKeyType
+                            receiverIdentityKey:sessionState.remoteIdentityKey.prependKeyType];
+
+    if ([sessionState hasUnacknowledgedPreKeyMessage]) {
+        PendingPreKey *items = [sessionState unacknowledgedPreKeyMessageItems];
+        int localRegistrationId = [sessionState localRegistrationId];
+
+        cipherMessage =
+            [[PreKeyWhisperMessage alloc] initWithWhisperMessage:cipherMessage
+                                                  registrationId:localRegistrationId
+                                                        prekeyId:items.preKeyId
+                                                  signedPrekeyId:items.signedPreKeyId
+                                                         baseKey:items.baseKey.prependKeyType
+                                                     identityKey:sessionState.localIdentityKey.prependKeyType];
     }
-    
-    [session setSenderChainKey:[chainKey nextChainKey]];
+
+    [sessionState setSenderChainKey:[chainKey nextChainKey]];
     [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
     
     return cipherMessage;
