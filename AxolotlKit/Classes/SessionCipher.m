@@ -35,6 +35,7 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
 @property (nonatomic, readonly) NSString *recipientId;
 @property (nonatomic, readonly) int deviceId;
 
+@property (nonatomic, readonly) id<IdentityKeyStore> identityKeyStore;
 @property (nonatomic, readonly) id<SessionStore> sessionStore;
 @property (nonatomic, readonly) SessionBuilder *sessionBuilder;
 @property (nonatomic, readonly) id<PreKeyStore> prekeyStore;
@@ -66,6 +67,7 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
         _recipientId = recipientId;
         _deviceId = deviceId;
         _sessionStore = sessionStore;
+        _identityKeyStore = identityKeyStore;
         _sessionBuilder = [[SessionBuilder alloc] initWithSessionStore:sessionStore
                                                            preKeyStore:preKeyStore
                                                      signedPreKeyStore:signedPreKeyStore
@@ -111,6 +113,20 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
     NSData *senderRatchetKey = sessionState.senderRatchetKey;
     int previousCounter = sessionState.previousCounter;
     int sessionVersion = sessionState.version;
+
+    if (![self.identityKeyStore isTrustedIdentityKey:sessionState.remoteIdentityKey
+                                         recipientId:self.recipientId
+                                           direction:TSMessageDirectionOutgoing]) {
+        DDLogWarn(
+            @"%@ Previously known identity key for while encrypting for recipient: %@", self.tag, self.recipientId);
+        @throw [NSException exceptionWithName:UntrustedIdentityKeyException
+                                       reason:@"There is a previously known identity key."
+                                     userInfo:@{}];
+    }
+
+    if ([self.identityKeyStore saveRemoteIdentity:sessionState.remoteIdentityKey recipientId:self.recipientId]) {
+        [sessionRecord removePreviousSessionStates];
+    }
 
     NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
 
@@ -176,7 +192,22 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
     
     SessionRecord  *sessionRecord  = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
     NSData         *plaintext      = [self decryptWithSessionRecord:sessionRecord whisperMessage:message];
-    
+
+    if (![self.identityKeyStore isTrustedIdentityKey:sessionRecord.sessionState.remoteIdentityKey
+                                         recipientId:self.recipientId
+                                           direction:TSMessageDirectionIncoming]) {
+        DDLogWarn(
+            @"%@ Previously known identity key for while decrypting from recipient: %@", self.tag, self.recipientId);
+        @throw [NSException exceptionWithName:UntrustedIdentityKeyException
+                                       reason:@"There is a previously known identity key."
+                                     userInfo:@{}];
+    }
+
+    if ([self.identityKeyStore saveRemoteIdentity:sessionRecord.sessionState.remoteIdentityKey
+                                      recipientId:self.recipientId]) {
+        [sessionRecord removePreviousSessionStates];
+    }
+
     [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
     
     return plaintext;
