@@ -1,9 +1,5 @@
 //
-//  WhisperMessage.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 23/07/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import "AxolotlExceptions.h"
@@ -98,8 +94,21 @@
                                  serialized:data];
     
     if (![theirMac isEqualToData:ourMac]) {
+        DDLogError(@"%@ Bad Mac! Their Mac: %@ Our Mac: %@", self.tag, theirMac, ourMac);
         @throw [NSException exceptionWithName:InvalidMessageException reason:@"Bad Mac!" userInfo:@{}];
     }
+}
+
+#pragma mark - Logging
+
++ (NSString *)tag
+{
+    return [NSString stringWithFormat:@"[%@]", self.class];
+}
+
+- (NSString *)tag
+{
+    return self.class.tag;
 }
 
 @end
