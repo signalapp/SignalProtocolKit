@@ -108,16 +108,8 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     [sessionRecord.sessionState setRemoteRegistrationId:preKeyBundle.registrationId];
     [sessionRecord.sessionState setAliceBaseKey:ourBaseKey.publicKey];
 
-    // Saving invalidates any existing sessions, so be sure to save *before* storing the new session.
-    BOOL previousIdentityExisted =
-        [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
-    if (previousIdentityExisted) {
-        DDLogInfo(@"%@ PKBundle removing previous session states for changed identity for recipient:%@",
-            self.tag,
-            self.recipientId);
-        [sessionRecord removePreviousSessionStates];
-    }
 
+    [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
     [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
 }
 
@@ -141,14 +133,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
             break;
     }
 
-    BOOL previousIdentityExisted =
-        [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
-    if (previousIdentityExisted) {
-        DDLogInfo(@"%@ PKWM removing previous session states for changed identity for recipient:%@",
-            self.tag,
-            self.recipientId);
-        [sessionRecord removePreviousSessionStates];
-    }
+    [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
 
     return unSignedPrekeyId;
 }
