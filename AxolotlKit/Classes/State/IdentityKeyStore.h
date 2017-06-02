@@ -24,11 +24,8 @@ typedef NS_ENUM(NSInteger, TSMessageDirection) {
  *
  * @param   identityKey key data used to identify the recipient
  * @param   recipientId unique stable identifier for the recipient, e.g. e164 phone number
- *
- * @returns YES if we are replacing an existing known identity key for recipientId.
- *          NO  if there was no previously stored identity key for the recipient.
  */
-- (BOOL)saveRemoteIdentity:(NSData *)identityKey recipientId:(NSString *)recipientId;
+- (void)saveRemoteIdentity:(NSData *)identityKey recipientId:(NSString *)recipientId;
 
 /**
  * @param   identityKey key data used to identify the recipient

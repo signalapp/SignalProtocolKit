@@ -124,9 +124,7 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
                                      userInfo:@{}];
     }
 
-    if ([self.identityKeyStore saveRemoteIdentity:sessionState.remoteIdentityKey recipientId:self.recipientId]) {
-        [sessionRecord removePreviousSessionStates];
-    }
+    [self.identityKeyStore saveRemoteIdentity:sessionState.remoteIdentityKey recipientId:self.recipientId];
 
     NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
 
@@ -205,11 +203,8 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
                                      userInfo:@{}];
     }
 
-    if ([self.identityKeyStore saveRemoteIdentity:sessionRecord.sessionState.remoteIdentityKey
-                                      recipientId:self.recipientId]) {
-        [sessionRecord removePreviousSessionStates];
-    }
-
+    [self.identityKeyStore saveRemoteIdentity:sessionRecord.sessionState.remoteIdentityKey
+                                  recipientId:self.recipientId];
     [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
     
     return plaintext;
