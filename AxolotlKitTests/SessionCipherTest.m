@@ -134,7 +134,10 @@
     
     [RatchetingSession initializeSession:aliceSessionState sessionVersion:3 AliceParameters:aliceParams];
 
+    [self.aliceStore saveRemoteIdentity:bobIdentityKeyPair.publicKey recipientId:self.bobIdentifier];
     [self.aliceStore storeSession:self.bobIdentifier deviceId:1 session:aliceSessionRecord];
+
+    [self.bobStore saveRemoteIdentity:aliceIdentityKeyPair.publicKey recipientId:self.aliceIdentifier];
     [self.bobStore storeSession:self.aliceIdentifier deviceId:1 session:bobSessionRecord];
 
     XCTAssert([aliceSessionState.remoteIdentityKey isEqualToData:bobSessionState.localIdentityKey]);
