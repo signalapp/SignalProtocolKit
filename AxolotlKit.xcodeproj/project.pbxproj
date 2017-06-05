@@ -191,7 +191,8 @@
 				B63B2FE0197D8B9600E09F65 /* Supporting Files */,
 				B6B3E64019FD5B0D0035422D /* Util */,
 			);
-			path = "AxolotlKit Tests";
+			name = "AxolotlKit Tests";
+			path = AxolotlKitTests;
 			sourceTree = "<group>";
 		};
 		B63B2FE0197D8B9600E09F65 /* Supporting Files */ = {
@@ -544,12 +545,12 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AxolotlKit Tests/AxolotlKit Tests-Prefix.pch";
+				GCC_PREFIX_HEADER = "AxolotlKitTests/AxolotlKit Tests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "AxolotlKit Tests/AxolotlKit Tests-Info.plist";
+				INFOPLIST_FILE = "AxolotlKitTests/AxolotlKit Tests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.whispersystems.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AxolotlKit.app/AxolotlKit";
@@ -569,8 +570,8 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "AxolotlKit Tests/AxolotlKit Tests-Prefix.pch";
-				INFOPLIST_FILE = "AxolotlKit Tests/AxolotlKit Tests-Info.plist";
+				GCC_PREFIX_HEADER = "AxolotlKitTests/AxolotlKit Tests-Prefix.pch";
+				INFOPLIST_FILE = "AxolotlKitTests/AxolotlKit Tests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.whispersystems.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AxolotlKit.app/AxolotlKit";
