@@ -188,10 +188,7 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
 
 - (NSData*)decryptWhisperMessage:(WhisperMessage*)message{
     [self assertOnSessionCipherDispatchQueue];
-    if (![self.sessionStore containsSession:self.recipientId deviceId:self.deviceId]) {
-        @throw [NSException exceptionWithName:NoSessionException reason:[NSString stringWithFormat:@"No session for: %@, %d", self.recipientId, self.deviceId] userInfo:nil];
-    }
-    
+
     SessionRecord  *sessionRecord  = [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId];
     NSData         *plaintext      = [self decryptWithSessionRecord:sessionRecord whisperMessage:message];
 
@@ -222,9 +219,9 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
     NSMutableArray *exceptions     = [NSMutableArray array];
     
     @try {
-        NSData *decrypteData = [self decryptWithSessionState:sessionState whisperMessage:message];
+        NSData *decryptedData = [self decryptWithSessionState:sessionState whisperMessage:message];
         DDLogDebug(@"%@ successfully decrypted with current session state: %@", self.tag, sessionState);
-        return decrypteData;
+        return decryptedData;
     }
     @catch (NSException *exception) {
         if ([exception.name isEqualToString:InvalidMessageException]) {
@@ -260,8 +257,26 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
 
         return decryptedData;
     }
-    
-    @throw [NSException exceptionWithName:InvalidMessageException reason:@"No valid sessions" userInfo:@{@"Exceptions":exceptions}];
+
+    BOOL containsActiveSession = [self.sessionStore containsSession:self.recipientId deviceId:self.deviceId];
+    DDLogError(@"%@ No valid session for recipient: %@ containsActiveSession: %@, previousStates: %lu",
+        self.tag,
+        self.recipientId,
+        (containsActiveSession ? @"YES" : @"NO"),
+        (unsigned long)sessionRecord.previousSessionStates.count);
+
+    if (containsActiveSession) {
+        @throw [NSException exceptionWithName:InvalidMessageException
+                                       reason:@"No valid sessions"
+                                     userInfo:@{
+                                         @"Exceptions" : exceptions
+                                     }];
+    } else {
+        @throw [NSException
+            exceptionWithName:NoSessionException
+                       reason:[NSString stringWithFormat:@"No session for: %@, %d", self.recipientId, self.deviceId]
+                     userInfo:nil];
+    }
 }
 
 -(NSData*)decryptWithSessionState:(SessionState*)sessionState whisperMessage:(WhisperMessage*)message{
