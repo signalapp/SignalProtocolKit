@@ -141,14 +141,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
             break;
     }
 
-    BOOL previousIdentityExisted =
-        [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
-    if (previousIdentityExisted) {
-        DDLogInfo(@"%@ PKWM removing previous session states for changed identity for recipient:%@",
-            self.tag,
-            self.recipientId);
-        [sessionRecord removePreviousSessionStates];
-    }
+    [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
 
     return unSignedPrekeyId;
 }
