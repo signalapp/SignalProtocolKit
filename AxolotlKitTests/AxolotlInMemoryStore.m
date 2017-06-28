@@ -128,7 +128,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 # pragma mark IdentityKeyStore
 
-- (ECKeyPair *)identityKeyPair{
+- (nullable ECKeyPair *)identityKeyPair
+{
     return __identityKeyPair;
 }
 
@@ -136,18 +137,40 @@ NS_ASSUME_NONNULL_BEGIN
     return __localRegistrationId;
 }
 
-- (void)saveRemoteIdentity:(NSData *)identityKey recipientId:(NSString*)recipientId{
+- (BOOL)saveRemoteIdentity:(NSData *)identityKey recipientId:(NSString *)recipientId
+{
+    NSData *existingKey = [self.trustedKeys objectForKey:recipientId];
+
+    if ([existingKey isEqualToData:existingKey]) {
+        return NO;
+    }
+
     [self.trustedKeys setObject:identityKey forKey:recipientId];
+    return YES;
 }
 
-- (BOOL)isTrustedIdentityKey:(NSData *)identityKey recipientId:(NSString*)recipientId{
+- (BOOL)isTrustedIdentityKey:(NSData *)identityKey
+                 recipientId:(NSString *)recipientId
+                   direction:(TSMessageDirection)direction
+{
+
     NSData *data = [self.trustedKeys objectForKey:recipientId];
-    
-    if (data) {
-        return [data isEqualToData:identityKey];
+    if (!data) {
+        // Trust on first use
+        return YES;
     }
-    
-    return YES; // Trust on first use
+
+    switch (direction) {
+        case TSMessageDirectionIncoming:
+            return YES;
+        case TSMessageDirectionOutgoing:
+            // In a real implementation you may wish to ensure the use has been properly notified of any
+            // recent identity change before sending outgoing messages.
+            return [data isEqualToData:identityKey];
+        case TSMessageDirectionUnknown:
+            NSAssert(NO, @"unknown message direction");
+            return NO;
+    }
 }
 
 # pragma mark Session Store
