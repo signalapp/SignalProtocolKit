@@ -1,9 +1,5 @@
 //
-//  SessionState.h
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 01/03/14.
-//  Copyright (c) 2014 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -46,10 +42,10 @@
 - (NSData*)senderRatchetKey;
 - (ECKeyPair*)senderRatchetKeyPair;
 
-- (BOOL)hasReceiverChain:(NSData*)senderRatchet;
+- (BOOL)hasReceiverChain:(NSData *)senderEphemeral;
 - (BOOL)hasSenderChain;
 
-- (ChainKey*)receiverChainKey:(NSData*)senderRatchetKey;
+- (ChainKey *)receiverChainKey:(NSData *)senderEphemeral;
 
 - (void)setReceiverChainKey:(NSData*)senderEphemeral chainKey:(ChainKey*)chainKey;
 

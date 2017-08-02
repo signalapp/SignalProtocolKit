@@ -1,9 +1,5 @@
 //
-//  RootKey.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 22/07/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import "RootKey.h"
@@ -36,9 +32,9 @@ static NSString* const kCoderData      = @"kCoderData";
 
 - (instancetype)initWithData:(NSData *)data{
     self = [super init];
-    
-    NSAssert([data length] == 32, @"Expected 32-byte RootKey Data");
-    
+
+    SPKAssert(data.length == ECCKeyLength);
+
     if (self) {
         _keyData = data;
     }
@@ -48,9 +44,10 @@ static NSString* const kCoderData      = @"kCoderData";
 
 - (RKCK*)createChainWithTheirEphemeral:(NSData*)theirEphemeral ourEphemeral:(ECKeyPair*)ourEphemeral{
     NSData *sharedSecret = [Curve25519 generateSharedSecretFromPublicKey:theirEphemeral andKeyPair:ourEphemeral];
-    
+    SPKAssert(sharedSecret.length == ECCKeyLength);
+
     TSDerivedSecrets *secrets = [TSDerivedSecrets derivedRatchetedSecretsWithSharedSecret:sharedSecret rootKey:_keyData];
-    
+
     RKCK *newRKCK = [[RKCK alloc] initWithRK:[[RootKey alloc]  initWithData:secrets.cipherKey]
                                           CK:[[ChainKey alloc] initWithData:secrets.macKey index:0]];
     

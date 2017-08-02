@@ -3,7 +3,6 @@
 //
 
 #import "SessionCipher.h"
-
 #import <25519/Curve25519.h>
 #import <25519/Ed25519.h>
 
@@ -288,8 +287,10 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
     NSData *theirEphemeral   = message.senderRatchetKey.removeKeyType;
     int counter              = message.counter;
     ChainKey *chainKey       = [self getOrCreateChainKeys:sessionState theirEphemeral:theirEphemeral];
+    SPKAssert(chainKey);
     MessageKeys *messageKeys = [self getOrCreateMessageKeysForSession:sessionState theirEphemeral:theirEphemeral chainKey:chainKey counter:counter];
-    
+    SPKAssert(messageKeys);
+
     [message verifyMacWithVersion:messageVersion senderIdentityKey:sessionState.remoteIdentityKey receiverIdentityKey:sessionState.localIdentityKey macKey:messageKeys.macKey];
     
     NSData *plaintext = [AES_CBC decryptCBCMode:message.cipherText withKey:messageKeys.cipherKey withIV:messageKeys.iv];
@@ -301,17 +302,31 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
 
 - (ChainKey*)getOrCreateChainKeys:(SessionState*)sessionState theirEphemeral:(NSData*)theirEphemeral{
     [self assertOnSessionCipherDispatchQueue];
+    SPKAssert(theirEphemeral.length == ECCKeyLength);
+
     @try {
         if ([sessionState hasReceiverChain:theirEphemeral]) {
+            DDLogInfo(@"%@ %@.%d has existing receiver chain.", self.tag, self.recipientId, self.deviceId);
             return [sessionState receiverChainKey:theirEphemeral];
         } else{
+            DDLogInfo(@"%@ %@.%d creating new chains.", self.tag, self.recipientId, self.deviceId);
             RootKey *rootKey = [sessionState rootKey];
+            SPKAssert(rootKey.keyData.length == ECCKeyLength);
+
             ECKeyPair *ourEphemeral = [sessionState senderRatchetKeyPair];
+            SPKAssert(ourEphemeral.publicKey.length == ECCKeyLength);
+
             RKCK *receiverChain = [rootKey createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourEphemeral];
+
             ECKeyPair *ourNewEphemeral = [Curve25519 generateKeyPair];
+            SPKAssert(ourNewEphemeral.publicKey.length == ECCKeyLength);
+
             RKCK *senderChain = [receiverChain.rootKey createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourNewEphemeral];
-            
+
+            SPKAssert(senderChain.rootKey.keyData.length == ECCKeyLength);
             [sessionState setRootKey:senderChain.rootKey];
+
+            SPKAssert(receiverChain.chainKey.key.length == ECCKeyLength);
             [sessionState addReceiverChain:theirEphemeral chainKey:receiverChain.chainKey];
             [sessionState setPreviousCounter:MAX(sessionState.senderChainKey.index-1 , 0)];
             [sessionState setSenderChain:ourNewEphemeral chainKey:senderChain.chainKey];
@@ -329,14 +344,25 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
     if (chainKey.index > counter) {
         if ([sessionState hasMessageKeys:theirEphemeral counter:counter]) {
             return [sessionState removeMessageKeys:theirEphemeral counter:counter];
-        }
-        else{
+        } else {
+            DDLogInfo(
+                @"%@ %@.%d Duplicate message for counter: %d", self.tag, self.recipientId, self.deviceId, counter);
             @throw [NSException exceptionWithName:DuplicateMessageException reason:@"Received message with old counter!" userInfo:@{}];
         }
     }
 
-    if (counter - chainKey.index > 2000) {
-        @throw [NSException exceptionWithName:@"Over 500 messages into the future!" reason:@"" userInfo:@{}];
+    NSUInteger kCounterLimit = 2000;
+    if (counter - chainKey.index > kCounterLimit) {
+        DDLogError(@"%@ %@.%d Exceeded future message limit: %lu, index: %d, counter: %d)",
+            self.tag,
+            self.recipientId,
+            self.deviceId,
+            (unsigned long)kCounterLimit,
+            chainKey.index,
+            counter);
+        @throw [NSException exceptionWithName:InvalidMessageException
+                                       reason:@"Exceeded message keys chain length limit"
+                                     userInfo:@{}];
     }
     
     while (chainKey.index < counter) {
