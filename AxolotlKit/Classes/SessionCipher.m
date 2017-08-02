@@ -334,8 +334,8 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
             @throw [NSException exceptionWithName:DuplicateMessageException reason:@"Received message with old counter!" userInfo:@{}];
         }
     }
-    
-    if (chainKey.index - counter > 2000) {
+
+    if (counter - chainKey.index > 2000) {
         @throw [NSException exceptionWithName:@"Over 500 messages into the future!" reason:@"" userInfo:@{}];
     }
     
