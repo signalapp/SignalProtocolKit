@@ -1,19 +1,18 @@
 //
-//  TSDerivedSecrets.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 29/03/14.
-//  Copyright (c) 2014 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import "TSDerivedSecrets.h"
 #import "HKDFKit.h"
+#import <25519/Curve25519.h>
 
 @implementation TSDerivedSecrets
 
 + (instancetype)derivedSecretsWithSeed:(NSData*)masterKey salt:(NSData*)salt info:(NSData*)info{
     TSDerivedSecrets *secrets = [[TSDerivedSecrets alloc] init];
-    
+
+    SPKAssert(masterKey.length == ECCKeyLength);
+
     if (!salt) {
         const char *HKDFDefaultSalt[4] = {0};
         salt                           = [NSData dataWithBytes:HKDFDefaultSalt length:sizeof(HKDFDefaultSalt)];
@@ -28,7 +27,10 @@
     @catch (NSException *exception) {
         @throw NSInvalidArgumentException;
     }
-    
+
+    SPKAssert(secrets.cipherKey.length == ECCKeyLength);
+    SPKAssert(secrets.macKey.length == ECCKeyLength);
+
     return secrets;
 }
 

@@ -1,9 +1,5 @@
 //
-//  SessionState.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 01/03/14.
-//  Copyright (c) 2014 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import <25519/Curve25519.h>
@@ -129,21 +125,23 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     return [[self sendingChain] senderRatchetKeyPair];
 }
 
-- (BOOL)hasReceiverChain:(NSData*)senderRatchet{
-    return [self receiverChainKey:senderRatchet] != nil;
+- (BOOL)hasReceiverChain:(NSData *)senderEphemeral
+{
+    return [self receiverChain:senderEphemeral] != nil;
 }
 
 - (BOOL)hasSenderChain{
     return self.sendingChain != nil;
 }
 
-- (ChainAndIndex*)receiverChain:(NSData*)senderRatchetKey{
+- (ChainAndIndex *)receiverChain:(NSData *)senderEphemeral
+{
     int index = 0;
     
     for (ReceivingChain *receiverChain in self.receivingChains) {
         NSData *chainSenderRatchetKey = receiverChain.senderRatchetKey;
-        
-        if ([chainSenderRatchetKey isEqualToData:senderRatchetKey]) {
+
+        if ([chainSenderRatchetKey isEqualToData:senderEphemeral]) {
             ChainAndIndex *cai = [[ChainAndIndex alloc] init];
             cai.chain   = receiverChain;
             cai.index   = index;
@@ -155,13 +153,15 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     return nil;
 }
 
-- (ChainKey*)receiverChainKey:(NSData*)senderRatchetKey{
-    ChainAndIndex  *receiverChainAndIndex = [self receiverChain:senderRatchetKey];
+- (ChainKey *)receiverChainKey:(NSData *)senderEphemeral
+{
+    ChainAndIndex *receiverChainAndIndex = [self receiverChain:senderEphemeral];
     ReceivingChain *receiverChain         = (ReceivingChain*)receiverChainAndIndex.chain;
     
     if (receiverChain == nil) {
         return nil;
     } else{
+        SPKAssert(receiverChain.chainKey.key);
         return [[ChainKey alloc] initWithData:receiverChain.chainKey.key index:receiverChain.chainKey.index];
     }
 }
@@ -183,6 +183,8 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     [self.receivingChains addObject:receivingChain];
     
     if ([self.receivingChains count] > 5) {
+        DDLogInfo(
+            @"%@ Trimming excessive receivingChain count: %lu", self.tag, (unsigned long)self.receivingChains.count);
         // We keep 5 receiving chains to be able to decrypt out of order messages.
         [self.receivingChains removeObjectAtIndex:0];
     }
@@ -199,7 +201,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 - (void)setSenderChainKey:(ChainKey*)nextChainKey{
     SendingChain *sendingChain = self.sendingChain;
     sendingChain.chainKey = nextChainKey;
-    
+
     self.sendingChain = sendingChain;
 }
 
@@ -208,7 +210,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     ReceivingChain *receivingChain = (ReceivingChain*)chainAndIndex.chain;
     
     if (!receivingChain) {
-        return false;
+        return NO;
     }
 
     NSArray *messageKeyArray = receivingChain.messageKeysList;
@@ -273,6 +275,18 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 - (void)clearUnacknowledgedPreKeyMessage{
     self.pendingPreKey = nil;
+}
+
+#pragma mark - Logging
+
++ (NSString *)tag
+{
+    return [NSString stringWithFormat:@"[%@]", self.class];
+}
+
+- (NSString *)tag
+{
+    return self.class.tag;
 }
 
 @end

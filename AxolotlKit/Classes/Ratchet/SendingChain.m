@@ -1,9 +1,5 @@
 //
-//  SendingChain.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 02/09/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import "SendingChain.h"
@@ -38,6 +34,9 @@ static NSString* const kCoderSenderRatchet = @"kCoderSenderRatchet";
 
 - (instancetype)initWithChainKey:(ChainKey *)chainKey senderRatchetKeyPair:(ECKeyPair *)keyPair{
     self = [super init];
+
+    SPKAssert(chainKey.key.length == ECCKeyLength);
+    SPKAssert(keyPair);
 
     if (self) {
         _chainKey             = chainKey;

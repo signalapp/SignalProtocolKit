@@ -1,13 +1,10 @@
 //
-//  ChainKey.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 26/08/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import "ChainKey.h"
 #import "TSDerivedSecrets.h"
+#import <25519/Curve25519.h>
 #import <CommonCrypto/CommonCrypto.h>
 
 @implementation ChainKey
@@ -41,6 +38,8 @@ static uint8_t kChainKeySeed[kTSKeySeedLength]      = {02};
 }
 
 -(instancetype)initWithData:(NSData *)chainKey index:(int)index{
+    SPKAssert(chainKey.length == ECCKeyLength);
+
     self = [super init];
     
     if (self) {
