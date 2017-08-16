@@ -8,6 +8,7 @@
 #import "SendingChain.h"
 #import "ChainAndIndex.h"
 
+const NSUInteger kMaxReceivingChainCount = 10;
 
 @implementation PendingPreKey
 
@@ -181,11 +182,11 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     ReceivingChain *receivingChain =  [[ReceivingChain alloc] initWithChainKey:chainKey senderRatchetKey:senderRatchetKey];
     
     [self.receivingChains addObject:receivingChain];
-    
-    if ([self.receivingChains count] > 5) {
+
+    // We keep some old receiving chains to be able to decrypt out of order messages.
+    if ([self.receivingChains count] > kMaxReceivingChainCount) {
         DDLogInfo(
             @"%@ Trimming excessive receivingChain count: %lu", self.tag, (unsigned long)self.receivingChains.count);
-        // We keep 5 receiving chains to be able to decrypt out of order messages.
         [self.receivingChains removeObjectAtIndex:0];
     }
 }
