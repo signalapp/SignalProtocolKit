@@ -1,16 +1,12 @@
 //
-//  ProtobuffsTests.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 25/10/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-#import "PreKeyWhisperMessage.h"
-#import "WhisperMessage.h"
-#import "WhisperTextProtocol.pb.h"
+#import <AxolotlKit/PreKeyWhisperMessage.h>
+#import <AxolotlKit/WhisperMessage.h>
+#import <AxolotlKit/WhisperTextProtocol.pb.h>
 
 @interface ProtobuffsTests : XCTestCase
 

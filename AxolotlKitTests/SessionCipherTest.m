@@ -5,14 +5,14 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import <25519/Curve25519.h>
-#import "AxolotlInMemoryStore.h"
 #import "AliceAxolotlParameters.h"
+#import "AxolotlInMemoryStore.h"
 #import "BobAxolotlParameters.h"
+#import "ChainKey.h"
 #import "RatchetingSession.h"
 #import "SessionBuilder.h"
 #import "SessionCipher.h"
-#import "Chainkey.h"
+#import <Curve25519Kit/Curve25519.h>
 
 #import "SessionState.h"
 
