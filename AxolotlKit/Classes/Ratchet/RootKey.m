@@ -5,7 +5,7 @@
 #import "RootKey.h"
 #import "TSDerivedSecrets.h"
 #import "RKCK.h"
-#import <25519/Curve25519.h>
+#import <Curve25519Kit/Curve25519.h>
 #import "ChainKey.h"
 
 static NSString* const kCoderData      = @"kCoderData";

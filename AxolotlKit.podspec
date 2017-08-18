@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = "6.0"
   s.osx.deployment_target = "10.8"
   s.requires_arc          = true
-  s.dependency            '25519',   '~> 2.0.1'
+  s.dependency            'Curve25519Kit',   '~> 2.1.0'
   s.dependency            'HKDFKit', '~> 0.0.3'
   s.dependency            'ProtocolBuffers', '~> 1.9.8'
   s.dependency            'CocoaLumberjack'
