@@ -68,8 +68,11 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 - (void)processPrekeyBundle:(PreKeyBundle*)preKeyBundle{
     NSData *theirIdentityKey  = preKeyBundle.identityKey.removeKeyType;
     NSData *theirSignedPreKey = preKeyBundle.signedPreKeyPublic.removeKeyType;
-    
-    if (![self.identityStore isTrustedIdentityKey:theirIdentityKey recipientId:self.recipientId direction:TSMessageDirectionOutgoing]) {
+
+    if (![self.identityStore isTrustedIdentityKey:theirIdentityKey
+                                      recipientId:self.recipientId
+                                        direction:TSMessageDirectionOutgoing
+                                  protocolContext:protocolContext]) {
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"Identity key is not valid" userInfo:@{}];
     }
 
@@ -106,8 +109,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     [sessionRecord.sessionState setAliceBaseKey:ourBaseKey.publicKey];
 
     // Saving invalidates any existing sessions, so be sure to save *before* storing the new session.
-    BOOL previousIdentityExisted =
-        [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
+    BOOL previousIdentityExisted = [self.identityStore saveRemoteIdentity:theirIdentityKey
+                                                              recipientId:self.recipientId
+                                                          protocolContext:protocolContext];
     if (previousIdentityExisted) {
         DDLogInfo(@"%@ PKBundle removing previous session states for changed identity for recipient:%@",
             self.tag,
@@ -126,7 +130,10 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     int    messageVersion    = message.version;
     NSData *theirIdentityKey = message.identityKey.removeKeyType;
 
-    if (![self.identityStore isTrustedIdentityKey:theirIdentityKey recipientId:self.recipientId direction:TSMessageDirectionIncoming]) {
+    if (![self.identityStore isTrustedIdentityKey:theirIdentityKey
+                                      recipientId:self.recipientId
+                                        direction:TSMessageDirectionIncoming
+                                  protocolContext:protocolContext]) {
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"There is a previously known identity key." userInfo:@{}];
     }
     
@@ -141,7 +148,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
             break;
     }
 
-    [self.identityStore saveRemoteIdentity:theirIdentityKey recipientId:self.recipientId];
+    [self.identityStore saveRemoteIdentity:theirIdentityKey
+                               recipientId:self.recipientId
+                           protocolContext:protocolContext];
 
     return unSignedPrekeyId;
 }
@@ -163,13 +172,14 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
         DDLogWarn(@"%@ Processing PreKey message which had no one-time prekey.", self.tag);
     }
 
-    BobAxolotlParameters *params = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:self.identityStore.identityKeyPair
-                                                                          theirIdentityKey:message.identityKey.removeKeyType
-                                                                           ourSignedPrekey:ourSignedPrekey
-                                                                             ourRatchetKey:ourSignedPrekey
-                                                                          ourOneTimePrekey:ourOneTimePreKey
-                                                                              theirBaseKey:baseKey];
-    
+    BobAxolotlParameters *params =
+        [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:[self.identityStore identityKeyPair:protocolContext]
+                                               theirIdentityKey:message.identityKey.removeKeyType
+                                                ourSignedPrekey:ourSignedPrekey
+                                                  ourRatchetKey:ourSignedPrekey
+                                               ourOneTimePrekey:ourOneTimePreKey
+                                                   theirBaseKey:baseKey];
+
     if (!sessionRecord.isFresh) {
         [sessionRecord archiveCurrentState];
     }
