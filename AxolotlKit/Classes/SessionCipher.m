@@ -90,7 +90,8 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
 
     if (![self.identityKeyStore isTrustedIdentityKey:sessionState.remoteIdentityKey
                                          recipientId:self.recipientId
-                                           direction:TSMessageDirectionOutgoing]) {
+                                           direction:TSMessageDirectionOutgoing
+                                     protocolContext:protocolContext]) {
         DDLogWarn(
             @"%@ Previously known identity key for while encrypting for recipient: %@", self.tag, self.recipientId);
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException
@@ -98,7 +99,9 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
                                      userInfo:@{}];
     }
 
-    [self.identityKeyStore saveRemoteIdentity:sessionState.remoteIdentityKey recipientId:self.recipientId];
+    [self.identityKeyStore saveRemoteIdentity:sessionState.remoteIdentityKey
+                                  recipientId:self.recipientId
+                              protocolContext:protocolContext];
 
     NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
 
@@ -181,7 +184,8 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
 
     if (![self.identityKeyStore isTrustedIdentityKey:sessionRecord.sessionState.remoteIdentityKey
                                          recipientId:self.recipientId
-                                           direction:TSMessageDirectionIncoming]) {
+                                           direction:TSMessageDirectionIncoming
+                                     protocolContext:protocolContext]) {
         DDLogWarn(
             @"%@ Previously known identity key for while decrypting from recipient: %@", self.tag, self.recipientId);
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException
@@ -190,7 +194,8 @@ static dispatch_queue_t _sessionCipherDispatchQueue;
     }
 
     [self.identityKeyStore saveRemoteIdentity:sessionRecord.sessionState.remoteIdentityKey
-                                  recipientId:self.recipientId];
+                                  recipientId:self.recipientId
+                              protocolContext:protocolContext];
     [self.sessionStore storeSession:self.recipientId
                            deviceId:self.deviceId
                             session:sessionRecord
