@@ -1,24 +1,20 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
+#import "SessionBuilder.h"
+#import "AliceAxolotlParameters.h"
 #import "AxolotlExceptions.h"
 #import "AxolotlParameters.h"
-#import "AliceAxolotlParameters.h"
-#import "BobAxolotlParameters.h"
-
-#import "NSData+keyVersionByte.h"
-
 #import "AxolotlStore.h"
-#import "SessionState.h"
-#import "SessionBuilder.h"
+#import "BobAxolotlParameters.h"
+#import "NSData+keyVersionByte.h"
 #import "PreKeyWhisperMessage.h"
+#import "PrekeyBundle.h"
 #import "RatchetingSession.h"
-
+#import "SessionState.h"
 #import <Curve25519Kit/Curve25519.h>
 #import <Curve25519Kit/Ed25519.h>
-
-#import "PrekeyBundle.h"
 
 #define CURRENT_VERSION 3
 #define MINUMUM_VERSION 3
@@ -80,8 +76,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     if (![Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:theirIdentityKey data:preKeyBundle.signedPreKeyPublic]) {
         @throw [NSException exceptionWithName:InvalidKeyException reason:@"KeyIsNotValidlySigned" userInfo:nil];
     }
-    
-    SessionRecord *sessionRecord       = [self.sessionStore loadSession:self.recipientId deviceId:preKeyBundle.deviceId];
+
+    SessionRecord *sessionRecord =
+        [self.sessionStore loadSession:self.recipientId deviceId:preKeyBundle.deviceId protocolContext:protocolContext];
     ECKeyPair     *ourBaseKey          = [Curve25519 generateKeyPair];
     NSData        *theirOneTimePreKey  = preKeyBundle.preKeyPublic.removeKeyType;
     int           theirOneTimePreKeyId = preKeyBundle.preKeyId;
@@ -118,7 +115,10 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
         [sessionRecord removePreviousSessionStates];
     }
 
-    [self.sessionStore storeSession:self.recipientId deviceId:self.deviceId session:sessionRecord];
+    [self.sessionStore storeSession:self.recipientId
+                           deviceId:self.deviceId
+                            session:sessionRecord
+                    protocolContext:protocolContext];
 }
 
 - (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
