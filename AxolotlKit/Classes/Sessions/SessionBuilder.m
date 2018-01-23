@@ -16,6 +16,8 @@
 #import <Curve25519Kit/Curve25519.h>
 #import <Curve25519Kit/Ed25519.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define CURRENT_VERSION 3
 #define MINUMUM_VERSION 3
 
@@ -65,7 +67,10 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     return self;
 }
 
-- (void)processPrekeyBundle:(PreKeyBundle*)preKeyBundle{
+- (void)processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext
+{
+    SPKAssert(preKeyBundle);
+
     NSData *theirIdentityKey  = preKeyBundle.identityKey.removeKeyType;
     NSData *theirSignedPreKey = preKeyBundle.signedPreKeyPublic.removeKeyType;
 
@@ -86,15 +91,16 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     NSData        *theirOneTimePreKey  = preKeyBundle.preKeyPublic.removeKeyType;
     int           theirOneTimePreKeyId = preKeyBundle.preKeyId;
     int           theirSignedPreKeyId  = preKeyBundle.signedPreKeyId;
-    
-    
-    AliceAxolotlParameters *params = [[AliceAxolotlParameters alloc] initWithIdentityKey:[self.identityStore identityKeyPair]
-                                                                        theirIdentityKey:theirIdentityKey
-                                                                              ourBaseKey:ourBaseKey
-                                                                       theirSignedPreKey:theirSignedPreKey
-                                                                      theirOneTimePreKey:theirOneTimePreKey
-                                                                         theirRatchetKey:theirSignedPreKey];
-    
+
+
+    AliceAxolotlParameters *params =
+        [[AliceAxolotlParameters alloc] initWithIdentityKey:[self.identityStore identityKeyPair:protocolContext]
+                                           theirIdentityKey:theirIdentityKey
+                                                 ourBaseKey:ourBaseKey
+                                          theirSignedPreKey:theirSignedPreKey
+                                         theirOneTimePreKey:theirOneTimePreKey
+                                            theirRatchetKey:theirSignedPreKey];
+
     if (!sessionRecord.isFresh) {
         [sessionRecord archiveCurrentState];
     }
@@ -104,7 +110,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     DDLogInfo(@"setUnacknowledgedPreKeyMessage for: %@ with preKeyId: %d", self.recipientId, theirOneTimePreKeyId);
 
     [sessionRecord.sessionState setUnacknowledgedPreKeyMessage:theirOneTimePreKeyId signedPreKey:theirSignedPreKeyId baseKey:ourBaseKey.publicKey];
-    [sessionRecord.sessionState setLocalRegistrationId:self.identityStore.localRegistrationId];
+    [sessionRecord.sessionState setLocalRegistrationId:[self.identityStore.localRegistrationId]];
     [sessionRecord.sessionState setRemoteRegistrationId:preKeyBundle.registrationId];
     [sessionRecord.sessionState setAliceBaseKey:ourBaseKey.publicKey];
 
@@ -125,7 +131,12 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
                     protocolContext:protocolContext];
 }
 
-- (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
+- (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage *)message
+                       withSession:(SessionRecord *)sessionRecord
+                   protocolContext:(nullable id)protocolContext
+{
+    SPKAssert(message);
+    SPKAssert(sessionRecord);
 
     int    messageVersion    = message.version;
     NSData *theirIdentityKey = message.identityKey.removeKeyType;
@@ -155,8 +166,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     return unSignedPrekeyId;
 }
 
-- (int)processPrekeyV3:(PreKeyWhisperMessage*)message withSession:(SessionRecord*)sessionRecord{
-    
+- (int)processPrekeyV3:(PreKeyWhisperMessage *)message withSession:(SessionRecord *)sessionRecord
+{
+
     NSData *baseKey = message.baseKey.removeKeyType;
     
     if ([sessionRecord hasSessionState:message.version baseKey:baseKey]) {
@@ -211,3 +223,5 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

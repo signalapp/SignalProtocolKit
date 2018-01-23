@@ -5,6 +5,8 @@
 #import "SessionRecord.h"
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 // See a discussion of the protocolContext in SessionCipher.h.
 @protocol SessionStore <NSObject>
 
@@ -39,3 +41,5 @@
 - (void)deleteAllSessionsForContact:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext;
 
 @end
+
+NS_ASSUME_NONNULL_END
