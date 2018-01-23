@@ -12,17 +12,9 @@
 #import "WhisperMessage.h"
 #import <Foundation/Foundation.h>
 
-@interface SessionCipher : NSObject
+NS_ASSUME_NONNULL_BEGIN
 
-/**
- * To keep Session state synchronized, encryption and decryption must happen on the same (serial) dispatch queue. If no
- * queue is specified, the main queue will be used by default. We only assert that this invariant is held. Dispatching 
- * to this thread is the responsibility of the caller.
- *
- * @param dispatchQueue    serial dispatch queue on which all encryption/decryption must be dispatched.
- */
-+ (void)setSessionCipherDispatchQueue:(dispatch_queue_t)dispatchQueue;
-+ (dispatch_queue_t)getSessionCipherDispatchQueue;
+@interface SessionCipher : NSObject
 
 - (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(NSString*)recipientId deviceId:(int)deviceId;
 
@@ -36,6 +28,8 @@
 - (NSData *)decrypt:(id<CipherMessage>)whisperMessage protocolContext:(nullable id)protocolContext;
 
 - (int)remoteRegistrationId:(nullable id)protocolContext;
-- (int)sessionVersion;
+- (int)sessionVersion:(nullable id)protocolContext;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -19,8 +19,7 @@ typedef NS_ENUM(NSInteger, TSMessageDirection) {
 
 - (nullable ECKeyPair *)identityKeyPair:(nullable id)protocolContext;
 
-// TODO: Is this method obsolete?
-//- (int)localRegistrationId:(nullable id)protocolContext;
+- (int)localRegistrationId:(nullable id)protocolContext;
 
 /**
  * Record a recipients identity key
