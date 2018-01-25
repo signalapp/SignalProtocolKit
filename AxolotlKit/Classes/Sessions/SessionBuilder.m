@@ -110,7 +110,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     DDLogInfo(@"setUnacknowledgedPreKeyMessage for: %@ with preKeyId: %d", self.recipientId, theirOneTimePreKeyId);
 
     [sessionRecord.sessionState setUnacknowledgedPreKeyMessage:theirOneTimePreKeyId signedPreKey:theirSignedPreKeyId baseKey:ourBaseKey.publicKey];
-    [sessionRecord.sessionState setLocalRegistrationId:[self.identityStore.localRegistrationId]];
+    [sessionRecord.sessionState setLocalRegistrationId:[self.identityStore localRegistrationId:protocolContext]];
     [sessionRecord.sessionState setRemoteRegistrationId:preKeyBundle.registrationId];
     [sessionRecord.sessionState setAliceBaseKey:ourBaseKey.publicKey];
 
@@ -152,7 +152,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     
     switch (messageVersion) {
         case 3:
-            unSignedPrekeyId = [self processPrekeyV3:message withSession:sessionRecord];
+            unSignedPrekeyId = [self processPrekeyV3:message withSession:sessionRecord protocolContext:protocolContext];
             break;
         default:
             @throw [NSException exceptionWithName:InvalidVersionException reason:@"Trying to initialize with unknown version" userInfo:@{}];
@@ -166,9 +166,10 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     return unSignedPrekeyId;
 }
 
-- (int)processPrekeyV3:(PreKeyWhisperMessage *)message withSession:(SessionRecord *)sessionRecord
+- (int)processPrekeyV3:(PreKeyWhisperMessage *)message
+           withSession:(SessionRecord *)sessionRecord
+       protocolContext:(nullable id)protocolContext
 {
-
     NSData *baseKey = message.baseKey.removeKeyType;
     
     if ([sessionRecord hasSessionState:message.version baseKey:baseKey]) {
@@ -198,7 +199,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     
     [RatchetingSession initializeSession:sessionRecord.sessionState sessionVersion:message.version BobParameters:params];
     
-    [sessionRecord.sessionState setLocalRegistrationId:self.identityStore.localRegistrationId];
+    [sessionRecord.sessionState setLocalRegistrationId:[self.identityStore localRegistrationId:protocolContext]];
     [sessionRecord.sessionState setRemoteRegistrationId:message.registrationId];
     [sessionRecord.sessionState setAliceBaseKey:baseKey];
 
