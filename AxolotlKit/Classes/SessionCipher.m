@@ -157,7 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     SessionRecord *sessionRecord =
         [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId protocolContext:protocolContext];
-    int unsignedPreKeyId         = [self.sessionBuilder processPrekeyWhisperMessage:preKeyWhisperMessage withSession:sessionRecord];
+    int unsignedPreKeyId         = [self.sessionBuilder processPrekeyWhisperMessage:preKeyWhisperMessage withSession:sessionRecord protocolContext:protocolContext];
     NSData *plaintext = [self decryptWithSessionRecord:sessionRecord
                                         whisperMessage:preKeyWhisperMessage.message
                                        protocolContext:protocolContext];
