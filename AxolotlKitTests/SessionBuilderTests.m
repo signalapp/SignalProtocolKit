@@ -2,13 +2,13 @@
 //  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import "AxolotlInMemoryStore.h"
-#import "SessionBuilder.h"
-#import "SessionCipher.h"
-#import "AxolotlExceptions.h"
+#import <AxolotlKit/AxolotlExceptions.h>
+#import <AxolotlKit/SessionBuilder.h>
+#import <AxolotlKit/SessionCipher.h>
+#import <XCTest/XCTest.h>
 
-#import <25519/Ed25519.h>
+#import <Curve25519Kit/Ed25519.h>
 
 
 @interface PreKeyWhisperMessage ()

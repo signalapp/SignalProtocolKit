@@ -4,8 +4,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import <25519/Curve25519.h>
-#import <25519/Ed25519.h>
+#import <Curve25519Kit/Curve25519.h>
+#import <Curve25519Kit/Ed25519.h>
 
 #import "AxolotlInMemoryStore.h"
 #import "AliceAxolotlParameters.h"

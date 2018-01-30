@@ -1,17 +1,13 @@
 //
-//  ECCTests.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 21/09/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "ECKeyPair+ECKeyPairTesting.h"
 
-#import <25519/Curve25519.h>
-#import <25519/Ed25519.h>
+#import <Curve25519Kit/Curve25519.h>
+#import <Curve25519Kit/Ed25519.h>
 
 @interface ECCTests : XCTestCase
 

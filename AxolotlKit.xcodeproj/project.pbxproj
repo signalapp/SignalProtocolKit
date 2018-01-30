@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		053B67B83D50637758B1B452 /* libPods-AxolotlKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 75608451B1B3A2376073DF48 /* libPods-AxolotlKit.a */; };
-		6D26FD663E5FAC929BC98FE5 /* libPods-AxolotlKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF744C9D36F3B6418C094847 /* libPods-AxolotlKitTests.a */; };
+		57470C183587C149ABC5FAB1 /* Pods_AxolotlKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B975DDFFBFB50034D581DD9 /* Pods_AxolotlKitTests.framework */; };
 		B619AF1419FC148D00E33198 /* ProtobuffsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B619AF1319FC148D00E33198 /* ProtobuffsTests.m */; };
 		B61E841E19D17C33004FC382 /* HKDFTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B61E841C19D1780D004FC382 /* HKDFTest.m */; };
 		B62EFBF01A9140190072ADD3 /* PreKeyBundleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B62EFBEF1A9140190072ADD3 /* PreKeyBundleTests.m */; };
@@ -32,6 +31,7 @@
 		B6BB8C3519F7E773008A5895 /* SessionBuilderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BB8C3419F7E773008A5895 /* SessionBuilderTests.m */; };
 		B6D41A2319DB4F8E00EE9BAA /* SessionCipherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D41A2219DB4F8E00EE9BAA /* SessionCipherTest.m */; };
 		B6E37AE019CF107C00E619CA /* ECCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E37ADF19CF107C00E619CA /* ECCTests.m */; };
+		D75CF4C560CF9758A0E0550F /* Pods_AxolotlKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF81D400C79761E2EBFB1BEA /* Pods_AxolotlKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,9 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B975DDFFBFB50034D581DD9 /* Pods_AxolotlKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AxolotlKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		273B59DE0B6958AC58F56CBC /* Pods-AxolotlKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AxolotlKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AxolotlKit/Pods-AxolotlKit.debug.xcconfig"; sourceTree = "<group>"; };
 		535B95F3C3486538E9B66E8B /* Pods-AxolotlKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AxolotlKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AxolotlKitTests/Pods-AxolotlKitTests.release.xcconfig"; sourceTree = "<group>"; };
-		75608451B1B3A2376073DF48 /* libPods-AxolotlKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AxolotlKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A301BD7DC87662E4F12CE89C /* Pods-AxolotlKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AxolotlKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-AxolotlKit/Pods-AxolotlKit.release.xcconfig"; sourceTree = "<group>"; };
 		B619AF1319FC148D00E33198 /* ProtobuffsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProtobuffsTests.m; sourceTree = "<group>"; };
 		B61E841C19D1780D004FC382 /* HKDFTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKDFTest.m; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 		B6D41A2219DB4F8E00EE9BAA /* SessionCipherTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionCipherTest.m; sourceTree = "<group>"; };
 		B6E37ADF19CF107C00E619CA /* ECCTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ECCTests.m; sourceTree = "<group>"; };
 		F18946391DB22E6D23D4168E /* Pods-AxolotlKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AxolotlKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AxolotlKitTests/Pods-AxolotlKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		FF744C9D36F3B6418C094847 /* libPods-AxolotlKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AxolotlKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF81D400C79761E2EBFB1BEA /* Pods_AxolotlKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AxolotlKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,7 +90,7 @@
 				B63B2FA1197D8AFD00E09F65 /* CoreGraphics.framework in Frameworks */,
 				B63B2FA3197D8AFD00E09F65 /* UIKit.framework in Frameworks */,
 				B63B2F9F197D8AFD00E09F65 /* Foundation.framework in Frameworks */,
-				053B67B83D50637758B1B452 /* libPods-AxolotlKit.a in Frameworks */,
+				D75CF4C560CF9758A0E0550F /* Pods_AxolotlKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,7 +101,7 @@
 				B63B2FDC197D8B9600E09F65 /* XCTest.framework in Frameworks */,
 				B63B2FDE197D8B9600E09F65 /* UIKit.framework in Frameworks */,
 				B63B2FDD197D8B9600E09F65 /* Foundation.framework in Frameworks */,
-				6D26FD663E5FAC929BC98FE5 /* libPods-AxolotlKitTests.a in Frameworks */,
+				57470C183587C149ABC5FAB1 /* Pods_AxolotlKitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,8 +115,8 @@
 				B63B2FA0197D8AFD00E09F65 /* CoreGraphics.framework */,
 				B63B2FA2197D8AFD00E09F65 /* UIKit.framework */,
 				B63B2FB7197D8AFD00E09F65 /* XCTest.framework */,
-				75608451B1B3A2376073DF48 /* libPods-AxolotlKit.a */,
-				FF744C9D36F3B6418C094847 /* libPods-AxolotlKitTests.a */,
+				FF81D400C79761E2EBFB1BEA /* Pods_AxolotlKit.framework */,
+				1B975DDFFBFB50034D581DD9 /* Pods_AxolotlKitTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -350,9 +350,20 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AxolotlKit/Pods-AxolotlKit-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AxolotlKit/AxolotlKit.framework",
+				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
+				"${BUILT_PRODUCTS_DIR}/Curve25519Kit/Curve25519Kit.framework",
+				"${BUILT_PRODUCTS_DIR}/HKDFKit/HKDFKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ProtocolBuffers/ProtocolBuffers.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AxolotlKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Curve25519Kit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HKDFKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtocolBuffers.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -410,13 +421,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AxolotlKit-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F7D1D7822CA76333BE3F65B0 /* [CP] Check Pods Manifest.lock */ = {
@@ -425,13 +439,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AxolotlKitTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

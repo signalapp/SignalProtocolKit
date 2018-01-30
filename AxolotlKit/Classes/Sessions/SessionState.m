@@ -2,7 +2,7 @@
 //  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
 //
 
-#import <25519/Curve25519.h>
+#import <Curve25519Kit/Curve25519.h>
 #import "SessionState.h"
 #import "ReceivingChain.h"
 #import "SendingChain.h"
