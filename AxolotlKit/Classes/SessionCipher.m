@@ -432,7 +432,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (int)sessionVersion:(nullable id)protocolContext
 {
-
     SessionRecord *record =
         [self.sessionStore loadSession:self.recipientId deviceId:_deviceId protocolContext:protocolContext];
 
