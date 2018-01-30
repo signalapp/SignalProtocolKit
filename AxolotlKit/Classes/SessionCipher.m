@@ -206,7 +206,6 @@ NS_ASSUME_NONNULL_BEGIN
     return plaintext;
 }
 
-
 - (NSData *)decryptWithSessionRecord:(SessionRecord *)sessionRecord
                       whisperMessage:(WhisperMessage *)whisperMessage
                      protocolContext:(nullable id)protocolContext
@@ -419,10 +418,8 @@ NS_ASSUME_NONNULL_BEGIN
     return versionByte;
 }
 
-
 - (int)remoteRegistrationId:(nullable id)protocolContext
 {
-
     SessionRecord *record =
         [self.sessionStore loadSession:self.recipientId deviceId:_deviceId protocolContext:protocolContext];
 
