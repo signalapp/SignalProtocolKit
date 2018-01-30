@@ -22,8 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
                       deviceId:(int)deviceId
                protocolContext:(nullable id)protocolContext;
 
-// Deprecated.
-- (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext;
+- (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext __attribute__((deprecated));
 
 - (void)storeSession:(NSString *)contactIdentifier
             deviceId:(int)deviceId
