@@ -48,26 +48,26 @@
     AxolotlInMemoryStore *bobStore      = [AxolotlInMemoryStore new];
     ECKeyPair *bobPreKeyPair            = [Curve25519 generateKeyPair];
     ECKeyPair *bobSignedPreKeyPair      = [Curve25519 generateKeyPair];
-    NSData    *bobSignedPreKeySignature = [Ed25519 sign:bobSignedPreKeyPair.publicKey withKeyPair:bobStore.identityKeyPair];
+    NSData    *bobSignedPreKeySignature = [Ed25519 sign:bobSignedPreKeyPair.publicKey withKeyPair:[bobStore identityKeyPair:nil]];
     
-    PreKeyBundle *bobPreKey = [[PreKeyBundle alloc]initWithRegistrationId:bobStore.localRegistrationId
+    PreKeyBundle *bobPreKey = [[PreKeyBundle alloc]initWithRegistrationId:[bobStore localRegistrationId:nil]
                                                                  deviceId:1
                                                                  preKeyId:31337
                                                              preKeyPublic:bobPreKeyPair.publicKey
                                                        signedPreKeyPublic:bobSignedPreKeyPair.publicKey
                                                            signedPreKeyId:22
                                                     signedPreKeySignature:bobSignedPreKeySignature
-                                                              identityKey:bobStore.identityKeyPair.publicKey];
+                                                              identityKey:[bobStore identityKeyPair:nil].publicKey];
     
-    [aliceSessionBuilder processPrekeyBundle:bobPreKey];
+    [aliceSessionBuilder processPrekeyBundle:bobPreKey protocolContext:nil];
     
-    XCTAssert([aliceStore containsSession:BOB_RECIPIENT_ID deviceId:1]);
-    XCTAssert([aliceStore loadSession:BOB_RECIPIENT_ID deviceId:1].sessionState.version == 3);
+    XCTAssert([aliceStore containsSession:BOB_RECIPIENT_ID deviceId:1 protocolContext:nil]);
+    XCTAssert([aliceStore loadSession:BOB_RECIPIENT_ID deviceId:1 protocolContext:nil].sessionState.version == 3);
         
     NSString *originalMessage = @"Freedom is the right to tell people what they do not want to hear.";
     SessionCipher *aliceSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:aliceStore recipientId:BOB_RECIPIENT_ID deviceId:1];
     
-    WhisperMessage *outgoingMessage = [aliceSessionCipher encryptMessage:[originalMessage dataUsingEncoding:NSUTF8StringEncoding]];
+    WhisperMessage *outgoingMessage = [aliceSessionCipher encryptMessage:[originalMessage dataUsingEncoding:NSUTF8StringEncoding] protocolContext:nil];
     
     XCTAssert([outgoingMessage isKindOfClass:[PreKeyWhisperMessage class]], @"Message should be PreKey type");
     
@@ -76,11 +76,11 @@
     [bobStore storeSignedPreKey:22 signedPreKeyRecord:[[SignedPreKeyRecord alloc] initWithId:22 keyPair:bobSignedPreKeyPair signature:bobSignedPreKeySignature generatedAt:[NSDate date]]];
     
     SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:ALICE_RECIPIENT_ID deviceId:1];
-    [bobSessionCipher decrypt:incomingMessage];
+    [bobSessionCipher decrypt:incomingMessage protocolContext:nil];
     
-    XCTAssert([bobStore containsSession:ALICE_RECIPIENT_ID deviceId:1]);
-    XCTAssert([bobStore loadSession:ALICE_RECIPIENT_ID deviceId:1].sessionState.version == 3);
-    XCTAssert([bobStore loadSession:ALICE_RECIPIENT_ID deviceId:1].sessionState.aliceBaseKey != nil);
+    XCTAssert([bobStore containsSession:ALICE_RECIPIENT_ID deviceId:1 protocolContext:nil]);
+    XCTAssert([bobStore loadSession:ALICE_RECIPIENT_ID deviceId:1 protocolContext:nil].sessionState.version == 3);
+    XCTAssert([bobStore loadSession:ALICE_RECIPIENT_ID deviceId:1 protocolContext:nil].sessionState.aliceBaseKey != nil);
 }
 
 /**
@@ -100,7 +100,7 @@
     ECKeyPair *bobSignedPreKeyPair1 = [Curve25519 generateKeyPair];
     NSData *bobSignedPreKeySignature1 = [Ed25519 sign:bobSignedPreKeyPair1.publicKey withKeyPair:bobIdentityKeyPair1];
 
-    PreKeyBundle *bobPreKey1 = [[PreKeyBundle alloc] initWithRegistrationId:bobStore.localRegistrationId
+    PreKeyBundle *bobPreKey1 = [[PreKeyBundle alloc] initWithRegistrationId:[bobStore localRegistrationId:nil]
                                                                    deviceId:1
                                                                    preKeyId:31337
                                                                preKeyPublic:bobPreKeyPair1.publicKey
@@ -109,16 +109,16 @@
                                                       signedPreKeySignature:bobSignedPreKeySignature1
                                                                 identityKey:bobIdentityKeyPair1.publicKey];
 
-    [aliceSessionBuilder processPrekeyBundle:bobPreKey1];
+    [aliceSessionBuilder processPrekeyBundle:bobPreKey1 protocolContext:nil];
 
-    XCTAssert([aliceStore containsSession:BOB_RECIPIENT_ID deviceId:1]);
-    XCTAssert([aliceStore loadSession:BOB_RECIPIENT_ID deviceId:1].sessionState.version == 3);
+    XCTAssert([aliceStore containsSession:BOB_RECIPIENT_ID deviceId:1 protocolContext:nil]);
+    XCTAssert([aliceStore loadSession:BOB_RECIPIENT_ID deviceId:1 protocolContext:nil].sessionState.version == 3);
 
     NSString *messageText = @"Freedom is the right to tell people what they do not want to hear.";
     SessionCipher *aliceSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:aliceStore recipientId:BOB_RECIPIENT_ID deviceId:1];
 
     WhisperMessage *outgoingMessage1 =
-        [aliceSessionCipher encryptMessage:[messageText dataUsingEncoding:NSUTF8StringEncoding]];
+        [aliceSessionCipher encryptMessage:[messageText dataUsingEncoding:NSUTF8StringEncoding] protocolContext:nil];
 
     XCTAssert([outgoingMessage1 isKindOfClass:[PreKeyWhisperMessage class]], @"Message should be PreKey type");
 
@@ -127,7 +127,7 @@
     ECKeyPair *bobSignedPreKeyPair2 = [Curve25519 generateKeyPair];
     NSData *bobSignedPreKeySignature2 = [Ed25519 sign:bobSignedPreKeyPair2.publicKey withKeyPair:bobIdentityKeyPair2];
 
-    PreKeyBundle *bobPreKey2 = [[PreKeyBundle alloc] initWithRegistrationId:bobStore.localRegistrationId
+    PreKeyBundle *bobPreKey2 = [[PreKeyBundle alloc] initWithRegistrationId:[bobStore localRegistrationId:nil]
                                                                    deviceId:1
                                                                    preKeyId:31337
                                                                preKeyPublic:bobPreKeyPair2.publicKey
@@ -137,7 +137,7 @@
                                                                 identityKey:bobIdentityKeyPair2.publicKey];
 
     XCTAssertThrowsSpecificNamed(
-        [aliceSessionBuilder processPrekeyBundle:bobPreKey2], NSException, UntrustedIdentityKeyException);
+        [aliceSessionBuilder processPrekeyBundle:bobPreKey2 protocolContext:nil], NSException, UntrustedIdentityKeyException);
 }
 
 
