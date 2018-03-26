@@ -56,30 +56,6 @@
     [self runInteractionWithAliceRecord:aliceSessionRecord bobRecord:bobSessionRecord];
 }
 
-- (void)testBasicSessionCipherDispatchQueue {
-    SessionRecord *aliceSessionRecord = [SessionRecord new];
-    SessionRecord *bobSessionRecord   = [SessionRecord new];
-
-    XCTestExpectation *expectation = [self expectationWithDescription:@"session cipher completed"];
-
-    dispatch_queue_t sessionCipherDispatchQueue = dispatch_queue_create("session cipher queue", DISPATCH_QUEUE_SERIAL);
-
-    [SessionCipher setSessionCipherDispatchQueue:sessionCipherDispatchQueue];
-    dispatch_async(sessionCipherDispatchQueue, ^{
-        [self sessionInitializationWithAliceSessionRecord:aliceSessionRecord bobSessionRecord:bobSessionRecord];
-        [self runInteractionWithAliceRecord:aliceSessionRecord bobRecord:bobSessionRecord];
-
-        [expectation fulfill];
-    });
-
-    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * _Nullable error) {
-        if (error) {
-            XCTFail(@"Expectation failed with error: %@", error);
-        }
-    }];
-    [SessionCipher setSessionCipherDispatchQueue:nil];
-}
-
 - (void)testPromotingOldSessionState
 {
     SessionRecord *aliceSessionRecord = [SessionRecord new];
