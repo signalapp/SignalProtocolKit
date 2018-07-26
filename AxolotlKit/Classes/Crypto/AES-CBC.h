@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface AES_CBC : NSObject
 
 /**
@@ -20,7 +22,7 @@
  *  @return         ciphertext
  */
 
-+(NSData*)encryptCBCMode:(NSData*)data withKey:(NSData*)key withIV:(NSData*)iv;
++ (NSData *)encryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv;
 
 /**
  *  Decrypts with AES in CBC mode
@@ -32,6 +34,8 @@
  *  @return         plaintext
  */
 
-+(NSData*)decryptCBCMode:(NSData*)data withKey:(NSData*)key withIV:(NSData*)iv;
++ (NSData *)decryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv;
 
 @end
+
+NS_ASSUME_NONNULL_END
