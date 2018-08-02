@@ -10,17 +10,19 @@
 #import "MessageKeys.h"
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ChainKey : NSObject <NSSecureCoding>
 
--(instancetype)initWithData:(NSData*)chainKey index:(int)index;
+@property (nonatomic, readonly) int index;
+@property (nonatomic, readonly) NSData *key;
 
--(instancetype)nextChainKey;
+- (instancetype)initWithData:(NSData *)chainKey index:(int)index;
 
--(MessageKeys*)messageKeys;
+- (instancetype)nextChainKey;
 
--(NSData*)baseMaterial:(NSData*)seed;
-
-@property (readonly) int index;
-@property (readonly) NSData *key;
+- (MessageKeys *)messageKeys;
 
 @end
+
+NS_ASSUME_NONNULL_END

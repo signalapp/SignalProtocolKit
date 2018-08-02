@@ -4,6 +4,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define MAC_LENGTH 8
 
 @interface SerializationUtilities : NSObject
@@ -14,6 +16,12 @@
 
 + (Byte)intsToByteHigh:(int)highValue low:(int)lowValue;
 
-+ (NSData*)macWithVersion:(int)version identityKey:(NSData*)senderIdentityKey receiverIdentityKey:(NSData*)receiverIdentityKey macKey:(NSData*)macKey serialized:(NSData*)serialized;
++ (NSData *)macWithVersion:(int)version
+               identityKey:(NSData *)senderIdentityKey
+       receiverIdentityKey:(NSData *)receiverIdentityKey
+                    macKey:(NSData *)macKey
+                serialized:(NSData *)serialized;
 
 @end
+
+NS_ASSUME_NONNULL_END
