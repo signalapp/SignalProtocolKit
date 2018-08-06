@@ -119,8 +119,19 @@ NS_ASSUME_NONNULL_BEGIN
          receiverIdentityKey:(NSData *)receiverIdentityKey
                       macKey:(NSData *)macKey
 {
-    NSData *data = [self.serialized subdataWithRange:NSMakeRange(0, self.serialized.length - MAC_LENGTH)];
-    NSData *theirMac = [self.serialized subdataWithRange:NSMakeRange(self.serialized.length - MAC_LENGTH, MAC_LENGTH)];
+    DataParser *dataParser = [[DataParser alloc] initWithData:self.serialized];
+    NSError *error;
+    NSData *_Nullable data = [dataParser nextDataWithLength:self.serialized.length - MAC_LENGTH error:&error];
+    if (!data || error) {
+        SPKFail(@"%@ Could not parse data: %@", self.logTag, error);
+        @throw [NSException exceptionWithName:InvalidMessageException reason:@"Could not parse data." userInfo:@{}];
+    }
+    NSData *_Nullable theirMac = [dataParser nextDataWithLength:MAC_LENGTH error:&error];
+    if (!theirMac || error) {
+        SPKFail(@"%@ Could not parse theirMac: %@", self.logTag, error);
+        @throw [NSException exceptionWithName:InvalidMessageException reason:@"Could not parse theirMac." userInfo:@{}];
+    }
+
     NSData *ourMac = [SerializationUtilities macWithVersion:messageVersion
                                                 identityKey:[senderIdentityKey prependKeyType]
                                         receiverIdentityKey:[receiverIdentityKey prependKeyType]
