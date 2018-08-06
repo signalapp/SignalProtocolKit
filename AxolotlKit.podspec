@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = "AxolotlKit"
-  s.version               = "0.9.0"
+  s.version               = "0.9.1"
   s.summary               = "AxolotlKit is a Free implementation of the Axolotl protocol in Objective-C"
   s.homepage              = "https://github.com/WhisperSystems/AxolotlKit"
   s.license               = "GPLv2"
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.author                = { "Frederic Jacobs" => "github@fredericjacobs.com" }
   s.social_media_url      = "http://twitter.com/FredericJacobs"
   s.source                = { :git => "https://github.com/WhisperSystems/AxolotlKit.git", :tag => "#{s.version}" }
-  s.source_files          = "AxolotlKit/Classes/*.{h,m}", "AxolotlKit/Classes/**/*.{h,m}"
+  s.source_files          = "AxolotlKit/Classes/*.{h,m,swift}", "AxolotlKit/Classes/**/*.{h,m,swift}"
   s.public_header_files   = "AxolotlKit/Classes/*.{h}", "AxolotlKit/Classes/**/*.{h}"
   s.prefix_header_file    = "AxolotlKit/SPKPrefix.h"
   s.ios.deployment_target = "6.0"
@@ -18,4 +18,5 @@ Pod::Spec.new do |s|
   s.dependency            'HKDFKit', '~> 0.0.3'
   s.dependency            'ProtocolBuffers', '~> 1.9.8'
   s.dependency            'CocoaLumberjack'
+  s.dependency            'SwiftProtobuf'
 end

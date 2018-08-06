@@ -10,6 +10,6 @@
 
 @protocol CipherMessage <NSObject>
 
-- (NSData*)serialized;
+- (NSData *)serialized;
 
 @end
