@@ -6,24 +6,38 @@
 //  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "CipherMessage.h"
+#import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @class ECKeyPair;
 
 @interface WhisperMessage : NSObject <CipherMessage>
 
-@property (nonatomic, readonly) int       version;
-@property (nonatomic, readonly) NSData    *senderRatchetKey;
-@property (nonatomic, readonly) int       previousCounter;
-@property (nonatomic, readonly) int       counter;
-@property (nonatomic, readonly) NSData    *cipherText;
-@property (nonatomic, readonly) NSData    *serialized;
+@property (nonatomic, readonly) int version;
+@property (nonatomic, readonly) NSData *senderRatchetKey;
+@property (nonatomic, readonly) int previousCounter;
+@property (nonatomic, readonly) int counter;
+@property (nonatomic, readonly) NSData *cipherText;
+@property (nonatomic, readonly) NSData *serialized;
 
-- (instancetype)initWithData:(NSData*)serialized;
+- (instancetype)initWithData:(NSData *)serialized;
 
-- (instancetype)initWithVersion:(int)version macKey:(NSData*)macKey senderRatchetKey:(NSData*)senderRatchetKey counter:(int)counter previousCounter:(int)previousCounter cipherText:(NSData*)cipherText senderIdentityKey:(NSData*)senderIdentityKey receiverIdentityKey:(NSData*)receiverIdentityKey;
+- (instancetype)initWithVersion:(int)version
+                         macKey:(NSData *)macKey
+               senderRatchetKey:(NSData *)senderRatchetKey
+                        counter:(int)counter
+                previousCounter:(int)previousCounter
+                     cipherText:(NSData *)cipherText
+              senderIdentityKey:(NSData *)senderIdentityKey
+            receiverIdentityKey:(NSData *)receiverIdentityKey;
 
-- (void)verifyMacWithVersion:(int)messageVersion senderIdentityKey:(NSData *)senderIdentityKey receiverIdentityKey:(NSData*)receiverIdentityKey macKey:(NSData *)macKey;
+- (void)verifyMacWithVersion:(int)messageVersion
+           senderIdentityKey:(NSData *)senderIdentityKey
+         receiverIdentityKey:(NSData *)receiverIdentityKey
+                      macKey:(NSData *)macKey;
 
 @end
+
+NS_ASSUME_NONNULL_END
