@@ -8,7 +8,6 @@ import Foundation
 
 public enum SPKProtoError: Error {
     case invalidProtobuf(description: String)
-    case unsafeProtobuf(description: String)
 }
 
 // MARK: - SPKProtoTSProtoWhisperMessage
@@ -25,6 +24,15 @@ public enum SPKProtoError: Error {
         private var proto = SPKProtos_TSProtoWhisperMessage()
 
         @objc public override init() {}
+
+        // Initializer for required fields
+        @objc public init(ratchetKey: Data, counter: UInt32, ciphertext: Data) {
+            super.init()
+
+            setRatchetKey(ratchetKey)
+            setCounter(counter)
+            setCiphertext(ciphertext)
+        }
 
         @objc public func setRatchetKey(_ valueParam: Data) {
             proto.ratchetKey = valueParam
@@ -146,6 +154,16 @@ public enum SPKProtoError: Error {
         private var proto = SPKProtos_TSProtoPreKeyWhisperMessage()
 
         @objc public override init() {}
+
+        // Initializer for required fields
+        @objc public init(signedPreKeyID: UInt32, baseKey: Data, identityKey: Data, message: Data) {
+            super.init()
+
+            setSignedPreKeyID(signedPreKeyID)
+            setBaseKey(baseKey)
+            setIdentityKey(identityKey)
+            setMessage(message)
+        }
 
         @objc public func setRegistrationID(_ valueParam: UInt32) {
             proto.registrationID = valueParam
