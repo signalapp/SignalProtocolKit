@@ -119,7 +119,7 @@ NS_ASSUME_NONNULL_BEGIN
          receiverIdentityKey:(NSData *)receiverIdentityKey
                       macKey:(NSData *)macKey
 {
-    DataParser *dataParser = [[DataParser alloc] initWithData:self.serialized];
+    SPKDataParser *dataParser = [[SPKDataParser alloc] initWithData:self.serialized];
     NSError *error;
     NSData *_Nullable data = [dataParser nextDataWithLength:self.serialized.length - MAC_LENGTH error:&error];
     if (!data || error) {
