@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.author                = { "Frederic Jacobs" => "github@fredericjacobs.com" }
   s.social_media_url      = "http://twitter.com/FredericJacobs"
   s.source                = { :git => "https://github.com/WhisperSystems/AxolotlKit.git", :tag => "#{s.version}" }
-  s.source_files          = "AxolotlKit/Classes/*.{h,m,swift}", "AxolotlKit/Classes/**/*.{h,m,swift}"
+  s.source_files          = "AxolotlKit/Classes/*.{h,m,swift}", "AxolotlKit/Classes/**/*.{h,m,swift}", "AxolotlKit/Private/*.{h,m,swift}"
   s.public_header_files   = "AxolotlKit/Classes/*.{h}", "AxolotlKit/Classes/**/*.{h}"
   s.prefix_header_file    = "AxolotlKit/SPKPrefix.h"
   s.ios.deployment_target = "6.0"
