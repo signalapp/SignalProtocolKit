@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     NSMutableData *_Nullable bufferData = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
     if (!bufferData) {
-        @throw [NSException exceptionWithName:NSGenericException reason:@"Couldn't allocate buffer." userInfo:nil];
+        OWSFail(@"Couldn't allocate buffer.");
     }
 
     CCHmacContext context;

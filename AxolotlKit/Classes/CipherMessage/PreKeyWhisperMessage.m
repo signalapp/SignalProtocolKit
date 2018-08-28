@@ -58,10 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
         NSError *error;
         NSData *_Nullable messageData = [messageBuilder buildSerializedDataAndReturnError:&error];
         if (!messageData || error) {
-            SPKFail(@"%@ Could not serialize proto: %@.", self.logTag, error);
-            @throw [NSException exceptionWithName:InvalidMessageException
-                                           reason:@"could not serialize proto"
-                                         userInfo:@{}];
+            OWSFailDebug(@"Could not serialize proto: %@.", error);
+            OWSRaiseException(InvalidMessageException, @"Could not serialize proto.");
         }
         [serialized appendData:messageData];
 
@@ -90,8 +88,8 @@ NS_ASSUME_NONNULL_BEGIN
         SPKProtoTSProtoPreKeyWhisperMessage *_Nullable preKeyWhisperMessage =
             [SPKProtoTSProtoPreKeyWhisperMessage parseData:messageData error:&error];
         if (!preKeyWhisperMessage || error) {
-            SPKFail(@"%@ Could not parse proto: %@.", self.logTag, error);
-            @throw [NSException exceptionWithName:InvalidMessageException reason:@"Could not parse proto" userInfo:@{}];
+            OWSFailDebug(@"Could not parse proto: %@.", error);
+            OWSRaiseException(InvalidMessageException, @"Could not parse proto.");
         }
 
         _serialized = serialized;
