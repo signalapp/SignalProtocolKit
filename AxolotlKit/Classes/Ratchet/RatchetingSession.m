@@ -24,8 +24,9 @@
 @implementation DHEResult
 
 - (instancetype)initWithMasterKey:(NSData*)data{
-    NSAssert([data length] != 32*4 || [data length] != 32*3, @"DHE Result is expected to be the result of 3 or 4 DHEs outputting 32 bytes each");
-    
+    // DHE Result is expected to be the result of 3 or 4 DHEs outputting 32 bytes each
+    OWSAssert([data length] == 32 * 4 || [data length] == 32 * 3);
+
     self                           = [super init];
     const char *HKDFDefaultSalt[4] = {0};
     NSData *salt                   = [NSData dataWithBytes:HKDFDefaultSalt length:sizeof(HKDFDefaultSalt)];
