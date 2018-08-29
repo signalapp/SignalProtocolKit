@@ -33,7 +33,7 @@ static NSString* const kCoderData      = @"kCoderData";
 - (instancetype)initWithData:(NSData *)data{
     self = [super init];
 
-    OWSAssert(data.length == ECCKeyLength);
+    OWSAssertDebug(data.length == ECCKeyLength);
 
     if (self) {
         _keyData = data;
@@ -44,7 +44,7 @@ static NSString* const kCoderData      = @"kCoderData";
 
 - (RKCK*)createChainWithTheirEphemeral:(NSData*)theirEphemeral ourEphemeral:(ECKeyPair*)ourEphemeral{
     NSData *sharedSecret = [Curve25519 generateSharedSecretFromPublicKey:theirEphemeral andKeyPair:ourEphemeral];
-    OWSAssert(sharedSecret.length == ECCKeyLength);
+    OWSAssertDebug(sharedSecret.length == ECCKeyLength);
 
     TSDerivedSecrets *secrets = [TSDerivedSecrets derivedRatchetedSecretsWithSharedSecret:sharedSecret rootKey:_keyData];
 

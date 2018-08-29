@@ -44,7 +44,7 @@ static uint8_t kChainKeySeed[kTSKeySeedLength] = { 02 };
 
 - (instancetype)initWithData:(NSData *)chainKey index:(int)index
 {
-    OWSAssert(chainKey.length == ECCKeyLength);
+    OWSAssertDebug(chainKey.length == ECCKeyLength);
 
     self = [super init];
 
