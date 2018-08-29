@@ -34,11 +34,10 @@ NS_ASSUME_NONNULL_BEGIN
         @throw [NSException exceptionWithName:CipherException reason:@"AES-CBC IV should be 128 bits." userInfo:nil];
     }
 
-    size_t bufferSize = [data length] + kCCBlockSizeAES128;
+    size_t bufferSize;
+    ows_add_overflow(data.length, kCCBlockSizeAES128, &bufferSize);
     NSMutableData *_Nullable bufferData = [NSMutableData dataWithLength:bufferSize];
-    if (!bufferData) {
-        @throw [NSException exceptionWithName:CipherException reason:@"Couldn't allocate buffer." userInfo:nil];
-    }
+    OWSAssert(bufferData != nil);
 
     size_t bytesEncrypted = 0;
     CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt,
@@ -77,11 +76,10 @@ NS_ASSUME_NONNULL_BEGIN
         @throw [NSException exceptionWithName:CipherException reason:@"AES-CBC IV should be 128 bits." userInfo:nil];
     }
 
-    size_t bufferSize = [data length] + kCCBlockSizeAES128;
+    size_t bufferSize;
+    ows_add_overflow(data.length, kCCBlockSizeAES128, &bufferSize);
     NSMutableData *_Nullable bufferData = [NSMutableData dataWithLength:bufferSize];
-    if (!bufferData) {
-        OWSFail(@"Couldn't allocate buffer.");
-    }
+    OWSAssert(bufferData != nil);
 
     size_t bytesDecrypted = 0;
     CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,

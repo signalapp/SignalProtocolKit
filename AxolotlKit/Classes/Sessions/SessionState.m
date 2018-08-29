@@ -147,7 +147,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
             cai.index   = index;
             return cai;
         }
-        index++;
+        ows_add_overflow(index, 1, &index);
     }
     
     return nil;

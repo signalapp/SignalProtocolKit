@@ -349,7 +349,10 @@ NS_ASSUME_NONNULL_BEGIN
 
             OWSAssertDebug(receiverChain.chainKey.key.length == ECCKeyLength);
             [sessionState addReceiverChain:theirEphemeral chainKey:receiverChain.chainKey];
-            [sessionState setPreviousCounter:MAX(sessionState.senderChainKey.index-1 , 0)];
+
+            int previousCounter;
+            ows_sub_overflow(sessionState.senderChainKey.index, 1, &previousCounter);
+            [sessionState setPreviousCounter:MAX(previousCounter, 0)];
             [sessionState setSenderChain:ourNewEphemeral chainKey:senderChain.chainKey];
             
             return receiverChain.chainKey;
@@ -380,7 +383,12 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     NSUInteger kCounterLimit = 2000;
-    if (counter - chainKey.index > kCounterLimit) {
+    int counterOffset;
+    if (__builtin_sub_overflow(counter, chainKey.index, &counterOffset)) {
+        OWSFailDebug(@"Overflow while calculating counter offset");
+        OWSRaiseException(InvalidMessageException, @"Overflow while calculating counter offset");
+    }
+    if (counterOffset > kCounterLimit) {
         DDLogError(@"%@ %@.%d Exceeded future message limit: %lu, index: %d, counter: %d)",
             self.tag,
             self.recipientId,
@@ -392,7 +400,7 @@ NS_ASSUME_NONNULL_BEGIN
                                        reason:@"Exceeded message keys chain length limit"
                                      userInfo:@{}];
     }
-    
+
     while (chainKey.index < counter) {
         MessageKeys *messageKeys = [chainKey messageKeys];
         [sessionState setMessageKeys:theirEphemeral messageKeys:messageKeys];

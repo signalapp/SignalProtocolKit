@@ -110,7 +110,10 @@
     self.sessionState = promotedState;
     
     if (self.previousStates.count > ARCHIVED_STATES_MAX_LENGTH) {
-        NSIndexSet *indexesToDelete = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(ARCHIVED_STATES_MAX_LENGTH, self.previousStates.count - ARCHIVED_STATES_MAX_LENGTH)];
+        NSUInteger deleteCount;
+        ows_sub_overflow(self.previousStates.count, ARCHIVED_STATES_MAX_LENGTH, &deleteCount);
+        NSIndexSet *indexesToDelete =
+            [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(ARCHIVED_STATES_MAX_LENGTH, deleteCount)];
         [self.previousSessionStates removeObjectsAtIndexes:indexesToDelete];
     }
 }
