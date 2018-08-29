@@ -39,6 +39,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 @implementation SessionBuilder
 
 - (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(NSString*)recipientId deviceId:(int)deviceId{
+    OWSAssert(sessionStore);
+    OWSAssert(recipientId);
+
     return [self initWithSessionStore:sessionStore
                           preKeyStore:sessionStore
                     signedPreKeyStore:sessionStore
@@ -53,6 +56,13 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
                     identityKeyStore:(id<IdentityKeyStore>)identityKeyStore
                          recipientId:(NSString*)recipientId
                             deviceId:(int)deviceId{
+
+    OWSAssert(sessionStore);
+    OWSAssert(preKeyStore);
+    OWSAssert(signedPreKeyStore);
+    OWSAssert(identityKeyStore);
+    OWSAssert(recipientId);
+
     self = [super init];
     
     if (self) {
@@ -170,6 +180,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
            withSession:(SessionRecord *)sessionRecord
        protocolContext:(nullable id)protocolContext
 {
+    OWSAssert(message);
+    OWSAssert(sessionRecord);
+
     NSData *baseKey = message.baseKey.removeKeyType;
     
     if ([sessionRecord hasSessionState:message.version baseKey:baseKey]) {

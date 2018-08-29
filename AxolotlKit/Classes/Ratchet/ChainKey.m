@@ -41,6 +41,7 @@ static uint8_t kChainKeySeed[kTSKeySeedLength] = { 02 };
 - (instancetype)initWithData:(NSData *)chainKey index:(int)index
 {
     OWSAssert(chainKey.length == ECCKeyLength);
+    OWSAssert(index >= 0);
 
     self = [super init];
 
@@ -55,6 +56,7 @@ static uint8_t kChainKeySeed[kTSKeySeedLength] = { 02 };
 - (instancetype)nextChainKey
 {
     NSData *nextCK = [self baseMaterial:[NSData dataWithBytes:kChainKeySeed length:kTSKeySeedLength]];
+    OWSAssert(nextCK.length == ECCKeyLength);
 
     int nextIndex;
     ows_add_overflow(self.index, 1, &nextIndex);
@@ -73,23 +75,13 @@ static uint8_t kChainKeySeed[kTSKeySeedLength] = { 02 };
 
 - (NSData *)baseMaterial:(NSData *)seed
 {
-    if (!self.key) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Missing key." userInfo:nil];
-    }
-    if (self.key.length >= SIZE_MAX) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Oversize key." userInfo:nil];
-    }
-    if (!seed) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Missing seed." userInfo:nil];
-    }
-    if (seed.length >= SIZE_MAX) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Oversize seed." userInfo:nil];
-    }
+    OWSAssert(self.key);
+    OWSAssert(self.key.length == ECCKeyLength);
+    OWSAssert(seed);
+    OWSAssert(seed.length == kTSKeySeedLength);
 
     NSMutableData *_Nullable bufferData = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
-    if (!bufferData) {
-        OWSFail(@"Couldn't allocate buffer.");
-    }
+    OWSAssert(bufferData);
 
     CCHmacContext ctx;
     CCHmacInit(&ctx, kCCHmacAlgSHA256, [self.key bytes], [self.key length]);

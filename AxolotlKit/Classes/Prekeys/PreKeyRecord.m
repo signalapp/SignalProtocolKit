@@ -18,6 +18,8 @@ static NSString* const kCoderPreKeyPair      = @"kCoderPreKeyPair";
 }
 
 - (instancetype)initWithId:(int)identifier keyPair:(ECKeyPair*)keyPair{
+    OWSAssert(keyPair);
+
     self = [super init];
     
     if (self) {

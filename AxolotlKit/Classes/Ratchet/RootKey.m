@@ -43,10 +43,14 @@ static NSString* const kCoderData      = @"kCoderData";
 }
 
 - (RKCK*)createChainWithTheirEphemeral:(NSData*)theirEphemeral ourEphemeral:(ECKeyPair*)ourEphemeral{
+    OWSAssert(theirEphemeral);
+    OWSAssert(ourEphemeral);
+
     NSData *sharedSecret = [Curve25519 generateSharedSecretFromPublicKey:theirEphemeral andKeyPair:ourEphemeral];
     OWSAssert(sharedSecret.length == ECCKeyLength);
 
     TSDerivedSecrets *secrets = [TSDerivedSecrets derivedRatchetedSecretsWithSharedSecret:sharedSecret rootKey:_keyData];
+    OWSAssert(secrets);
 
     RKCK *newRKCK = [[RKCK alloc] initWithRK:[[RootKey alloc]  initWithData:secrets.cipherKey]
                                           CK:[[ChainKey alloc] initWithData:secrets.macKey index:0]];

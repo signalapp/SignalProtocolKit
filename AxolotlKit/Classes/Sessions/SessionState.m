@@ -21,6 +21,8 @@ static NSString* const kCoderBaseKey        = @"kCoderBaseKey";
 }
 
 -(instancetype)initWithBaseKey:(NSData*)baseKey preKeyId:(int)preKeyId signedPreKeyId:(int)signedPrekeyId{
+    OWSAssert(baseKey);
+
     self = [super init];
     if (self) {
         _preKeyId       = preKeyId;
@@ -155,6 +157,8 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 
 - (ChainKey *)receiverChainKey:(NSData *)senderEphemeral
 {
+    OWSAssert(senderEphemeral);
+
     ChainAndIndex *receiverChainAndIndex = [self receiverChain:senderEphemeral];
     ReceivingChain *receiverChain         = (ReceivingChain*)receiverChainAndIndex.chain;
     
@@ -167,6 +171,9 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 
 - (void)setReceiverChainKey:(NSData*)senderEphemeral chainKey:(ChainKey*)nextChainKey{
+    OWSAssert(senderEphemeral);
+    OWSAssert(nextChainKey);
+
     ChainAndIndex *chainAndIndex = [self receiverChain:senderEphemeral];
     ReceivingChain *chain        = (ReceivingChain*)chainAndIndex.chain;
     
@@ -177,7 +184,8 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 
 - (void)addReceiverChain:(NSData*)senderRatchetKey chainKey:(ChainKey*)chainKey{
-    
+    OWSAssert(senderRatchetKey);
+    OWSAssert(chainKey);
     ReceivingChain *receivingChain =  [[ReceivingChain alloc] initWithChainKey:chainKey senderRatchetKey:senderRatchetKey];
     
     [self.receivingChains addObject:receivingChain];
@@ -191,6 +199,9 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 
 - (void)setSenderChain:(ECKeyPair*)senderRatchetKeyPair chainKey:(ChainKey*)chainKey{
+    OWSAssert(senderRatchetKeyPair);
+    OWSAssert(chainKey);
+
     self.sendingChain = [[SendingChain alloc]initWithChainKey:chainKey senderRatchetKeyPair:senderRatchetKeyPair];
 }
 
@@ -199,6 +210,8 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 
 - (void)setSenderChainKey:(ChainKey*)nextChainKey{
+    OWSAssert(nextChainKey);
+
     SendingChain *sendingChain = self.sendingChain;
     sendingChain.chainKey = nextChainKey;
 
@@ -206,6 +219,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 
 - (BOOL)hasMessageKeys:(NSData*)senderRatchetKey counter:(int)counter{
+    OWSAssert(senderRatchetKey);
     ChainAndIndex *chainAndIndex = [self receiverChain:senderRatchetKey];
     ReceivingChain *receivingChain = (ReceivingChain*)chainAndIndex.chain;
     
@@ -249,10 +263,15 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 
 -(void)setReceiverChain:(int)index updatedChain:(ReceivingChain*)recvchain{
+    OWSAssert(recvchain);
+
     [self.receivingChains replaceObjectAtIndex:index withObject:recvchain];
 }
 
 - (void)setMessageKeys:(NSData*)senderRatchetKey messageKeys:(MessageKeys*)messageKeys{
+    OWSAssert(senderRatchetKey);
+    OWSAssert(messageKeys);
+
     ChainAndIndex  *chainAndIndex = [self receiverChain:senderRatchetKey];
     ReceivingChain *chain         = (ReceivingChain*)chainAndIndex.chain;
     [chain.messageKeysList addObject:messageKeys];
@@ -261,6 +280,8 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 
 - (void)setUnacknowledgedPreKeyMessage:(int)preKeyId signedPreKey:(int)signedPreKeyId baseKey:(NSData*)baseKey{
+    OWSAssert(baseKey);
+
     PendingPreKey *pendingPreKey = [[PendingPreKey alloc] initWithBaseKey:baseKey preKeyId:preKeyId signedPreKeyId:signedPreKeyId];
     
     self.pendingPreKey = pendingPreKey;

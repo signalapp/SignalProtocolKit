@@ -38,16 +38,23 @@
 }
 
 + (instancetype)derivedInitialSecretsWithMasterKey:(NSData*)masterKey{
+    OWSAssert(masterKey);
+
     NSData *info = [@"WhisperText" dataUsingEncoding:NSUTF8StringEncoding];
     return [self derivedSecretsWithSeed:masterKey salt:nil info:info];
 }
 
 + (instancetype)derivedRatchetedSecretsWithSharedSecret:(NSData*)masterKey rootKey:(NSData*)rootKey{
+    OWSAssert(masterKey);
+    OWSAssert(rootKey);
+
     NSData *info = [@"WhisperRatchet" dataUsingEncoding:NSUTF8StringEncoding];
     return [self derivedSecretsWithSeed:masterKey salt:rootKey info:info];
 }
 
 + (instancetype)derivedMessageKeysWithData:(NSData*)data{
+    OWSAssert(data);
+
     NSData *info = [@"WhisperMessageKeys" dataUsingEncoding:NSUTF8StringEncoding];
     return [self derivedSecretsWithSeed:data salt:nil info:info];
 }

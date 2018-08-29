@@ -28,9 +28,14 @@ static NSString* const kCoderPKBsignedPreKeySignature = @"kCoderPKBsignedPreKeyS
                         signedPreKeyId:(int)signedPreKeyId
                  signedPreKeySignature:(NSData*)signedPreKeySignature
                            identityKey:(NSData*)identityKey{
-    
+
+    OWSAssert(!preKeyPublic || preKeyPublic.length == 32);
+    OWSAssert(signedPreKeyPublic.length == 32);
+    OWSAssert(signedPreKeySignature);
+    OWSAssert(identityKey.length == 32);
+
     self = [super init];
-    
+
     if (self) {
         _identityKey           = identityKey;
         _registrationId        = registrationId;

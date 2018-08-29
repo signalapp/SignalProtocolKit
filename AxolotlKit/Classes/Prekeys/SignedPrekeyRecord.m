@@ -22,6 +22,10 @@ static NSString *const kCoderPreKeyWasAcceptedByService = @"kCoderPreKeyWasAccep
                generatedAt:(NSDate *)generatedAt
       wasAcceptedByService:(BOOL)wasAcceptedByService
 {
+    OWSAssert(keyPair);
+    OWSAssert(signature);
+    OWSAssert(generatedAt);
+
     self = [super initWithId:identifier keyPair:keyPair];
 
     if (self) {

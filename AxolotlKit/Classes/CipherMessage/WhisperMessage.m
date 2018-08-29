@@ -25,6 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
               senderIdentityKey:(NSData *)senderIdentityKey
             receiverIdentityKey:(NSData *)receiverIdentityKey
 {
+    OWSAssert(macKey);
+    OWSAssert(senderRatchetKey);
+    OWSAssert(cipherText);
+    OWSAssert(cipherText);
+    OWSAssert(senderIdentityKey);
+    OWSAssert(receiverIdentityKey);
+
     if (self = [super init]) {
         Byte versionByte = [SerializationUtilities intsToByteHigh:version low:CURRENT_VERSION];
         NSMutableData *serialized = [NSMutableData dataWithBytes:&versionByte length:1];
@@ -120,6 +127,10 @@ NS_ASSUME_NONNULL_BEGIN
          receiverIdentityKey:(NSData *)receiverIdentityKey
                       macKey:(NSData *)macKey
 {
+    OWSAssert(senderIdentityKey);
+    OWSAssert(receiverIdentityKey);
+    OWSAssert(macKey);
+
     SPKDataParser *dataParser = [[SPKDataParser alloc] initWithData:self.serialized];
     NSError *error;
 

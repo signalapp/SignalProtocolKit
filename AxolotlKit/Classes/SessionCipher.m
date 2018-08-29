@@ -39,6 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation SessionCipher
 
 - (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(NSString*)recipientId deviceId:(int)deviceId{
+    OWSAssert(sessionStore);
+    OWSAssert(recipientId);
     return [self initWithSessionStore:sessionStore
                           preKeyStore:sessionStore
                     signedPreKeyStore:sessionStore
@@ -53,6 +55,12 @@ NS_ASSUME_NONNULL_BEGIN
                     identityKeyStore:(id<IdentityKeyStore>)identityKeyStore
                          recipientId:(NSString*)recipientId
                             deviceId:(int)deviceId{
+    OWSAssert(sessionStore);
+    OWSAssert(preKeyStore);
+    OWSAssert(signedPreKeyStore);
+    OWSAssert(identityKeyStore);
+    OWSAssert(recipientId);
+
     self = [super init];
 
     if (self){
@@ -370,6 +378,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     OWSAssert(sessionState);
     OWSAssert(theirEphemeral);
+    OWSAssert(theirEphemeral.length == ECCKeyLength);
     OWSAssert(chainKey);
 
     if (chainKey.index > counter) {
@@ -425,7 +434,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (int)remoteRegistrationId:(nullable id)protocolContext
 {
-    SessionRecord *record =
+    SessionRecord *_Nullable record =
         [self.sessionStore loadSession:self.recipientId deviceId:_deviceId protocolContext:protocolContext];
 
     if (!record) {
@@ -437,7 +446,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (int)sessionVersion:(nullable id)protocolContext
 {
-    SessionRecord *record =
+    SessionRecord *_Nullable record =
         [self.sessionStore loadSession:self.recipientId deviceId:_deviceId protocolContext:protocolContext];
 
     if (!record) {

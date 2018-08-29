@@ -21,18 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSData *)encryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv
 {
-    if (!data) {
-        @throw [NSException exceptionWithName:CipherException reason:@"Missing data to encrypt." userInfo:nil];
-    }
-    if (data.length >= SIZE_MAX - kCCBlockSizeAES128) {
-        @throw [NSException exceptionWithName:CipherException reason:@"Oversize data." userInfo:nil];
-    }
-    if (key.length != 32) {
-        @throw [NSException exceptionWithName:CipherException reason:@"AES key should be 256 bits." userInfo:nil];
-    }
-    if (iv.length != 16) {
-        @throw [NSException exceptionWithName:CipherException reason:@"AES-CBC IV should be 128 bits." userInfo:nil];
-    }
+    OWSAssert(data);
+    OWSAssert(data.length < SIZE_MAX - kCCBlockSizeAES128);
+    OWSAssert(key.length == 32);
+    OWSAssert(iv.length == 16);
 
     size_t bufferSize;
     ows_add_overflow(data.length, kCCBlockSizeAES128, &bufferSize);
@@ -63,18 +55,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSData *)decryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv
 {
-    if (!data) {
-        @throw [NSException exceptionWithName:CipherException reason:@"Missing data to decrypt." userInfo:nil];
-    }
-    if (data.length >= SIZE_MAX - kCCBlockSizeAES128) {
-        @throw [NSException exceptionWithName:CipherException reason:@"Oversize data." userInfo:nil];
-    }
-    if (key.length != 32) {
-        @throw [NSException exceptionWithName:CipherException reason:@"AES key should be 256 bits." userInfo:nil];
-    }
-    if (iv.length != 16) {
-        @throw [NSException exceptionWithName:CipherException reason:@"AES-CBC IV should be 128 bits." userInfo:nil];
-    }
+    OWSAssert(data);
+    OWSAssert(data.length < SIZE_MAX - kCCBlockSizeAES128);
+    OWSAssert(key.length == 32);
+    OWSAssert(iv.length == 16);
 
     size_t bufferSize;
     ows_add_overflow(data.length, kCCBlockSizeAES128, &bufferSize);

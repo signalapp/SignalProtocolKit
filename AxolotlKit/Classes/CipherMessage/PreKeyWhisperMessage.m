@@ -33,6 +33,10 @@ NS_ASSUME_NONNULL_BEGIN
                                baseKey:(NSData *)baseKey
                            identityKey:(NSData *)identityKey
 {
+    OWSAssert(whisperMessage);
+    OWSAssert(baseKey);
+    OWSAssert(identityKey);
+
     if (self = [super init]) {
         _registrationId = registrationId;
         _version = whisperMessage.version;

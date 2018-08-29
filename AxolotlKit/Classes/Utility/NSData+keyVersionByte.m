@@ -18,6 +18,8 @@ const Byte DJB_TYPE = 0x05;
         NSMutableData *data = [NSMutableData dataWithBytes:&DJB_TYPE length:1];
         [data appendData:self.copy];
         return data;
+    } else {
+        OWSLogDebug(@"key length: %lu", (unsigned long)self.length);
     }
     return self;
 }
@@ -29,7 +31,8 @@ const Byte DJB_TYPE = 0x05;
         } else{
             @throw [NSException exceptionWithName:InvalidKeyException reason:@"Key type is incorrect" userInfo:@{}];
         }
-    } else{
+    } else {
+        OWSLogDebug(@"key length: %lu", (unsigned long)self.length);
         return self;
     }
 }

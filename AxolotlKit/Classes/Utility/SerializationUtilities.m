@@ -30,42 +30,17 @@ NS_ASSUME_NONNULL_BEGIN
                     macKey:(NSData *)macKey
                 serialized:(NSData *)serialized
 {
-    if (!macKey) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Missing macKey." userInfo:nil];
-    }
-    if (macKey.length >= SIZE_MAX) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Oversize macKey." userInfo:nil];
-    }
-    if (!senderIdentityKey) {
-        @throw
-            [NSException exceptionWithName:NSInvalidArgumentException reason:@"Missing senderIdentityKey" userInfo:nil];
-    }
-    if (senderIdentityKey.length >= SIZE_MAX) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"Oversize senderIdentityKey"
-                                     userInfo:nil];
-    }
-    if (!receiverIdentityKey) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"Missing receiverIdentityKey"
-                                     userInfo:nil];
-    }
-    if (receiverIdentityKey.length >= SIZE_MAX) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"Oversize receiverIdentityKey"
-                                     userInfo:nil];
-    }
-    if (!serialized) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Missing serialized." userInfo:nil];
-    }
-    if (serialized.length >= SIZE_MAX) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Oversize serialized." userInfo:nil];
-    }
+    OWSAssert(macKey);
+    OWSAssert(macKey.length < SIZE_MAX);
+    OWSAssert(senderIdentityKey);
+    OWSAssert(senderIdentityKey.length < SIZE_MAX);
+    OWSAssert(receiverIdentityKey);
+    OWSAssert(receiverIdentityKey.length < SIZE_MAX);
+    OWSAssert(serialized);
+    OWSAssert(serialized.length < SIZE_MAX);
 
     NSMutableData *_Nullable bufferData = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
-    if (!bufferData) {
-        OWSFail(@"Couldn't allocate buffer.");
-    }
+    OWSAssert(bufferData);
 
     CCHmacContext context;
     CCHmacInit(&context, kCCHmacAlgSHA256, [macKey bytes], [macKey length]);
