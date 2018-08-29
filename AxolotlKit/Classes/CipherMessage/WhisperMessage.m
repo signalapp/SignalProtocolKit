@@ -1,10 +1,11 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
 #import "WhisperMessage.h"
 #import "AxolotlExceptions.h"
 #import "Constants.h"
+#import "NSData+SPK.h"
 #import "NSData+keyVersionByte.h"
 #import "SerializationUtilities.h"
 #import <AxolotlKit/AxolotlKit-Swift.h>
@@ -135,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
                                                      macKey:macKey
                                                  serialized:data];
 
-    if (![theirMac isEqualToData:ourMac]) {
+    if (![theirMac ows_constantTimeIsEqualToData:ourMac]) {
         OWSFailDebug(@"Bad Mac! Their Mac: %@ Our Mac: %@", theirMac, ourMac);
         OWSRaiseException(InvalidMessageException, @"Bad Mac!");
     }
