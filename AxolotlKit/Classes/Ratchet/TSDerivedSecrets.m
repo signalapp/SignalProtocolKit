@@ -9,9 +9,11 @@
 @implementation TSDerivedSecrets
 
 + (instancetype)derivedSecretsWithSeed:(NSData*)masterKey salt:(NSData*)salt info:(NSData*)info{
-    TSDerivedSecrets *secrets = [[TSDerivedSecrets alloc] init];
+    OWSAssert(masterKey.length == ECCKeyLength);
+    OWSAssert(info);
 
-    OWSAssertDebug(masterKey.length == ECCKeyLength);
+    TSDerivedSecrets *secrets = [[TSDerivedSecrets alloc] init];
+    OWSAssert(secrets);
 
     if (!salt) {
         const char *HKDFDefaultSalt[4] = {0};
@@ -28,8 +30,9 @@
         @throw NSInvalidArgumentException;
     }
 
-    OWSAssertDebug(secrets.cipherKey.length == ECCKeyLength);
-    OWSAssertDebug(secrets.macKey.length == ECCKeyLength);
+    OWSAssert(secrets.cipherKey.length == ECCKeyLength);
+    OWSAssert(secrets.macKey.length == ECCKeyLength);
+    OWSAssert(secrets.iv.length == 16);
 
     return secrets;
 }
