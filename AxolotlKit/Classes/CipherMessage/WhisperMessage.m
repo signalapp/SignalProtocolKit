@@ -136,8 +136,8 @@ NS_ASSUME_NONNULL_BEGIN
 
     NSUInteger messageLength;
     if (__builtin_sub_overflow(self.serialized.length, MAC_LENGTH, &messageLength)) {
-        OWSFailDebug(@"Data too shot");
-        OWSRaiseException(InvalidMessageException, @"Data too shot");
+        OWSFailDebug(@"Data too short");
+        OWSRaiseException(InvalidMessageException, @"Data too short");
     }
     NSData *_Nullable data = [dataParser nextDataWithLength:messageLength error:&error];
     if (!data || error) {
