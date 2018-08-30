@@ -53,17 +53,6 @@
     return self;
 }
 
-
-- (instancetype)initWithSessionState:(SessionState *)sessionState{
-    assert(sessionState);
-    self = [self init];
-    
-    self.sessionState = sessionState;
-    self.fresh = false;
-    
-    return self;
-}
-
 - (BOOL)hasSessionState:(int)version baseKey:(NSData *)aliceBaseKey{
     if (self.sessionState.version == version && [aliceBaseKey isEqualToData:self.sessionState.aliceBaseKey]) {
         return YES;
