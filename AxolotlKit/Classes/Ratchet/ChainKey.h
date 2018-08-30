@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) int index;
 @property (nonatomic, readonly) NSData *key;
 
-- (instancetype)initWithData:(NSData *)chainKey index:(int)index;
+- (instancetype)initWithData:(NSData *)chainKey index:(int)index NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)nextChainKey;
 

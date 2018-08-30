@@ -26,14 +26,10 @@ static uint8_t kChainKeySeed[kTSKeySeedLength] = { 02 };
 
 - (nullable id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super init];
+    NSData *key = [aDecoder decodeObjectOfClass:[NSData class] forKey:kCoderKey];
+    int index = [aDecoder decodeIntForKey:kCoderIndex];
 
-    if (self) {
-        _key = [aDecoder decodeObjectOfClass:[NSData class] forKey:kCoderKey];
-        _index = [aDecoder decodeIntForKey:kCoderIndex];
-    }
-
-    return self;
+    return [self initWithData:key index:index];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
