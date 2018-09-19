@@ -40,7 +40,7 @@ static uint8_t kChainKeySeed[kTSKeySeedLength] = { 02 };
 
 - (instancetype)initWithData:(NSData *)chainKey index:(int)index
 {
-    OWSAssert(chainKey.length == ECCKeyLength);
+    OWSAssert(chainKey.length == 32);
     OWSAssert(index >= 0);
 
     self = [super init];
@@ -56,7 +56,7 @@ static uint8_t kChainKeySeed[kTSKeySeedLength] = { 02 };
 - (instancetype)nextChainKey
 {
     NSData *nextCK = [self baseMaterial:[NSData dataWithBytes:kChainKeySeed length:kTSKeySeedLength]];
-    OWSAssert(nextCK.length == ECCKeyLength);
+    OWSAssert(nextCK.length == 32);
 
     int nextIndex;
     ows_add_overflow(self.index, 1, &nextIndex);
@@ -76,7 +76,7 @@ static uint8_t kChainKeySeed[kTSKeySeedLength] = { 02 };
 - (NSData *)baseMaterial:(NSData *)seed
 {
     OWSAssert(self.key);
-    OWSAssert(self.key.length == ECCKeyLength);
+    OWSAssert(self.key.length == 32);
     OWSAssert(seed);
     OWSAssert(seed.length == kTSKeySeedLength);
 

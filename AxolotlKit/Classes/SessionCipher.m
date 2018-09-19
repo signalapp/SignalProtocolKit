@@ -331,7 +331,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     OWSAssert(sessionState);
     OWSGuardWithException(theirEphemeral, InvalidMessageException);
-    OWSGuardWithException(theirEphemeral.length == ECCKeyLength, InvalidMessageException);
+    OWSGuardWithException(theirEphemeral.length == 32, InvalidMessageException);
 
     @try {
         if ([sessionState hasReceiverChain:theirEphemeral]) {
@@ -340,22 +340,22 @@ NS_ASSUME_NONNULL_BEGIN
         } else{
             DDLogInfo(@"%@ %@.%d creating new chains.", self.tag, self.recipientId, self.deviceId);
             RootKey *rootKey = [sessionState rootKey];
-            OWSAssert(rootKey.keyData.length == ECCKeyLength);
+            OWSAssert(rootKey.keyData.length == 32);
 
             ECKeyPair *ourEphemeral = [sessionState senderRatchetKeyPair];
-            OWSAssert(ourEphemeral.publicKey.length == ECCKeyLength);
+            OWSAssert(ourEphemeral.publicKey.length == 32);
 
             RKCK *receiverChain = [rootKey createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourEphemeral];
 
             ECKeyPair *ourNewEphemeral = [Curve25519 generateKeyPair];
-            OWSAssert(ourNewEphemeral.publicKey.length == ECCKeyLength);
+            OWSAssert(ourNewEphemeral.publicKey.length == 32);
 
             RKCK *senderChain = [receiverChain.rootKey createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourNewEphemeral];
 
-            OWSAssert(senderChain.rootKey.keyData.length == ECCKeyLength);
+            OWSAssert(senderChain.rootKey.keyData.length == 32);
             [sessionState setRootKey:senderChain.rootKey];
 
-            OWSAssert(receiverChain.chainKey.key.length == ECCKeyLength);
+            OWSAssert(receiverChain.chainKey.key.length == 32);
             [sessionState addReceiverChain:theirEphemeral chainKey:receiverChain.chainKey];
 
             int previousCounter;
@@ -378,7 +378,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     OWSAssert(sessionState);
     OWSGuardWithException(theirEphemeral, InvalidMessageException);
-    OWSGuardWithException(theirEphemeral.length == ECCKeyLength, InvalidMessageException);
+    OWSGuardWithException(theirEphemeral.length == 32, InvalidMessageException);
     OWSAssert(chainKey);
 
     if (chainKey.index > counter) {

@@ -9,7 +9,7 @@
 @implementation TSDerivedSecrets
 
 + (instancetype)derivedSecretsWithSeed:(NSData*)masterKey salt:(NSData*)salt info:(NSData*)info{
-    OWSAssert(masterKey.length == ECCKeyLength);
+    OWSAssert(masterKey.length == 32);
     OWSAssert(info);
 
     TSDerivedSecrets *secrets = [[TSDerivedSecrets alloc] init];
@@ -30,8 +30,8 @@
         @throw NSInvalidArgumentException;
     }
 
-    OWSAssert(secrets.cipherKey.length == ECCKeyLength);
-    OWSAssert(secrets.macKey.length == ECCKeyLength);
+    OWSAssert(secrets.cipherKey.length == 32);
+    OWSAssert(secrets.macKey.length == 32);
     OWSAssert(secrets.iv.length == 16);
 
     return secrets;
