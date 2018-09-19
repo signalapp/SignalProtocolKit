@@ -330,8 +330,8 @@ NS_ASSUME_NONNULL_BEGIN
                     theirEphemeral:(NSData *)theirEphemeral
 {
     OWSAssert(sessionState);
-    OWSAssert(theirEphemeral);
-    OWSAssert(theirEphemeral.length == ECCKeyLength);
+    OWSGuardWithException(theirEphemeral, InvalidMessageException);
+    OWSGuardWithException(theirEphemeral.length == ECCKeyLength, InvalidMessageException);
 
     @try {
         if ([sessionState hasReceiverChain:theirEphemeral]) {
@@ -377,8 +377,8 @@ NS_ASSUME_NONNULL_BEGIN
                                           counter:(int)counter
 {
     OWSAssert(sessionState);
-    OWSAssert(theirEphemeral);
-    OWSAssert(theirEphemeral.length == ECCKeyLength);
+    OWSGuardWithException(theirEphemeral, InvalidMessageException);
+    OWSGuardWithException(theirEphemeral.length == ECCKeyLength, InvalidMessageException);
     OWSAssert(chainKey);
 
     if (chainKey.index > counter) {

@@ -20,19 +20,31 @@ static NSString* const kCoderPKBsignedPreKeySignature = @"kCoderPKBsignedPreKeyS
 
 @implementation PreKeyBundle
 
-- (instancetype)initWithRegistrationId:(int)registrationId
-                              deviceId:(int)deviceId
-                              preKeyId:(int)preKeyId
-                          preKeyPublic:(NSData*)preKeyPublic
-                    signedPreKeyPublic:(NSData*)signedPreKeyPublic
-                        signedPreKeyId:(int)signedPreKeyId
-                 signedPreKeySignature:(NSData*)signedPreKeySignature
-                           identityKey:(NSData*)identityKey{
-
-    OWSAssert(!preKeyPublic || preKeyPublic.length == 32);
-    OWSAssert(signedPreKeyPublic.length == 32);
-    OWSAssert(signedPreKeySignature);
-    OWSAssert(identityKey.length == 32);
+- (nullable instancetype)initWithRegistrationId:(int)registrationId
+                                       deviceId:(int)deviceId
+                                       preKeyId:(int)preKeyId
+                                   preKeyPublic:(NSData *)preKeyPublic
+                             signedPreKeyPublic:(NSData *)signedPreKeyPublic
+                                 signedPreKeyId:(int)signedPreKeyId
+                          signedPreKeySignature:(NSData *)signedPreKeySignature
+                                    identityKey:(NSData *)identityKey
+{
+    if (preKeyPublic && preKeyPublic.length == 32) {
+        OWSFailDebug(@"preKeyPublic && preKeyPublic.length == 32");
+        return nil;
+    }
+    if (signedPreKeyPublic.length != 32) {
+        OWSFailDebug(@"signedPreKeyPublic.length != 32");
+        return nil;
+    }
+    if (!signedPreKeySignature) {
+        OWSFailDebug(@"!signedPreKeySignature");
+        return nil;
+    }
+    if (identityKey.length != 32) {
+        OWSFailDebug(@"identityKey.length != 32");
+        return nil;
+    }
 
     self = [super init];
 

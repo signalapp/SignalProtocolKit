@@ -134,6 +134,13 @@ __attribute__((annotate("returns_localized_nsstring"))) static inline NSString *
     return s;
 }
 
+#define OWSGuardWithException(X, ExceptionName)                                                                        \
+    do {                                                                                                               \
+        if (!(X)) {                                                                                                    \
+            OWSRaiseException(ExceptionName, @"Guard failed: %s", CONVERT_EXPR_TO_STRING(X));                          \
+        }                                                                                                              \
+    } while (NO)
+
 #define OWSRaiseException(name, formatParam, ...)                                                                      \
     do {                                                                                                               \
         OWSLogError(@"Exception: %@ %@", name, [NSString stringWithFormat:formatParam, ##__VA_ARGS__]);                \

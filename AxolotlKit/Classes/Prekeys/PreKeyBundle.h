@@ -19,13 +19,13 @@
 @property (nonatomic, readonly) int      signedPreKeyId;
 @property (nonatomic, readonly) NSData   *signedPreKeySignature;
 
-- (instancetype)initWithRegistrationId:(int)registrationId
-                              deviceId:(int)deviceId
-                              preKeyId:(int)preKeyId
-                          preKeyPublic:(NSData*)preKeyPublic
-                    signedPreKeyPublic:(NSData*)signedPreKeyPublic
-                        signedPreKeyId:(int)signedPreKeyId
-                 signedPreKeySignature:(NSData*)signedPreKeySignature
-                           identityKey:(NSData*)identityKey;
+- (nullable instancetype)initWithRegistrationId:(int)registrationId
+                                       deviceId:(int)deviceId
+                                       preKeyId:(int)preKeyId
+                                   preKeyPublic:(NSData *)preKeyPublic
+                             signedPreKeyPublic:(NSData *)signedPreKeyPublic
+                                 signedPreKeyId:(int)signedPreKeyId
+                          signedPreKeySignature:(NSData *)signedPreKeySignature
+                                    identityKey:(NSData *)identityKey;
 
 @end
