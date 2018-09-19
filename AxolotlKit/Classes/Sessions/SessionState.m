@@ -147,7 +147,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
             cai.index   = index;
             return cai;
         }
-        index++;
+        ows_add_overflow(index, 1, &index);
     }
     
     return nil;
@@ -161,7 +161,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     if (receiverChain == nil) {
         return nil;
     } else{
-        OWSAssert(receiverChain.chainKey.key);
+        OWSAssertDebug(receiverChain.chainKey.key);
         return [[ChainKey alloc] initWithData:receiverChain.chainKey.key index:receiverChain.chainKey.index];
     }
 }

@@ -72,6 +72,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithData:(NSData *)serialized
 {
     if (self = [super init]) {
+        if (serialized.length < 1) {
+            OWSFailDebug(@"Empty data");
+            OWSRaiseException(InvalidMessageException, @"Empty data");
+        }
+
         Byte version;
         [serialized getBytes:&version length:1];
         _version = [SerializationUtilities highBitsToIntFromByte:version];
@@ -82,7 +87,9 @@ NS_ASSUME_NONNULL_BEGIN
                                          userInfo:@{ @"version" : [NSNumber numberWithInt:_version] }];
         }
 
-        NSData *messageData = [serialized subdataWithRange:NSMakeRange(1, serialized.length - 1)];
+        NSUInteger messageDataLength;
+        ows_sub_overflow(serialized.length, 1, &messageDataLength);
+        NSData *messageData = [serialized subdataWithRange:NSMakeRange(1, messageDataLength)];
 
         NSError *error;
         SPKProtoTSProtoPreKeyWhisperMessage *_Nullable preKeyWhisperMessage =
@@ -96,7 +103,7 @@ NS_ASSUME_NONNULL_BEGIN
         _registrationId = preKeyWhisperMessage.registrationID;
 
         // This method is called when decrypting a received PreKeyMessage, but to be symmetrical with
-        // encrypting a PreKeyWhisperMessage before sending, we use "-1" to indicate *no* unsignd prekey was
+        // encrypting a PreKeyWhisperMessage before sending, we use "-1" to indicate *no* unsigned prekey was
         // included.
         _prekeyID = preKeyWhisperMessage.hasPreKeyID ? preKeyWhisperMessage.preKeyID : -1;
         _signedPrekeyId = preKeyWhisperMessage.signedPreKeyID;
