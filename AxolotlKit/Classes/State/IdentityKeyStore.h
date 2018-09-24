@@ -48,6 +48,10 @@ typedef NS_ENUM(NSInteger, TSMessageDirection) {
                    direction:(TSMessageDirection)direction
              protocolContext:(nullable id)protocolContext;
 
+- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId;
+
+- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId protocolContext:(nullable id)protocolContext;
+
 @end
 
 NS_ASSUME_NONNULL_END
