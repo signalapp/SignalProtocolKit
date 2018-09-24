@@ -162,6 +162,10 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
+- (CipherMessageType)cipherMessageType {
+    return CipherMessageType_Whisper;
+}
+
 #pragma mark - Logging
 
 + (NSString *)logTag

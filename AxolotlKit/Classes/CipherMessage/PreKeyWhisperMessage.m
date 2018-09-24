@@ -119,6 +119,10 @@ NS_ASSUME_NONNULL_BEGIN
     return self;
 }
 
+- (CipherMessageType)cipherMessageType {
+    return CipherMessageType_Prekey;
+}
+
 #pragma mark - Logging
 
 + (NSString *)logTag
