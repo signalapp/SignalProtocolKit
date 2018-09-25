@@ -5,7 +5,7 @@
 #import "WhisperMessage.h"
 #import "AxolotlExceptions.h"
 #import "Constants.h"
-#import "NSData+SPK.h"
+#import <SignalCoreKit/NSData+OWS.h>
 #import "NSData+keyVersionByte.h"
 #import "SerializationUtilities.h"
 #import <AxolotlKit/AxolotlKit-Swift.h>
@@ -131,7 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
     OWSAssert(receiverIdentityKey);
     OWSAssert(macKey);
 
-    SPKDataParser *dataParser = [[SPKDataParser alloc] initWithData:self.serialized];
+    OWSDataParser *dataParser = [[OWSDataParser alloc] initWithData:self.serialized];
     NSError *error;
 
     NSUInteger messageLength;
