@@ -16,18 +16,17 @@ public enum SPKProtoError: Error {
 
     // MARK: - SPKProtoTSProtoWhisperMessageBuilder
 
-    @objc public class func builder() -> SPKProtoTSProtoWhisperMessageBuilder {
-        return SPKProtoTSProtoWhisperMessageBuilder()
+    @objc public class func builder(ratchetKey: Data, counter: UInt32, ciphertext: Data) -> SPKProtoTSProtoWhisperMessageBuilder {
+        return SPKProtoTSProtoWhisperMessageBuilder(ratchetKey: ratchetKey, counter: counter, ciphertext: ciphertext)
     }
 
     @objc public class SPKProtoTSProtoWhisperMessageBuilder: NSObject {
 
         private var proto = SPKProtos_TSProtoWhisperMessage()
 
-        @objc public override init() {}
+        @objc fileprivate override init() {}
 
-        // Initializer for required fields
-        @objc public init(ratchetKey: Data, counter: UInt32, ciphertext: Data) {
+        @objc fileprivate init(ratchetKey: Data, counter: UInt32, ciphertext: Data) {
             super.init()
 
             setRatchetKey(ratchetKey)
@@ -145,18 +144,17 @@ extension SPKProtoTSProtoWhisperMessage.SPKProtoTSProtoWhisperMessageBuilder {
 
     // MARK: - SPKProtoTSProtoPreKeyWhisperMessageBuilder
 
-    @objc public class func builder() -> SPKProtoTSProtoPreKeyWhisperMessageBuilder {
-        return SPKProtoTSProtoPreKeyWhisperMessageBuilder()
+    @objc public class func builder(signedPreKeyID: UInt32, baseKey: Data, identityKey: Data, message: Data) -> SPKProtoTSProtoPreKeyWhisperMessageBuilder {
+        return SPKProtoTSProtoPreKeyWhisperMessageBuilder(signedPreKeyID: signedPreKeyID, baseKey: baseKey, identityKey: identityKey, message: message)
     }
 
     @objc public class SPKProtoTSProtoPreKeyWhisperMessageBuilder: NSObject {
 
         private var proto = SPKProtos_TSProtoPreKeyWhisperMessage()
 
-        @objc public override init() {}
+        @objc fileprivate override init() {}
 
-        // Initializer for required fields
-        @objc public init(signedPreKeyID: UInt32, baseKey: Data, identityKey: Data, message: Data) {
+        @objc fileprivate init(signedPreKeyID: UInt32, baseKey: Data, identityKey: Data, message: Data) {
             super.init()
 
             setSignedPreKeyID(signedPreKeyID)
@@ -308,7 +306,7 @@ extension SPKProtoTSProtoPreKeyWhisperMessage.SPKProtoTSProtoPreKeyWhisperMessag
 
         private var proto = SPKProtos_TSProtoKeyExchangeMessage()
 
-        @objc public override init() {}
+        @objc fileprivate override init() {}
 
         @objc public func setId(_ valueParam: UInt32) {
             proto.id = valueParam
@@ -442,7 +440,7 @@ extension SPKProtoTSProtoKeyExchangeMessage.SPKProtoTSProtoKeyExchangeMessageBui
 
         private var proto = SPKProtos_TSProtoSenderKeyMessage()
 
-        @objc public override init() {}
+        @objc fileprivate override init() {}
 
         @objc public func setId(_ valueParam: UInt32) {
             proto.id = valueParam
@@ -545,7 +543,7 @@ extension SPKProtoTSProtoSenderKeyMessage.SPKProtoTSProtoSenderKeyMessageBuilder
 
         private var proto = SPKProtos_TSProtoSenderKeyDistributionMessage()
 
-        @objc public override init() {}
+        @objc fileprivate override init() {}
 
         @objc public func setId(_ valueParam: UInt32) {
             proto.id = valueParam
