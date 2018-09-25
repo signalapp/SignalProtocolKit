@@ -20,11 +20,9 @@
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Public or Private key is not required size" userInfo:@{@"PrivateKey":privateKey, @"Public Key":publicKey}];
     }
     
-    ECKeyPair *keyPair  = [ECKeyPair new];
-    memcpy(keyPair->publicKey,  [publicKey  bytes], ECCKeyLength);
-    memcpy(keyPair->privateKey, [privateKey bytes], ECCKeyLength);
-    
-    return keyPair;
+    ECKeyPair *keyPairCopy = [ECKeyPair keyPairWithPrivateKey:[privateKey copy]
+                                                 publicKey:[publicKey copy]];
+    return keyPairCopy;
 }
 
 @end

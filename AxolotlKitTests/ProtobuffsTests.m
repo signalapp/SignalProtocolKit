@@ -6,7 +6,7 @@
 
 #import <AxolotlKit/PreKeyWhisperMessage.h>
 #import <AxolotlKit/WhisperMessage.h>
-#import <AxolotlKit/WhisperTextProtocol.pb.h>
+#import <AxolotlKit/AxolotlKit-Swift.h>
 
 @interface ProtobuffsTests : XCTestCase
 
@@ -30,17 +30,19 @@
     int    counter = 2;
     int    previousCounter = 1;
     
-    TSProtoWhisperMessage *helloMessage = [[[[[[[TSProtoWhisperMessage builder]
-                                                setCounter:1]
-                                               setRatchetKey:ratchetKey]
-                                              setCiphertext:cipherText]
-                                             setCounter:counter]
-                                            setPreviousCounter:previousCounter] build];
+    SPKProtoTSProtoWhisperMessageBuilder *builder = [[SPKProtoTSProtoWhisperMessageBuilder alloc] initWithRatchetKey:ratchetKey
+                                                                                                                    counter:counter
+                                                                                                                 ciphertext:cipherText];
+    [builder setPreviousCounter:previousCounter];
+    SPKProtoTSProtoWhisperMessage *message = [builder buildIgnoringErrors];
+    NSData *serializedMessage = [message serializedDataIgnoringErrors];
     
-    NSData *serializedMessage = [helloMessage data];
-    
-    TSProtoWhisperMessage *deserialized = [TSProtoWhisperMessage parseFromData:serializedMessage];
-    
+    NSError *error;
+    SPKProtoTSProtoWhisperMessage *_Nullable deserialized = [SPKProtoTSProtoWhisperMessage parseData:serializedMessage
+                                                             error:&error];
+    XCTAssertNotNil(deserialized);
+    XCTAssertNil(error);
+
     XCTAssert(deserialized.counter == counter);
     XCTAssert(deserialized.previousCounter == previousCounter);
     XCTAssert([deserialized.ratchetKey isEqualToData:ratchetKey]);

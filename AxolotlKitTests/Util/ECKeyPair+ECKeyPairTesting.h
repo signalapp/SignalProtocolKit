@@ -10,6 +10,6 @@
 
 @interface ECKeyPair (ECKeyPairTesting)
 
-+(ECKeyPair*)keyPairWithPrivateKey:(NSData*)privateKey publicKey:(NSData*)publicKey;
++ (ECKeyPair*)keyPairWithPrivateKey:(NSData*)privateKey publicKey:(NSData*)publicKey;
 
 @end
