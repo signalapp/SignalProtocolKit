@@ -24,13 +24,15 @@
 @implementation DHEResult
 
 - (instancetype)initWithMasterKey:(NSData*)data{
-    NSAssert([data length] != 32*4 || [data length] != 32*3, @"DHE Result is expected to be the result of 3 or 4 DHEs outputting 32 bytes each");
-    
+    // DHE Result is expected to be the result of 3 or 4 DHEs outputting 32 bytes each
+    OWSAssert([data length] == 32 * 4 || [data length] == 32 * 3);
+
     self                           = [super init];
     const char *HKDFDefaultSalt[4] = {0};
     NSData *salt                   = [NSData dataWithBytes:HKDFDefaultSalt length:sizeof(HKDFDefaultSalt)];
     NSData *info                   = [@"WhisperText" dataUsingEncoding:NSUTF8StringEncoding];
     NSData *derivedMaterial        = [HKDFKit deriveKey:data info:info salt:salt outputSize:64];
+    OWSAssert(derivedMaterial.length == 64);
     _rootKey                       = [[RootKey alloc] initWithData:[derivedMaterial subdataWithRange:NSMakeRange(0, 32)]];
     _chainKey                      = [derivedMaterial subdataWithRange:NSMakeRange(32, 32)];
 
@@ -43,36 +45,52 @@
 @implementation RatchetingSession
 
 + (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion AliceParameters:(AliceAxolotlParameters*)parameters{
+    OWSAssert(session);
+    OWSAssert(parameters);
+
     ECKeyPair *sendingRatchetKey = [Curve25519 generateKeyPair];
+    OWSAssert(sendingRatchetKey);
     [self initializeSession:session sessionVersion:sessionVersion AliceParameters:parameters senderRatchet:sendingRatchetKey];
 }
 
 + (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion BobParameters:(BobAxolotlParameters*)parameters{
-    
+    OWSAssert(session);
+    OWSAssert(parameters);
+
     [session setVersion:sessionVersion];
     [session setRemoteIdentityKey:parameters.theirIdentityKey];
     [session setLocalIdentityKey:parameters.ourIdentityKeyPair.publicKey];
     
     DHEResult *result     = [self DHEKeyAgreement:parameters];
-    
+    OWSAssert(result);
+
     [session setSenderChain:parameters.ourRatchetKey chainKey:[[ChainKey alloc]initWithData:result.chainKey index:0]];
     [session setRootKey:result.rootKey];
 }
 
 + (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion AliceParameters:(AliceAxolotlParameters*)parameters senderRatchet:(ECKeyPair*)sendingRatchet{
+
+    OWSAssert(session);
+    OWSAssert(parameters);
+    OWSAssert(sendingRatchet);
+
     [session setVersion:sessionVersion];
     [session setRemoteIdentityKey:parameters.theirIdentityKey];
     [session setLocalIdentityKey:parameters.ourIdentityKeyPair.publicKey];
     
     DHEResult *result            = [self DHEKeyAgreement:parameters];
+    OWSAssert(result);
     RKCK *sendingChain           = [result.rootKey createChainWithTheirEphemeral:parameters.theirRatchetKey ourEphemeral:sendingRatchet];
-    
+    OWSAssert(sendingChain);
+
     [session addReceiverChain:parameters.theirRatchetKey chainKey:[[ChainKey alloc]initWithData:result.chainKey index:0]];
     [session setSenderChain:sendingRatchet chainKey:sendingChain.chainKey];
     [session setRootKey:sendingChain.rootKey];
 }
 
 + (DHEResult*)DHEKeyAgreement:(id<AxolotlParameters>)parameters{
+    OWSAssert(parameters);
+
     NSMutableData *masterKey = [NSMutableData data];
     
     [masterKey appendData:[self discontinuityBytes]];

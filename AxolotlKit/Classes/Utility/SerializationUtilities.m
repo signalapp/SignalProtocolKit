@@ -63,9 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     NSMutableData *_Nullable bufferData = [NSMutableData dataWithLength:CC_SHA256_DIGEST_LENGTH];
-    if (!bufferData) {
-        OWSFail(@"Couldn't allocate buffer.");
-    }
+    OWSAssert(bufferData);
 
     CCHmacContext context;
     CCHmacInit(&context, kCCHmacAlgSHA256, [macKey bytes], [macKey length]);

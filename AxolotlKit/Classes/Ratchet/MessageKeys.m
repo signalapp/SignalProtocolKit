@@ -37,6 +37,11 @@ static NSString* const kCoderMessageKeysIndex     = @"kCoderMessageKeysIndex";
 
 
 - (instancetype)initWithCipherKey:(NSData*)cipherKey macKey:(NSData*)macKey iv:(NSData *)data index:(int)index{
+
+    OWSAssert(cipherKey);
+    OWSAssert(macKey);
+    OWSAssert(data);
+
     self = [super init];
     
     if (self) {

@@ -9,6 +9,9 @@
 @implementation RKCK
 
 - (instancetype)initWithRK:(RootKey*)rootKey CK:(ChainKey*)chainKey{
+    OWSAssert(rootKey);
+    OWSAssert(chainKey);
+
     self = [super init];
     self.rootKey = rootKey;
     self.chainKey   = chainKey;

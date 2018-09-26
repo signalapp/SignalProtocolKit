@@ -39,6 +39,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 @implementation SessionBuilder
 
 - (instancetype)initWithAxolotlStore:(id<AxolotlStore>)sessionStore recipientId:(NSString*)recipientId deviceId:(int)deviceId{
+    OWSAssert(sessionStore);
+    OWSAssert(recipientId);
+
     return [self initWithSessionStore:sessionStore
                           preKeyStore:sessionStore
                     signedPreKeyStore:sessionStore
@@ -53,6 +56,13 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
                     identityKeyStore:(id<IdentityKeyStore>)identityKeyStore
                          recipientId:(NSString*)recipientId
                             deviceId:(int)deviceId{
+
+    OWSAssert(sessionStore);
+    OWSAssert(preKeyStore);
+    OWSAssert(signedPreKeyStore);
+    OWSAssert(identityKeyStore);
+    OWSAssert(recipientId);
+
     self = [super init];
     
     if (self) {
@@ -69,7 +79,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 
 - (void)processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext
 {
-    OWSAssertDebug(preKeyBundle);
+    OWSAssert(preKeyBundle);
 
     NSData *theirIdentityKey  = preKeyBundle.identityKey.removeKeyType;
     NSData *theirSignedPreKey = preKeyBundle.signedPreKeyPublic.removeKeyType;
@@ -135,8 +145,8 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
                        withSession:(SessionRecord *)sessionRecord
                    protocolContext:(nullable id)protocolContext
 {
-    OWSAssertDebug(message);
-    OWSAssertDebug(sessionRecord);
+    OWSAssert(message);
+    OWSAssert(sessionRecord);
 
     int    messageVersion    = message.version;
     NSData *theirIdentityKey = message.identityKey.removeKeyType;
@@ -170,6 +180,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
            withSession:(SessionRecord *)sessionRecord
        protocolContext:(nullable id)protocolContext
 {
+    OWSAssert(message);
+    OWSAssert(sessionRecord);
+
     NSData *baseKey = message.baseKey.removeKeyType;
     
     if ([sessionRecord hasSessionState:message.version baseKey:baseKey]) {

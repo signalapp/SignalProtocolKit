@@ -25,6 +25,13 @@ NS_ASSUME_NONNULL_BEGIN
               senderIdentityKey:(NSData *)senderIdentityKey
             receiverIdentityKey:(NSData *)receiverIdentityKey
 {
+    OWSAssert(macKey);
+    OWSAssert(senderRatchetKey);
+    OWSAssert(cipherText);
+    OWSAssert(cipherText);
+    OWSAssert(senderIdentityKey);
+    OWSAssert(receiverIdentityKey);
+
     if (self = [super init]) {
         Byte versionByte = [SerializationUtilities intsToByteHigh:version low:CURRENT_VERSION];
         NSMutableData *serialized = [NSMutableData dataWithBytes:&versionByte length:1];
@@ -120,13 +127,17 @@ NS_ASSUME_NONNULL_BEGIN
          receiverIdentityKey:(NSData *)receiverIdentityKey
                       macKey:(NSData *)macKey
 {
+    OWSAssert(senderIdentityKey);
+    OWSAssert(receiverIdentityKey);
+    OWSAssert(macKey);
+
     SPKDataParser *dataParser = [[SPKDataParser alloc] initWithData:self.serialized];
     NSError *error;
 
     NSUInteger messageLength;
     if (__builtin_sub_overflow(self.serialized.length, MAC_LENGTH, &messageLength)) {
-        OWSFailDebug(@"Data too shot");
-        OWSRaiseException(InvalidMessageException, @"Data too shot");
+        OWSFailDebug(@"Data too short");
+        OWSRaiseException(InvalidMessageException, @"Data too short");
     }
     NSData *_Nullable data = [dataParser nextDataWithLength:messageLength error:&error];
     if (!data || error) {
