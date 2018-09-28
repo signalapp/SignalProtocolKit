@@ -130,7 +130,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
                                                           protocolContext:protocolContext];
     if (previousIdentityExisted) {
         DDLogInfo(@"%@ PKBundle removing previous session states for changed identity for recipient:%@",
-            self.tag,
+            self.logTag,
             self.recipientId);
         [sessionRecord removePreviousSessionStates];
     }
@@ -195,7 +195,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     if (message.prekeyID >= 0) {
         ourOneTimePreKey = [self.prekeyStore loadPreKey:message.prekeyID].keyPair;
     } else {
-        DDLogWarn(@"%@ Processing PreKey message which had no one-time prekey.", self.tag);
+        DDLogWarn(@"%@ Processing PreKey message which had no one-time prekey.", self.logTag);
     }
 
     BobAxolotlParameters *params =
@@ -222,18 +222,6 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     } else {
         return -1;
     }
-}
-
-#pragma mark - Logging
-
-+ (NSString *)tag
-{
-    return [NSString stringWithFormat:@"[%@]", self.class];
-}
-
-- (NSString *)tag
-{
-    return self.class.tag;
 }
 
 @end

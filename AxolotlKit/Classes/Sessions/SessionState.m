@@ -1,13 +1,12 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
-#import <Curve25519Kit/Curve25519.h>
 #import "SessionState.h"
+#import "ChainAndIndex.h"
 #import "ReceivingChain.h"
 #import "SendingChain.h"
-#import "ChainAndIndex.h"
-
+#import <Curve25519Kit/Curve25519.h>
 
 @implementation PendingPreKey
 
@@ -192,7 +191,7 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     
     if ([self.receivingChains count] > 5) {
         DDLogInfo(
-            @"%@ Trimming excessive receivingChain count: %lu", self.tag, (unsigned long)self.receivingChains.count);
+            @"%@ Trimming excessive receivingChain count: %lu", self.logTag, (unsigned long)self.receivingChains.count);
         // We keep 5 receiving chains to be able to decrypt out of order messages.
         [self.receivingChains removeObjectAtIndex:0];
     }
@@ -296,18 +295,6 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
 }
 - (void)clearUnacknowledgedPreKeyMessage{
     self.pendingPreKey = nil;
-}
-
-#pragma mark - Logging
-
-+ (NSString *)tag
-{
-    return [NSString stringWithFormat:@"[%@]", self.class];
-}
-
-- (NSString *)tag
-{
-    return self.class.tag;
 }
 
 @end
