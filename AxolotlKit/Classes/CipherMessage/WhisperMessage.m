@@ -5,10 +5,11 @@
 #import "WhisperMessage.h"
 #import "AxolotlExceptions.h"
 #import "Constants.h"
-#import "NSData+SPK.h"
+#import <SignalCoreKit/NSData+OWS.h>
 #import "NSData+keyVersionByte.h"
 #import "SerializationUtilities.h"
 #import <AxolotlKit/AxolotlKit-Swift.h>
+#import <SignalCoreKit/SignalCoreKit-Swift.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -36,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
         Byte versionByte = [SerializationUtilities intsToByteHigh:version low:CURRENT_VERSION];
         NSMutableData *serialized = [NSMutableData dataWithBytes:&versionByte length:1];
 
-        SPKProtoTSProtoWhisperMessageBuilder *messageBuilder = [[SPKProtoTSProtoWhisperMessageBuilder alloc] initWithRatchetKey:senderRatchetKey
+        SPKProtoTSProtoWhisperMessageBuilder *messageBuilder = [SPKProtoTSProtoWhisperMessage builderWithRatchetKey:senderRatchetKey
                                                                                                                         counter:counter
                                                                                                                      ciphertext:cipherText];
         [messageBuilder setPreviousCounter:previousCounter];
@@ -131,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
     OWSAssert(receiverIdentityKey);
     OWSAssert(macKey);
 
-    SPKDataParser *dataParser = [[SPKDataParser alloc] initWithData:self.serialized];
+    OWSDataParser *dataParser = [[OWSDataParser alloc] initWithData:self.serialized];
     NSError *error;
 
     NSUInteger messageLength;
@@ -139,12 +140,16 @@ NS_ASSUME_NONNULL_BEGIN
         OWSFailDebug(@"Data too short");
         OWSRaiseException(InvalidMessageException, @"Data too short");
     }
-    NSData *_Nullable data = [dataParser nextDataWithLength:messageLength error:&error];
+    NSData *_Nullable data = [dataParser nextDataWithLength:messageLength
+                                                       name:@"message data"
+                                                      error:&error];
     if (!data || error) {
         OWSFailDebug(@"Could not parse data: %@.", error);
         OWSRaiseException(InvalidMessageException, @"Could not parse data.");
     }
-    NSData *_Nullable theirMac = [dataParser nextDataWithLength:MAC_LENGTH error:&error];
+    NSData *_Nullable theirMac = [dataParser nextDataWithLength:MAC_LENGTH
+                                                           name:@"mac data"
+                                                          error:&error];
     if (!theirMac || error) {
         OWSFailDebug(@"Could not parse their mac: %@.", error);
         OWSRaiseException(InvalidMessageException, @"Could not parse their mac.");
@@ -160,6 +165,10 @@ NS_ASSUME_NONNULL_BEGIN
         OWSFailDebug(@"Bad Mac! Their Mac: %@ Our Mac: %@", theirMac, ourMac);
         OWSRaiseException(InvalidMessageException, @"Bad Mac!");
     }
+}
+
+- (CipherMessageType)cipherMessageType {
+    return CipherMessageType_Whisper;
 }
 
 #pragma mark - Logging

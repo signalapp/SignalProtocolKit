@@ -147,11 +147,23 @@ NS_ASSUME_NONNULL_BEGIN
 {
     OWSAssert(whisperMessage);
 
-    if ([whisperMessage isKindOfClass:[PreKeyWhisperMessage class]]) {
-        return
+    switch (whisperMessage.cipherMessageType) {
+        case CipherMessageType_Whisper:
+            if (![whisperMessage isKindOfClass:[WhisperMessage class]]) {
+                OWSFail(@"Unexpected message type: %@", [whisperMessage class]);
+                return nil;
+            }
+            return [self decryptWhisperMessage:(WhisperMessage *)whisperMessage protocolContext:protocolContext];
+        case CipherMessageType_Prekey:
+            if (![whisperMessage isKindOfClass:[PreKeyWhisperMessage class]]) {
+                OWSFail(@"Unexpected message type: %@", [whisperMessage class]);
+                return nil;
+            }
+            return
             [self decryptPreKeyWhisperMessage:(PreKeyWhisperMessage *)whisperMessage protocolContext:protocolContext];
-    } else{
-        return [self decryptWhisperMessage:whisperMessage protocolContext:protocolContext];
+        default:
+            OWSFailDebug(@"Unexpected message type: %@", [whisperMessage class]);
+            break;
     }
 }
 
