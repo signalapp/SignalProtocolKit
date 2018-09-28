@@ -29,20 +29,20 @@ static NSString* const kCoderPKBsignedPreKeySignature = @"kCoderPKBsignedPreKeyS
                           signedPreKeySignature:(NSData *)signedPreKeySignature
                                     identityKey:(NSData *)identityKey
 {
-    if (preKeyPublic && preKeyPublic.length == 32) {
-        OWSFailDebug(@"preKeyPublic && preKeyPublic.length == 32");
+    if (preKeyPublic && preKeyPublic.length != 33) {
+        OWSFailDebug(@"preKeyPublic && preKeyPublic.length != 33");
         return nil;
     }
-    if (signedPreKeyPublic.length != 32) {
-        OWSFailDebug(@"signedPreKeyPublic.length != 32");
+    if (signedPreKeyPublic.length != 33) {
+        OWSFailDebug(@"signedPreKeyPublic.length != 33");
         return nil;
     }
     if (!signedPreKeySignature) {
         OWSFailDebug(@"!signedPreKeySignature");
         return nil;
     }
-    if (identityKey.length != 32) {
-        OWSFailDebug(@"identityKey.length != 32");
+    if (identityKey.length != 33) {
+        OWSFailDebug(@"identityKey.length != 33");
         return nil;
     }
 

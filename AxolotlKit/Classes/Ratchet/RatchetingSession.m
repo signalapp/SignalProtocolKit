@@ -24,8 +24,9 @@
 @implementation DHEResult
 
 - (instancetype)initWithMasterKey:(NSData*)data{
-    // DHE Result is expected to be the result of 3 or 4 DHEs outputting 32 bytes each
-    OWSAssert([data length] == 32 * 4 || [data length] == 32 * 3);
+    // DHE Result is expected to be the result of 3 or 4 DHEs outputting 32 bytes each,
+    // plus the 32 discontinuity bytes added to make V3 incompatible with V2
+    OWSAssert([data length] == 32 * 4 || [data length] == 32 * 5);
 
     self                           = [super init];
     const char *HKDFDefaultSalt[4] = {0};
