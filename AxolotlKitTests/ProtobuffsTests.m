@@ -1,12 +1,11 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-
+#import <AxolotlKit/AxolotlKit-Swift.h>
 #import <AxolotlKit/PreKeyWhisperMessage.h>
 #import <AxolotlKit/WhisperMessage.h>
-#import <AxolotlKit/AxolotlKit-Swift.h>
+#import <XCTest/XCTest.h>
 
 @interface ProtobuffsTests : XCTestCase
 
@@ -29,17 +28,18 @@
     NSData *cipherText = [@"CipherText" dataUsingEncoding:NSUTF8StringEncoding];
     int    counter = 2;
     int    previousCounter = 1;
-    
-    SPKProtoTSProtoWhisperMessageBuilder *builder = [[SPKProtoTSProtoWhisperMessageBuilder alloc] initWithRatchetKey:ratchetKey
-                                                                                                                    counter:counter
-                                                                                                                 ciphertext:cipherText];
+
+    SPKProtoTSProtoWhisperMessageBuilder *builder =
+        [[SPKProtoTSProtoWhisperMessageBuilder alloc] initWithRatchetKey:ratchetKey
+                                                                 counter:counter
+                                                              ciphertext:cipherText];
     [builder setPreviousCounter:previousCounter];
     SPKProtoTSProtoWhisperMessage *message = [builder buildIgnoringErrors];
     NSData *serializedMessage = [message serializedDataIgnoringErrors];
     
     NSError *error;
-    SPKProtoTSProtoWhisperMessage *_Nullable deserialized = [SPKProtoTSProtoWhisperMessage parseData:serializedMessage
-                                                             error:&error];
+    SPKProtoTSProtoWhisperMessage *_Nullable deserialized =
+        [SPKProtoTSProtoWhisperMessage parseData:serializedMessage error:&error];
     XCTAssertNotNil(deserialized);
     XCTAssertNil(error);
 
