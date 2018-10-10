@@ -30,9 +30,9 @@
     int    previousCounter = 1;
 
     SPKProtoTSProtoWhisperMessageBuilder *builder =
-        [[SPKProtoTSProtoWhisperMessageBuilder alloc] initWithRatchetKey:ratchetKey
-                                                                 counter:counter
-                                                              ciphertext:cipherText];
+        [SPKProtoTSProtoWhisperMessage builderWithRatchetKey:ratchetKey
+                                                     counter:counter
+                                                  ciphertext:cipherText];
     [builder setPreviousCounter:previousCounter];
     SPKProtoTSProtoWhisperMessage *message = [builder buildIgnoringErrors];
     NSData *serializedMessage = [message serializedDataIgnoringErrors];

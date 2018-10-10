@@ -5,6 +5,7 @@
 #import <XCTest/XCTest.h>
 
 #import <AxolotlKit/PreKeyBundle.h>
+#import <AxolotlKit/NSData+keyVersionByte.h>
 #import <Curve25519Kit/Curve25519.h>
 
 @interface PreKeyBundleTests : XCTestCase
@@ -27,11 +28,11 @@
     PreKeyBundle *bundle = [[PreKeyBundle alloc] initWithRegistrationId:1
                                                                deviceId:2
                                                                preKeyId:3
-                                                           preKeyPublic:[Curve25519 generateKeyPair].publicKey
-                                                     signedPreKeyPublic:[Curve25519 generateKeyPair].publicKey
+                                                           preKeyPublic:[Curve25519 generateKeyPair].publicKey.prependKeyType
+                                                     signedPreKeyPublic:[Curve25519 generateKeyPair].publicKey.prependKeyType
                                                          signedPreKeyId:4
                                                   signedPreKeySignature:[Curve25519 generateKeyPair].publicKey
-                                                            identityKey:[Curve25519 generateKeyPair].publicKey];
+                                                            identityKey:[Curve25519 generateKeyPair].publicKey.prependKeyType];
     
 
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:bundle];
