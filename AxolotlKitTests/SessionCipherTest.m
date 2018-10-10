@@ -56,30 +56,6 @@
     [self runInteractionWithAliceRecord:aliceSessionRecord bobRecord:bobSessionRecord];
 }
 
-- (void)testBasicSessionCipherDispatchQueue {
-    SessionRecord *aliceSessionRecord = [SessionRecord new];
-    SessionRecord *bobSessionRecord   = [SessionRecord new];
-
-    XCTestExpectation *expectation = [self expectationWithDescription:@"session cipher completed"];
-
-    dispatch_queue_t sessionCipherDispatchQueue = dispatch_queue_create("session cipher queue", DISPATCH_QUEUE_SERIAL);
-
-    [SessionCipher setSessionCipherDispatchQueue:sessionCipherDispatchQueue];
-    dispatch_async(sessionCipherDispatchQueue, ^{
-        [self sessionInitializationWithAliceSessionRecord:aliceSessionRecord bobSessionRecord:bobSessionRecord];
-        [self runInteractionWithAliceRecord:aliceSessionRecord bobRecord:bobSessionRecord];
-
-        [expectation fulfill];
-    });
-
-    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError * _Nullable error) {
-        if (error) {
-            XCTFail(@"Expectation failed with error: %@", error);
-        }
-    }];
-    [SessionCipher setSessionCipherDispatchQueue:nil];
-}
-
 - (void)testPromotingOldSessionState
 {
     SessionRecord *aliceSessionRecord = [SessionRecord new];
@@ -89,7 +65,7 @@
     SessionState *initialSessionState = bobSessionRecord.sessionState;
     [self sessionInitializationWithAliceSessionRecord:aliceSessionRecord bobSessionRecord:bobSessionRecord];
 
-    SessionRecord *activeSession = [self.bobStore loadSession:self.aliceIdentifier deviceId:1];
+    SessionRecord *activeSession = [self.bobStore loadSession:self.aliceIdentifier deviceId:1 protocolContext:nil];
     XCTAssertNotNil(activeSession);
     XCTAssertEqualObjects(initialSessionState, activeSession.sessionState);
 
@@ -97,9 +73,9 @@
     SessionState *newSessionState = [SessionState new];
     [bobSessionRecord promoteState:newSessionState];
     XCTAssertEqual(1, bobSessionRecord.previousSessionStates.count);
-    [self.bobStore storeSession:self.aliceIdentifier deviceId:1 session:bobSessionRecord];
+    [self.bobStore storeSession:self.aliceIdentifier deviceId:1 session:bobSessionRecord protocolContext:nil];
 
-    activeSession = [self.bobStore loadSession:self.aliceIdentifier deviceId:1];
+    activeSession = [self.bobStore loadSession:self.aliceIdentifier deviceId:1 protocolContext:nil];
     XCTAssertNotNil(activeSession);
     XCTAssertNotEqualObjects(initialSessionState, activeSession.sessionState);
     XCTAssertEqualObjects(newSessionState, activeSession.sessionState);
@@ -134,11 +110,11 @@
     
     [RatchetingSession initializeSession:aliceSessionState sessionVersion:3 AliceParameters:aliceParams];
 
-    [self.aliceStore saveRemoteIdentity:bobIdentityKeyPair.publicKey recipientId:self.bobIdentifier];
-    [self.aliceStore storeSession:self.bobIdentifier deviceId:1 session:aliceSessionRecord];
+    [self.aliceStore saveRemoteIdentity:bobIdentityKeyPair.publicKey recipientId:self.bobIdentifier protocolContext:nil];
+    [self.aliceStore storeSession:self.bobIdentifier deviceId:1 session:aliceSessionRecord protocolContext:nil];
 
-    [self.bobStore saveRemoteIdentity:aliceIdentityKeyPair.publicKey recipientId:self.aliceIdentifier];
-    [self.bobStore storeSession:self.aliceIdentifier deviceId:1 session:bobSessionRecord];
+    [self.bobStore saveRemoteIdentity:aliceIdentityKeyPair.publicKey recipientId:self.aliceIdentifier protocolContext:nil];
+    [self.bobStore storeSession:self.aliceIdentifier deviceId:1 session:bobSessionRecord protocolContext:nil];
 
     XCTAssert([aliceSessionState.remoteIdentityKey isEqualToData:bobSessionState.localIdentityKey]);
 }
@@ -150,9 +126,9 @@
         [[SessionCipher alloc] initWithAxolotlStore:self.bobStore recipientId:self.aliceIdentifier deviceId:1];
 
     NSData *alicePlainText     = [@"This is a plaintext message!" dataUsingEncoding:NSUTF8StringEncoding];
-    WhisperMessage *cipherText = [aliceSessionCipher encryptMessage:alicePlainText];
+    WhisperMessage *cipherText = [aliceSessionCipher encryptMessage:alicePlainText protocolContext:nil];
     
-    NSData *bobPlaintext = [bobSessionCipher decrypt:cipherText];
+    NSData *bobPlaintext = [bobSessionCipher decrypt:cipherText protocolContext:nil];
     
     XCTAssert([bobPlaintext isEqualToData:alicePlainText]);
 }

@@ -15,6 +15,7 @@
 #import "SessionState.h"
 #import <Curve25519Kit/Curve25519.h>
 #import <Curve25519Kit/Ed25519.h>
+#import <SignalCoreKit/NSData+OWS.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -91,6 +92,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException reason:@"Identity key is not valid" userInfo:@{}];
     }
 
+    // NOTE: we use preKeyBundle.signedPreKeyPublic which has the key type byte.
     if (![Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:theirIdentityKey data:preKeyBundle.signedPreKeyPublic]) {
         @throw [NSException exceptionWithName:InvalidKeyException reason:@"KeyIsNotValidlySigned" userInfo:nil];
     }

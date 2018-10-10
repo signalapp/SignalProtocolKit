@@ -338,38 +338,38 @@
     XCTAssert([aliceSendingIVKeyData isEqualToData:aliceSessionRecord.sessionState.senderChainKey.messageKeys.iv]);
     XCTAssert([aliceSendingMacKeyData isEqualToData:aliceSessionRecord.sessionState.senderChainKey.messageKeys.macKey]);
     
-    [aliceStore storeSession:bobIdentifier deviceId:1 session:aliceSessionRecord];
+    [aliceStore storeSession:bobIdentifier deviceId:1 session:aliceSessionRecord protocolContext:nil];
     SessionCipher *aliceSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:aliceStore recipientId:bobIdentifier deviceId:1];
     
-    WhisperMessage *message = [aliceSessionCipher encryptMessage:alicePlaintextData];
+    WhisperMessage *message = [aliceSessionCipher encryptMessage:alicePlaintextData protocolContext:nil];
     XCTAssert([aliceCipherTextData isEqualToData:message.cipherText]);
     
     // Logging's Bob's Session initialization and first message decryption
     
     XCTAssert([bobRootKeyData isEqualToData:bobSessionRecord.sessionState.rootKey.keyData]);
         
-    [bobStore storeSession:aliceIdentifier deviceId:1 session:bobSessionRecord];
+    [bobStore storeSession:aliceIdentifier deviceId:1 session:bobSessionRecord protocolContext:nil];
     
     SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:aliceIdentifier deviceId:1];
     
-    NSData *plainData = [bobSessionCipher decrypt:message];
+    NSData *plainData = [bobSessionCipher decrypt:message protocolContext:nil];
     
     XCTAssert([plainData isEqualToData:alicePlaintextData]);
     
     for (int i = 0; i<100; i++) {
         NSData *message = [[NSString stringWithFormat:@"Message: %i", i] dataUsingEncoding:NSUTF8StringEncoding];
         
-        WhisperMessage *encrypted = [aliceSessionCipher encryptMessage:message];
+        WhisperMessage *encrypted = [aliceSessionCipher encryptMessage:message protocolContext:nil];
         
-        XCTAssert([message isEqualToData:[bobSessionCipher decrypt:encrypted]]);
+        XCTAssert([message isEqualToData:[bobSessionCipher decrypt:encrypted protocolContext:nil]]);
     }
     
     for (int i = 0; i<100; i++) {
         NSData *message = [[NSString stringWithFormat:@"Message: %i", i] dataUsingEncoding:NSUTF8StringEncoding];
         
-        WhisperMessage *encrypted = [bobSessionCipher encryptMessage:message];
+        WhisperMessage *encrypted = [bobSessionCipher encryptMessage:message protocolContext:nil];
         
-        XCTAssert([message isEqualToData:[aliceSessionCipher decrypt:encrypted]]);
+        XCTAssert([message isEqualToData:[aliceSessionCipher decrypt:encrypted protocolContext:nil]]);
     }
 
     NSMutableArray *plainTexts      = [NSMutableArray new];
@@ -378,11 +378,12 @@
     for (int i = 0 ; i < 100; i++) {
         NSData *message = [[NSString stringWithFormat:@"Message: %i", i] dataUsingEncoding:NSUTF8StringEncoding];
         [plainTexts addObject:message];
-        [cipherMessages addObject:[bobSessionCipher encryptMessage:message]];
+        [cipherMessages addObject:[bobSessionCipher encryptMessage:message protocolContext:nil]];
     }
     
     for (int i = 0; i < plainTexts.count; i++) {
-        XCTAssert([[aliceSessionCipher decrypt:[cipherMessages objectAtIndex:i]] isEqualToData:[plainTexts objectAtIndex:i]]);
+        XCTAssert([[aliceSessionCipher decrypt:[cipherMessages objectAtIndex:i] protocolContext:nil]
+                   isEqualToData:[plainTexts objectAtIndex:i]]);
     }
     
 }
@@ -686,21 +687,21 @@
     XCTAssert([aliceSendingIVKeyData isEqualToData:aliceSessionRecord.sessionState.senderChainKey.messageKeys.iv]);
     XCTAssert([aliceSendingMacKeyData isEqualToData:aliceSessionRecord.sessionState.senderChainKey.messageKeys.macKey]);
     
-    [aliceStore storeSession:bobIdentifier deviceId:1 session:aliceSessionRecord];
+    [aliceStore storeSession:bobIdentifier deviceId:1 session:aliceSessionRecord protocolContext:nil];
     SessionCipher *aliceSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:aliceStore recipientId:bobIdentifier deviceId:1];
     
-    WhisperMessage *message = [aliceSessionCipher encryptMessage:alicePlaintextData];
+    WhisperMessage *message = [aliceSessionCipher encryptMessage:alicePlaintextData protocolContext:nil];
     XCTAssert([aliceCipherTextData isEqualToData:message.cipherText]);
     
     // Logging's Bob's Session initialization and first message decryption
     
     XCTAssert([bobRootKeyData isEqualToData:bobSessionRecord.sessionState.rootKey.keyData]);
     
-    [bobStore storeSession:aliceIdentifier deviceId:1 session:bobSessionRecord];
+    [bobStore storeSession:aliceIdentifier deviceId:1 session:bobSessionRecord protocolContext:nil];
     
     SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:aliceIdentifier deviceId:1];
     
-    NSData *plainData = [bobSessionCipher decrypt:message];
+    NSData *plainData = [bobSessionCipher decrypt:message protocolContext:nil];
     
     XCTAssert([plainData isEqualToData:alicePlaintextData]);
     
@@ -711,11 +712,12 @@
     for (int i = 0 ; i < 30; i++) {
         NSData *message = [[NSString stringWithFormat:@"Message: %i", i] dataUsingEncoding:NSUTF8StringEncoding];
         [plainTexts addObject:message];
-        [cipherMessages addObject:[bobSessionCipher encryptMessage:message]];
+        [cipherMessages addObject:[bobSessionCipher encryptMessage:message protocolContext:nil]];
     }
     
     for (NSUInteger i = plainTexts.count-1; i > 0; i--) {
-        XCTAssert([[aliceSessionCipher decrypt:[cipherMessages objectAtIndex:i]] isEqualToData:[plainTexts objectAtIndex:i]]);
+        XCTAssert([[aliceSessionCipher decrypt:[cipherMessages objectAtIndex:i] protocolContext:nil]
+                   isEqualToData:[plainTexts objectAtIndex:i]]);
     }
     
 }
