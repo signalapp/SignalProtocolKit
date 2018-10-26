@@ -397,8 +397,9 @@ NS_ASSUME_NONNULL_BEGIN
         if ([sessionState hasMessageKeys:theirEphemeral counter:counter]) {
             return [sessionState removeMessageKeys:theirEphemeral counter:counter];
         } else {
-            DDLogInfo(
+            OWSLogInfo(
                 @"%@ %@.%d Duplicate message for counter: %d", self.tag, self.recipientId, self.deviceId, counter);
+            OWSLogFlush();
             @throw [NSException exceptionWithName:DuplicateMessageException reason:@"Received message with old counter!" userInfo:@{}];
         }
     }
@@ -410,13 +411,14 @@ NS_ASSUME_NONNULL_BEGIN
         OWSRaiseException(InvalidMessageException, @"Overflow while calculating counter offset");
     }
     if (counterOffset > kCounterLimit) {
-        DDLogError(@"%@ %@.%d Exceeded future message limit: %lu, index: %d, counter: %d)",
+        OWSLogError(@"%@ %@.%d Exceeded future message limit: %lu, index: %d, counter: %d)",
             self.tag,
             self.recipientId,
             self.deviceId,
             (unsigned long)kCounterLimit,
             chainKey.index,
             counter);
+        OWSLogFlush();
         @throw [NSException exceptionWithName:InvalidMessageException
                                        reason:@"Exceeded message keys chain length limit"
                                      userInfo:@{}];
