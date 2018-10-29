@@ -1,9 +1,5 @@
 //
-//  WhisperMessage.h
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 23/07/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
 #import "CipherMessage.h"
@@ -22,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSData *cipherText;
 @property (nonatomic, readonly) NSData *serialized;
 
-- (instancetype)initWithData:(NSData *)serialized;
+- (instancetype)init_try_withData:(NSData *)serialized NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (nullable instancetype)initWithData:(NSData *)serialized error:(NSError **)outError;
 
 - (instancetype)initWithVersion:(int)version
                          macKey:(NSData *)macKey

@@ -5,10 +5,11 @@
 #import "WhisperMessage.h"
 #import "AxolotlExceptions.h"
 #import "Constants.h"
-#import <SignalCoreKit/NSData+OWS.h>
 #import "NSData+keyVersionByte.h"
 #import "SerializationUtilities.h"
 #import <AxolotlKit/AxolotlKit-Swift.h>
+#import <SignalCoreKit/NSData+OWS.h>
+#import <SignalCoreKit/SCKExceptionWrapper.h>
 #import <SignalCoreKit/SignalCoreKit-Swift.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -68,7 +69,18 @@ NS_ASSUME_NONNULL_BEGIN
     return self;
 }
 
-- (instancetype)initWithData:(NSData *)serialized
+- (nullable instancetype)initWithData:(NSData *)serialized error:(NSError **)outError
+{
+    @try {
+        self = [self init_try_withData:serialized];
+        return self;
+    } @catch (NSException *exception) {
+        *outError = SCKExceptionWrapperErrorMake(exception);
+        return nil;
+    }
+}
+
+- (instancetype)init_try_withData:(NSData *)serialized
 {
     if (self = [super init]) {
         if (serialized.length <= (VERSION_LENGTH + MAC_LENGTH)) {

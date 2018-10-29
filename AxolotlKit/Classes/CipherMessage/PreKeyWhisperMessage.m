@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
         _signedPrekeyId = preKeyWhisperMessage.signedPreKeyID;
         _baseKey = preKeyWhisperMessage.baseKey;
         _identityKey = preKeyWhisperMessage.identityKey;
-        _message = [[WhisperMessage alloc] initWithData:preKeyWhisperMessage.message];
+        _message = [[WhisperMessage alloc] init_try_withData:preKeyWhisperMessage.message];
     }
 
     return self;
