@@ -1,16 +1,15 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
 #import "RatchetingSession.h"
-
 #import "AliceAxolotlParameters.h"
 #import "BobAxolotlParameters.h"
+#import "ChainKey.h"
 #import "RootKey.h"
 #import "SessionState.h"
-#import <HKDFKit/HKDFKit.h>
 #import <Curve25519Kit/Curve25519.h>
-#import "ChainKey.h"
+#import <HKDFKit/HKDFKit.h>
 
 @interface DHEResult : NSObject
 
@@ -45,13 +44,19 @@
 
 @implementation RatchetingSession
 
-+ (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion AliceParameters:(AliceAxolotlParameters*)parameters{
++ (void)try_initializeSession:(SessionState *)session
+               sessionVersion:(int)sessionVersion
+              AliceParameters:(AliceAxolotlParameters *)parameters
+{
     OWSAssert(session);
     OWSAssert(parameters);
 
     ECKeyPair *sendingRatchetKey = [Curve25519 generateKeyPair];
     OWSAssert(sendingRatchetKey);
-    [self initializeSession:session sessionVersion:sessionVersion AliceParameters:parameters senderRatchet:sendingRatchetKey];
+    [self try_initializeSession:session
+                 sessionVersion:sessionVersion
+                AliceParameters:parameters
+                  senderRatchet:sendingRatchetKey];
 }
 
 + (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion BobParameters:(BobAxolotlParameters*)parameters{
@@ -69,7 +74,11 @@
     [session setRootKey:result.rootKey];
 }
 
-+ (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion AliceParameters:(AliceAxolotlParameters*)parameters senderRatchet:(ECKeyPair*)sendingRatchet{
++ (void)try_initializeSession:(SessionState *)session
+               sessionVersion:(int)sessionVersion
+              AliceParameters:(AliceAxolotlParameters *)parameters
+                senderRatchet:(ECKeyPair *)sendingRatchet
+{
 
     OWSAssert(session);
     OWSAssert(parameters);
@@ -81,7 +90,8 @@
     
     DHEResult *result            = [self DHEKeyAgreement:parameters];
     OWSAssert(result);
-    RKCK *sendingChain           = [result.rootKey createChainWithTheirEphemeral:parameters.theirRatchetKey ourEphemeral:sendingRatchet];
+    RKCK *sendingChain =
+        [result.rootKey try_createChainWithTheirEphemeral:parameters.theirRatchetKey ourEphemeral:sendingRatchet];
     OWSAssert(sendingChain);
 
     [session addReceiverChain:parameters.theirRatchetKey chainKey:[[ChainKey alloc]initWithData:result.chainKey index:0]];

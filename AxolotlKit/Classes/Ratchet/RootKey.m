@@ -1,12 +1,12 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
 #import "RootKey.h"
-#import "TSDerivedSecrets.h"
-#import "RKCK.h"
-#import <Curve25519Kit/Curve25519.h>
 #import "ChainKey.h"
+#import "RKCK.h"
+#import "TSDerivedSecrets.h"
+#import <Curve25519Kit/Curve25519.h>
 
 static NSString* const kCoderData      = @"kCoderData";
 
@@ -42,14 +42,16 @@ static NSString* const kCoderData      = @"kCoderData";
     return self;
 }
 
-- (RKCK*)createChainWithTheirEphemeral:(NSData*)theirEphemeral ourEphemeral:(ECKeyPair*)ourEphemeral{
+- (RKCK *)try_createChainWithTheirEphemeral:(NSData *)theirEphemeral ourEphemeral:(ECKeyPair *)ourEphemeral
+{
     OWSAssert(theirEphemeral);
     OWSAssert(ourEphemeral);
 
     NSData *sharedSecret = [Curve25519 generateSharedSecretFromPublicKey:theirEphemeral andKeyPair:ourEphemeral];
     OWSAssert(sharedSecret.length == 32);
 
-    TSDerivedSecrets *secrets = [TSDerivedSecrets derivedRatchetedSecretsWithSharedSecret:sharedSecret rootKey:_keyData];
+    TSDerivedSecrets *secrets =
+        [TSDerivedSecrets try_derivedRatchetedSecretsWithSharedSecret:sharedSecret rootKey:_keyData];
     OWSAssert(secrets);
 
     RKCK *newRKCK = [[RKCK alloc] initWithRK:[[RootKey alloc]  initWithData:secrets.cipherKey]

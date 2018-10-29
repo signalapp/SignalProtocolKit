@@ -29,7 +29,7 @@ extern const int kPreKeyOfLastResortId;
                          recipientId:(NSString *)recipientId
                             deviceId:(int)deviceId;
 
-- (void)processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext;
+- (void)try_processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext;
 
 - (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage *)message
                        withSession:(SessionRecord *)sessionRecord

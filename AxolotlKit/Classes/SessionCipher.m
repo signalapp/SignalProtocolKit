@@ -102,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
         [self.sessionStore loadSession:self.recipientId deviceId:self.deviceId protocolContext:protocolContext];
     SessionState *sessionState = sessionRecord.sessionState;
     ChainKey *chainKey = sessionState.senderChainKey;
-    MessageKeys *messageKeys     = chainKey.messageKeys;
+    MessageKeys *messageKeys = [chainKey try_messageKeys];
     NSData *senderRatchetKey = sessionState.senderRatchetKey;
     int previousCounter = sessionState.previousCounter;
     int sessionVersion = sessionState.version;
@@ -390,12 +390,13 @@ NS_ASSUME_NONNULL_BEGIN
             ECKeyPair *ourEphemeral = [sessionState senderRatchetKeyPair];
             OWSAssert(ourEphemeral.publicKey.length == 32);
 
-            RKCK *receiverChain = [rootKey createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourEphemeral];
+            RKCK *receiverChain = [rootKey try_createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourEphemeral];
 
             ECKeyPair *ourNewEphemeral = [Curve25519 generateKeyPair];
             OWSAssert(ourNewEphemeral.publicKey.length == 32);
 
-            RKCK *senderChain = [receiverChain.rootKey createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourNewEphemeral];
+            RKCK *senderChain =
+                [receiverChain.rootKey try_createChainWithTheirEphemeral:theirEphemeral ourEphemeral:ourNewEphemeral];
 
             OWSAssert(senderChain.rootKey.keyData.length == 32);
             [sessionState setRootKey:senderChain.rootKey];
@@ -458,13 +459,13 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     while (chainKey.index < counter) {
-        MessageKeys *messageKeys = [chainKey messageKeys];
+        MessageKeys *messageKeys = [chainKey try_messageKeys];
         [sessionState setMessageKeys:theirEphemeral messageKeys:messageKeys];
         chainKey = chainKey.nextChainKey;
     }
     
     [sessionState setReceiverChainKey:theirEphemeral chainKey:[chainKey nextChainKey]];
-    return [chainKey messageKeys];
+    return [chainKey try_messageKeys];
 }
 
 /**

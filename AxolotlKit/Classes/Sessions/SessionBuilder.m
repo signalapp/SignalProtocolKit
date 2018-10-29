@@ -78,7 +78,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     return self;
 }
 
-- (void)processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext
+- (void)try_processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext
 {
     OWSAssert(preKeyBundle);
 
@@ -116,8 +116,10 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     if (!sessionRecord.isFresh) {
         [sessionRecord archiveCurrentState];
     }
-    
-    [RatchetingSession initializeSession:[sessionRecord sessionState] sessionVersion:CURRENT_VERSION AliceParameters:params];
+
+    [RatchetingSession try_initializeSession:[sessionRecord sessionState]
+                              sessionVersion:CURRENT_VERSION
+                             AliceParameters:params];
 
     DDLogInfo(@"setUnacknowledgedPreKeyMessage for: %@ with preKeyId: %d", self.recipientId, theirOneTimePreKeyId);
 
