@@ -298,15 +298,15 @@
     NSData *aliceCipherTextData =  [NSData dataWithBytes:aliceCipherText length:32];
     
     
-    ECKeyPair *aliceIdentityKey = [ECKeyPair keyPairWithPrivateKey:aliceIdentityPrivateKeyData publicKey:aliceIdentityPublicKeyData];
+    ECKeyPair *aliceIdentityKey = [ECKeyPair try_keyPairWithPrivateKey:aliceIdentityPrivateKeyData publicKey:aliceIdentityPublicKeyData];
     
-    ECKeyPair *bobIdentityKey   = [ECKeyPair keyPairWithPrivateKey:bobIdentityPrivateKeyData publicKey:bobIdentityPublicKeyData];
+    ECKeyPair *bobIdentityKey   = [ECKeyPair try_keyPairWithPrivateKey:bobIdentityPrivateKeyData publicKey:bobIdentityPublicKeyData];
     
-    ECKeyPair *aliceBaseKey = [ECKeyPair keyPairWithPrivateKey:aliceBasePrivateKeyData publicKey:aliceBasePublicKeyData];
+    ECKeyPair *aliceBaseKey = [ECKeyPair try_keyPairWithPrivateKey:aliceBasePrivateKeyData publicKey:aliceBasePublicKeyData];
     
-    ECKeyPair *bobBaseKey   = [ECKeyPair keyPairWithPrivateKey:bobBasePrivateKeyData publicKey:bobBasePublicKeyData];
+    ECKeyPair *bobBaseKey   = [ECKeyPair try_keyPairWithPrivateKey:bobBasePrivateKeyData publicKey:bobBasePublicKeyData];
     
-    ECKeyPair *aliceSendingRatchet = [ECKeyPair keyPairWithPrivateKey:aliceSendingRatchetPrivateData publicKey:aliceSendingRatchetPublicData];
+    ECKeyPair *aliceSendingRatchet = [ECKeyPair try_keyPairWithPrivateKey:aliceSendingRatchetPrivateData publicKey:aliceSendingRatchetPublicData];
     
     // ---
     
@@ -647,15 +647,15 @@
     NSData *aliceCipherTextData =  [NSData dataWithBytes:aliceCipherText length:32];
     
     
-    ECKeyPair *aliceIdentityKey = [ECKeyPair keyPairWithPrivateKey:aliceIdentityPrivateKeyData publicKey:aliceIdentityPublicKeyData];
+    ECKeyPair *aliceIdentityKey = [ECKeyPair try_keyPairWithPrivateKey:aliceIdentityPrivateKeyData publicKey:aliceIdentityPublicKeyData];
     
-    ECKeyPair *bobIdentityKey   = [ECKeyPair keyPairWithPrivateKey:bobIdentityPrivateKeyData publicKey:bobIdentityPublicKeyData];
+    ECKeyPair *bobIdentityKey   = [ECKeyPair try_keyPairWithPrivateKey:bobIdentityPrivateKeyData publicKey:bobIdentityPublicKeyData];
     
-    ECKeyPair *aliceBaseKey = [ECKeyPair keyPairWithPrivateKey:aliceBasePrivateKeyData publicKey:aliceBasePublicKeyData];
+    ECKeyPair *aliceBaseKey = [ECKeyPair try_keyPairWithPrivateKey:aliceBasePrivateKeyData publicKey:aliceBasePublicKeyData];
     
-    ECKeyPair *bobBaseKey   = [ECKeyPair keyPairWithPrivateKey:bobBasePrivateKeyData publicKey:bobBasePublicKeyData];
+    ECKeyPair *bobBaseKey   = [ECKeyPair try_keyPairWithPrivateKey:bobBasePrivateKeyData publicKey:bobBasePublicKeyData];
     
-    ECKeyPair *aliceSendingRatchet = [ECKeyPair keyPairWithPrivateKey:aliceSendingRatchetPrivateData publicKey:aliceSendingRatchetPublicData];
+    ECKeyPair *aliceSendingRatchet = [ECKeyPair try_keyPairWithPrivateKey:aliceSendingRatchetPrivateData publicKey:aliceSendingRatchetPublicData];
     
     // ---
     

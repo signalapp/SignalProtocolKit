@@ -1,13 +1,12 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <XCTest/XCTest.h>
 #import "ECKeyPair+ECKeyPairTesting.h"
-
 #import <Curve25519Kit/Curve25519.h>
 #import <Curve25519Kit/Ed25519.h>
+#import <UIKit/UIKit.h>
+#import <XCTest/XCTest.h>
 
 @interface ECCTests : XCTestCase
 
@@ -76,8 +75,8 @@
     
     NSData *sharedSecret = [NSData dataWithBytes:sharedBytes length:32];
     
-    ECKeyPair *aliceKeyPair = [ECKeyPair keyPairWithPrivateKey:alicePrivateKey publicKey:alicePublicKey];
-    ECKeyPair *bobKeyPair   = [ECKeyPair keyPairWithPrivateKey:bobPrivateKey   publicKey:bobPublicKey];
+    ECKeyPair *aliceKeyPair = [ECKeyPair try_keyPairWithPrivateKey:alicePrivateKey publicKey:alicePublicKey];
+    ECKeyPair *bobKeyPair   = [ECKeyPair try_keyPairWithPrivateKey:bobPrivateKey   publicKey:bobPublicKey];
     
     NSData *aliceShared = [Curve25519 generateSharedSecretFromPublicKey:[bobKeyPair publicKey] andKeyPair:aliceKeyPair];
     NSData *bobShared   = [Curve25519 generateSharedSecretFromPublicKey:[aliceKeyPair publicKey] andKeyPair:bobKeyPair];
