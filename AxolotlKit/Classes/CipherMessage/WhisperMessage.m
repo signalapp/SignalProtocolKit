@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
         }
 
         _serialized = serialized;
-        _senderRatchetKey = [whisperMessage.ratchetKey removeKeyType];
+        _senderRatchetKey = [whisperMessage.ratchetKey try_removeKeyType];
         _version = [SerializationUtilities highBitsToIntFromByte:version];
         _counter = whisperMessage.counter;
         _previousCounter = whisperMessage.previousCounter;

@@ -349,7 +349,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     int messageVersion = whisperMessage.version;
-    NSData *theirEphemeral = whisperMessage.senderRatchetKey.removeKeyType;
+    NSData *theirEphemeral = whisperMessage.senderRatchetKey.try_removeKeyType;
     int counter = whisperMessage.counter;
     ChainKey *chainKey = [self try_getOrCreateChainKeys:sessionState theirEphemeral:theirEphemeral];
     OWSAssert(chainKey);

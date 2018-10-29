@@ -94,8 +94,8 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 {
     OWSAssert(preKeyBundle);
 
-    NSData *theirIdentityKey  = preKeyBundle.identityKey.removeKeyType;
-    NSData *theirSignedPreKey = preKeyBundle.signedPreKeyPublic.removeKeyType;
+    NSData *theirIdentityKey = preKeyBundle.identityKey.try_removeKeyType;
+    NSData *theirSignedPreKey = preKeyBundle.signedPreKeyPublic.try_removeKeyType;
 
     if (![self.identityStore isTrustedIdentityKey:theirIdentityKey
                                       recipientId:self.recipientId
@@ -112,7 +112,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     SessionRecord *sessionRecord =
         [self.sessionStore loadSession:self.recipientId deviceId:preKeyBundle.deviceId protocolContext:protocolContext];
     ECKeyPair     *ourBaseKey          = [Curve25519 generateKeyPair];
-    NSData        *theirOneTimePreKey  = preKeyBundle.preKeyPublic.removeKeyType;
+    NSData *theirOneTimePreKey = preKeyBundle.preKeyPublic.try_removeKeyType;
     int           theirOneTimePreKeyId = preKeyBundle.preKeyId;
     int           theirSignedPreKeyId  = preKeyBundle.signedPreKeyId;
 
@@ -165,7 +165,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     OWSAssert(sessionRecord);
 
     int    messageVersion    = message.version;
-    NSData *theirIdentityKey = message.identityKey.removeKeyType;
+    NSData *theirIdentityKey = message.identityKey.try_removeKeyType;
 
     if (![self.identityStore isTrustedIdentityKey:theirIdentityKey
                                       recipientId:self.recipientId
@@ -199,8 +199,8 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     OWSAssert(message);
     OWSAssert(sessionRecord);
 
-    NSData *baseKey = message.baseKey.removeKeyType;
-    
+    NSData *baseKey = message.baseKey.try_removeKeyType;
+
     if ([sessionRecord hasSessionState:message.version baseKey:baseKey]) {
         return -1;
     }
@@ -216,7 +216,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 
     BobAxolotlParameters *params =
         [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:[self.identityStore identityKeyPair:protocolContext]
-                                               theirIdentityKey:message.identityKey.removeKeyType
+                                               theirIdentityKey:message.identityKey.try_removeKeyType
                                                 ourSignedPrekey:ourSignedPrekey
                                                   ourRatchetKey:ourSignedPrekey
                                                ourOneTimePrekey:ourOneTimePreKey
