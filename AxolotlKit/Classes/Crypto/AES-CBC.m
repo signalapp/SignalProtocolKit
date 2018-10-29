@@ -1,9 +1,5 @@
 //
-//  AES-CBC.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 22/07/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
 #import "AES-CBC.h"
@@ -19,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark AESCBC Mode
 
-+ (NSData *)encryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv
++ (NSData *)try_encryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv
 {
     if (!data) {
         @throw [NSException exceptionWithName:CipherException reason:@"Missing data to encrypt." userInfo:nil];
@@ -61,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
-+ (NSData *)decryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv
++ (NSData *)try_decryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv
 {
     if (!data) {
         @throw [NSException exceptionWithName:CipherException reason:@"Missing data to decrypt." userInfo:nil];

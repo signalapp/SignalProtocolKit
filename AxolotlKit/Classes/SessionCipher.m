@@ -122,7 +122,8 @@ NS_ASSUME_NONNULL_BEGIN
                                   recipientId:self.recipientId
                               protocolContext:protocolContext];
 
-    NSData *ciphertextBody = [AES_CBC encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
+    NSData *ciphertextBody =
+        [AES_CBC try_encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
 
     id<CipherMessage> cipherMessage =
         [[WhisperMessage alloc] initWithVersion:sessionVersion
@@ -364,7 +365,7 @@ NS_ASSUME_NONNULL_BEGIN
                                   macKey:messageKeys.macKey];
 
     NSData *plaintext =
-        [AES_CBC decryptCBCMode:whisperMessage.cipherText withKey:messageKeys.cipherKey withIV:messageKeys.iv];
+        [AES_CBC try_decryptCBCMode:whisperMessage.cipherText withKey:messageKeys.cipherKey withIV:messageKeys.iv];
 
     [sessionState clearUnacknowledgedPreKeyMessage];
     
