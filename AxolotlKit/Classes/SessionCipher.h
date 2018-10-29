@@ -23,12 +23,21 @@ NS_ASSUME_NONNULL_BEGIN
 // protocolContext is an optional parameter that can be used to ensure that all
 // identity and session store writes are coordinated and/or occur within a single
 // transaction.
-- (id<CipherMessage>)encryptMessage:(NSData *)paddedMessage protocolContext:(nullable id)protocolContext;
+- (id<CipherMessage>)try_encryptMessage:(NSData *)paddedMessage
+                        protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (nullable id<CipherMessage>)encryptMessage:(NSData *)paddedMessage
+                             protocolContext:(nullable id)protocolContext
+                                       error:(NSError **)outError;
 
-- (NSData *)decrypt:(id<CipherMessage>)whisperMessage protocolContext:(nullable id)protocolContext;
+- (NSData *)try_decrypt:(id<CipherMessage>)whisperMessage
+        protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (nullable NSData *)decrypt:(id<CipherMessage>)whisperMessage
+             protocolContext:(nullable id)protocolContext
+                       error:(NSError **)outError;
 
-- (int)remoteRegistrationId:(nullable id)protocolContext;
-- (int)sessionVersion:(nullable id)protocolContext;
+- (int)try_remoteRegistrationId:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+
+- (int)try_sessionVersion:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 
