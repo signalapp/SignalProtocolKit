@@ -23,12 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation PreKeyWhisperMessage
 
-- (instancetype)initWithWhisperMessage:(WhisperMessage *)whisperMessage
-                        registrationId:(int)registrationId
-                              prekeyId:(int)prekeyId
-                        signedPrekeyId:(int)signedPrekeyId
-                               baseKey:(NSData *)baseKey
-                           identityKey:(NSData *)identityKey
+- (instancetype)init_try_withWhisperMessage:(WhisperMessage *)whisperMessage
+                             registrationId:(int)registrationId
+                                   prekeyId:(int)prekeyId
+                             signedPrekeyId:(int)signedPrekeyId
+                                    baseKey:(NSData *)baseKey
+                                identityKey:(NSData *)identityKey
 {
     OWSAssert(whisperMessage);
     OWSAssert(baseKey);

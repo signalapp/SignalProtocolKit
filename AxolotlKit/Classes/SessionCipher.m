@@ -142,12 +142,12 @@ NS_ASSUME_NONNULL_BEGIN
         DDLogInfo(@"Building PreKeyWhisperMessage for: %@ with preKeyId: %d", self.recipientId, items.preKeyId);
 
         cipherMessage =
-            [[PreKeyWhisperMessage alloc] initWithWhisperMessage:cipherMessage
-                                                  registrationId:localRegistrationId
-                                                        prekeyId:items.preKeyId
-                                                  signedPrekeyId:items.signedPreKeyId
-                                                         baseKey:items.baseKey.prependKeyType
-                                                     identityKey:sessionState.localIdentityKey.prependKeyType];
+            [[PreKeyWhisperMessage alloc] init_try_withWhisperMessage:cipherMessage
+                                                       registrationId:localRegistrationId
+                                                             prekeyId:items.preKeyId
+                                                       signedPrekeyId:items.signedPreKeyId
+                                                              baseKey:items.baseKey.prependKeyType
+                                                          identityKey:sessionState.localIdentityKey.prependKeyType];
     }
 
     [sessionState setSenderChainKey:[chainKey nextChainKey]];
