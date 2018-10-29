@@ -126,14 +126,14 @@ NS_ASSUME_NONNULL_BEGIN
         [AES_CBC try_encryptCBCMode:paddedMessage withKey:messageKeys.cipherKey withIV:messageKeys.iv];
 
     id<CipherMessage> cipherMessage =
-        [[WhisperMessage alloc] initWithVersion:sessionVersion
-                                         macKey:messageKeys.macKey
-                               senderRatchetKey:senderRatchetKey.prependKeyType
-                                        counter:chainKey.index
-                                previousCounter:previousCounter
-                                     cipherText:ciphertextBody
-                              senderIdentityKey:sessionState.localIdentityKey.prependKeyType
-                            receiverIdentityKey:sessionState.remoteIdentityKey.prependKeyType];
+        [[WhisperMessage alloc] init_try_withVersion:sessionVersion
+                                              macKey:messageKeys.macKey
+                                    senderRatchetKey:senderRatchetKey.prependKeyType
+                                             counter:chainKey.index
+                                     previousCounter:previousCounter
+                                          cipherText:ciphertextBody
+                                   senderIdentityKey:sessionState.localIdentityKey.prependKeyType
+                                 receiverIdentityKey:sessionState.remoteIdentityKey.prependKeyType];
 
     if ([sessionState hasUnacknowledgedPreKeyMessage]) {
         PendingPreKey *items = [sessionState unacknowledgedPreKeyMessageItems];
@@ -359,10 +359,10 @@ NS_ASSUME_NONNULL_BEGIN
                                                                   counter:counter];
     OWSAssert(messageKeys);
 
-    [whisperMessage verifyMacWithVersion:messageVersion
-                       senderIdentityKey:sessionState.remoteIdentityKey
-                     receiverIdentityKey:sessionState.localIdentityKey
-                                  macKey:messageKeys.macKey];
+    [whisperMessage try_verifyMacWithVersion:messageVersion
+                           senderIdentityKey:sessionState.remoteIdentityKey
+                         receiverIdentityKey:sessionState.localIdentityKey
+                                      macKey:messageKeys.macKey];
 
     NSData *plaintext =
         [AES_CBC try_decryptCBCMode:whisperMessage.cipherText withKey:messageKeys.cipherKey withIV:messageKeys.iv];
