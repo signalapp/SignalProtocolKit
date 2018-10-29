@@ -10,7 +10,7 @@
 @interface RootKey : NSObject <NSSecureCoding>
 
 - (instancetype)initWithData:(NSData *)data;
-- (RKCK *)try_createChainWithTheirEphemeral:(NSData *)theirEphemeral ourEphemeral:(ECKeyPair *)ourEphemeral;
+- (RKCK *)try_createChainWithTheirEphemeral:(NSData *)theirEphemeral ourEphemeral:(ECKeyPair *)ourEphemeral NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @property (nonatomic, readonly) NSData *keyData;
 

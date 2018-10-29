@@ -1,10 +1,9 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
-#import <Curve25519Kit/Curve25519.h>
-
 #import <AxolotlKit/WhisperMessage.h>
+#import <Curve25519Kit/Curve25519.h>
 #import <XCTest/XCTest.h>
 
 @interface WhisperMessageSerialization : XCTestCase
@@ -33,7 +32,7 @@
     
     WhisperMessage *message = [[WhisperMessage alloc] initWithVersion:3 macKey:fakeMacKey.publicKey senderRatchetKey:keyPair.publicKey counter:counter previousCounter:0 cipherText:cipherText senderIdentityKey:senderIdentityKey.publicKey receiverIdentityKey:receiverIdentityKey.publicKey];
     
-    WhisperMessage *deserializedMessage = [[WhisperMessage alloc] initWithData:message.serialized];
+    WhisperMessage *deserializedMessage = [[WhisperMessage alloc] init_try_withData:message.serialized];
     
     
     XCTAssert([[message.serialized subdataWithRange:NSMakeRange(0, message.serialized.length-8)] isEqualToData:[deserializedMessage.serialized subdataWithRange:NSMakeRange(0, deserializedMessage.serialized.length-8)]]);

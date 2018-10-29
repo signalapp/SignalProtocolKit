@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
 #import "AxolotlInMemoryStore.h"
@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 # pragma mark Signed PreKey Store
 
-- (SignedPreKeyRecord *)loadSignedPrekey:(int)signedPreKeyId{
+- (SignedPreKeyRecord *)try_loadSignedPrekey:(int)signedPreKeyId{
     if (![[self.signedPreKeyStore allKeys] containsObject:[NSNumber numberWithInt:signedPreKeyId]]) {
         @throw [NSException exceptionWithName:InvalidKeyIdException reason:@"No such signedprekeyrecord" userInfo:nil];
     }
@@ -57,7 +57,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable SignedPreKeyRecord *)loadSignedPrekeyOrNil:(int)signedPreKeyId
 {
     if ([self containsSignedPreKey:signedPreKeyId]) {
-        return [self loadSignedPrekey:signedPreKeyId];
+        @try {
+            // Given that we've checked for `contains` this really shouldn't fail.
+            return [self try_loadSignedPrekey:signedPreKeyId];
+        } @catch (NSException *exception) {
+            OWSFailDebug(@"unexpected exception: %@", exception);
+            return nil;
+        }
     } else {
         return nil;
     }
@@ -92,7 +98,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 # pragma mark PreKey Store
 
-- (PreKeyRecord *)loadPreKey:(int)preKeyId{
+- (PreKeyRecord *)try_loadPreKey:(int)preKeyId{
     if (![[self.preKeyStore allKeys] containsObject:[NSNumber numberWithInt:preKeyId]]) {
         @throw [NSException exceptionWithName:InvalidKeyIdException reason:@"No such signedprekeyrecord" userInfo:nil];
     }

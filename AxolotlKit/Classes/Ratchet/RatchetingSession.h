@@ -13,7 +13,7 @@
 
 + (void)try_initializeSession:(SessionState *)session
                sessionVersion:(int)sessionVersion
-              AliceParameters:(AliceAxolotlParameters *)parameters;
+              AliceParameters:(AliceAxolotlParameters *)parameters NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 + (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion BobParameters:(BobAxolotlParameters*)parameters;
 
@@ -24,6 +24,6 @@
 + (void)try_initializeSession:(SessionState *)session
                sessionVersion:(int)sessionVersion
               AliceParameters:(AliceAxolotlParameters *)parameters
-                senderRatchet:(ECKeyPair *)ratchet;
+                senderRatchet:(ECKeyPair *)ratchet NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end

@@ -145,9 +145,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
                     protocolContext:protocolContext];
 }
 
-- (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage *)message
-                       withSession:(SessionRecord *)sessionRecord
-                   protocolContext:(nullable id)protocolContext
+- (int)try_processPrekeyWhisperMessage:(PreKeyWhisperMessage *)message
+                           withSession:(SessionRecord *)sessionRecord
+                       protocolContext:(nullable id)protocolContext
 {
     OWSAssert(message);
     OWSAssert(sessionRecord);
@@ -166,7 +166,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     
     switch (messageVersion) {
         case 3:
-            unSignedPrekeyId = [self processPrekeyV3:message withSession:sessionRecord protocolContext:protocolContext];
+            unSignedPrekeyId = [self try_processPrekeyV3:message withSession:sessionRecord protocolContext:protocolContext];
             break;
         default:
             @throw [NSException exceptionWithName:InvalidVersionException reason:@"Trying to initialize with unknown version" userInfo:@{}];
@@ -180,7 +180,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     return unSignedPrekeyId;
 }
 
-- (int)processPrekeyV3:(PreKeyWhisperMessage *)message
+- (int)try_processPrekeyV3:(PreKeyWhisperMessage *)message
            withSession:(SessionRecord *)sessionRecord
        protocolContext:(nullable id)protocolContext
 {
@@ -193,11 +193,11 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
         return -1;
     }
     
-    ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore loadSignedPrekey:message.signedPrekeyId].keyPair;
+    ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore try_loadSignedPrekey:message.signedPrekeyId].keyPair;
 
     ECKeyPair *_Nullable ourOneTimePreKey;
     if (message.prekeyID >= 0) {
-        ourOneTimePreKey = [self.prekeyStore loadPreKey:message.prekeyID].keyPair;
+        ourOneTimePreKey = [self.prekeyStore try_loadPreKey:message.prekeyID].keyPair;
     } else {
         DDLogWarn(@"%@ Processing PreKey message which had no one-time prekey.", self.tag);
     }

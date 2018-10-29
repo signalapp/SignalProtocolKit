@@ -1,15 +1,15 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
 #import "AxolotlInMemoryStore.h"
 #import <AxolotlKit/AxolotlExceptions.h>
+#import <AxolotlKit/NSData+keyVersionByte.h>
 #import <AxolotlKit/SessionBuilder.h>
 #import <AxolotlKit/SessionCipher.h>
-#import <XCTest/XCTest.h>
-#import <AxolotlKit/NSData+keyVersionByte.h>
-#import <SignalCoreKit/NSData+OWS.h>
 #import <Curve25519Kit/Ed25519.h>
+#import <SignalCoreKit/NSData+OWS.h>
+#import <XCTest/XCTest.h>
 
 @interface PreKeyWhisperMessage ()
 
@@ -65,7 +65,7 @@
                                                     signedPreKeySignature:bobSignedPreKeySignature
                                                               identityKey:[bobStore identityKeyPair:nil].publicKey.prependKeyType];
     
-    [aliceSessionBuilder processPrekeyBundle:bobPreKey protocolContext:nil];
+    [aliceSessionBuilder try_processPrekeyBundle:bobPreKey protocolContext:nil];
     
     XCTAssert([aliceStore containsSession:BOB_RECIPIENT_ID deviceId:1 protocolContext:nil]);
     XCTAssert([aliceStore loadSession:BOB_RECIPIENT_ID deviceId:1 protocolContext:nil].sessionState.version == 3);
@@ -73,7 +73,7 @@
     NSString *originalMessage = @"Freedom is the right to tell people what they do not want to hear.";
     SessionCipher *aliceSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:aliceStore recipientId:BOB_RECIPIENT_ID deviceId:1];
     
-    WhisperMessage *outgoingMessage = [aliceSessionCipher encryptMessage:[originalMessage dataUsingEncoding:NSUTF8StringEncoding] protocolContext:nil];
+    WhisperMessage *outgoingMessage = [aliceSessionCipher try_encryptMessage:[originalMessage dataUsingEncoding:NSUTF8StringEncoding] protocolContext:nil];
     
     XCTAssert([outgoingMessage isKindOfClass:[PreKeyWhisperMessage class]], @"Message should be PreKey type");
     
@@ -82,7 +82,7 @@
     [bobStore storeSignedPreKey:22 signedPreKeyRecord:[[SignedPreKeyRecord alloc] initWithId:22 keyPair:bobSignedPreKeyPair signature:bobSignedPreKeySignature generatedAt:[NSDate date]]];
     
     SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:ALICE_RECIPIENT_ID deviceId:1];
-    [bobSessionCipher decrypt:incomingMessage protocolContext:nil];
+    [bobSessionCipher try_decrypt:incomingMessage protocolContext:nil];
     
     XCTAssert([bobStore containsSession:ALICE_RECIPIENT_ID deviceId:1 protocolContext:nil]);
     XCTAssert([bobStore loadSession:ALICE_RECIPIENT_ID deviceId:1 protocolContext:nil].sessionState.version == 3);
@@ -116,7 +116,7 @@
                                                       signedPreKeySignature:bobSignedPreKeySignature1
                                                                 identityKey:bobIdentityKeyPair1.publicKey.prependKeyType];
 
-    [aliceSessionBuilder processPrekeyBundle:bobPreKey1 protocolContext:nil];
+    [aliceSessionBuilder try_processPrekeyBundle:bobPreKey1 protocolContext:nil];
 
     XCTAssert([aliceStore containsSession:BOB_RECIPIENT_ID deviceId:1 protocolContext:nil]);
     XCTAssert([aliceStore loadSession:BOB_RECIPIENT_ID deviceId:1 protocolContext:nil].sessionState.version == 3);
@@ -125,7 +125,7 @@
     SessionCipher *aliceSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:aliceStore recipientId:BOB_RECIPIENT_ID deviceId:1];
 
     WhisperMessage *outgoingMessage1 =
-        [aliceSessionCipher encryptMessage:[messageText dataUsingEncoding:NSUTF8StringEncoding] protocolContext:nil];
+        [aliceSessionCipher try_encryptMessage:[messageText dataUsingEncoding:NSUTF8StringEncoding] protocolContext:nil];
 
     XCTAssert([outgoingMessage1 isKindOfClass:[PreKeyWhisperMessage class]], @"Message should be PreKey type");
 
@@ -145,7 +145,7 @@
                                                                 identityKey:bobIdentityKeyPair2.publicKey.prependKeyType];
 
     XCTAssertThrowsSpecificNamed(
-        [aliceSessionBuilder processPrekeyBundle:bobPreKey2 protocolContext:nil], NSException, UntrustedIdentityKeyException);
+        [aliceSessionBuilder try_processPrekeyBundle:bobPreKey2 protocolContext:nil], NSException, UntrustedIdentityKeyException);
 }
 
 

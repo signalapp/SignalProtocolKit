@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)nextChainKey;
 
-- (MessageKeys *)try_messageKeys;
+- (MessageKeys *)try_messageKeys NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 
