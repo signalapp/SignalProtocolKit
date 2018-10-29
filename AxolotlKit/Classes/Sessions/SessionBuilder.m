@@ -16,6 +16,7 @@
 #import <Curve25519Kit/Curve25519.h>
 #import <Curve25519Kit/Ed25519.h>
 #import <SignalCoreKit/NSData+OWS.h>
+#import <SignalCoreKit/SCKExceptionWrapper.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -76,6 +77,17 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     }
     
     return self;
+}
+
+- (BOOL)processPrekeyBundle:(PreKeyBundle *)preKeyBundle
+            protocolContext:(nullable id)protocolContext
+                      error:(NSError **)outError
+{
+    return [SCKExceptionWrapper
+        tryBlock:^{
+            [self try_processPrekeyBundle:preKeyBundle protocolContext:protocolContext];
+        }
+           error:outError];
 }
 
 - (void)try_processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext

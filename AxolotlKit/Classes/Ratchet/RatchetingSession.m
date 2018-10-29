@@ -10,6 +10,7 @@
 #import "SessionState.h"
 #import <Curve25519Kit/Curve25519.h>
 #import <HKDFKit/HKDFKit.h>
+#import <SignalCoreKit/SCKExceptionWrapper.h>
 
 @interface DHEResult : NSObject
 
@@ -72,6 +73,18 @@
 
     [session setSenderChain:parameters.ourRatchetKey chainKey:[[ChainKey alloc]initWithData:result.chainKey index:0]];
     [session setRootKey:result.rootKey];
+}
+
++ (BOOL)initializeSession:(SessionState *)session
+           sessionVersion:(int)sessionVersion
+          aliceParameters:(AliceAxolotlParameters *)aliceParameters
+                    error:(NSError **)outError
+{
+    return [SCKExceptionWrapper
+        tryBlock:^{
+            [self try_initializeSession:session sessionVersion:sessionVersion AliceParameters:aliceParameters];
+        }
+           error:outError];
 }
 
 + (void)try_initializeSession:(SessionState *)session
