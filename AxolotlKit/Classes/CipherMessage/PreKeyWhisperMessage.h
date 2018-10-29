@@ -1,9 +1,5 @@
 //
-//  PrekeyWhisperMessage.h
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 23/07/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
 #import "WhisperMessage.h"
@@ -13,7 +9,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PreKeyWhisperMessage : NSObject <CipherMessage>
 
-- (instancetype)initWithData:(NSData *)serialized;
+- (instancetype)init_try_withData:(NSData *)serialized NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (nullable instancetype)initWithData:(NSData *)serialized error:(NSError **)outError;
 
 - (instancetype)initWithWhisperMessage:(WhisperMessage *)whisperMessage
                         registrationId:(int)registrationId
