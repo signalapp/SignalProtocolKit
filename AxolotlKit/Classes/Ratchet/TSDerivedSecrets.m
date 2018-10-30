@@ -3,8 +3,8 @@
 //
 
 #import "TSDerivedSecrets.h"
-#import "HKDFKit.h"
 #import <Curve25519Kit/Curve25519.h>
+#import <HKDFKit/HKDFKit.h>
 
 @implementation TSDerivedSecrets
 
