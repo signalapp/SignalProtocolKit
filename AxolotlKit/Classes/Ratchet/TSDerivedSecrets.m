@@ -22,7 +22,7 @@
     }
     
     @try {
-        NSData *derivedMaterial = [HKDFKit deriveKey:masterKey info:info salt:salt outputSize:96];
+        NSData *derivedMaterial = [HKDFKit try_deriveKey:masterKey info:info salt:salt outputSize:96];
         secrets.cipherKey       = [derivedMaterial subdataWithRange:NSMakeRange(0, 32)];
         secrets.macKey          = [derivedMaterial subdataWithRange:NSMakeRange(32, 32)];
         secrets.iv              = [derivedMaterial subdataWithRange:NSMakeRange(64, 16)];

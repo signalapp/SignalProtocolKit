@@ -17,13 +17,14 @@
 @property (nonatomic, readonly) RootKey *rootKey;
 @property (nonatomic, readonly) NSData *chainKey;
 
-- (instancetype)initWithMasterKey:(NSData*)data;
+- (instancetype)init_try_withMasterKey:(NSData *)data NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 
 @implementation DHEResult
 
-- (instancetype)initWithMasterKey:(NSData*)data{
+- (instancetype)init_try_withMasterKey:(NSData *)data
+{
     // DHE Result is expected to be the result of 3 or 4 DHEs outputting 32 bytes each,
     // plus the 32 discontinuity bytes added to make V3 incompatible with V2
     OWSAssert([data length] == 32 * 4 || [data length] == 32 * 5);
@@ -32,7 +33,7 @@
     const char *HKDFDefaultSalt[4] = {0};
     NSData *salt                   = [NSData dataWithBytes:HKDFDefaultSalt length:sizeof(HKDFDefaultSalt)];
     NSData *info                   = [@"WhisperText" dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *derivedMaterial        = [HKDFKit deriveKey:data info:info salt:salt outputSize:64];
+    NSData *derivedMaterial = [HKDFKit try_deriveKey:data info:info salt:salt outputSize:64];
     OWSAssert(derivedMaterial.length == 64);
     _rootKey                       = [[RootKey alloc] initWithData:[derivedMaterial subdataWithRange:NSMakeRange(0, 32)]];
     _chainKey                      = [derivedMaterial subdataWithRange:NSMakeRange(32, 32)];
@@ -162,8 +163,8 @@
                                                                          andKeyPair:params.ourOneTimePrekey]];
         }
     }
-    
-    return [[DHEResult alloc] initWithMasterKey:masterKey];
+
+    return [[DHEResult alloc] init_try_withMasterKey:masterKey];
 }
 
 /**
