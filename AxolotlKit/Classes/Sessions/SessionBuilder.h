@@ -29,11 +29,15 @@ extern const int kPreKeyOfLastResortId;
                          recipientId:(NSString *)recipientId
                             deviceId:(int)deviceId;
 
-- (void)processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext;
+- (void)throws_processPrekeyBundle:(PreKeyBundle *)preKeyBundle
+                   protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (BOOL)processPrekeyBundle:(PreKeyBundle *)preKeyBundle
+            protocolContext:(nullable id)protocolContext
+                      error:(NSError **)outError;
 
-- (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage *)message
-                       withSession:(SessionRecord *)sessionRecord
-                   protocolContext:(nullable id)protocolContext;
+- (int)throws_processPrekeyWhisperMessage:(PreKeyWhisperMessage *)message
+                              withSession:(SessionRecord *)sessionRecord
+                          protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 

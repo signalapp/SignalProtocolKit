@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SignedPreKeyStore <NSObject>
 
-- (SignedPreKeyRecord *)loadSignedPrekey:(int)signedPreKeyId;
+- (SignedPreKeyRecord *)throws_loadSignedPrekey:(int)signedPreKeyId NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 - (nullable SignedPreKeyRecord *)loadSignedPrekeyOrNil:(int)signedPreKeyId;
 

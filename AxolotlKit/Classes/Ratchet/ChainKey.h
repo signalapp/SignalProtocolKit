@@ -1,9 +1,5 @@
 //
-//  ChainKey.h
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 26/08/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
 #import "Chain.h"
@@ -22,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)nextChainKey;
 
-- (MessageKeys *)messageKeys;
+- (MessageKeys *)throws_messageKeys NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 

@@ -16,6 +16,7 @@
 #import <Curve25519Kit/Curve25519.h>
 #import <Curve25519Kit/Ed25519.h>
 #import <SignalCoreKit/NSData+OWS.h>
+#import <SignalCoreKit/SCKExceptionWrapper.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -78,12 +79,23 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     return self;
 }
 
-- (void)processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext
+- (BOOL)processPrekeyBundle:(PreKeyBundle *)preKeyBundle
+            protocolContext:(nullable id)protocolContext
+                      error:(NSError **)outError
+{
+    return [SCKExceptionWrapper
+        tryBlock:^{
+            [self throws_processPrekeyBundle:preKeyBundle protocolContext:protocolContext];
+        }
+           error:outError];
+}
+
+- (void)throws_processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext
 {
     OWSAssert(preKeyBundle);
 
-    NSData *theirIdentityKey  = preKeyBundle.identityKey.removeKeyType;
-    NSData *theirSignedPreKey = preKeyBundle.signedPreKeyPublic.removeKeyType;
+    NSData *theirIdentityKey = preKeyBundle.identityKey.throws_removeKeyType;
+    NSData *theirSignedPreKey = preKeyBundle.signedPreKeyPublic.throws_removeKeyType;
 
     if (![self.identityStore isTrustedIdentityKey:theirIdentityKey
                                       recipientId:self.recipientId
@@ -93,14 +105,16 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     }
 
     // NOTE: we use preKeyBundle.signedPreKeyPublic which has the key type byte.
-    if (![Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:theirIdentityKey data:preKeyBundle.signedPreKeyPublic]) {
+    if (![Ed25519 throws_verifySignature:preKeyBundle.signedPreKeySignature
+                               publicKey:theirIdentityKey
+                                    data:preKeyBundle.signedPreKeyPublic]) {
         @throw [NSException exceptionWithName:InvalidKeyException reason:@"KeyIsNotValidlySigned" userInfo:nil];
     }
 
     SessionRecord *sessionRecord =
         [self.sessionStore loadSession:self.recipientId deviceId:preKeyBundle.deviceId protocolContext:protocolContext];
     ECKeyPair     *ourBaseKey          = [Curve25519 generateKeyPair];
-    NSData        *theirOneTimePreKey  = preKeyBundle.preKeyPublic.removeKeyType;
+    NSData *theirOneTimePreKey = preKeyBundle.preKeyPublic.throws_removeKeyType;
     int           theirOneTimePreKeyId = preKeyBundle.preKeyId;
     int           theirSignedPreKeyId  = preKeyBundle.signedPreKeyId;
 
@@ -116,8 +130,10 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     if (!sessionRecord.isFresh) {
         [sessionRecord archiveCurrentState];
     }
-    
-    [RatchetingSession initializeSession:[sessionRecord sessionState] sessionVersion:CURRENT_VERSION AliceParameters:params];
+
+    [RatchetingSession throws_initializeSession:[sessionRecord sessionState]
+                                 sessionVersion:CURRENT_VERSION
+                                AliceParameters:params];
 
     DDLogInfo(@"setUnacknowledgedPreKeyMessage for: %@ with preKeyId: %d", self.recipientId, theirOneTimePreKeyId);
 
@@ -143,15 +159,15 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
                     protocolContext:protocolContext];
 }
 
-- (int)processPrekeyWhisperMessage:(PreKeyWhisperMessage *)message
-                       withSession:(SessionRecord *)sessionRecord
-                   protocolContext:(nullable id)protocolContext
+- (int)throws_processPrekeyWhisperMessage:(PreKeyWhisperMessage *)message
+                              withSession:(SessionRecord *)sessionRecord
+                          protocolContext:(nullable id)protocolContext
 {
     OWSAssert(message);
     OWSAssert(sessionRecord);
 
     int    messageVersion    = message.version;
-    NSData *theirIdentityKey = message.identityKey.removeKeyType;
+    NSData *theirIdentityKey = message.identityKey.throws_removeKeyType;
 
     if (![self.identityStore isTrustedIdentityKey:theirIdentityKey
                                       recipientId:self.recipientId
@@ -164,7 +180,8 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     
     switch (messageVersion) {
         case 3:
-            unSignedPrekeyId = [self processPrekeyV3:message withSession:sessionRecord protocolContext:protocolContext];
+            unSignedPrekeyId =
+                [self throws_processPrekeyV3:message withSession:sessionRecord protocolContext:protocolContext];
             break;
         default:
             @throw [NSException exceptionWithName:InvalidVersionException reason:@"Trying to initialize with unknown version" userInfo:@{}];
@@ -178,31 +195,31 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     return unSignedPrekeyId;
 }
 
-- (int)processPrekeyV3:(PreKeyWhisperMessage *)message
-           withSession:(SessionRecord *)sessionRecord
-       protocolContext:(nullable id)protocolContext
+- (int)throws_processPrekeyV3:(PreKeyWhisperMessage *)message
+                  withSession:(SessionRecord *)sessionRecord
+              protocolContext:(nullable id)protocolContext
 {
     OWSAssert(message);
     OWSAssert(sessionRecord);
 
-    NSData *baseKey = message.baseKey.removeKeyType;
-    
+    NSData *baseKey = message.baseKey.throws_removeKeyType;
+
     if ([sessionRecord hasSessionState:message.version baseKey:baseKey]) {
         return -1;
     }
-    
-    ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore loadSignedPrekey:message.signedPrekeyId].keyPair;
+
+    ECKeyPair *ourSignedPrekey = [self.signedPreKeyStore throws_loadSignedPrekey:message.signedPrekeyId].keyPair;
 
     ECKeyPair *_Nullable ourOneTimePreKey;
     if (message.prekeyID >= 0) {
-        ourOneTimePreKey = [self.prekeyStore loadPreKey:message.prekeyID].keyPair;
+        ourOneTimePreKey = [self.prekeyStore throws_loadPreKey:message.prekeyID].keyPair;
     } else {
         DDLogWarn(@"%@ Processing PreKey message which had no one-time prekey.", self.tag);
     }
 
     BobAxolotlParameters *params =
         [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:[self.identityStore identityKeyPair:protocolContext]
-                                               theirIdentityKey:message.identityKey.removeKeyType
+                                               theirIdentityKey:message.identityKey.throws_removeKeyType
                                                 ourSignedPrekey:ourSignedPrekey
                                                   ourRatchetKey:ourSignedPrekey
                                                ourOneTimePrekey:ourOneTimePreKey
@@ -211,9 +228,11 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     if (!sessionRecord.isFresh) {
         [sessionRecord archiveCurrentState];
     }
-    
-    [RatchetingSession initializeSession:sessionRecord.sessionState sessionVersion:message.version BobParameters:params];
-    
+
+    [RatchetingSession throws_initializeSession:sessionRecord.sessionState
+                                 sessionVersion:message.version
+                                  BobParameters:params];
+
     [sessionRecord.sessionState setLocalRegistrationId:[self.identityStore localRegistrationId:protocolContext]];
     [sessionRecord.sessionState setRemoteRegistrationId:message.registrationId];
     [sessionRecord.sessionState setAliceBaseKey:baseKey];

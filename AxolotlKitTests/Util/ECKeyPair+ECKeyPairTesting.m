@@ -5,6 +5,8 @@
 #import "ECKeyPair+ECKeyPairTesting.h"
 #import "NSData+keyVersionByte.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ECKeyPair (ECKeyPairTestingPrivate)
 
 - (nullable id)initWithPublicKey:(NSData *)publicKey privateKey:(NSData *)privateKey;
@@ -15,10 +17,10 @@
 
 @implementation ECKeyPair (testing)
 
-+ (ECKeyPair *)keyPairWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey
++ (ECKeyPair *)throws_keyPairWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey
 {
     if (([publicKey length]  == 33)) {
-        publicKey = [publicKey removeKeyType];
+        publicKey = [publicKey throws_removeKeyType];
     }
     
     if ([privateKey length] != ECCKeyLength && [publicKey length] != ECCKeyLength) {
@@ -30,3 +32,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

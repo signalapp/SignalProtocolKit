@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
 #import "ChainKey.h"
@@ -63,10 +63,10 @@ static uint8_t kChainKeySeed[kTSKeySeedLength] = { 02 };
     return [[ChainKey alloc] initWithData:nextCK index:nextIndex];
 }
 
-- (MessageKeys *)messageKeys
+- (MessageKeys *)throws_messageKeys
 {
     NSData *inputKeyMaterial = [self baseMaterial:[NSData dataWithBytes:kMessageKeySeed length:kTSKeySeedLength]];
-    TSDerivedSecrets *derivedSecrets = [TSDerivedSecrets derivedMessageKeysWithData:inputKeyMaterial];
+    TSDerivedSecrets *derivedSecrets = [TSDerivedSecrets throws_derivedMessageKeysWithData:inputKeyMaterial];
     return [[MessageKeys alloc] initWithCipherKey:derivedSecrets.cipherKey
                                            macKey:derivedSecrets.macKey
                                                iv:derivedSecrets.iv

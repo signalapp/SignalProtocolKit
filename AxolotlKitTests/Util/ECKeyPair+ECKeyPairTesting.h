@@ -4,8 +4,13 @@
 
 #import "Curve25519.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ECKeyPair (ECKeyPairTesting)
 
-+ (ECKeyPair *)keyPairWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey;
++ (ECKeyPair *)throws_keyPairWithPrivateKey:(NSData *)privateKey
+                                  publicKey:(NSData *)publicKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
+
+NS_ASSUME_NONNULL_END

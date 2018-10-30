@@ -1,10 +1,9 @@
 //
-//  Copyright (c) 2017 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
-#import <Curve25519Kit/Curve25519.h>
-
 #import <AxolotlKit/WhisperMessage.h>
+#import <Curve25519Kit/Curve25519.h>
 #import <XCTest/XCTest.h>
 
 @interface WhisperMessageSerialization : XCTestCase
@@ -30,17 +29,30 @@
     NSData *cipherText = [@"I'm not really ciphertext" dataUsingEncoding:NSUTF8StringEncoding];
     ECKeyPair *senderIdentityKey = [Curve25519 generateKeyPair];
     ECKeyPair *receiverIdentityKey = [Curve25519 generateKeyPair];
-    
-    WhisperMessage *message = [[WhisperMessage alloc] initWithVersion:3 macKey:fakeMacKey.publicKey senderRatchetKey:keyPair.publicKey counter:counter previousCounter:0 cipherText:cipherText senderIdentityKey:senderIdentityKey.publicKey receiverIdentityKey:receiverIdentityKey.publicKey];
-    
-    WhisperMessage *deserializedMessage = [[WhisperMessage alloc] initWithData:message.serialized];
-    
-    
+
+    WhisperMessage *message = [[WhisperMessage alloc] init_throws_withVersion:3
+                                                                       macKey:fakeMacKey.publicKey
+                                                             senderRatchetKey:keyPair.publicKey
+                                                                      counter:counter
+                                                              previousCounter:0
+                                                                   cipherText:cipherText
+                                                            senderIdentityKey:senderIdentityKey.publicKey
+                                                          receiverIdentityKey:receiverIdentityKey.publicKey];
+
+    WhisperMessage *deserializedMessage = [[WhisperMessage alloc] init_throws_withData:message.serialized];
+
+
     XCTAssert([[message.serialized subdataWithRange:NSMakeRange(0, message.serialized.length-8)] isEqualToData:[deserializedMessage.serialized subdataWithRange:NSMakeRange(0, deserializedMessage.serialized.length-8)]]);
-    
-    [message verifyMacWithVersion:3 senderIdentityKey:senderIdentityKey.publicKey receiverIdentityKey:receiverIdentityKey.publicKey macKey:fakeMacKey.publicKey];
-    [deserializedMessage verifyMacWithVersion:3 senderIdentityKey:senderIdentityKey.publicKey receiverIdentityKey:receiverIdentityKey.publicKey macKey:fakeMacKey.publicKey];
-    
+
+    [message throws_verifyMacWithVersion:3
+                       senderIdentityKey:senderIdentityKey.publicKey
+                     receiverIdentityKey:receiverIdentityKey.publicKey
+                                  macKey:fakeMacKey.publicKey];
+    [deserializedMessage throws_verifyMacWithVersion:3
+                                   senderIdentityKey:senderIdentityKey.publicKey
+                                 receiverIdentityKey:receiverIdentityKey.publicKey
+                                              macKey:fakeMacKey.publicKey];
+
     XCTAssert([message.cipherText isEqualToData:deserializedMessage.cipherText]);
     XCTAssert(message.version == deserializedMessage.version);
     XCTAssert([message.serialized isEqualToData:deserializedMessage.serialized]);
