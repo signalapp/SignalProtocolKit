@@ -53,8 +53,8 @@
     AxolotlInMemoryStore *bobStore      = [AxolotlInMemoryStore new];
     ECKeyPair *bobPreKeyPair            = [Curve25519 generateKeyPair];
     ECKeyPair *bobSignedPreKeyPair      = [Curve25519 generateKeyPair];
-    NSData    *bobSignedPreKeySignature = [Ed25519 sign:bobSignedPreKeyPair.publicKey.prependKeyType
-                                            withKeyPair:[bobStore identityKeyPair:nil]];
+    NSData *bobSignedPreKeySignature =
+        [Ed25519 try_sign:bobSignedPreKeyPair.publicKey.prependKeyType withKeyPair:[bobStore identityKeyPair:nil]];
 
     PreKeyBundle *bobPreKey = [[PreKeyBundle alloc]initWithRegistrationId:[bobStore localRegistrationId:nil]
                                                                  deviceId:1
@@ -104,8 +104,8 @@
     ECKeyPair *bobIdentityKeyPair1 = [Curve25519 generateKeyPair];
     ECKeyPair *bobPreKeyPair1 = [Curve25519 generateKeyPair];
     ECKeyPair *bobSignedPreKeyPair1 = [Curve25519 generateKeyPair];
-    NSData *bobSignedPreKeySignature1 = [Ed25519 sign:bobSignedPreKeyPair1.publicKey.prependKeyType
-                                          withKeyPair:bobIdentityKeyPair1];
+    NSData *bobSignedPreKeySignature1 =
+        [Ed25519 try_sign:bobSignedPreKeyPair1.publicKey.prependKeyType withKeyPair:bobIdentityKeyPair1];
 
     PreKeyBundle *bobPreKey1 = [[PreKeyBundle alloc] initWithRegistrationId:[bobStore localRegistrationId:nil]
                                                                    deviceId:1
@@ -132,8 +132,8 @@
     ECKeyPair *bobIdentityKeyPair2 = [Curve25519 generateKeyPair];
     ECKeyPair *bobPreKeyPair2 = [Curve25519 generateKeyPair];
     ECKeyPair *bobSignedPreKeyPair2 = [Curve25519 generateKeyPair];
-    NSData *bobSignedPreKeySignature2 = [Ed25519 sign:bobSignedPreKeyPair2.publicKey.prependKeyType
-                                          withKeyPair:bobIdentityKeyPair2];
+    NSData *bobSignedPreKeySignature2 =
+        [Ed25519 try_sign:bobSignedPreKeyPair2.publicKey.prependKeyType withKeyPair:bobIdentityKeyPair2];
 
     PreKeyBundle *bobPreKey2 = [[PreKeyBundle alloc] initWithRegistrationId:[bobStore localRegistrationId:nil]
                                                                    deviceId:1

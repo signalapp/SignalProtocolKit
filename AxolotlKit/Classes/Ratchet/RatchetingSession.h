@@ -20,7 +20,14 @@
           aliceParameters:(AliceAxolotlParameters *)aliceParameters
                     error:(NSError **)outError;
 
-+ (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion BobParameters:(BobAxolotlParameters*)parameters;
++ (void)try_initializeSession:(SessionState *)session
+               sessionVersion:(int)sessionVersion
+                BobParameters:(BobAxolotlParameters *)parameters NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+
++ (BOOL)initializeSession:(SessionState *)session
+           sessionVersion:(int)sessionVersion
+            bobParameters:(BobAxolotlParameters *)bobParameters
+                    error:(NSError **)outError;
 
 /**
  *  For testing purposes

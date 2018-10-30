@@ -47,7 +47,7 @@ static NSString* const kCoderData      = @"kCoderData";
     OWSAssert(theirEphemeral);
     OWSAssert(ourEphemeral);
 
-    NSData *sharedSecret = [Curve25519 generateSharedSecretFromPublicKey:theirEphemeral andKeyPair:ourEphemeral];
+    NSData *sharedSecret = [Curve25519 try_generateSharedSecretFromPublicKey:theirEphemeral andKeyPair:ourEphemeral];
     OWSAssert(sharedSecret.length == 32);
 
     TSDerivedSecrets *secrets =

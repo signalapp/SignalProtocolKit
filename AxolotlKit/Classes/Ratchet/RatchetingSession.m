@@ -60,15 +60,30 @@
                   senderRatchet:sendingRatchetKey];
 }
 
-+ (void)initializeSession:(SessionState*)session sessionVersion:(int)sessionVersion BobParameters:(BobAxolotlParameters*)parameters{
++ (BOOL)initializeSession:(SessionState *)session
+           sessionVersion:(int)sessionVersion
+            bobParameters:(BobAxolotlParameters *)bobParameters
+                    error:(NSError **)outError
+{
+    return [SCKExceptionWrapper
+        tryBlock:^{
+            [self try_initializeSession:session sessionVersion:sessionVersion BobParameters:bobParameters];
+        }
+           error:outError];
+}
+
++ (void)try_initializeSession:(SessionState *)session
+               sessionVersion:(int)sessionVersion
+                BobParameters:(BobAxolotlParameters *)parameters
+{
     OWSAssert(session);
     OWSAssert(parameters);
 
     [session setVersion:sessionVersion];
     [session setRemoteIdentityKey:parameters.theirIdentityKey];
     [session setLocalIdentityKey:parameters.ourIdentityKeyPair.publicKey];
-    
-    DHEResult *result     = [self DHEKeyAgreement:parameters];
+
+    DHEResult *result = [self try_DHEKeyAgreement:parameters];
     OWSAssert(result);
 
     [session setSenderChain:parameters.ourRatchetKey chainKey:[[ChainKey alloc]initWithData:result.chainKey index:0]];
@@ -100,8 +115,8 @@
     [session setVersion:sessionVersion];
     [session setRemoteIdentityKey:parameters.theirIdentityKey];
     [session setLocalIdentityKey:parameters.ourIdentityKeyPair.publicKey];
-    
-    DHEResult *result            = [self DHEKeyAgreement:parameters];
+
+    DHEResult *result = [self try_DHEKeyAgreement:parameters];
     OWSAssert(result);
     RKCK *sendingChain =
         [result.rootKey try_createChainWithTheirEphemeral:parameters.theirRatchetKey ourEphemeral:sendingRatchet];
@@ -112,7 +127,8 @@
     [session setRootKey:sendingChain.rootKey];
 }
 
-+ (DHEResult*)DHEKeyAgreement:(id<AxolotlParameters>)parameters{
++ (DHEResult *)try_DHEKeyAgreement:(id<AxolotlParameters>)parameters
+{
     OWSAssert(parameters);
 
     NSMutableData *masterKey = [NSMutableData data];
@@ -122,20 +138,28 @@
     if ([parameters isKindOfClass:[AliceAxolotlParameters class]]) {
         AliceAxolotlParameters *params = (AliceAxolotlParameters*)parameters;
 
-        [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirSignedPreKey andKeyPair:params.ourIdentityKeyPair]];
-        [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirIdentityKey andKeyPair:params.ourBaseKey]];
-        [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirSignedPreKey andKeyPair:params.ourBaseKey]];
+        [masterKey appendData:[Curve25519 try_generateSharedSecretFromPublicKey:params.theirSignedPreKey
+                                                                     andKeyPair:params.ourIdentityKeyPair]];
+        [masterKey appendData:[Curve25519 try_generateSharedSecretFromPublicKey:params.theirIdentityKey
+                                                                     andKeyPair:params.ourBaseKey]];
+        [masterKey appendData:[Curve25519 try_generateSharedSecretFromPublicKey:params.theirSignedPreKey
+                                                                     andKeyPair:params.ourBaseKey]];
         if (params.theirOneTimePrekey) {
-            [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirOneTimePrekey andKeyPair:params.ourBaseKey]];
+            [masterKey appendData:[Curve25519 try_generateSharedSecretFromPublicKey:params.theirOneTimePrekey
+                                                                         andKeyPair:params.ourBaseKey]];
         }
     } else if ([parameters isKindOfClass:[BobAxolotlParameters class]]){
         BobAxolotlParameters *params = (BobAxolotlParameters*)parameters;
 
-        [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirIdentityKey andKeyPair:params.ourSignedPrekey]];
-        [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirBaseKey andKeyPair:params.ourIdentityKeyPair]];
-        [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirBaseKey andKeyPair:params.ourSignedPrekey]];
+        [masterKey appendData:[Curve25519 try_generateSharedSecretFromPublicKey:params.theirIdentityKey
+                                                                     andKeyPair:params.ourSignedPrekey]];
+        [masterKey appendData:[Curve25519 try_generateSharedSecretFromPublicKey:params.theirBaseKey
+                                                                     andKeyPair:params.ourIdentityKeyPair]];
+        [masterKey appendData:[Curve25519 try_generateSharedSecretFromPublicKey:params.theirBaseKey
+                                                                     andKeyPair:params.ourSignedPrekey]];
         if (params.ourOneTimePrekey) {
-            [masterKey appendData:[Curve25519 generateSharedSecretFromPublicKey:params.theirBaseKey andKeyPair:params.ourOneTimePrekey]];
+            [masterKey appendData:[Curve25519 try_generateSharedSecretFromPublicKey:params.theirBaseKey
+                                                                         andKeyPair:params.ourOneTimePrekey]];
         }
     }
     

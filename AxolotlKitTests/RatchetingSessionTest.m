@@ -321,9 +321,11 @@
     BobAxolotlParameters   *bobAxolotlParams   = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:bobIdentityKey theirIdentityKey:aliceIdentityKey.publicKey ourSignedPrekey:bobBaseKey ourRatchetKey:bobBaseKey ourOneTimePrekey:nil theirBaseKey:aliceBaseKey.publicKey];
     
     [RatchetingSession try_initializeSession:aliceSessionRecord.sessionState sessionVersion:3 AliceParameters:aliceAxolotlParams senderRatchet:aliceSendingRatchet];
-    
-    [RatchetingSession initializeSession:bobSessionRecord.sessionState sessionVersion:3 BobParameters:bobAxolotlParams];
-    
+
+    [RatchetingSession try_initializeSession:bobSessionRecord.sessionState
+                              sessionVersion:3
+                               BobParameters:bobAxolotlParams];
+
     NSString *aliceIdentifier = @"+483294823482";
     NSString *bobIdentifier = @"+389424728942";
 
@@ -670,9 +672,11 @@
     BobAxolotlParameters   *bobAxolotlParams   = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:bobIdentityKey theirIdentityKey:aliceIdentityKey.publicKey ourSignedPrekey:bobBaseKey ourRatchetKey:bobBaseKey ourOneTimePrekey:nil theirBaseKey:aliceBaseKey.publicKey];
     
     [RatchetingSession try_initializeSession:aliceSessionRecord.sessionState sessionVersion:3 AliceParameters:aliceAxolotlParams senderRatchet:aliceSendingRatchet];
-    
-    [RatchetingSession initializeSession:bobSessionRecord.sessionState sessionVersion:3 BobParameters:bobAxolotlParams];
-    
+
+    [RatchetingSession try_initializeSession:bobSessionRecord.sessionState
+                              sessionVersion:3
+                               BobParameters:bobAxolotlParams];
+
     NSString *aliceIdentifier = @"+483294823482";
     NSString *bobIdentifier = @"+389424728942";
     

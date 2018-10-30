@@ -103,9 +103,9 @@
     AliceAxolotlParameters *aliceParams = [[AliceAxolotlParameters alloc] initWithIdentityKey:aliceIdentityKeyPair theirIdentityKey:[bobIdentityKeyPair publicKey] ourBaseKey:aliceBaseKey theirSignedPreKey:[bobBaseKey publicKey] theirOneTimePreKey:[bobOneTimePK publicKey] theirRatchetKey:[bobBaseKey publicKey]];
     
     BobAxolotlParameters   *bobParams = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:bobIdentityKeyPair theirIdentityKey:[aliceIdentityKeyPair publicKey] ourSignedPrekey:bobBaseKey ourRatchetKey:bobBaseKey ourOneTimePrekey:bobOneTimePK theirBaseKey:[aliceBaseKey publicKey]];
-    
-    [RatchetingSession initializeSession:bobSessionState sessionVersion:3 BobParameters:bobParams];
-    
+
+    [RatchetingSession try_initializeSession:bobSessionState sessionVersion:3 BobParameters:bobParams];
+
     [RatchetingSession try_initializeSession:aliceSessionState sessionVersion:3 AliceParameters:aliceParams];
 
     [self.aliceStore saveRemoteIdentity:bobIdentityKeyPair.publicKey recipientId:self.bobIdentifier protocolContext:nil];

@@ -105,7 +105,9 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     }
 
     // NOTE: we use preKeyBundle.signedPreKeyPublic which has the key type byte.
-    if (![Ed25519 verifySignature:preKeyBundle.signedPreKeySignature publicKey:theirIdentityKey data:preKeyBundle.signedPreKeyPublic]) {
+    if (![Ed25519 try_verifySignature:preKeyBundle.signedPreKeySignature
+                            publicKey:theirIdentityKey
+                                 data:preKeyBundle.signedPreKeyPublic]) {
         @throw [NSException exceptionWithName:InvalidKeyException reason:@"KeyIsNotValidlySigned" userInfo:nil];
     }
 
@@ -225,9 +227,11 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     if (!sessionRecord.isFresh) {
         [sessionRecord archiveCurrentState];
     }
-    
-    [RatchetingSession initializeSession:sessionRecord.sessionState sessionVersion:message.version BobParameters:params];
-    
+
+    [RatchetingSession try_initializeSession:sessionRecord.sessionState
+                              sessionVersion:message.version
+                               BobParameters:params];
+
     [sessionRecord.sessionState setLocalRegistrationId:[self.identityStore localRegistrationId:protocolContext]];
     [sessionRecord.sessionState setRemoteRegistrationId:message.registrationId];
     [sessionRecord.sessionState setAliceBaseKey:baseKey];
