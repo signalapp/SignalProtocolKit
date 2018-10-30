@@ -16,11 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (Byte)intsToByteHigh:(int)highValue low:(int)lowValue;
 
-+ (NSData *)try_macWithVersion:(int)version
-                   identityKey:(NSData *)senderIdentityKey
-           receiverIdentityKey:(NSData *)receiverIdentityKey
-                        macKey:(NSData *)macKey
-                    serialized:(NSData *)serialized NS_SWIFT_UNAVAILABLE("throws objc exceptions");
++ (NSData *)throws_macWithVersion:(int)version
+                      identityKey:(NSData *)senderIdentityKey
+              receiverIdentityKey:(NSData *)receiverIdentityKey
+                           macKey:(NSData *)macKey
+                       serialized:(NSData *)serialized NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 

@@ -9,15 +9,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PreKeyWhisperMessage : NSObject <CipherMessage>
 
-- (instancetype)init_try_withData:(NSData *)serialized NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (instancetype)init_throws_withData:(NSData *)serialized NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 - (nullable instancetype)initWithData:(NSData *)serialized error:(NSError **)outError;
 
-- (instancetype)init_try_withWhisperMessage:(WhisperMessage *)whisperMessage
-                             registrationId:(int)registrationId
-                                   prekeyId:(int)prekeyId
-                             signedPrekeyId:(int)signedPrekeyId
-                                    baseKey:(NSData *)baseKey
-                                identityKey:(NSData *)identityKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (instancetype)init_throws_withWhisperMessage:(WhisperMessage *)whisperMessage
+                                registrationId:(int)registrationId
+                                      prekeyId:(int)prekeyId
+                                signedPrekeyId:(int)signedPrekeyId
+                                       baseKey:(NSData *)baseKey
+                                   identityKey:(NSData *)identityKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @property (nonatomic, readonly) int registrationId;
 @property (nonatomic, readonly) int version;

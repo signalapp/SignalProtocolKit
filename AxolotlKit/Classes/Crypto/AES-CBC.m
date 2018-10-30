@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark AESCBC Mode
 
-+ (NSData *)try_encryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv
++ (NSData *)throws_encryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv
 {
     if (!data) {
         @throw [NSException exceptionWithName:CipherException reason:@"Missing data to encrypt." userInfo:nil];
@@ -57,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
-+ (NSData *)try_decryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv
++ (NSData *)throws_decryptCBCMode:(NSData *)data withKey:(NSData *)key withIV:(NSData *)iv
 {
     if (!data) {
         @throw [NSException exceptionWithName:CipherException reason:@"Missing data to decrypt." userInfo:nil];

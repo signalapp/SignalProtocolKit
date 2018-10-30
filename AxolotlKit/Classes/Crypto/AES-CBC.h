@@ -18,9 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return         ciphertext
  */
 
-+ (NSData *)try_encryptCBCMode:(NSData *)data
-                       withKey:(NSData *)key
-                        withIV:(NSData *)iv NS_SWIFT_UNAVAILABLE("throws objc exceptions");
++ (NSData *)throws_encryptCBCMode:(NSData *)data
+                          withKey:(NSData *)key
+                           withIV:(NSData *)iv NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 /**
  *  Decrypts with AES in CBC mode
@@ -32,9 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return         plaintext
  */
 
-+ (NSData *)try_decryptCBCMode:(NSData *)data
-                       withKey:(NSData *)key
-                        withIV:(NSData *)iv NS_SWIFT_UNAVAILABLE("throws objc exceptions");
++ (NSData *)throws_decryptCBCMode:(NSData *)data
+                          withKey:(NSData *)key
+                           withIV:(NSData *)iv NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 

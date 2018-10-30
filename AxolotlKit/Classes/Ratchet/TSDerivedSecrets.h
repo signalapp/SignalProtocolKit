@@ -6,9 +6,12 @@
 
 @interface TSDerivedSecrets : NSData
 
-+ (instancetype)try_derivedInitialSecretsWithMasterKey:(NSData *)masterKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
-+ (instancetype)try_derivedRatchetedSecretsWithSharedSecret:(NSData *)masterKey rootKey:(NSData *)rootKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
-+ (instancetype)try_derivedMessageKeysWithData:(NSData *)data NS_SWIFT_UNAVAILABLE("throws objc exceptions");
++ (instancetype)throws_derivedInitialSecretsWithMasterKey:(NSData *)masterKey
+    NS_SWIFT_UNAVAILABLE("throws objc exceptions");
++ (instancetype)throws_derivedRatchetedSecretsWithSharedSecret:(NSData *)masterKey
+                                                       rootKey:(NSData *)rootKey
+    NS_SWIFT_UNAVAILABLE("throws objc exceptions");
++ (instancetype)throws_derivedMessageKeysWithData:(NSData *)data NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @property NSData *cipherKey;
 @property NSData *macKey;

@@ -24,11 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
     return (Byte)((highValue << 4 | lowValue) & 0xFF);
 }
 
-+ (NSData *)try_macWithVersion:(int)version
-                   identityKey:(NSData *)senderIdentityKey
-           receiverIdentityKey:(NSData *)receiverIdentityKey
-                        macKey:(NSData *)macKey
-                    serialized:(NSData *)serialized
++ (NSData *)throws_macWithVersion:(int)version
+                      identityKey:(NSData *)senderIdentityKey
+              receiverIdentityKey:(NSData *)receiverIdentityKey
+                           macKey:(NSData *)macKey
+                       serialized:(NSData *)serialized
 {
     if (!macKey) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException reason:@"Missing macKey." userInfo:nil];

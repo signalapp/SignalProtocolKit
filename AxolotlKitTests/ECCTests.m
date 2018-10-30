@@ -74,14 +74,14 @@
         (Byte) 0xe6, (Byte) 0x29};
     
     NSData *sharedSecret = [NSData dataWithBytes:sharedBytes length:32];
-    
-    ECKeyPair *aliceKeyPair = [ECKeyPair try_keyPairWithPrivateKey:alicePrivateKey publicKey:alicePublicKey];
-    ECKeyPair *bobKeyPair   = [ECKeyPair try_keyPairWithPrivateKey:bobPrivateKey   publicKey:bobPublicKey];
+
+    ECKeyPair *aliceKeyPair = [ECKeyPair throws_keyPairWithPrivateKey:alicePrivateKey publicKey:alicePublicKey];
+    ECKeyPair *bobKeyPair = [ECKeyPair throws_keyPairWithPrivateKey:bobPrivateKey publicKey:bobPublicKey];
 
     NSData *aliceShared =
-        [Curve25519 try_generateSharedSecretFromPublicKey:[bobKeyPair publicKey] andKeyPair:aliceKeyPair];
+        [Curve25519 throws_generateSharedSecretFromPublicKey:[bobKeyPair publicKey] andKeyPair:aliceKeyPair];
     NSData *bobShared =
-        [Curve25519 try_generateSharedSecretFromPublicKey:[aliceKeyPair publicKey] andKeyPair:bobKeyPair];
+        [Curve25519 throws_generateSharedSecretFromPublicKey:[aliceKeyPair publicKey] andKeyPair:bobKeyPair];
 
     XCTAssert([aliceShared isEqualToData:sharedSecret], @"Alice's shared secret is equal to the expected one.");
     XCTAssert([bobShared   isEqualToData:sharedSecret], @"Bob's shared secret is equal to the expected one.");
@@ -92,9 +92,9 @@
         ECKeyPair *aliceKeyPair       = [Curve25519 generateKeyPair];
         ECKeyPair *bobKeyPair         = [Curve25519 generateKeyPair];
 
-        XCTAssert([[Curve25519 try_generateSharedSecretFromPublicKey:[aliceKeyPair publicKey] andKeyPair:bobKeyPair]
-                      isEqualToData:[Curve25519 try_generateSharedSecretFromPublicKey:[bobKeyPair publicKey]
-                                                                           andKeyPair:aliceKeyPair]],
+        XCTAssert([[Curve25519 throws_generateSharedSecretFromPublicKey:[aliceKeyPair publicKey] andKeyPair:bobKeyPair]
+                      isEqualToData:[Curve25519 throws_generateSharedSecretFromPublicKey:[bobKeyPair publicKey]
+                                                                              andKeyPair:aliceKeyPair]],
             @"Randomly generated keypairs produce same shared secret.");
     }
 }
@@ -145,7 +145,7 @@
     
     NSData *signature    = [NSData dataWithBytes:aliceSignature length:ECCSignatureLength];
 
-    if (![Ed25519 try_verifySignature:signature publicKey:alicePublic data:ephemPublic]) {
+    if (![Ed25519 throws_verifySignature:signature publicKey:alicePublic data:ephemPublic]) {
         XCTAssert(NO, @"Sig verification failed!");
     }
 
@@ -161,7 +161,7 @@
         
         [modifiedSignature replaceBytesInRange:NSMakeRange(i, 1) withBytes:&replacedByte length:1];
 
-        if ([Ed25519 try_verifySignature:modifiedSignature publicKey:alicePublic data:ephemPublic]) {
+        if ([Ed25519 throws_verifySignature:modifiedSignature publicKey:alicePublic data:ephemPublic]) {
             XCTAssert(NO, @"Modified signature shouldn't be verified correctly");
         }
     }

@@ -8,7 +8,7 @@
 
 @implementation TSDerivedSecrets
 
-+ (instancetype)try_derivedSecretsWithSeed:(NSData *)masterKey salt:(NSData *)salt info:(NSData *)info
++ (instancetype)throws_derivedSecretsWithSeed:(NSData *)masterKey salt:(NSData *)salt info:(NSData *)info
 {
     OWSAssert(masterKey.length == 32);
     OWSAssert(info);
@@ -22,7 +22,7 @@
     }
     
     @try {
-        NSData *derivedMaterial = [HKDFKit try_deriveKey:masterKey info:info salt:salt outputSize:96];
+        NSData *derivedMaterial = [HKDFKit throws_deriveKey:masterKey info:info salt:salt outputSize:96];
         secrets.cipherKey       = [derivedMaterial subdataWithRange:NSMakeRange(0, 32)];
         secrets.macKey          = [derivedMaterial subdataWithRange:NSMakeRange(32, 32)];
         secrets.iv              = [derivedMaterial subdataWithRange:NSMakeRange(64, 16)];
@@ -38,29 +38,29 @@
     return secrets;
 }
 
-+ (instancetype)try_derivedInitialSecretsWithMasterKey:(NSData *)masterKey
++ (instancetype)throws_derivedInitialSecretsWithMasterKey:(NSData *)masterKey
 {
     OWSAssert(masterKey);
 
     NSData *info = [@"WhisperText" dataUsingEncoding:NSUTF8StringEncoding];
-    return [self try_derivedSecretsWithSeed:masterKey salt:nil info:info];
+    return [self throws_derivedSecretsWithSeed:masterKey salt:nil info:info];
 }
 
-+ (instancetype)try_derivedRatchetedSecretsWithSharedSecret:(NSData *)masterKey rootKey:(NSData *)rootKey
++ (instancetype)throws_derivedRatchetedSecretsWithSharedSecret:(NSData *)masterKey rootKey:(NSData *)rootKey
 {
     OWSAssert(masterKey);
     OWSAssert(rootKey);
 
     NSData *info = [@"WhisperRatchet" dataUsingEncoding:NSUTF8StringEncoding];
-    return [self try_derivedSecretsWithSeed:masterKey salt:rootKey info:info];
+    return [self throws_derivedSecretsWithSeed:masterKey salt:rootKey info:info];
 }
 
-+ (instancetype)try_derivedMessageKeysWithData:(NSData *)data
++ (instancetype)throws_derivedMessageKeysWithData:(NSData *)data
 {
     OWSAssert(data);
 
     NSData *info = [@"WhisperMessageKeys" dataUsingEncoding:NSUTF8StringEncoding];
-    return [self try_derivedSecretsWithSeed:data salt:nil info:info];
+    return [self throws_derivedSecretsWithSeed:data salt:nil info:info];
 }
 
 @end

@@ -8,7 +8,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ECKeyPair (ECKeyPairTesting)
 
-+ (ECKeyPair *)try_keyPairWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
++ (ECKeyPair *)throws_keyPairWithPrivateKey:(NSData *)privateKey
+                                  publicKey:(NSData *)publicKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 

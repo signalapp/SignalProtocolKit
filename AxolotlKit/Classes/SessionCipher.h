@@ -23,21 +23,21 @@ NS_ASSUME_NONNULL_BEGIN
 // protocolContext is an optional parameter that can be used to ensure that all
 // identity and session store writes are coordinated and/or occur within a single
 // transaction.
-- (id<CipherMessage>)try_encryptMessage:(NSData *)paddedMessage
-                        protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (id<CipherMessage>)throws_encryptMessage:(NSData *)paddedMessage
+                           protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 - (nullable id<CipherMessage>)encryptMessage:(NSData *)paddedMessage
                              protocolContext:(nullable id)protocolContext
                                        error:(NSError **)outError;
 
-- (NSData *)try_decrypt:(id<CipherMessage>)whisperMessage
-        protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (NSData *)throws_decrypt:(id<CipherMessage>)whisperMessage
+           protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 - (nullable NSData *)decrypt:(id<CipherMessage>)whisperMessage
              protocolContext:(nullable id)protocolContext
                        error:(NSError **)outError;
 
-- (int)try_remoteRegistrationId:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (int)throws_remoteRegistrationId:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
-- (int)try_sessionVersion:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (int)throws_sessionVersion:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 

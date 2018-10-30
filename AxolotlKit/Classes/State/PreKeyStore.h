@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol PreKeyStore <NSObject>
 
-- (PreKeyRecord *)try_loadPreKey:(int)preKeyId NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (PreKeyRecord *)throws_loadPreKey:(int)preKeyId NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 - (void)storePreKey:(int)preKeyId preKeyRecord:(PreKeyRecord *)record;
 

@@ -46,7 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 # pragma mark Signed PreKey Store
 
-- (SignedPreKeyRecord *)try_loadSignedPrekey:(int)signedPreKeyId{
+- (SignedPreKeyRecord *)throws_loadSignedPrekey:(int)signedPreKeyId
+{
     if (![[self.signedPreKeyStore allKeys] containsObject:[NSNumber numberWithInt:signedPreKeyId]]) {
         @throw [NSException exceptionWithName:InvalidKeyIdException reason:@"No such signedprekeyrecord" userInfo:nil];
     }
@@ -59,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
     if ([self containsSignedPreKey:signedPreKeyId]) {
         @try {
             // Given that we've checked for `contains` this really shouldn't fail.
-            return [self try_loadSignedPrekey:signedPreKeyId];
+            return [self throws_loadSignedPrekey:signedPreKeyId];
         } @catch (NSException *exception) {
             OWSFailDebug(@"unexpected exception: %@", exception);
             return nil;
@@ -98,7 +99,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 # pragma mark PreKey Store
 
-- (PreKeyRecord *)try_loadPreKey:(int)preKeyId{
+- (PreKeyRecord *)throws_loadPreKey:(int)preKeyId
+{
     if (![[self.preKeyStore allKeys] containsObject:[NSNumber numberWithInt:preKeyId]]) {
         @throw [NSException exceptionWithName:InvalidKeyIdException reason:@"No such signedprekeyrecord" userInfo:nil];
     }

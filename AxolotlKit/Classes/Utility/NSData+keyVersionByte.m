@@ -24,14 +24,14 @@ const Byte DJB_TYPE = 0x05;
 - (nullable instancetype)removeKeyTypeAndReturnError:(NSError **)outError
 {
     @try {
-        return self.try_removeKeyType;
+        return self.throws_removeKeyType;
     } @catch (NSException *exception) {
         *outError = SCKExceptionWrapperErrorMake(exception);
         return nil;
     }
 }
 
-- (instancetype)try_removeKeyType
+- (instancetype)throws_removeKeyType
 {
     if (self.length == 33) {
         if ([[self subdataWithRange:NSMakeRange(0, 1)] isEqualToData:[NSData dataWithBytes:&DJB_TYPE length:1]]) {

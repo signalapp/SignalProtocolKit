@@ -11,18 +11,18 @@
 
 @interface RatchetingSession : NSObject
 
-+ (void)try_initializeSession:(SessionState *)session
-               sessionVersion:(int)sessionVersion
-              AliceParameters:(AliceAxolotlParameters *)parameters NS_SWIFT_UNAVAILABLE("throws objc exceptions");
++ (void)throws_initializeSession:(SessionState *)session
+                  sessionVersion:(int)sessionVersion
+                 AliceParameters:(AliceAxolotlParameters *)parameters NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 + (BOOL)initializeSession:(SessionState *)session
            sessionVersion:(int)sessionVersion
           aliceParameters:(AliceAxolotlParameters *)aliceParameters
                     error:(NSError **)outError;
 
-+ (void)try_initializeSession:(SessionState *)session
-               sessionVersion:(int)sessionVersion
-                BobParameters:(BobAxolotlParameters *)parameters NS_SWIFT_UNAVAILABLE("throws objc exceptions");
++ (void)throws_initializeSession:(SessionState *)session
+                  sessionVersion:(int)sessionVersion
+                   BobParameters:(BobAxolotlParameters *)parameters NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 + (BOOL)initializeSession:(SessionState *)session
            sessionVersion:(int)sessionVersion
@@ -33,9 +33,9 @@
  *  For testing purposes
  */
 
-+ (void)try_initializeSession:(SessionState *)session
-               sessionVersion:(int)sessionVersion
-              AliceParameters:(AliceAxolotlParameters *)parameters
-                senderRatchet:(ECKeyPair *)ratchet NS_SWIFT_UNAVAILABLE("throws objc exceptions");
++ (void)throws_initializeSession:(SessionState *)session
+                  sessionVersion:(int)sessionVersion
+                 AliceParameters:(AliceAxolotlParameters *)parameters
+                   senderRatchet:(ECKeyPair *)ratchet NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end

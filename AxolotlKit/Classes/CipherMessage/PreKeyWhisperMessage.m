@@ -23,12 +23,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation PreKeyWhisperMessage
 
-- (instancetype)init_try_withWhisperMessage:(WhisperMessage *)whisperMessage
-                             registrationId:(int)registrationId
-                                   prekeyId:(int)prekeyId
-                             signedPrekeyId:(int)signedPrekeyId
-                                    baseKey:(NSData *)baseKey
-                                identityKey:(NSData *)identityKey
+- (instancetype)init_throws_withWhisperMessage:(WhisperMessage *)whisperMessage
+                                registrationId:(int)registrationId
+                                      prekeyId:(int)prekeyId
+                                signedPrekeyId:(int)signedPrekeyId
+                                       baseKey:(NSData *)baseKey
+                                   identityKey:(NSData *)identityKey
 {
     OWSAssert(whisperMessage);
     OWSAssert(baseKey);
@@ -73,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable instancetype)initWithData:(NSData *)serialized error:(NSError **)outError
 {
     @try {
-        self = [self init_try_withData:serialized];
+        self = [self init_throws_withData:serialized];
         return self;
     } @catch (NSException *exception) {
         *outError = SCKExceptionWrapperErrorMake(exception);
@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
-- (instancetype)init_try_withData:(NSData *)serialized
+- (instancetype)init_throws_withData:(NSData *)serialized
 {
     if (self = [super init]) {
         if (serialized.length < 1) {
@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
         _signedPrekeyId = preKeyWhisperMessage.signedPreKeyID;
         _baseKey = preKeyWhisperMessage.baseKey;
         _identityKey = preKeyWhisperMessage.identityKey;
-        _message = [[WhisperMessage alloc] init_try_withData:preKeyWhisperMessage.message];
+        _message = [[WhisperMessage alloc] init_throws_withData:preKeyWhisperMessage.message];
     }
 
     return self;

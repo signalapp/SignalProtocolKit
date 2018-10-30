@@ -17,10 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation ECKeyPair (testing)
 
-+ (ECKeyPair *)try_keyPairWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey
++ (ECKeyPair *)throws_keyPairWithPrivateKey:(NSData *)privateKey publicKey:(NSData *)publicKey
 {
     if (([publicKey length]  == 33)) {
-        publicKey = [publicKey try_removeKeyType];
+        publicKey = [publicKey throws_removeKeyType];
     }
     
     if ([privateKey length] != ECCKeyLength && [publicKey length] != ECCKeyLength) {

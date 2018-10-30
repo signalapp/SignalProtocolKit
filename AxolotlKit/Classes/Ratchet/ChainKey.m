@@ -63,10 +63,10 @@ static uint8_t kChainKeySeed[kTSKeySeedLength] = { 02 };
     return [[ChainKey alloc] initWithData:nextCK index:nextIndex];
 }
 
-- (MessageKeys *)try_messageKeys
+- (MessageKeys *)throws_messageKeys
 {
     NSData *inputKeyMaterial = [self baseMaterial:[NSData dataWithBytes:kMessageKeySeed length:kTSKeySeedLength]];
-    TSDerivedSecrets *derivedSecrets = [TSDerivedSecrets try_derivedMessageKeysWithData:inputKeyMaterial];
+    TSDerivedSecrets *derivedSecrets = [TSDerivedSecrets throws_derivedMessageKeysWithData:inputKeyMaterial];
     return [[MessageKeys alloc] initWithCipherKey:derivedSecrets.cipherKey
                                            macKey:derivedSecrets.macKey
                                                iv:derivedSecrets.iv

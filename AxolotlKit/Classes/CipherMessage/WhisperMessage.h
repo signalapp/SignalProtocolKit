@@ -18,22 +18,22 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSData *cipherText;
 @property (nonatomic, readonly) NSData *serialized;
 
-- (instancetype)init_try_withData:(NSData *)serialized NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (instancetype)init_throws_withData:(NSData *)serialized NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 - (nullable instancetype)initWithData:(NSData *)serialized error:(NSError **)outError;
 
-- (instancetype)init_try_withVersion:(int)version
-                              macKey:(NSData *)macKey
-                    senderRatchetKey:(NSData *)senderRatchetKey
-                             counter:(int)counter
-                     previousCounter:(int)previousCounter
-                          cipherText:(NSData *)cipherText
-                   senderIdentityKey:(NSData *)senderIdentityKey
-                 receiverIdentityKey:(NSData *)receiverIdentityKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (instancetype)init_throws_withVersion:(int)version
+                                 macKey:(NSData *)macKey
+                       senderRatchetKey:(NSData *)senderRatchetKey
+                                counter:(int)counter
+                        previousCounter:(int)previousCounter
+                             cipherText:(NSData *)cipherText
+                      senderIdentityKey:(NSData *)senderIdentityKey
+                    receiverIdentityKey:(NSData *)receiverIdentityKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
-- (void)try_verifyMacWithVersion:(int)messageVersion
-               senderIdentityKey:(NSData *)senderIdentityKey
-             receiverIdentityKey:(NSData *)receiverIdentityKey
-                          macKey:(NSData *)macKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (void)throws_verifyMacWithVersion:(int)messageVersion
+                  senderIdentityKey:(NSData *)senderIdentityKey
+                receiverIdentityKey:(NSData *)receiverIdentityKey
+                             macKey:(NSData *)macKey NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 

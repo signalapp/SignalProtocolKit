@@ -50,7 +50,7 @@
     SessionRecord *aliceSessionRecord = [SessionRecord new];
     SessionRecord *bobSessionRecord   = [SessionRecord new];
 
-    [self try_sessionInitializationWithAliceSessionRecord:aliceSessionRecord bobSessionRecord:bobSessionRecord];
+    [self throws_sessionInitializationWithAliceSessionRecord:aliceSessionRecord bobSessionRecord:bobSessionRecord];
     [self runInteractionWithAliceRecord:aliceSessionRecord bobRecord:bobSessionRecord];
 }
 
@@ -61,7 +61,7 @@
 
     // 1.) Given Alice and Bob have initialized some session together
     SessionState *initialSessionState = bobSessionRecord.sessionState;
-    [self try_sessionInitializationWithAliceSessionRecord:aliceSessionRecord bobSessionRecord:bobSessionRecord];
+    [self throws_sessionInitializationWithAliceSessionRecord:aliceSessionRecord bobSessionRecord:bobSessionRecord];
 
     SessionRecord *activeSession = [self.bobStore loadSession:self.aliceIdentifier deviceId:1 protocolContext:nil];
     XCTAssertNotNil(activeSession);
@@ -86,8 +86,8 @@
     XCTAssertEqual(0, aliceSessionRecord.previousSessionStates.count);
 }
 
-- (void)try_sessionInitializationWithAliceSessionRecord:(SessionRecord *)aliceSessionRecord
-                                   bobSessionRecord:(SessionRecord *)bobSessionRecord
+- (void)throws_sessionInitializationWithAliceSessionRecord:(SessionRecord *)aliceSessionRecord
+                                          bobSessionRecord:(SessionRecord *)bobSessionRecord
 {
 
     SessionState *aliceSessionState = aliceSessionRecord.sessionState;
@@ -104,9 +104,9 @@
     
     BobAxolotlParameters   *bobParams = [[BobAxolotlParameters alloc] initWithMyIdentityKeyPair:bobIdentityKeyPair theirIdentityKey:[aliceIdentityKeyPair publicKey] ourSignedPrekey:bobBaseKey ourRatchetKey:bobBaseKey ourOneTimePrekey:bobOneTimePK theirBaseKey:[aliceBaseKey publicKey]];
 
-    [RatchetingSession try_initializeSession:bobSessionState sessionVersion:3 BobParameters:bobParams];
+    [RatchetingSession throws_initializeSession:bobSessionState sessionVersion:3 BobParameters:bobParams];
 
-    [RatchetingSession try_initializeSession:aliceSessionState sessionVersion:3 AliceParameters:aliceParams];
+    [RatchetingSession throws_initializeSession:aliceSessionState sessionVersion:3 AliceParameters:aliceParams];
 
     [self.aliceStore saveRemoteIdentity:bobIdentityKeyPair.publicKey recipientId:self.bobIdentifier protocolContext:nil];
     [self.aliceStore storeSession:self.bobIdentifier deviceId:1 session:aliceSessionRecord protocolContext:nil];
@@ -124,10 +124,10 @@
         [[SessionCipher alloc] initWithAxolotlStore:self.bobStore recipientId:self.aliceIdentifier deviceId:1];
 
     NSData *alicePlainText     = [@"This is a plaintext message!" dataUsingEncoding:NSUTF8StringEncoding];
-    WhisperMessage *cipherText = [aliceSessionCipher try_encryptMessage:alicePlainText protocolContext:nil];
-    
-    NSData *bobPlaintext = [bobSessionCipher try_decrypt:cipherText protocolContext:nil];
-    
+    WhisperMessage *cipherText = [aliceSessionCipher throws_encryptMessage:alicePlainText protocolContext:nil];
+
+    NSData *bobPlaintext = [bobSessionCipher throws_decrypt:cipherText protocolContext:nil];
+
     XCTAssert([bobPlaintext isEqualToData:alicePlainText]);
 }
 

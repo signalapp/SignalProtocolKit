@@ -8,7 +8,7 @@
 
 - (instancetype)prependKeyType;
 
-- (instancetype)try_removeKeyType NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (instancetype)throws_removeKeyType NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 - (nullable instancetype)removeKeyTypeAndReturnError:(NSError **)outError;
 
 @end

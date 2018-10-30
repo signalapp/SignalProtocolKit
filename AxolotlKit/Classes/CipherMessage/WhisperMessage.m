@@ -18,14 +18,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation WhisperMessage
 
-- (instancetype)init_try_withVersion:(int)version
-                              macKey:(NSData *)macKey
-                    senderRatchetKey:(NSData *)senderRatchetKey
-                             counter:(int)counter
-                     previousCounter:(int)previousCounter
-                          cipherText:(NSData *)cipherText
-                   senderIdentityKey:(NSData *)senderIdentityKey
-                 receiverIdentityKey:(NSData *)receiverIdentityKey
+- (instancetype)init_throws_withVersion:(int)version
+                                 macKey:(NSData *)macKey
+                       senderRatchetKey:(NSData *)senderRatchetKey
+                                counter:(int)counter
+                        previousCounter:(int)previousCounter
+                             cipherText:(NSData *)cipherText
+                      senderIdentityKey:(NSData *)senderIdentityKey
+                    receiverIdentityKey:(NSData *)receiverIdentityKey
 {
     OWSAssert(macKey);
     OWSAssert(senderRatchetKey);
@@ -50,11 +50,11 @@ NS_ASSUME_NONNULL_BEGIN
         }
         [serialized appendData:messageData];
 
-        NSData *mac = [SerializationUtilities try_macWithVersion:version
-                                                     identityKey:[senderIdentityKey prependKeyType]
-                                             receiverIdentityKey:[receiverIdentityKey prependKeyType]
-                                                          macKey:macKey
-                                                      serialized:serialized];
+        NSData *mac = [SerializationUtilities throws_macWithVersion:version
+                                                        identityKey:[senderIdentityKey prependKeyType]
+                                                receiverIdentityKey:[receiverIdentityKey prependKeyType]
+                                                             macKey:macKey
+                                                         serialized:serialized];
 
         [serialized appendData:mac];
 
@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable instancetype)initWithData:(NSData *)serialized error:(NSError **)outError
 {
     @try {
-        self = [self init_try_withData:serialized];
+        self = [self init_throws_withData:serialized];
         return self;
     } @catch (NSException *exception) {
         *outError = SCKExceptionWrapperErrorMake(exception);
@@ -80,7 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 }
 
-- (instancetype)init_try_withData:(NSData *)serialized
+- (instancetype)init_throws_withData:(NSData *)serialized
 {
     if (self = [super init]) {
         if (serialized.length <= (VERSION_LENGTH + MAC_LENGTH)) {
@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
         }
 
         _serialized = serialized;
-        _senderRatchetKey = [whisperMessage.ratchetKey try_removeKeyType];
+        _senderRatchetKey = [whisperMessage.ratchetKey throws_removeKeyType];
         _version = [SerializationUtilities highBitsToIntFromByte:version];
         _counter = whisperMessage.counter;
         _previousCounter = whisperMessage.previousCounter;
@@ -135,10 +135,10 @@ NS_ASSUME_NONNULL_BEGIN
     return self;
 }
 
-- (void)try_verifyMacWithVersion:(int)messageVersion
-               senderIdentityKey:(NSData *)senderIdentityKey
-             receiverIdentityKey:(NSData *)receiverIdentityKey
-                          macKey:(NSData *)macKey
+- (void)throws_verifyMacWithVersion:(int)messageVersion
+                  senderIdentityKey:(NSData *)senderIdentityKey
+                receiverIdentityKey:(NSData *)receiverIdentityKey
+                             macKey:(NSData *)macKey
 {
     OWSAssert(senderIdentityKey);
     OWSAssert(receiverIdentityKey);
@@ -167,11 +167,11 @@ NS_ASSUME_NONNULL_BEGIN
         OWSRaiseException(InvalidMessageException, @"Could not parse their mac.");
     }
 
-    NSData *ourMac = [SerializationUtilities try_macWithVersion:messageVersion
-                                                    identityKey:[senderIdentityKey prependKeyType]
-                                            receiverIdentityKey:[receiverIdentityKey prependKeyType]
-                                                         macKey:macKey
-                                                     serialized:data];
+    NSData *ourMac = [SerializationUtilities throws_macWithVersion:messageVersion
+                                                       identityKey:[senderIdentityKey prependKeyType]
+                                               receiverIdentityKey:[receiverIdentityKey prependKeyType]
+                                                            macKey:macKey
+                                                        serialized:data];
 
     if (![theirMac ows_constantTimeIsEqualToData:ourMac]) {
         OWSFailDebug(@"Bad Mac! Their Mac: %@ Our Mac: %@", theirMac, ourMac);
