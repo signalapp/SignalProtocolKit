@@ -1,14 +1,10 @@
 //
-//  HKDFTest.m
-//  
-//
-//  Created by Frederic Jacobs on 23/09/14.
-//
+//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
+#import <HKDFKit/HKDFKit.h>
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import <HKDFKit/HKDFKit.h>
 
 @interface HKDFTest : XCTestCase
 
@@ -45,7 +41,7 @@
     
     NSData *okmData     = [NSData dataWithBytes:okm length:42];
     
-    NSData *actualOutput = [HKDFKit deriveKey:ikmData info:infoData salt:saltData outputSize:42];
+    NSData *actualOutput = [HKDFKit throws_deriveKey:ikmData info:infoData salt:saltData outputSize:42];
     
     XCTAssert([okmData isEqualToData:actualOutput], @"HKDF output matches test vector");
 }
@@ -127,7 +123,7 @@
     
     NSData *okmData  = [NSData dataWithBytes:okm length:82];
     
-    NSData *actualOutput = [HKDFKit deriveKey:ikmData info:infoData salt:saltData outputSize:82];
+    NSData *actualOutput = [HKDFKit throws_deriveKey:ikmData info:infoData salt:saltData outputSize:82];
     
     XCTAssert([actualOutput isEqualToData:okmData], @"HKDF output matches long test vector");
 }
