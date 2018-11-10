@@ -18,40 +18,46 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property NSMutableDictionary *trustedKeys;
 
-@property ECKeyPair *_identityKeyPair;
-@property int _localRegistrationId;
+@property ECKeyPair *identityKeyPair;
+@property int localRegistrationId;
 
 @end
 
 @implementation AxolotlInMemoryStore
 
 
-# pragma mark General
+#pragma mark General
 
-- (instancetype)init{
+- (instancetype)init
+{
+    return [self initWithIdentityKeyPair:[Curve25519 generateKeyPair] localRegistrationId:arc4random() % 16380];
+}
+
+- (instancetype)initWithIdentityKeyPair:(ECKeyPair *)identityKeyPair localRegistrationId:(int)localRegistrationId
+{
     self = [super init];
-    
+
     if (self) {
-        self._identityKeyPair     = [Curve25519 generateKeyPair];
-        self._localRegistrationId = arc4random() % 16380;
-        
+        _identityKeyPair = identityKeyPair;
+        _localRegistrationId = localRegistrationId;
+
         _preKeyStore = [NSMutableDictionary dictionary];
         _signedPreKeyStore = [NSMutableDictionary dictionary];
         _trustedKeys = [NSMutableDictionary dictionary];
         _sessionRecords = [NSMutableDictionary dictionary];
     }
-    
+
     return self;
 }
 
-# pragma mark Signed PreKey Store
+#pragma mark Signed PreKey Store
 
 - (SignedPreKeyRecord *)throws_loadSignedPrekey:(int)signedPreKeyId
 {
     if (![[self.signedPreKeyStore allKeys] containsObject:[NSNumber numberWithInt:signedPreKeyId]]) {
         @throw [NSException exceptionWithName:InvalidKeyIdException reason:@"No such signedprekeyrecord" userInfo:nil];
     }
-    
+
     return [self.signedPreKeyStore objectForKey:[NSNumber numberWithInt:signedPreKeyId]];
 }
 
@@ -73,76 +79,84 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray<SignedPreKeyRecord *> *)loadSignedPreKeys
 {
     NSMutableArray *results = [NSMutableArray array];
-    
+
     for (SignedPreKeyRecord *signedPrekey in [self.signedPreKeyStore allValues]) {
         [results addObject:signedPrekey];
     }
-    
+
     return results;
 }
 
-- (void)storeSignedPreKey:(int)signedPreKeyId signedPreKeyRecord:(SignedPreKeyRecord *)signedPreKeyRecord{
+- (void)storeSignedPreKey:(int)signedPreKeyId signedPreKeyRecord:(SignedPreKeyRecord *)signedPreKeyRecord
+{
     [self.signedPreKeyStore setObject:signedPreKeyRecord forKey:[NSNumber numberWithInteger:signedPreKeyId]];
 }
 
-- (BOOL)containsSignedPreKey:(int)signedPreKeyId{
+- (BOOL)containsSignedPreKey:(int)signedPreKeyId
+{
     if ([[self.signedPreKeyStore allKeys] containsObject:[NSNumber numberWithInteger:signedPreKeyId]]) {
         return TRUE;
     }
-    
+
     return FALSE;
 }
 
-- (void)removeSignedPreKey:(int)signedPrekeyId{
+- (void)removeSignedPreKey:(int)signedPrekeyId
+{
     [self.signedPreKeyStore removeObjectForKey:[NSNumber numberWithInteger:signedPrekeyId]];
 }
 
-# pragma mark PreKey Store
+#pragma mark PreKey Store
 
 - (PreKeyRecord *)throws_loadPreKey:(int)preKeyId
 {
     if (![[self.preKeyStore allKeys] containsObject:[NSNumber numberWithInt:preKeyId]]) {
         @throw [NSException exceptionWithName:InvalidKeyIdException reason:@"No such signedprekeyrecord" userInfo:nil];
     }
-    
+
     return [self.preKeyStore objectForKey:[NSNumber numberWithInt:preKeyId]];
 }
 
-- (NSArray *)loadPreKeys{
+- (NSArray *)loadPreKeys
+{
     NSMutableArray *results = [NSMutableArray array];
-    
+
     for (PreKeyRecord *prekey in [self.preKeyStore allValues]) {
         [results addObject:prekey];
     }
-    
+
     return results;
 }
 
-- (void)storePreKey:(int)preKeyId preKeyRecord:(PreKeyRecord *)record{
+- (void)storePreKey:(int)preKeyId preKeyRecord:(PreKeyRecord *)record
+{
     [self.preKeyStore setObject:record forKey:[NSNumber numberWithInt:preKeyId]];
 }
 
-- (BOOL)containsPreKey:(int)preKeyId{
+- (BOOL)containsPreKey:(int)preKeyId
+{
     if ([[self.preKeyStore allKeys] containsObject:[NSNumber numberWithInteger:preKeyId]]) {
         return TRUE;
     }
-    
+
     return FALSE;
 }
 
-- (void)removePreKey:(int)preKeyId{
+- (void)removePreKey:(int)preKeyId
+{
     [self.preKeyStore removeObjectForKey:[NSNumber numberWithInt:preKeyId]];
 }
 
-# pragma mark IdentityKeyStore
+#pragma mark IdentityKeyStore
 
 - (nullable ECKeyPair *)identityKeyPair:(nullable id)protocolContext
 {
-    return __identityKeyPair;
+    return self.identityKeyPair;
 }
 
-- (int)localRegistrationId:(nullable id)protocolContext {
-    return __localRegistrationId;
+- (int)localRegistrationId:(nullable id)protocolContext
+{
+    return self.localRegistrationId;
 }
 
 - (BOOL)saveRemoteIdentity:(NSData *)identityKey
@@ -185,33 +199,33 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId
 {
-    return [self identityKeyForRecipientId:recipientId
-                           protocolContext:nil];
+    return [self identityKeyForRecipientId:recipientId protocolContext:nil];
 }
 
-- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId
-                               protocolContext:(nullable id)protocolContext
+- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId protocolContext:(nullable id)protocolContext
 {
     NSData *_Nullable data = [self.trustedKeys objectForKey:recipientId];
     return data;
 }
 
-# pragma mark Session Store
+#pragma mark Session Store
 
--(SessionRecord *)loadSession:(NSString *)contactIdentifier
-                     deviceId:(int)deviceId
-              protocolContext:(nullable id)protocolContext {
-    SessionRecord *sessionRecord = [[self deviceSessionRecordsForContactIdentifier:contactIdentifier] objectForKey:[NSNumber numberWithInteger:deviceId]];
-    
+- (SessionRecord *)loadSession:(NSString *)contactIdentifier
+                      deviceId:(int)deviceId
+               protocolContext:(nullable id)protocolContext
+{
+    SessionRecord *sessionRecord = [[self deviceSessionRecordsForContactIdentifier:contactIdentifier]
+        objectForKey:[NSNumber numberWithInteger:deviceId]];
+
     if (!sessionRecord) {
         sessionRecord = [SessionRecord new];
     }
-    
+
     return sessionRecord;
 }
 
-- (NSArray *)subDevicesSessions:(NSString *)contactIdentifier
-                protocolContext:(nullable id)protocolContext {
+- (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext
+{
     return [[self deviceSessionRecordsForContactIdentifier:contactIdentifier] allKeys];
 }
 
@@ -223,7 +237,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)storeSession:(NSString *)contactIdentifier
             deviceId:(int)deviceId
              session:(SessionRecord *)session
-     protocolContext:(nullable id)protocolContext {
+     protocolContext:(nullable id)protocolContext
+{
     NSAssert(session, @"Session can't be nil");
     NSMutableDictionary *deviceSessions = self.sessionRecords[contactIdentifier];
     if (!deviceSessions) {
@@ -236,9 +251,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)containsSession:(NSString *)contactIdentifier
                deviceId:(int)deviceId
-        protocolContext:(nullable id)protocolContext {
-    
-    if ([[self.sessionRecords objectForKey:contactIdentifier] objectForKey:[NSNumber numberWithInt:deviceId]]){
+        protocolContext:(nullable id)protocolContext
+{
+
+    if ([[self.sessionRecords objectForKey:contactIdentifier] objectForKey:[NSNumber numberWithInt:deviceId]]) {
         return YES;
     }
     return NO;
@@ -253,8 +269,7 @@ NS_ASSUME_NONNULL_BEGIN
     [sessions removeObjectForKey:@(deviceId)];
 }
 
-- (void)deleteAllSessionsForContact:(NSString *)contactIdentifier
-                    protocolContext:(nullable id)protocolContext
+- (void)deleteAllSessionsForContact:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext
 {
     [self.sessionRecords removeObjectForKey:contactIdentifier];
 }
