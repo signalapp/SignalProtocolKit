@@ -2,16 +2,15 @@
 //  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
-#import "AliceAxolotlParameters.h"
-#import "AxolotlInMemoryStore.h"
-#import "BobAxolotlParameters.h"
-#import "ChainKey.h"
-#import "RatchetingSession.h"
-#import "SessionBuilder.h"
-#import "SessionCipher.h"
-#import "SessionState.h"
+#import <AxolotlKit/AliceAxolotlParameters.h>
+#import <AxolotlKit/AxolotlInMemoryStore.h>
+#import <AxolotlKit/BobAxolotlParameters.h>
+#import <AxolotlKit/ChainKey.h>
+#import <AxolotlKit/RatchetingSession.h>
+#import <AxolotlKit/SessionBuilder.h>
+#import <AxolotlKit/SessionCipher.h>
+#import <AxolotlKit/SessionState.h>
 #import <Curve25519Kit/Curve25519.h>
-#import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
 @interface SessionCipherTest : XCTestCase

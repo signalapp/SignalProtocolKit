@@ -2,8 +2,8 @@
 //  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
-#import "AxolotlInMemoryStore.h"
 #import <AxolotlKit/AxolotlExceptions.h>
+#import <AxolotlKit/AxolotlInMemoryStore.h>
 #import <AxolotlKit/NSData+keyVersionByte.h>
 #import <AxolotlKit/SessionBuilder.h>
 #import <AxolotlKit/SessionCipher.h>
