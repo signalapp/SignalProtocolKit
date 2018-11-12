@@ -2,15 +2,15 @@
 //  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
-#import "AliceAxolotlParameters.h"
-#import "AxolotlInMemoryStore.h"
-#import "BobAxolotlParameters.h"
-#import "ChainKey.h"
 #import "ECKeyPair+ECKeyPairTesting.h"
-#import "RatchetingSession.h"
-#import "SessionCipher.h"
-#import "SessionRecord.h"
-#import "SessionState.h"
+#import <AxolotlKit/AliceAxolotlParameters.h>
+#import <AxolotlKit/BobAxolotlParameters.h>
+#import <AxolotlKit/ChainKey.h>
+#import <AxolotlKit/RatchetingSession.h>
+#import <AxolotlKit/SPKMockProtocolStore.h>
+#import <AxolotlKit/SessionCipher.h>
+#import <AxolotlKit/SessionRecord.h>
+#import <AxolotlKit/SessionState.h>
 #import <Curve25519Kit/Curve25519.h>
 #import <Curve25519Kit/Ed25519.h>
 #import <XCTest/XCTest.h>
@@ -315,8 +315,8 @@
 
     // ---
     
-    AxolotlInMemoryStore *aliceStore = [AxolotlInMemoryStore new];
-    AxolotlInMemoryStore *bobStore = [AxolotlInMemoryStore new];
+    SPKMockProtocolStore *aliceStore = [SPKMockProtocolStore new];
+    SPKMockProtocolStore *bobStore = [SPKMockProtocolStore new];
     
     SessionRecord *aliceSessionRecord = [SessionRecord new];
     SessionRecord *bobSessionRecord   = [SessionRecord new];
@@ -677,8 +677,8 @@
 
     // ---
     
-    AxolotlInMemoryStore *aliceStore = [AxolotlInMemoryStore new];
-    AxolotlInMemoryStore *bobStore = [AxolotlInMemoryStore new];
+    SPKMockProtocolStore *aliceStore = [SPKMockProtocolStore new];
+    SPKMockProtocolStore *bobStore = [SPKMockProtocolStore new];
     
     SessionRecord *aliceSessionRecord = [SessionRecord new];
     SessionRecord *bobSessionRecord   = [SessionRecord new];

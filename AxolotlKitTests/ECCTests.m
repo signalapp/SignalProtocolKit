@@ -5,7 +5,6 @@
 #import "ECKeyPair+ECKeyPairTesting.h"
 #import <Curve25519Kit/Curve25519.h>
 #import <Curve25519Kit/Ed25519.h>
-#import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
 @interface ECCTests : XCTestCase

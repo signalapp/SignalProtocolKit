@@ -3,7 +3,6 @@
 //
 
 #import <HKDFKit/HKDFKit.h>
-#import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
 @interface HKDFTest : XCTestCase

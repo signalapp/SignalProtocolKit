@@ -2,9 +2,9 @@
 //  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
-#import "AxolotlInMemoryStore.h"
 #import <AxolotlKit/AxolotlExceptions.h>
 #import <AxolotlKit/NSData+keyVersionByte.h>
+#import <AxolotlKit/SPKMockProtocolStore.h>
 #import <AxolotlKit/SessionBuilder.h>
 #import <AxolotlKit/SessionCipher.h>
 #import <Curve25519Kit/Ed25519.h>
@@ -47,10 +47,10 @@
     NSString *BOB_RECIPIENT_ID   = @"+3828923892";
     NSString *ALICE_RECIPIENT_ID = @"alice@gmail.com";
 
-    AxolotlInMemoryStore *aliceStore = [AxolotlInMemoryStore new];
+    SPKMockProtocolStore *aliceStore = [SPKMockProtocolStore new];
     SessionBuilder       *aliceSessionBuilder = [[SessionBuilder alloc] initWithAxolotlStore:aliceStore recipientId:BOB_RECIPIENT_ID deviceId:1];
     
-    AxolotlInMemoryStore *bobStore      = [AxolotlInMemoryStore new];
+    SPKMockProtocolStore *bobStore      = [SPKMockProtocolStore new];
     ECKeyPair *bobPreKeyPair            = [Curve25519 generateKeyPair];
     ECKeyPair *bobSignedPreKeyPair      = [Curve25519 generateKeyPair];
     NSData *bobSignedPreKeySignature =
@@ -99,10 +99,10 @@
     
     NSString *BOB_RECIPIENT_ID   = @"+3828923892";
     
-    AxolotlInMemoryStore *aliceStore = [AxolotlInMemoryStore new];
+    SPKMockProtocolStore *aliceStore = [SPKMockProtocolStore new];
     SessionBuilder       *aliceSessionBuilder = [[SessionBuilder alloc] initWithAxolotlStore:aliceStore recipientId:BOB_RECIPIENT_ID deviceId:1];
     
-    AxolotlInMemoryStore *bobStore      = [AxolotlInMemoryStore new];
+    SPKMockProtocolStore *bobStore      = [SPKMockProtocolStore new];
     ECKeyPair *bobIdentityKeyPair1 = [Curve25519 generateKeyPair];
     ECKeyPair *bobPreKeyPair1 = [Curve25519 generateKeyPair];
     ECKeyPair *bobSignedPreKeyPair1 = [Curve25519 generateKeyPair];
