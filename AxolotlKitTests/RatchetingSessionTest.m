@@ -4,10 +4,10 @@
 
 #import "ECKeyPair+ECKeyPairTesting.h"
 #import <AxolotlKit/AliceAxolotlParameters.h>
-#import <AxolotlKit/AxolotlInMemoryStore.h>
 #import <AxolotlKit/BobAxolotlParameters.h>
 #import <AxolotlKit/ChainKey.h>
 #import <AxolotlKit/RatchetingSession.h>
+#import <AxolotlKit/SPKMockProtocolStore.h>
 #import <AxolotlKit/SessionCipher.h>
 #import <AxolotlKit/SessionRecord.h>
 #import <AxolotlKit/SessionState.h>
@@ -315,8 +315,8 @@
 
     // ---
     
-    AxolotlInMemoryStore *aliceStore = [AxolotlInMemoryStore new];
-    AxolotlInMemoryStore *bobStore = [AxolotlInMemoryStore new];
+    SPKMockProtocolStore *aliceStore = [SPKMockProtocolStore new];
+    SPKMockProtocolStore *bobStore = [SPKMockProtocolStore new];
     
     SessionRecord *aliceSessionRecord = [SessionRecord new];
     SessionRecord *bobSessionRecord   = [SessionRecord new];
@@ -677,8 +677,8 @@
 
     // ---
     
-    AxolotlInMemoryStore *aliceStore = [AxolotlInMemoryStore new];
-    AxolotlInMemoryStore *bobStore = [AxolotlInMemoryStore new];
+    SPKMockProtocolStore *aliceStore = [SPKMockProtocolStore new];
+    SPKMockProtocolStore *bobStore = [SPKMockProtocolStore new];
     
     SessionRecord *aliceSessionRecord = [SessionRecord new];
     SessionRecord *bobSessionRecord   = [SessionRecord new];

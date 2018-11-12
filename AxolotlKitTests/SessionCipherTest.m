@@ -3,10 +3,10 @@
 //
 
 #import <AxolotlKit/AliceAxolotlParameters.h>
-#import <AxolotlKit/AxolotlInMemoryStore.h>
 #import <AxolotlKit/BobAxolotlParameters.h>
 #import <AxolotlKit/ChainKey.h>
 #import <AxolotlKit/RatchetingSession.h>
+#import <AxolotlKit/SPKMockProtocolStore.h>
 #import <AxolotlKit/SessionBuilder.h>
 #import <AxolotlKit/SessionCipher.h>
 #import <AxolotlKit/SessionState.h>
@@ -17,8 +17,8 @@
 
 @property (nonatomic, readonly) NSString *aliceIdentifier;
 @property (nonatomic, readonly) NSString *bobIdentifier;
-@property (nonatomic, readonly) AxolotlInMemoryStore *aliceStore;
-@property (nonatomic, readonly) AxolotlInMemoryStore *bobStore;
+@property (nonatomic, readonly) SPKMockProtocolStore *aliceStore;
+@property (nonatomic, readonly) SPKMockProtocolStore *bobStore;
 
 @end
 
@@ -36,8 +36,8 @@
 
 - (void)setUp {
     [super setUp];
-    _aliceStore = [AxolotlInMemoryStore new];
-    _bobStore = [AxolotlInMemoryStore new];
+    _aliceStore = [SPKMockProtocolStore new];
+    _bobStore = [SPKMockProtocolStore new];
 }
 
 - (void)tearDown {

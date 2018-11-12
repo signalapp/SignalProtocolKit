@@ -6,7 +6,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AxolotlInMemoryStore : NSObject <AxolotlStore>
+@interface SPKMockProtocolStore : NSObject <AxolotlStore>
 
 - (instancetype)initWithIdentityKeyPair:(ECKeyPair *)identityKeyPair
                     localRegistrationId:(int)localRegistrationId NS_DESIGNATED_INITIALIZER;

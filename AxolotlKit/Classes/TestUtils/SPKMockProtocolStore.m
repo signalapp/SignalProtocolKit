@@ -2,12 +2,12 @@
 //  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
 //
 
-#import "AxolotlInMemoryStore.h"
+#import "SPKMockProtocolStore.h"
 #import "AxolotlExceptions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AxolotlInMemoryStore ()
+@interface SPKMockProtocolStore ()
 
 @property NSMutableDictionary<NSString *, NSMutableDictionary *> *sessionRecords;
 
@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@implementation AxolotlInMemoryStore
+@implementation SPKMockProtocolStore
 
 
 #pragma mark General
