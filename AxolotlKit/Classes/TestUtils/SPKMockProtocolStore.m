@@ -126,19 +126,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark IdentityKeyStore
 
-- (nullable ECKeyPair *)identityKeyPair:(nullable id)protocolContext
+- (nullable ECKeyPair *)identityKeyPair:(nullable id<ProtocolContext>)protocolContext
 {
     return self.identityKeyPair;
 }
 
-- (int)localRegistrationId:(nullable id)protocolContext
+- (int)localRegistrationId:(nullable id<ProtocolContext>)protocolContext
 {
     return self.localRegistrationId;
 }
 
 - (BOOL)saveRemoteIdentity:(NSData *)identityKey
                recipientId:(NSString *)recipientId
-           protocolContext:(nullable id)protocolContext
+           protocolContext:(nullable id<ProtocolContext>)protocolContext
 {
     NSData *existingKey = [self.trustedKeys objectForKey:recipientId];
 
@@ -153,7 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isTrustedIdentityKey:(NSData *)identityKey
                  recipientId:(NSString *)recipientId
                    direction:(TSMessageDirection)direction
-             protocolContext:(nullable id)protocolContext
+             protocolContext:(nullable id<ProtocolContext>)protocolContext
 {
     NSData *data = [self.trustedKeys objectForKey:recipientId];
     if (!data) {
@@ -179,7 +179,7 @@ NS_ASSUME_NONNULL_BEGIN
     return [self identityKeyForRecipientId:recipientId protocolContext:nil];
 }
 
-- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId protocolContext:(nullable id)protocolContext
+- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId protocolContext:(nullable id<ProtocolContext>)protocolContext
 {
     NSData *_Nullable data = [self.trustedKeys objectForKey:recipientId];
     return data;
@@ -189,7 +189,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (SessionRecord *)loadSession:(NSString *)contactIdentifier
                       deviceId:(int)deviceId
-               protocolContext:(nullable id)protocolContext
+               protocolContext:(nullable id<ProtocolContext>)protocolContext
 {
     SessionRecord *sessionRecord = [[self deviceSessionRecordsForContactIdentifier:contactIdentifier]
         objectForKey:[NSNumber numberWithInteger:deviceId]];
@@ -201,7 +201,7 @@ NS_ASSUME_NONNULL_BEGIN
     return sessionRecord;
 }
 
-- (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext
+- (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id<ProtocolContext>)protocolContext
 {
     return [[self deviceSessionRecordsForContactIdentifier:contactIdentifier] allKeys];
 }
@@ -214,7 +214,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)storeSession:(NSString *)contactIdentifier
             deviceId:(int)deviceId
              session:(SessionRecord *)session
-     protocolContext:(nullable id)protocolContext
+     protocolContext:(nullable id<ProtocolContext>)protocolContext
 {
     NSAssert(session, @"Session can't be nil");
     NSMutableDictionary *deviceSessions = self.sessionRecords[contactIdentifier];
@@ -228,7 +228,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)containsSession:(NSString *)contactIdentifier
                deviceId:(int)deviceId
-        protocolContext:(nullable id)protocolContext
+        protocolContext:(nullable id<ProtocolContext>)protocolContext
 {
 
     if ([[self.sessionRecords objectForKey:contactIdentifier] objectForKey:[NSNumber numberWithInt:deviceId]]) {
@@ -239,14 +239,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)deleteSessionForContact:(NSString *)contactIdentifier
                        deviceId:(int)deviceId
-                protocolContext:(nullable id)protocolContext
+                protocolContext:(nullable id<ProtocolContext>)protocolContext
 {
     NSMutableDictionary<NSNumber *, SessionRecord *> *sessions =
         [self deviceSessionRecordsForContactIdentifier:contactIdentifier];
     [sessions removeObjectForKey:@(deviceId)];
 }
 
-- (void)deleteAllSessionsForContact:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext
+- (void)deleteAllSessionsForContact:(NSString *)contactIdentifier protocolContext:(nullable id<ProtocolContext>)protocolContext
 {
     [self.sessionRecords removeObjectForKey:contactIdentifier];
 }

@@ -4,6 +4,7 @@
 
 #import "SessionRecord.h"
 #import <Foundation/Foundation.h>
+#import "ProtocolContext.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,24 +21,24 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (SessionRecord *)loadSession:(NSString *)contactIdentifier
                       deviceId:(int)deviceId
-               protocolContext:(nullable id)protocolContext;
+               protocolContext:(nullable id<ProtocolContext>)protocolContext;
 
-- (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext __attribute__((deprecated));
+- (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id<ProtocolContext>)protocolContext __attribute__((deprecated));
 
 - (void)storeSession:(NSString *)contactIdentifier
             deviceId:(int)deviceId
              session:(SessionRecord *)session
-     protocolContext:(nullable id)protocolContext;
+     protocolContext:(nullable id<ProtocolContext>)protocolContext;
 
 - (BOOL)containsSession:(NSString *)contactIdentifier
                deviceId:(int)deviceId
-        protocolContext:(nullable id)protocolContext;
+        protocolContext:(nullable id<ProtocolContext>)protocolContext;
 
 - (void)deleteSessionForContact:(NSString *)contactIdentifier
                        deviceId:(int)deviceId
-                protocolContext:(nullable id)protocolContext;
+                protocolContext:(nullable id<ProtocolContext>)protocolContext;
 
-- (void)deleteAllSessionsForContact:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext;
+- (void)deleteAllSessionsForContact:(NSString *)contactIdentifier protocolContext:(nullable id<ProtocolContext>)protocolContext;
 
 @end
 

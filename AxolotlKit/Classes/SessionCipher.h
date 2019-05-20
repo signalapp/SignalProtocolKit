@@ -6,6 +6,7 @@
 #import "IdentityKeyStore.h"
 #import "PreKeyStore.h"
 #import "PreKeyWhisperMessage.h"
+#import "ProtocolContext.h"
 #import "SessionState.h"
 #import "SessionStore.h"
 #import "SignedPreKeyStore.h"
@@ -24,20 +25,20 @@ NS_ASSUME_NONNULL_BEGIN
 // identity and session store writes are coordinated and/or occur within a single
 // transaction.
 - (id<CipherMessage>)throws_encryptMessage:(NSData *)paddedMessage
-                           protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+                           protocolContext:(nullable id<ProtocolContext>)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 - (nullable id<CipherMessage>)encryptMessage:(NSData *)paddedMessage
-                             protocolContext:(nullable id)protocolContext
+                             protocolContext:(nullable id<ProtocolContext>)protocolContext
                                        error:(NSError **)outError;
 
 - (NSData *)throws_decrypt:(id<CipherMessage>)whisperMessage
-           protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+           protocolContext:(nullable id<ProtocolContext>)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 - (nullable NSData *)decrypt:(id<CipherMessage>)whisperMessage
-             protocolContext:(nullable id)protocolContext
+             protocolContext:(nullable id<ProtocolContext>)protocolContext
                        error:(NSError **)outError;
 
-- (int)throws_remoteRegistrationId:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (int)throws_remoteRegistrationId:(nullable id<ProtocolContext>)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
-- (int)throws_sessionVersion:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (int)throws_sessionVersion:(nullable id<ProtocolContext>)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 

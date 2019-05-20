@@ -6,6 +6,7 @@
 #import "IdentityKeyStore.h"
 #import "PreKeyBundle.h"
 #import "PreKeyStore.h"
+#import "ProtocolContext.h"
 #import "SessionStore.h"
 #import "SignedPreKeyStore.h"
 #import <Foundation/Foundation.h>
@@ -30,14 +31,14 @@ extern const int kPreKeyOfLastResortId;
                             deviceId:(int)deviceId;
 
 - (void)throws_processPrekeyBundle:(PreKeyBundle *)preKeyBundle
-                   protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+                   protocolContext:(nullable id<ProtocolContext>)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 - (BOOL)processPrekeyBundle:(PreKeyBundle *)preKeyBundle
-            protocolContext:(nullable id)protocolContext
+            protocolContext:(nullable id<ProtocolContext>)protocolContext
                       error:(NSError **)outError;
 
 - (int)throws_processPrekeyWhisperMessage:(PreKeyWhisperMessage *)message
                               withSession:(SessionRecord *)sessionRecord
-                          protocolContext:(nullable id)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+                          protocolContext:(nullable id<ProtocolContext>)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 
