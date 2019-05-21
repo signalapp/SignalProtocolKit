@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2019 Open Whisper Systems. All rights reserved.
 //
 
 #import "SignedPrekeyRecord.h"
@@ -9,9 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SignedPreKeyStore <NSObject>
 
-- (SignedPreKeyRecord *)throws_loadSignedPrekey:(int)signedPreKeyId NS_SWIFT_UNAVAILABLE("throws objc exceptions");
-
-- (nullable SignedPreKeyRecord *)loadSignedPrekeyOrNil:(int)signedPreKeyId;
+- (nullable SignedPreKeyRecord *)loadSignedPreKey:(int)signedPreKeyId;
 
 - (NSArray<SignedPreKeyRecord *> *)loadSignedPreKeys;
 
@@ -19,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)containsSignedPreKey:(int)signedPreKeyId;
 
-- (void)removeSignedPreKey:(int)signedPrekeyId;
+- (void)removeSignedPreKey:(int)signedPreKeyId;
 
 @end
 

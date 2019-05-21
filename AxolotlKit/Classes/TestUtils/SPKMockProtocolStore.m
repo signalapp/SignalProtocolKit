@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2019 Open Whisper Systems. All rights reserved.
 //
 
 #import "SPKMockProtocolStore.h"
@@ -52,28 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Signed PreKey Store
 
-- (SignedPreKeyRecord *)throws_loadSignedPrekey:(int)signedPreKeyId
+- (nullable SignedPreKeyRecord *)loadSignedPreKey:(int)signedPreKeyId
 {
-    if (![[self.signedPreKeyStore allKeys] containsObject:[NSNumber numberWithInt:signedPreKeyId]]) {
-        @throw [NSException exceptionWithName:InvalidKeyIdException reason:@"No such signedprekeyrecord" userInfo:nil];
-    }
-
     return [self.signedPreKeyStore objectForKey:[NSNumber numberWithInt:signedPreKeyId]];
-}
-
-- (nullable SignedPreKeyRecord *)loadSignedPrekeyOrNil:(int)signedPreKeyId
-{
-    if ([self containsSignedPreKey:signedPreKeyId]) {
-        @try {
-            // Given that we've checked for `contains` this really shouldn't fail.
-            return [self throws_loadSignedPrekey:signedPreKeyId];
-        } @catch (NSException *exception) {
-            OWSFailDebug(@"unexpected exception: %@", exception);
-            return nil;
-        }
-    } else {
-        return nil;
-    }
 }
 
 - (NSArray<SignedPreKeyRecord *> *)loadSignedPreKeys
@@ -101,19 +82,15 @@ NS_ASSUME_NONNULL_BEGIN
     return FALSE;
 }
 
-- (void)removeSignedPreKey:(int)signedPrekeyId
+- (void)removeSignedPreKey:(int)signedPreKeyId
 {
-    [self.signedPreKeyStore removeObjectForKey:[NSNumber numberWithInteger:signedPrekeyId]];
+    [self.signedPreKeyStore removeObjectForKey:[NSNumber numberWithInteger:signedPreKeyId]];
 }
 
 #pragma mark PreKey Store
 
-- (PreKeyRecord *)throws_loadPreKey:(int)preKeyId
+- (nullable PreKeyRecord *)loadPreKey:(int)preKeyId
 {
-    if (![[self.preKeyStore allKeys] containsObject:[NSNumber numberWithInt:preKeyId]]) {
-        @throw [NSException exceptionWithName:InvalidKeyIdException reason:@"No such signedprekeyrecord" userInfo:nil];
-    }
-
     return [self.preKeyStore objectForKey:[NSNumber numberWithInt:preKeyId]];
 }
 
