@@ -1,9 +1,9 @@
 //
-//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2019 Open Whisper Systems. All rights reserved.
 //
 
+#import "SPKProtocolContext.h"
 #import <Foundation/Foundation.h>
-#import "ProtocolContext.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,9 +18,9 @@ typedef NS_ENUM(NSInteger, TSMessageDirection) {
 // See a discussion of the protocolContext in SessionCipher.h.
 @protocol IdentityKeyStore <NSObject>
 
-- (nullable ECKeyPair *)identityKeyPair:(nullable id<ProtocolContext>)protocolContext;
+- (nullable ECKeyPair *)identityKeyPair:(nullable id<SPKProtocolWriteContext>)protocolContext;
 
-- (int)localRegistrationId:(nullable id<ProtocolContext>)protocolContext;
+- (int)localRegistrationId:(nullable id<SPKProtocolWriteContext>)protocolContext;
 
 /**
  * Record a recipients identity key
@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, TSMessageDirection) {
  */
 - (BOOL)saveRemoteIdentity:(NSData *)identityKey
                recipientId:(NSString *)recipientId
-           protocolContext:(nullable id<ProtocolContext>)protocolContext;
+           protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
 
 /**
  * @param   identityKey key data used to identify the recipient
@@ -47,11 +47,11 @@ typedef NS_ENUM(NSInteger, TSMessageDirection) {
 - (BOOL)isTrustedIdentityKey:(NSData *)identityKey
                  recipientId:(NSString *)recipientId
                    direction:(TSMessageDirection)direction
-             protocolContext:(nullable id<ProtocolContext>)protocolContext;
+             protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
 
 - (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId;
 
-- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId protocolContext:(nullable id<ProtocolContext>)protocolContext;
+- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
 
 @end
 
