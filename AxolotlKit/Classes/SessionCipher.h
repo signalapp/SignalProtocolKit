@@ -36,9 +36,11 @@ NS_ASSUME_NONNULL_BEGIN
              protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
                        error:(NSError **)outError;
 
-- (int)throws_remoteRegistrationId:(nullable id<SPKProtocolWriteContext>)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (int)throws_remoteRegistrationId:(nullable id<SPKProtocolReadContext>)protocolContext
+    NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
-- (int)throws_sessionVersion:(nullable id<SPKProtocolWriteContext>)protocolContext NS_SWIFT_UNAVAILABLE("throws objc exceptions");
+- (int)throws_sessionVersion:(nullable id<SPKProtocolReadContext>)protocolContext
+    NS_SWIFT_UNAVAILABLE("throws objc exceptions");
 
 @end
 

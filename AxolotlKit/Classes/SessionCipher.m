@@ -484,7 +484,7 @@ NS_ASSUME_NONNULL_BEGIN
     return versionByte;
 }
 
-- (int)throws_remoteRegistrationId:(nullable id<SPKProtocolWriteContext>)protocolContext
+- (int)throws_remoteRegistrationId:(nullable id<SPKProtocolReadContext>)protocolContext
 {
     SessionRecord *_Nullable record =
         [self.sessionStore loadSession:self.recipientId deviceId:_deviceId protocolContext:protocolContext];
@@ -496,7 +496,7 @@ NS_ASSUME_NONNULL_BEGIN
     return record.sessionState.remoteRegistrationId;
 }
 
-- (int)throws_sessionVersion:(nullable id<SPKProtocolWriteContext>)protocolContext
+- (int)throws_sessionVersion:(nullable id<SPKProtocolReadContext>)protocolContext
 {
     SessionRecord *_Nullable record =
         [self.sessionStore loadSession:self.recipientId deviceId:_deviceId protocolContext:protocolContext];

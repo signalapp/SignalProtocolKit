@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (SessionRecord *)loadSession:(NSString *)contactIdentifier
                       deviceId:(int)deviceId
-               protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
+               protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext;
 
 - (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext __attribute__((deprecated));
 
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)containsSession:(NSString *)contactIdentifier
                deviceId:(int)deviceId
-        protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
+        protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext;
 
 - (void)deleteSessionForContact:(NSString *)contactIdentifier
                        deviceId:(int)deviceId

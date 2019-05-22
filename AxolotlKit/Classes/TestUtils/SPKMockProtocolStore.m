@@ -179,7 +179,8 @@ NS_ASSUME_NONNULL_BEGIN
     return [self identityKeyForRecipientId:recipientId protocolContext:nil];
 }
 
-- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
+- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId
+                               protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext
 {
     NSData *_Nullable data = [self.trustedKeys objectForKey:recipientId];
     return data;
@@ -201,10 +202,13 @@ NS_ASSUME_NONNULL_BEGIN
     return sessionRecord;
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 - (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     return [[self deviceSessionRecordsForContactIdentifier:contactIdentifier] allKeys];
 }
+#pragma clang diagnostic pop
 
 - (NSMutableDictionary *)deviceSessionRecordsForContactIdentifier:(NSString *)contactIdentifier
 {

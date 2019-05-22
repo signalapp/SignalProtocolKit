@@ -47,11 +47,12 @@ typedef NS_ENUM(NSInteger, TSMessageDirection) {
 - (BOOL)isTrustedIdentityKey:(NSData *)identityKey
                  recipientId:(NSString *)recipientId
                    direction:(TSMessageDirection)direction
-             protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
+             protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext;
 
 - (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId;
 
-- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
+- (nullable NSData *)identityKeyForRecipientId:(NSString *)recipientId
+                               protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext;
 
 @end
 

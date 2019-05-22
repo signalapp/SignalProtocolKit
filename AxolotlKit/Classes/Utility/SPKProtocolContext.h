@@ -6,7 +6,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol SPKProtocolWriteContext <NSObject>
+@protocol SPKProtocolReadContext <NSObject>
+
+@end
+
+@protocol SPKProtocolWriteContext <SPKProtocolReadContext>
 
 @end
 
