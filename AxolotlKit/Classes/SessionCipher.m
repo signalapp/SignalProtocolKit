@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2019 Open Whisper Systems. All rights reserved.
 //
 
 #import "SessionCipher.h"
@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (nullable id<CipherMessage>)encryptMessage:(NSData *)paddedMessage
-                             protocolContext:(nullable id)protocolContext
+                             protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
                                        error:(NSError **)outError
 {
     __block id<CipherMessage> result;
@@ -94,7 +94,7 @@ NS_ASSUME_NONNULL_BEGIN
     return result;
 }
 
-- (id<CipherMessage>)throws_encryptMessage:(NSData *)paddedMessage protocolContext:(nullable id)protocolContext
+- (id<CipherMessage>)throws_encryptMessage:(NSData *)paddedMessage protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     OWSAssert(paddedMessage);
 
@@ -160,7 +160,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (nullable NSData *)decrypt:(id<CipherMessage>)whisperMessage
-             protocolContext:(nullable id)protocolContext
+             protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
                        error:(NSError **)outError
 {
     __block NSData *_Nullable result;
@@ -173,7 +173,7 @@ NS_ASSUME_NONNULL_BEGIN
     return result;
 }
 
-- (NSData *)throws_decrypt:(id<CipherMessage>)whisperMessage protocolContext:(nullable id)protocolContext
+- (NSData *)throws_decrypt:(id<CipherMessage>)whisperMessage protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     OWSAssert(whisperMessage);
 
@@ -198,7 +198,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSData *)throws_decryptPreKeyWhisperMessage:(PreKeyWhisperMessage *)preKeyWhisperMessage
-                               protocolContext:(nullable id)protocolContext
+                               protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     OWSAssert(preKeyWhisperMessage);
 
@@ -224,7 +224,7 @@ NS_ASSUME_NONNULL_BEGIN
     return plaintext;
 }
 
-- (NSData *)throws_decryptWhisperMessage:(WhisperMessage *)whisperMessage protocolContext:(nullable id)protocolContext
+- (NSData *)throws_decryptWhisperMessage:(WhisperMessage *)whisperMessage protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     OWSAssert(whisperMessage);
 
@@ -258,7 +258,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSData *)throws_decryptWithSessionRecord:(SessionRecord *)sessionRecord
                              whisperMessage:(WhisperMessage *)whisperMessage
-                            protocolContext:(nullable id)protocolContext
+                            protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     OWSAssert(sessionRecord);
     OWSAssert(whisperMessage);
@@ -334,7 +334,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSData *)throws_decryptWithSessionState:(SessionState *)sessionState
                             whisperMessage:(WhisperMessage *)whisperMessage
-                           protocolContext:(nullable id)protocolContext
+                           protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     OWSAssert(sessionState);
     OWSAssert(whisperMessage);
@@ -484,7 +484,7 @@ NS_ASSUME_NONNULL_BEGIN
     return versionByte;
 }
 
-- (int)throws_remoteRegistrationId:(nullable id)protocolContext
+- (int)throws_remoteRegistrationId:(nullable id<SPKProtocolReadContext>)protocolContext
 {
     SessionRecord *_Nullable record =
         [self.sessionStore loadSession:self.recipientId deviceId:_deviceId protocolContext:protocolContext];
@@ -496,7 +496,7 @@ NS_ASSUME_NONNULL_BEGIN
     return record.sessionState.remoteRegistrationId;
 }
 
-- (int)throws_sessionVersion:(nullable id)protocolContext
+- (int)throws_sessionVersion:(nullable id<SPKProtocolReadContext>)protocolContext
 {
     SessionRecord *_Nullable record =
         [self.sessionStore loadSession:self.recipientId deviceId:_deviceId protocolContext:protocolContext];

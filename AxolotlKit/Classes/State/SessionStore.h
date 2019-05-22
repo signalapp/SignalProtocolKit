@@ -1,7 +1,8 @@
 //
-//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2019 Open Whisper Systems. All rights reserved.
 //
 
+#import "SPKProtocolContext.h"
 #import "SessionRecord.h"
 #import <Foundation/Foundation.h>
 
@@ -20,24 +21,24 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (SessionRecord *)loadSession:(NSString *)contactIdentifier
                       deviceId:(int)deviceId
-               protocolContext:(nullable id)protocolContext;
+               protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext;
 
-- (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext __attribute__((deprecated));
+- (NSArray *)subDevicesSessions:(NSString *)contactIdentifier protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext __attribute__((deprecated));
 
 - (void)storeSession:(NSString *)contactIdentifier
             deviceId:(int)deviceId
              session:(SessionRecord *)session
-     protocolContext:(nullable id)protocolContext;
+     protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
 
 - (BOOL)containsSession:(NSString *)contactIdentifier
                deviceId:(int)deviceId
-        protocolContext:(nullable id)protocolContext;
+        protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext;
 
 - (void)deleteSessionForContact:(NSString *)contactIdentifier
                        deviceId:(int)deviceId
-                protocolContext:(nullable id)protocolContext;
+                protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
 
-- (void)deleteAllSessionsForContact:(NSString *)contactIdentifier protocolContext:(nullable id)protocolContext;
+- (void)deleteAllSessionsForContact:(NSString *)contactIdentifier protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
 
 @end
 

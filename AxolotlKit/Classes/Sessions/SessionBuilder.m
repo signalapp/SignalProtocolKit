@@ -80,7 +80,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 }
 
 - (BOOL)processPrekeyBundle:(PreKeyBundle *)preKeyBundle
-            protocolContext:(nullable id)protocolContext
+            protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
                       error:(NSError **)outError
 {
     return [SCKExceptionWrapper
@@ -90,7 +90,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
            error:outError];
 }
 
-- (void)throws_processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id)protocolContext
+- (void)throws_processPrekeyBundle:(PreKeyBundle *)preKeyBundle protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     OWSAssert(preKeyBundle);
 
@@ -161,7 +161,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 
 - (int)throws_processPrekeyWhisperMessage:(PreKeyWhisperMessage *)message
                               withSession:(SessionRecord *)sessionRecord
-                          protocolContext:(nullable id)protocolContext
+                          protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     OWSAssert(message);
     OWSAssert(sessionRecord);
@@ -197,7 +197,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 
 - (int)throws_processPrekeyV3:(PreKeyWhisperMessage *)message
                   withSession:(SessionRecord *)sessionRecord
-              protocolContext:(nullable id)protocolContext
+              protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     OWSAssert(message);
     OWSAssert(sessionRecord);
