@@ -1,13 +1,10 @@
 //
-//  AxolotlKeyFetch.m
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 21/07/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2019 Open Whisper Systems. All rights reserved.
 //
 
 #import "PreKeyBundle.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 static NSString* const kCoderPKBIdentityKey           = @"kCoderPKBIdentityKey";
 static NSString* const kCoderPKBregistrationId        = @"kCoderPKBregistrationId";
@@ -62,7 +59,8 @@ static NSString* const kCoderPKBsignedPreKeySignature = @"kCoderPKBsignedPreKeyS
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder{
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
+{
     int registrationId            = [aDecoder decodeIntForKey:kCoderPKBregistrationId];
     int deviceId                  = [aDecoder decodeIntForKey:kCoderPKBdeviceId];
     int preKeyId                  = [aDecoder decodeIntForKey:kCoderPKBpreKeyId];
@@ -103,3 +101,5 @@ static NSString* const kCoderPKBsignedPreKeySignature = @"kCoderPKBsignedPreKeyS
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

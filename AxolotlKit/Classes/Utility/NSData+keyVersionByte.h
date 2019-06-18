@@ -1,8 +1,10 @@
 //
-//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2019 Open Whisper Systems. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface NSData (keyVersionByte)
 
@@ -12,3 +14,5 @@
 - (nullable instancetype)removeKeyTypeAndReturnError:(NSError **)outError;
 
 @end
+
+NS_ASSUME_NONNULL_END

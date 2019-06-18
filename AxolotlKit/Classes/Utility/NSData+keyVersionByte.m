@@ -1,10 +1,12 @@
 //
-//  Copyright (c) 2018 Open Whisper Systems. All rights reserved.
+//  Copyright (c) 2019 Open Whisper Systems. All rights reserved.
 //
 
 #import "NSData+keyVersionByte.h"
 #import "AxolotlExceptions.h"
 #import <SignalCoreKit/SCKExceptionWrapper.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSData (keyVersionByte)
 
@@ -46,3 +48,5 @@ const Byte DJB_TYPE = 0x05;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
