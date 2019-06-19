@@ -1,12 +1,10 @@
 //
-//  AxolotlKeyFetch.h
-//  AxolotlKit
-//
-//  Created by Frederic Jacobs on 21/07/14.
-//  Copyright (c) 2014 Frederic Jacobs. All rights reserved.
+//  Copyright (c) 2019 Open Whisper Systems. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface PreKeyBundle : NSObject <NSSecureCoding>
 
@@ -29,3 +27,5 @@
                                     identityKey:(NSData *)identityKey;
 
 @end
+
+NS_ASSUME_NONNULL_END
