@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.source_files          = "AxolotlKit/Classes/**/*.{h,m,swift}", "AxolotlKit/Private/*.{h,m,swift}"
   s.public_header_files   = "AxolotlKit/Classes/**/*.{h}"
   s.prefix_header_file    = "AxolotlKit/SPKPrefix.h"
-  s.ios.deployment_target = "9.0"
+  s.ios.deployment_target = "10.0"
   s.osx.deployment_target = "10.8"
   s.requires_arc          = true
   
