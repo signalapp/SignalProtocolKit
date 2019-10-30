@@ -110,16 +110,8 @@ NS_ASSUME_NONNULL_BEGIN
     [self.preKeyStore setObject:record forKey:[NSNumber numberWithInt:preKeyId]];
 }
 
-- (BOOL)containsPreKey:(int)preKeyId
-{
-    if ([[self.preKeyStore allKeys] containsObject:[NSNumber numberWithInteger:preKeyId]]) {
-        return TRUE;
-    }
-
-    return FALSE;
-}
-
 - (void)removePreKey:(int)preKeyId
+     protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     [self.preKeyStore removeObjectForKey:[NSNumber numberWithInt:preKeyId]];
 }

@@ -13,9 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)storePreKey:(int)preKeyId preKeyRecord:(PreKeyRecord *)record;
 
-- (BOOL)containsPreKey:(int)preKeyId;
-
-- (void)removePreKey:(int)preKeyId;
+- (void)removePreKey:(int)preKeyId
+     protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
 
 @end
 
