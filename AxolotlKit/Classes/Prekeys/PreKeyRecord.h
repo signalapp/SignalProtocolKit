@@ -10,7 +10,12 @@
 
 @property (nonatomic, readonly) int       Id;
 @property (nonatomic, readonly) ECKeyPair *keyPair;
+@property (nonatomic, readonly, nullable) NSDate *createdAt;
 
-- (instancetype)initWithId:(int)identifier keyPair:(ECKeyPair*)keyPair;
+- (instancetype)initWithId:(int)identifier
+                   keyPair:(ECKeyPair*)keyPair
+                 createdAt:(NSDate *)createdAt;
+
+- (void)setCreatedAtToNow;
 
 @end

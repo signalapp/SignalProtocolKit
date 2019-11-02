@@ -69,6 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
         _deviceId = deviceId;
         _sessionStore = sessionStore;
         _identityKeyStore = identityKeyStore;
+        _prekeyStore = preKeyStore;
         _sessionBuilder = [[SessionBuilder alloc] initWithSessionStore:sessionStore
                                                            preKeyStore:preKeyStore
                                                      signedPreKeyStore:signedPreKeyStore
@@ -218,7 +219,8 @@ NS_ASSUME_NONNULL_BEGIN
 
     // If there was an unsigned PreKey
     if (unsignedPreKeyId >= 0) {
-        [self.prekeyStore removePreKey:unsignedPreKeyId];
+        [self.prekeyStore removePreKey:unsignedPreKeyId
+                       protocolContext:protocolContext];
     }
     
     return plaintext;

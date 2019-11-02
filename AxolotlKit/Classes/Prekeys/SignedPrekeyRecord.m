@@ -26,7 +26,9 @@ static NSString *const kCoderPreKeyWasAcceptedByService = @"kCoderPreKeyWasAccep
     OWSAssert(signature);
     OWSAssert(generatedAt);
 
-    self = [super initWithId:identifier keyPair:keyPair];
+    self = [super initWithId:identifier
+                     keyPair:keyPair
+                   createdAt:generatedAt];
 
     if (self) {
         _signature = signature;
@@ -38,7 +40,9 @@ static NSString *const kCoderPreKeyWasAcceptedByService = @"kCoderPreKeyWasAccep
 }
 
 - (instancetype)initWithId:(int)identifier keyPair:(ECKeyPair *)keyPair signature:(NSData*)signature generatedAt:(NSDate *)generatedAt{
-    self = [super initWithId:identifier keyPair:keyPair];
+    self = [super initWithId:identifier
+                     keyPair:keyPair
+                   createdAt:generatedAt];
     
     if (self) {
         _signature = signature;
