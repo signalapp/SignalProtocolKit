@@ -80,7 +80,9 @@
     XCTAssert([outgoingMessage isKindOfClass:[PreKeyWhisperMessage class]], @"Message should be PreKey type");
     
     PreKeyWhisperMessage *incomingMessage = (PreKeyWhisperMessage*)outgoingMessage;
-    [bobStore storePreKey:31337 preKeyRecord:[[PreKeyRecord alloc] initWithId:bobPreKey.preKeyId keyPair:bobPreKeyPair]];
+    [bobStore storePreKey:31337 preKeyRecord:[[PreKeyRecord alloc] initWithId:bobPreKey.preKeyId
+                                                                      keyPair:bobPreKeyPair
+                                                                    createdAt:[NSDate date]]];
     [bobStore storeSignedPreKey:22 signedPreKeyRecord:[[SignedPreKeyRecord alloc] initWithId:22 keyPair:bobSignedPreKeyPair signature:bobSignedPreKeySignature generatedAt:[NSDate date]]];
     
     SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:ALICE_RECIPIENT_ID deviceId:1];
