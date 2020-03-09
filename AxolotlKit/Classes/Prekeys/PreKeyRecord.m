@@ -8,6 +8,8 @@
 
 #import "PreKeyRecord.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 static NSString* const kCoderPreKeyId        = @"kCoderPreKeyId";
 static NSString* const kCoderPreKeyPair      = @"kCoderPreKeyPair";
 static NSString* const kCoderCreatedAt       = @"kCoderCreatedAt";
@@ -35,7 +37,7 @@ static NSString* const kCoderCreatedAt       = @"kCoderCreatedAt";
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
+- (nullable id)initWithCoder:(NSCoder *)aDecoder {
     return [self initWithId:[aDecoder decodeIntForKey:kCoderPreKeyId]
                     keyPair:[aDecoder decodeObjectOfClass:[ECKeyPair class] forKey:kCoderPreKeyPair]
                   createdAt:[aDecoder decodeObjectOfClass:[NSDate class] forKey:kCoderCreatedAt]];
@@ -54,3 +56,5 @@ static NSString* const kCoderCreatedAt       = @"kCoderCreatedAt";
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

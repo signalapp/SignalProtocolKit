@@ -4,6 +4,8 @@
 
 #import "SignedPrekeyRecord.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 static NSString* const kCoderPreKeyId        = @"kCoderPreKeyId";
 static NSString* const kCoderPreKeyPair      = @"kCoderPreKeyPair";
 static NSString* const kCoderPreKeyDate      = @"kCoderPreKeyDate";
@@ -52,7 +54,7 @@ static NSString *const kCoderPreKeyWasAcceptedByService = @"kCoderPreKeyWasAccep
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder{
+- (nullable id)initWithCoder:(NSCoder *)aDecoder{
     return [self initWithId:[aDecoder decodeIntForKey:kCoderPreKeyId]
                      keyPair:[aDecoder decodeObjectOfClass:[ECKeyPair class] forKey:kCoderPreKeyPair]
                    signature:[aDecoder decodeObjectOfClass:[NSData class] forKey:kCoderPreKeySignature]
@@ -79,3 +81,5 @@ static NSString *const kCoderPreKeyWasAcceptedByService = @"kCoderPreKeyWasAccep
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
