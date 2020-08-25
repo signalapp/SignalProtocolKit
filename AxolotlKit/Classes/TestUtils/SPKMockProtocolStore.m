@@ -69,6 +69,11 @@ NS_ASSUME_NONNULL_BEGIN
     return results;
 }
 
+- (NSArray<NSString *> *)availableSignedPreKeyIdsWithProtocolContext:(nullable id<SPKProtocolReadContext>)protocolContext
+{
+    return @[];
+}
+
 - (void)storeSignedPreKey:(int)signedPreKeyId
        signedPreKeyRecord:(SignedPreKeyRecord *)signedPreKeyRecord
           protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext

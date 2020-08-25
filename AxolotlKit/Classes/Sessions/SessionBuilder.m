@@ -211,10 +211,13 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     SignedPreKeyRecord *_Nullable signedPreKeyRecord = [self.signedPreKeyStore loadSignedPreKey:message.signedPrekeyId
                                                                                 protocolContext:protocolContext];
     if (signedPreKeyRecord == nil) {
-        DDLogWarn(@"%@ Signed prekey id: %lu, prekey id: %lu.", self.tag,
+        OWSLogWarn(@"Signed prekey id: %lu, prekey id: %lu.",
                   (unsigned long) message.signedPrekeyId,
                   (unsigned long) message.prekeyID);
-        OWSRaiseException(InvalidKeyIdException, @"No signed pre key found matching key id");
+        OWSLogWarn(@"Available signed prekey ids: %@",
+                  [self.signedPreKeyStore availableSignedPreKeyIdsWithProtocolContext:protocolContext]);
+
+        OWSRaiseException(InvalidKeyIdException, @"No signed prekey found matching key id");
     }
     ECKeyPair *ourSignedPrekey = signedPreKeyRecord.keyPair;
 

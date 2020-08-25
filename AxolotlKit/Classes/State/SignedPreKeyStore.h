@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeSignedPreKey:(int)signedPreKeyId
            protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext;
 
+- (NSArray<NSString *> *)availableSignedPreKeyIdsWithProtocolContext:(nullable id<SPKProtocolReadContext>)protocolContext;
+
 @end
 
 NS_ASSUME_NONNULL_END
