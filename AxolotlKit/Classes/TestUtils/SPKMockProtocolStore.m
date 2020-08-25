@@ -95,6 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark PreKey Store
 
 - (nullable PreKeyRecord *)loadPreKey:(int)preKeyId
+                      protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext;
 {
     return [self.preKeyStore objectForKey:[NSNumber numberWithInt:preKeyId]];
 }
@@ -111,6 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)storePreKey:(int)preKeyId preKeyRecord:(PreKeyRecord *)record
+    protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     [self.preKeyStore setObject:record forKey:[NSNumber numberWithInt:preKeyId]];
 }

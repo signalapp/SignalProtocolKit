@@ -82,7 +82,8 @@
     PreKeyWhisperMessage *incomingMessage = (PreKeyWhisperMessage*)outgoingMessage;
     [bobStore storePreKey:31337 preKeyRecord:[[PreKeyRecord alloc] initWithId:bobPreKey.preKeyId
                                                                       keyPair:bobPreKeyPair
-                                                                    createdAt:[NSDate date]]];
+                                                                    createdAt:[NSDate date]]
+          protocolContext:nil];
     [bobStore storeSignedPreKey:22
              signedPreKeyRecord:[[SignedPreKeyRecord alloc] initWithId:22
                                                                keyPair:bobSignedPreKeyPair

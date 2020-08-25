@@ -220,7 +220,8 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
 
     ECKeyPair *_Nullable ourOneTimePreKey;
     if (message.prekeyID >= 0) {
-        PreKeyRecord *_Nullable preKey = [self.prekeyStore loadPreKey:message.prekeyID];
+        PreKeyRecord *_Nullable preKey = [self.prekeyStore loadPreKey:message.prekeyID
+                                                      protocolContext:protocolContext];
         if (preKey == nil) {
             OWSRaiseException(InvalidKeyIdException, @"No pre key found matching key id");
         }
