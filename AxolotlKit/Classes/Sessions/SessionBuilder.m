@@ -208,8 +208,12 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
         return -1;
     }
 
-    SignedPreKeyRecord *_Nullable signedPreKeyRecord = [self.signedPreKeyStore loadSignedPreKey:message.signedPrekeyId];
+    SignedPreKeyRecord *_Nullable signedPreKeyRecord = [self.signedPreKeyStore loadSignedPreKey:message.signedPrekeyId
+                                                                                protocolContext:protocolContext];
     if (signedPreKeyRecord == nil) {
+        DDLogWarn(@"%@ Signed prekey id: %lu, prekey id: %lu.", self.tag,
+                  (unsigned long) message.signedPrekeyId,
+                  (unsigned long) message.prekeyID);
         OWSRaiseException(InvalidKeyIdException, @"No signed pre key found matching key id");
     }
     ECKeyPair *ourSignedPrekey = signedPreKeyRecord.keyPair;
