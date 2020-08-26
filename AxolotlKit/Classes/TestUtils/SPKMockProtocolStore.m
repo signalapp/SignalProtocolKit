@@ -53,11 +53,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Signed PreKey Store
 
 - (nullable SignedPreKeyRecord *)loadSignedPreKey:(int)signedPreKeyId
+                                  protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext
 {
     return [self.signedPreKeyStore objectForKey:[NSNumber numberWithInt:signedPreKeyId]];
 }
 
-- (NSArray<SignedPreKeyRecord *> *)loadSignedPreKeys
+- (NSArray<SignedPreKeyRecord *> *)loadSignedPreKeysWithProtocolContext:(nullable id<SPKProtocolReadContext>)protocolContext
 {
     NSMutableArray *results = [NSMutableArray array];
 
@@ -68,12 +69,20 @@ NS_ASSUME_NONNULL_BEGIN
     return results;
 }
 
-- (void)storeSignedPreKey:(int)signedPreKeyId signedPreKeyRecord:(SignedPreKeyRecord *)signedPreKeyRecord
+- (NSArray<NSString *> *)availableSignedPreKeyIdsWithProtocolContext:(nullable id<SPKProtocolReadContext>)protocolContext
+{
+    return @[];
+}
+
+- (void)storeSignedPreKey:(int)signedPreKeyId
+       signedPreKeyRecord:(SignedPreKeyRecord *)signedPreKeyRecord
+          protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     [self.signedPreKeyStore setObject:signedPreKeyRecord forKey:[NSNumber numberWithInteger:signedPreKeyId]];
 }
 
 - (BOOL)containsSignedPreKey:(int)signedPreKeyId
+             protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext
 {
     if ([[self.signedPreKeyStore allKeys] containsObject:[NSNumber numberWithInteger:signedPreKeyId]]) {
         return TRUE;
@@ -83,6 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)removeSignedPreKey:(int)signedPreKeyId
+           protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     [self.signedPreKeyStore removeObjectForKey:[NSNumber numberWithInteger:signedPreKeyId]];
 }
@@ -90,6 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark PreKey Store
 
 - (nullable PreKeyRecord *)loadPreKey:(int)preKeyId
+                      protocolContext:(nullable id<SPKProtocolReadContext>)protocolContext;
 {
     return [self.preKeyStore objectForKey:[NSNumber numberWithInt:preKeyId]];
 }
@@ -106,6 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)storePreKey:(int)preKeyId preKeyRecord:(PreKeyRecord *)record
+    protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
 {
     [self.preKeyStore setObject:record forKey:[NSNumber numberWithInt:preKeyId]];
 }

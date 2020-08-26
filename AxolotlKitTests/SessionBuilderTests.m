@@ -82,8 +82,14 @@
     PreKeyWhisperMessage *incomingMessage = (PreKeyWhisperMessage*)outgoingMessage;
     [bobStore storePreKey:31337 preKeyRecord:[[PreKeyRecord alloc] initWithId:bobPreKey.preKeyId
                                                                       keyPair:bobPreKeyPair
-                                                                    createdAt:[NSDate date]]];
-    [bobStore storeSignedPreKey:22 signedPreKeyRecord:[[SignedPreKeyRecord alloc] initWithId:22 keyPair:bobSignedPreKeyPair signature:bobSignedPreKeySignature generatedAt:[NSDate date]]];
+                                                                    createdAt:[NSDate date]]
+          protocolContext:nil];
+    [bobStore storeSignedPreKey:22
+             signedPreKeyRecord:[[SignedPreKeyRecord alloc] initWithId:22
+                                                               keyPair:bobSignedPreKeyPair
+                                                             signature:bobSignedPreKeySignature
+                                                           generatedAt:[NSDate date]]
+     protocolContext:nil];
     
     SessionCipher *bobSessionCipher = [[SessionCipher alloc] initWithAxolotlStore:bobStore recipientId:ALICE_RECIPIENT_ID deviceId:1];
     [bobSessionCipher throws_decrypt:incomingMessage protocolContext:nil];
@@ -91,7 +97,7 @@
     XCTAssert([bobStore containsSession:ALICE_RECIPIENT_ID deviceId:1 protocolContext:nil]);
     XCTAssert([bobStore loadSession:ALICE_RECIPIENT_ID deviceId:1 protocolContext:nil].sessionState.version == 3);
     XCTAssert([bobStore loadSession:ALICE_RECIPIENT_ID deviceId:1 protocolContext:nil].sessionState.aliceBaseKey != nil);
-}
+} 
 
 /**
  *  Tests the case where an attacker would send a new PreKeyWhisperMessage with another IdentityKey
