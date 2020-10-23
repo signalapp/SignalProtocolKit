@@ -226,6 +226,7 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
         PreKeyRecord *_Nullable preKey = [self.prekeyStore loadPreKey:message.prekeyID
                                                       protocolContext:protocolContext];
         if (preKey == nil) {
+            OWSFailDebug(@"Missing prekeyID: %lu", (unsigned long) message.prekeyID);
             OWSRaiseException(InvalidKeyIdException, @"No pre key found matching key id");
         }
         ourOneTimePreKey = preKey.keyPair;
