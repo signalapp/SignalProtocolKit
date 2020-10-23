@@ -314,9 +314,10 @@ NS_ASSUME_NONNULL_BEGIN
 
     BOOL containsActiveSession =
         [self.sessionStore containsSession:self.recipientId deviceId:self.deviceId protocolContext:protocolContext];
-    DDLogError(@"%@ No valid session for recipient: %@ containsActiveSession: %@, previousStates: %lu",
+    DDLogError(@"%@ No valid session for recipient: %@.%lu containsActiveSession: %@, previousStates: %lu",
         self.tag,
         self.recipientId,
+        (unsigned long) self.deviceId,
         (containsActiveSession ? @"YES" : @"NO"),
         (unsigned long)sessionRecord.previousSessionStates.count);
 
