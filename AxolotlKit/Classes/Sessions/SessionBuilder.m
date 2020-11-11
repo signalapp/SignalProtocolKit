@@ -146,12 +146,6 @@ const int kPreKeyOfLastResortId = 0xFFFFFF;
     BOOL previousIdentityExisted = [self.identityStore saveRemoteIdentity:theirIdentityKey
                                                               recipientId:self.recipientId
                                                           protocolContext:protocolContext];
-    if (previousIdentityExisted) {
-        DDLogInfo(@"%@ PKBundle removing previous session states for changed identity for recipient:%@",
-            self.tag,
-            self.recipientId);
-        [sessionRecord removePreviousSessionStates];
-    }
 
     [self.sessionStore storeSession:self.recipientId
                            deviceId:self.deviceId

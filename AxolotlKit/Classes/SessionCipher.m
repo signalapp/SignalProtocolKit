@@ -285,9 +285,8 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     // If we can decrypt the message with an "old" session state, that means the sender is using an "old" session.
-    // In which case, we promote that session to "active" so as to converge on a single session for sending/receiving.
-    __block NSUInteger stateToPromoteIdx;
-    __block NSData *decryptedData;
+    // We can continue to receive messages from this sender, but we will send to them using our current session.
+    __block NSData *_Nullable decryptedData;
     [[sessionRecord previousSessionStates]
         enumerateObjectsUsingBlock:^(SessionState *_Nonnull previousState, NSUInteger idx, BOOL *_Nonnull stop) {
             @try {
@@ -296,7 +295,6 @@ NS_ASSUME_NONNULL_BEGIN
                                                      protocolContext:protocolContext];
                 OWSLogInfo(@"%@ successfully decrypted with PREVIOUS session state: %@", self.tag, previousState);
                 OWSAssert(decryptedData != nil);
-                stateToPromoteIdx = idx;
                 *stop = YES;
             } @catch (NSException *exception) {
                 [exceptions addObject:exception];
@@ -304,12 +302,6 @@ NS_ASSUME_NONNULL_BEGIN
         }];
 
     if (decryptedData) {
-        SessionState *sessionStateToPromote = [sessionRecord previousSessionStates][stateToPromoteIdx];
-        OWSAssert(sessionStateToPromote != nil);
-        OWSLogInfo(@"%@ promoting session: %@", self.tag, sessionStateToPromote);
-        [[sessionRecord previousSessionStates] removeObjectAtIndex:stateToPromoteIdx];
-        [sessionRecord promoteState:sessionStateToPromote];
-
         return decryptedData;
     }
 

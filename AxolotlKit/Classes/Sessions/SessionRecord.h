@@ -11,13 +11,11 @@
 
 - (BOOL)hasSessionState:(int)version baseKey:(NSData*)aliceBaseKey;
 - (SessionState*)sessionState;
-- (NSMutableArray<SessionState *> *)previousSessionStates;
+- (NSArray<SessionState *> *)previousSessionStates;
 
-- (void)removePreviousSessionStates;
 - (BOOL)isFresh;
 - (void)markAsUnFresh;
 - (void)archiveCurrentState;
-- (void)promoteState:(SessionState*)promotedState;
 - (void)setState:(SessionState*)sessionState;
 
 @end
