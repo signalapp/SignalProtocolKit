@@ -112,7 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
                                          recipientId:self.recipientId
                                            direction:TSMessageDirectionOutgoing
                                      protocolContext:protocolContext]) {
-        DDLogWarn(
+        OWSLogWarn(
             @"%@ Previously known identity key for while encrypting for recipient: %@", self.tag, self.recipientId);
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException
                                        reason:@"There is a previously known identity key."
@@ -140,7 +140,8 @@ NS_ASSUME_NONNULL_BEGIN
         PendingPreKey *items = [sessionState unacknowledgedPreKeyMessageItems];
         int localRegistrationId = [sessionState localRegistrationId];
 
-        DDLogInfo(@"Building PreKeyWhisperMessage for: %@ with preKeyId: %d", self.recipientId, items.preKeyId);
+        OWSLogInfo(@"Building PreKeyWhisperMessage for: %@.%lu with preKeyId: %d",
+                  self.recipientId, (unsigned long) self.deviceId, items.preKeyId);
 
         cipherMessage =
             [[PreKeyWhisperMessage alloc] init_throws_withWhisperMessage:cipherMessage
@@ -240,7 +241,7 @@ NS_ASSUME_NONNULL_BEGIN
                                          recipientId:self.recipientId
                                            direction:TSMessageDirectionIncoming
                                      protocolContext:protocolContext]) {
-        DDLogWarn(
+        OWSLogWarn(
             @"%@ Previously known identity key for while decrypting from recipient: %@", self.tag, self.recipientId);
         @throw [NSException exceptionWithName:UntrustedIdentityKeyException
                                        reason:@"There is a previously known identity key."
@@ -272,7 +273,7 @@ NS_ASSUME_NONNULL_BEGIN
         NSData *decryptedData = [self throws_decryptWithSessionState:sessionState
                                                       whisperMessage:whisperMessage
                                                      protocolContext:protocolContext];
-        DDLogDebug(@"%@ successfully decrypted with current session state: %@", self.tag, sessionState);
+        OWSLogDebug(@"%@ successfully decrypted with current session state: %@", self.tag, sessionState);
         return decryptedData;
     }
     @catch (NSException *exception) {
@@ -293,7 +294,7 @@ NS_ASSUME_NONNULL_BEGIN
                 decryptedData = [self throws_decryptWithSessionState:previousState
                                                       whisperMessage:whisperMessage
                                                      protocolContext:protocolContext];
-                DDLogInfo(@"%@ successfully decrypted with PREVIOUS session state: %@", self.tag, previousState);
+                OWSLogInfo(@"%@ successfully decrypted with PREVIOUS session state: %@", self.tag, previousState);
                 OWSAssert(decryptedData != nil);
                 stateToPromoteIdx = idx;
                 *stop = YES;
@@ -305,7 +306,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (decryptedData) {
         SessionState *sessionStateToPromote = [sessionRecord previousSessionStates][stateToPromoteIdx];
         OWSAssert(sessionStateToPromote != nil);
-        DDLogInfo(@"%@ promoting session: %@", self.tag, sessionStateToPromote);
+        OWSLogInfo(@"%@ promoting session: %@", self.tag, sessionStateToPromote);
         [[sessionRecord previousSessionStates] removeObjectAtIndex:stateToPromoteIdx];
         [sessionRecord promoteState:sessionStateToPromote];
 
@@ -314,7 +315,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     BOOL containsActiveSession =
         [self.sessionStore containsSession:self.recipientId deviceId:self.deviceId protocolContext:protocolContext];
-    DDLogError(@"%@ No valid session for recipient: %@.%lu containsActiveSession: %@, previousStates: %lu",
+    OWSLogError(@"%@ No valid session for recipient: %@.%lu containsActiveSession: %@, previousStates: %lu",
         self.tag,
         self.recipientId,
         (unsigned long) self.deviceId,
@@ -386,10 +387,10 @@ NS_ASSUME_NONNULL_BEGIN
 
     @try {
         if ([sessionState hasReceiverChain:theirEphemeral]) {
-            DDLogInfo(@"%@ %@.%d has existing receiver chain.", self.tag, self.recipientId, self.deviceId);
+            OWSLogInfo(@"%@ %@.%d has existing receiver chain.", self.tag, self.recipientId, self.deviceId);
             return [sessionState receiverChainKey:theirEphemeral];
         } else{
-            DDLogInfo(@"%@ %@.%d creating new chains.", self.tag, self.recipientId, self.deviceId);
+            OWSLogInfo(@"%@ %@.%d creating new chains.", self.tag, self.recipientId, self.deviceId);
             RootKey *rootKey = [sessionState rootKey];
             OWSAssert(rootKey.keyData.length == 32);
 
