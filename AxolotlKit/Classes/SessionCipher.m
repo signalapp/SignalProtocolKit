@@ -237,20 +237,27 @@ NS_ASSUME_NONNULL_BEGIN
                                                whisperMessage:whisperMessage
                                               protocolContext:protocolContext];
 
-    if (![self.identityKeyStore isTrustedIdentityKey:sessionRecord.sessionState.remoteIdentityKey
-                                         recipientId:self.recipientId
-                                           direction:TSMessageDirectionIncoming
-                                     protocolContext:protocolContext]) {
-        OWSLogWarn(
-            @"%@ Previously known identity key for while decrypting from recipient: %@", self.tag, self.recipientId);
-        @throw [NSException exceptionWithName:UntrustedIdentityKeyException
-                                       reason:@"There is a previously known identity key."
-                                     userInfo:@{}];
+    // Our current session state may not have a remote identity key
+    // if we decrypted this message using an old session. It's safe
+    // to ignore this, as the identity key message was already surfaced
+    // when it originally changed.
+    if (sessionRecord.sessionState.remoteIdentityKey) {
+        if (![self.identityKeyStore isTrustedIdentityKey:sessionRecord.sessionState.remoteIdentityKey
+                                             recipientId:self.recipientId
+                                               direction:TSMessageDirectionIncoming
+                                         protocolContext:protocolContext]) {
+            OWSLogWarn(
+                @"%@ Previously known identity key for while decrypting from recipient: %@", self.tag, self.recipientId);
+            @throw [NSException exceptionWithName:UntrustedIdentityKeyException
+                                           reason:@"There is a previously known identity key."
+                                         userInfo:@{}];
+        }
+
+        [self.identityKeyStore saveRemoteIdentity:sessionRecord.sessionState.remoteIdentityKey
+                                      recipientId:self.recipientId
+                                  protocolContext:protocolContext];
     }
 
-    [self.identityKeyStore saveRemoteIdentity:sessionRecord.sessionState.remoteIdentityKey
-                                  recipientId:self.recipientId
-                              protocolContext:protocolContext];
     [self.sessionStore storeSession:self.recipientId
                            deviceId:self.deviceId
                             session:sessionRecord

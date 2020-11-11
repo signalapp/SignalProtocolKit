@@ -79,7 +79,7 @@
 
 - (NSArray<SessionState *> *)previousSessionStates
 {
-    return [_previousStates copy];
+    return _previousStates;
 }
 
 - (BOOL)isFresh{
