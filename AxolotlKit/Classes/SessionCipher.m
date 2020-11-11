@@ -20,6 +20,7 @@
 #import <Curve25519Kit/Ed25519.h>
 #import <HKDFKit/HKDFKit.h>
 #import <SignalCoreKit/SCKExceptionWrapper.h>
+#import <SignalCoreKit/NSData+OWS.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -266,6 +267,11 @@ NS_ASSUME_NONNULL_BEGIN
     return plaintext;
 }
 
+- (void)logDecryptionFailureForWhisperMessage:(WhisperMessage *)whisperMessage sessionState:(SessionState *)sessionState
+{
+    OWSFailDebug(@"Failed to decrypt whisper message with ratchet key: %@ and counter: %d. Session loaded using recipientId: %@ and deviceId: %d. Local session has base key: %@ and counter: %d", whisperMessage.senderRatchetKey.hexadecimalString, whisperMessage.counter, self.recipientId, self.deviceId, sessionState.senderRatchetKey.hexadecimalString, sessionState.previousCounter);
+}
+
 - (NSData *)throws_decryptWithSessionRecord:(SessionRecord *)sessionRecord
                              whisperMessage:(WhisperMessage *)whisperMessage
                             protocolContext:(nullable id<SPKProtocolWriteContext>)protocolContext
@@ -287,6 +293,7 @@ NS_ASSUME_NONNULL_BEGIN
         if ([exception.name isEqualToString:InvalidMessageException]) {
             [exceptions addObject:exception];
         } else {
+            [self logDecryptionFailureForWhisperMessage:whisperMessage sessionState:sessionState];
             @throw exception;
         }
     }
@@ -304,6 +311,10 @@ NS_ASSUME_NONNULL_BEGIN
                 OWSAssert(decryptedData != nil);
                 *stop = YES;
             } @catch (NSException *exception) {
+                if (![exception.name isEqualToString:InvalidMessageException]) {
+                    [self logDecryptionFailureForWhisperMessage:whisperMessage sessionState:sessionState];
+                }
+
                 [exceptions addObject:exception];
             }
         }];
