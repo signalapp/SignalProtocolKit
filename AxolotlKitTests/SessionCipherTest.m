@@ -13,6 +13,10 @@
 #import <Curve25519Kit/Curve25519.h>
 #import <XCTest/XCTest.h>
 
+@interface SessionRecord (Private)
+- (void)promoteState:(SessionState *)promotedState;
+@end
+
 @interface SessionCipherTest : XCTestCase
 
 @property (nonatomic, readonly) NSString *aliceIdentifier;
@@ -77,10 +81,11 @@
     XCTAssertNotEqualObjects(initialSessionState, activeSession.sessionState);
     XCTAssertEqualObjects(newSessionState, activeSession.sessionState);
 
-    // 3.) Bob should promote back the initial session after receiving a message from that old session.
+    // 3.) Bob should decrypt with initial session after receiving a message from that old session,
+    // but importantly *not* promote it to be the active session.
     [self runInteractionWithAliceRecord:aliceSessionRecord bobRecord:bobSessionRecord];
-    XCTAssertNotEqualObjects(newSessionState, activeSession.sessionState);
-    XCTAssertEqualObjects(initialSessionState, activeSession.sessionState);
+    XCTAssertNotEqualObjects(initialSessionState, activeSession.sessionState);
+    XCTAssertEqualObjects(newSessionState, activeSession.sessionState);
     XCTAssertEqual(1, bobSessionRecord.previousSessionStates.count);
     XCTAssertEqual(0, aliceSessionRecord.previousSessionStates.count);
 }
