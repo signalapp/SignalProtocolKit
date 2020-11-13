@@ -20,6 +20,7 @@
 #import <Curve25519Kit/Ed25519.h>
 #import <HKDFKit/HKDFKit.h>
 #import <SignalCoreKit/SCKExceptionWrapper.h>
+#import <SignalCoreKit/NSData+OWS.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -237,26 +238,38 @@ NS_ASSUME_NONNULL_BEGIN
                                                whisperMessage:whisperMessage
                                               protocolContext:protocolContext];
 
-    if (![self.identityKeyStore isTrustedIdentityKey:sessionRecord.sessionState.remoteIdentityKey
-                                         recipientId:self.recipientId
-                                           direction:TSMessageDirectionIncoming
-                                     protocolContext:protocolContext]) {
-        OWSLogWarn(
-            @"%@ Previously known identity key for while decrypting from recipient: %@", self.tag, self.recipientId);
-        @throw [NSException exceptionWithName:UntrustedIdentityKeyException
-                                       reason:@"There is a previously known identity key."
-                                     userInfo:@{}];
+    // Our current session state may not have a remote identity key
+    // if we decrypted this message using an old session. It's safe
+    // to ignore this, as the identity key message was already surfaced
+    // when it originally changed.
+    if (sessionRecord.sessionState.remoteIdentityKey) {
+        if (![self.identityKeyStore isTrustedIdentityKey:sessionRecord.sessionState.remoteIdentityKey
+                                             recipientId:self.recipientId
+                                               direction:TSMessageDirectionIncoming
+                                         protocolContext:protocolContext]) {
+            OWSLogWarn(
+                @"%@ Previously known identity key for while decrypting from recipient: %@", self.tag, self.recipientId);
+            @throw [NSException exceptionWithName:UntrustedIdentityKeyException
+                                           reason:@"There is a previously known identity key."
+                                         userInfo:@{}];
+        }
+
+        [self.identityKeyStore saveRemoteIdentity:sessionRecord.sessionState.remoteIdentityKey
+                                      recipientId:self.recipientId
+                                  protocolContext:protocolContext];
     }
 
-    [self.identityKeyStore saveRemoteIdentity:sessionRecord.sessionState.remoteIdentityKey
-                                  recipientId:self.recipientId
-                              protocolContext:protocolContext];
     [self.sessionStore storeSession:self.recipientId
                            deviceId:self.deviceId
                             session:sessionRecord
                     protocolContext:protocolContext];
 
     return plaintext;
+}
+
+- (void)logDecryptionFailureForWhisperMessage:(WhisperMessage *)whisperMessage sessionState:(SessionState *)sessionState
+{
+    OWSFailDebug(@"Failed to decrypt whisper message with ratchet key: %@ and counter: %d. Session loaded using recipientId: %@ and deviceId: %d. Local session has base key: %@ and counter: %d", whisperMessage.senderRatchetKey.hexadecimalString, whisperMessage.counter, self.recipientId, self.deviceId, sessionState.senderRatchetKey.hexadecimalString, sessionState.previousCounter);
 }
 
 - (NSData *)throws_decryptWithSessionRecord:(SessionRecord *)sessionRecord
@@ -280,14 +293,14 @@ NS_ASSUME_NONNULL_BEGIN
         if ([exception.name isEqualToString:InvalidMessageException]) {
             [exceptions addObject:exception];
         } else {
+            [self logDecryptionFailureForWhisperMessage:whisperMessage sessionState:sessionState];
             @throw exception;
         }
     }
 
     // If we can decrypt the message with an "old" session state, that means the sender is using an "old" session.
-    // In which case, we promote that session to "active" so as to converge on a single session for sending/receiving.
-    __block NSUInteger stateToPromoteIdx;
-    __block NSData *decryptedData;
+    // We can continue to receive messages from this sender, but we will send to them using our current session.
+    __block NSData *_Nullable decryptedData;
     [[sessionRecord previousSessionStates]
         enumerateObjectsUsingBlock:^(SessionState *_Nonnull previousState, NSUInteger idx, BOOL *_Nonnull stop) {
             @try {
@@ -296,20 +309,17 @@ NS_ASSUME_NONNULL_BEGIN
                                                      protocolContext:protocolContext];
                 OWSLogInfo(@"%@ successfully decrypted with PREVIOUS session state: %@", self.tag, previousState);
                 OWSAssert(decryptedData != nil);
-                stateToPromoteIdx = idx;
                 *stop = YES;
             } @catch (NSException *exception) {
+                if (![exception.name isEqualToString:InvalidMessageException]) {
+                    [self logDecryptionFailureForWhisperMessage:whisperMessage sessionState:sessionState];
+                }
+
                 [exceptions addObject:exception];
             }
         }];
 
     if (decryptedData) {
-        SessionState *sessionStateToPromote = [sessionRecord previousSessionStates][stateToPromoteIdx];
-        OWSAssert(sessionStateToPromote != nil);
-        OWSLogInfo(@"%@ promoting session: %@", self.tag, sessionStateToPromote);
-        [[sessionRecord previousSessionStates] removeObjectAtIndex:stateToPromoteIdx];
-        [sessionRecord promoteState:sessionStateToPromote];
-
         return decryptedData;
     }
 

@@ -71,14 +71,9 @@
     return _sessionState;
 }
 
-- (NSMutableArray<SessionState *> *)previousSessionStates
+- (NSArray<SessionState *> *)previousSessionStates
 {
     return _previousStates;
-}
-
-- (void)removePreviousSessionStates
-{
-    [_previousStates removeAllObjects];
 }
 
 - (BOOL)isFresh{
@@ -103,7 +98,7 @@
         ows_sub_overflow(self.previousStates.count, ARCHIVED_STATES_MAX_LENGTH, &deleteCount);
         NSIndexSet *indexesToDelete =
             [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(ARCHIVED_STATES_MAX_LENGTH, deleteCount)];
-        [self.previousSessionStates removeObjectsAtIndexes:indexesToDelete];
+        [self.previousStates removeObjectsAtIndexes:indexesToDelete];
     }
 }
 
