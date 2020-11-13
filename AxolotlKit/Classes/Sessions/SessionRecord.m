@@ -19,8 +19,7 @@
 
 @implementation SessionRecord
 
-- (instancetype)init
-{
+- (instancetype)init{
     self = [super init];
     
     if (self) {
@@ -34,19 +33,16 @@
 
 #pragma mark Serialization
 
-+ (BOOL)supportsSecureCoding
-{
++ (BOOL)supportsSecureCoding{
     return YES;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
+- (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.previousStates forKey:previousSessionsStateKey];
     [aCoder encodeObject:self.sessionState   forKey:currentSessionStateKey];
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
     self = [self init];
     
     self.fresh = false;
@@ -57,8 +53,7 @@
     return self;
 }
 
-- (BOOL)hasSessionState:(int)version baseKey:(NSData *)aliceBaseKey
-{
+- (BOOL)hasSessionState:(int)version baseKey:(NSData *)aliceBaseKey{
     if (self.sessionState.version == version && [aliceBaseKey isEqualToData:self.sessionState.aliceBaseKey]) {
         return YES;
     }
@@ -72,8 +67,7 @@
     return NO;
 }
 
-- (SessionState*)sessionState
-{
+- (SessionState*)sessionState{
     return _sessionState;
 }
 
@@ -91,13 +85,11 @@
     self.fresh = false;
 }
 
-- (void)archiveCurrentState
-{
+- (void)archiveCurrentState{
     [self promoteState:[SessionState new]];
 }
 
-- (void)promoteState:(SessionState *)promotedState
-{
+- (void)promoteState:(SessionState *)promotedState{
     [self.previousStates insertObject:self.sessionState atIndex:0];
     self.sessionState = promotedState;
     
@@ -110,8 +102,7 @@
     }
 }
 
-- (void)setState:(SessionState *)sessionState
-{
+- (void)setState:(SessionState *)sessionState{
     self.sessionState = sessionState;
 }
 
