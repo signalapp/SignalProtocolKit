@@ -456,7 +456,7 @@ NS_ASSUME_NONNULL_BEGIN
         }
     }
 
-    NSUInteger kCounterLimit = 2000;
+    NSUInteger kCounterLimit = 25000;
     int counterOffset;
     if (__builtin_sub_overflow(counter, chainKey.index, &counterOffset)) {
         OWSFailDebug(@"Overflow while calculating counter offset");
