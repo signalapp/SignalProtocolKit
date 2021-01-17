@@ -86,6 +86,10 @@
 }
 
 - (void)archiveCurrentState{
+    if (self.sessionState.isFresh) {
+        OWSLogInfo(@"Skipping archive, current session state is fresh.");
+        return;
+    }
     [self promoteState:[SessionState new]];
 }
 

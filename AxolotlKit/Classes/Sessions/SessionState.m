@@ -119,6 +119,11 @@ static NSString* const kCoderPendingPrekey    = @"kCoderPendingPrekey";
     [aCoder encodeObject:self.pendingPreKey forKey:kCoderPendingPrekey];
 }
 
+- (BOOL)isFresh
+{
+    return self.remoteIdentityKey == nil && self.localIdentityKey == nil && self.sendingChain == nil && self.receivingChains.count == 0 && self.pendingPreKey == nil;
+}
+
 - (NSData*)senderRatchetKey{
     return [[self senderRatchetKeyPair] publicKey];
 }

@@ -39,6 +39,8 @@
 @property(nonatomic)int remoteRegistrationId;
 @property(nonatomic)int localRegistrationId;
 
+@property (nonatomic, readonly) BOOL isFresh;
+
 - (NSData*)senderRatchetKey;
 - (ECKeyPair*)senderRatchetKeyPair;
 
